@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\Catch2Unittest.targets" />
+  <PropertyGroup Label="Globals">
+    <RootNamespace>Catch_Testset02</RootNamespace>
+    <ProjectTypeGuids>{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}</ProjectTypeGuids>
+    <ProjectGuid>{0468DB6A-4DA8-4214-880A-499B08D315DE}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Src\Catch2\Catch_Testset02\UT_Tests01.cpp" />
+    <ClCompile Include="..\..\..\Src\Catch2\Catch_Testset02\UT_Tests02.cpp" />
+    <ClCompile Include="..\..\..\Src\Catch2\Catch_Testset02\UT_Tests03.cpp" />
+    <ClCompile Include="..\..\..\Src\Catch2\main.cpp" />
+  </ItemGroup>
+</Project>

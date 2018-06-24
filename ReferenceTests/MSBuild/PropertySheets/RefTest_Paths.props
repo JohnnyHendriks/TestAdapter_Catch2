@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="RefTest_Properties">
+    <RefTest_Catch2Dir Condition="'$(RefTest_Catch2Dir)'==''">$(RefTest_RootDir)Catch2\</RefTest_Catch2Dir>
+    <RefTest_SourceDir Condition="'$(RefTest_SourceDir)'==''">$(RefTest_RootDir)Src\</RefTest_SourceDir>
+    <RefTest_x32OutDir Condition="'$(RefTest_x32OutDir)'==''">$(RefTest_RootDir)_unittest32\$(Configuration)\</RefTest_x32OutDir>
+    <RefTest_x64OutDir Condition="'$(RefTest_x64OutDir)'==''">$(RefTest_RootDir)_unittest64\$(Configuration)\</RefTest_x64OutDir>
+  </PropertyGroup>
+</Project>
