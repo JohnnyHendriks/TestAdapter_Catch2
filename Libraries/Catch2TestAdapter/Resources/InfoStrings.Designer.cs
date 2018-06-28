@@ -61,6 +61,15 @@ namespace Catch2TestAdapter.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Catch2Adapter is disabled..
+        /// </summary>
+        internal static string DiscoveryDisabled {
+            get {
+                return ResourceManager.GetString("DiscoveryDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Finished Catch2Adapter test discovery..
         /// </summary>
         internal static string FinishedDiscovery {

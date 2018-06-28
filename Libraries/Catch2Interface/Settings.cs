@@ -91,6 +91,7 @@ Class :
 
         #region Properties
 
+        public bool                  Disabled { get; set; }              = Constants.S_DefaultDisabled;
         public string                DiscoverCommandLine { get; set; }   = Constants.S_DefaultDiscoverCommandline;
         public int                   DiscoverTimeout { get; set; }       = Constants.S_DefaultDiscoverTimeout;
         public string                FilenameFilter { get; set; }        = Constants.S_DefaultFilenameFilter;
@@ -116,6 +117,18 @@ Class :
             // Make sure we have the correct node, and extract settings
             if( node.Name == Constants.SettingsName)
             {
+                // Check if test adapter is disbaled
+                var disabled = node.Attributes["disabled"]?.Value;
+                if (disabled != null && Constants.Rgx_TrueFalse.IsMatch(disabled))
+                {
+                    settings.Disabled = Constants.Rgx_True.IsMatch(disabled);
+                }
+
+                if (settings.Disabled)
+                {
+                    return settings;
+                }
+
                 // DiscoverCommanline
                 var discover = node.SelectSingleNode(Constants.NodeName_DiscoverCommanline)?.FirstChild;
                 if( discover != null && discover.NodeType == XmlNodeType.Text )

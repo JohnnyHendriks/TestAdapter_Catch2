@@ -64,6 +64,13 @@ namespace Catch2TestAdapter
                 return;
             }
 
+            // Check if adapter is disabled
+            if (_settings.Disabled)
+            {
+                LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.DiscoveryDisabled);
+                return;
+            }
+
             // Run Tests
             LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.StartExecutor);
 
@@ -86,8 +93,15 @@ namespace Catch2TestAdapter
                 return;
             }
 
+            // Check if adapter is disabled
+            if (_settings.Disabled)
+            {
+                LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.DiscoveryDisabled);
+                return;
+            }
+
             // Check Catch2Adapter Settings
-            if(!_settings.HasValidDiscoveryCommandline)
+            if (!_settings.HasValidDiscoveryCommandline)
             {
                 LogVerbose(TestMessageLevel.Error, "Discover Commandline: " + _settings.DiscoverCommandLine);
                 LogNormal(TestMessageLevel.Error, Resources.ErrorStrings.SettingsInvalidDiscoveryCommandline);

@@ -50,11 +50,12 @@ Class :
         public const string NodeName_WorkingDirectoryRoot = "WorkingDirectoryRoot";
 
         // Settings Default Values
+        public const bool   S_DefaultDisabled = false;
         public const string S_DefaultDiscoverCommandline = ""; // By default give invalid value
         public const int    S_DefaultDiscoverTimeout = 500; // Time in milliseconds
         public const string S_DefaultFilenameFilter = "";
         public const bool   S_DefaultIncludeHidden = true;
-        public const int    S_DefaultTestCaseTimeout = -1;
+        public const int    S_DefaultTestCaseTimeout = -1; // No timeout
         public const string S_DefaultWorkingDirectory = "";
 
         public const LoggingLevels         S_DefaultLoggingLevel = LoggingLevels.Normal;

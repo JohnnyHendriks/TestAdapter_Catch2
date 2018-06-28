@@ -2,6 +2,7 @@
 
 In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitely by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
 
+- [`<Catch2Adapter>`](#catch2adapter)
 - [`<DiscoverCommandLine>`](#discovercommandline)*
 - [`<DiscoverTimeout>`](#discovertimeout)
 - [`<FilenameFilter>`](#filenamefilter)*
@@ -50,6 +51,38 @@ The following _.runsettings_ file examples only contains settings specific to th
 
 </RunSettings>
  ```
+
+## Catch2Adapter
+
+The `<Catch2Adapter>` node contains the settings specific for the **Test Adapter for Catch2** as child nodes. This node has a single optional attribute named `disabled`, which can be set to `true`. The default value of this attribute is `false`. This attribute was added to make it possible to disable the **Test Adapter for Catch2** via the _.runsettings_ file in case you have a solution without Catch2 tests or you just don't want Catch2 tests to show up in the Test Explorer.
+
+Minimalistic example to disable the **Test Adapter for Catch2** via the _.runsettings_ file:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+
+    <!-- Adapter Specific sections -->
+    <Catch2Adapter disabled="true"/>
+
+</RunSettings>
+ ```
+
+ Of course, you can also temporarily disable the test adapter by adding the `disabled` attribute to the `<Catch2Adapter>` node when it contains settings, and then reenable it by setting the attribute to false.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+
+    <!-- Adapter Specific sections -->
+    <Catch2Adapter disabled="false">
+        <DiscoverCommandLine>--list-tests *</DiscoverCommandLine>
+        <FilenameFilter>.*</FilenameFilter><!-- Regex filter -->
+    </Catch2Adapter>
+
+</RunSettings>
+ ```
+
+**Note: `disabled` attribute is not available in v1.0.0.**
 
 ## DiscoverCommandLine
 

@@ -65,7 +65,7 @@ Class :
             var tests = new List<TestCase>();
 
             // Make sure the discovery commandline to be used is valid
-            if( !_settings.HasValidDiscoveryCommandline )
+            if( _settings.Disabled || !_settings.HasValidDiscoveryCommandline )
             {
                 return tests;
             }

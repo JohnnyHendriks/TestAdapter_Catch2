@@ -217,6 +217,15 @@ namespace UT_Catch2Interface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter disabled=&quot;true&quot;/&gt;.
+        /// </summary>
+        internal static string XmlSettings_Disabled_Minimal {
+            get {
+                return ResourceManager.GetString("XmlSettings_Disabled_Minimal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///&lt;/Catch2Adapter&gt;.
@@ -282,6 +291,40 @@ namespace UT_Catch2Interface.Resources {
         internal static string XmlSettings_FullyCustom {
             get {
                 return ResourceManager.GetString("XmlSettings_FullyCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter disabled=&quot;true&quot;&gt;
+        ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+        ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+        ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+        ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+        ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+        ///  &lt;StackTraceFormat&gt;Filename&lt;/StackTraceFormat&gt;
+        ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_FullyCustom_Disabled {
+            get {
+                return ResourceManager.GetString("XmlSettings_FullyCustom_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter disabled=&quot;false&quot;&gt;
+        ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+        ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+        ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+        ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+        ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+        ///  &lt;StackTraceFormat&gt;Filename&lt;/StackTraceFormat&gt;
+        ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_FullyCustom_NotDisabled {
+            get {
+                return ResourceManager.GetString("XmlSettings_FullyCustom_NotDisabled", resourceCulture);
             }
         }
         

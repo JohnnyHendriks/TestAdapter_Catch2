@@ -47,7 +47,7 @@ Class :
                 }
 
                 Filename = node.Attributes["filename"]?.Value;
-                
+
                 var nodeMessage = node?.FirstChild;
                 if (nodeMessage != null && nodeMessage.NodeType == XmlNodeType.Text)
                 {
