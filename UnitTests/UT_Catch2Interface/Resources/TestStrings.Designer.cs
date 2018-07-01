@@ -201,6 +201,7 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;DebugBreak&gt;&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;&lt;/DiscoverTimeout&gt;
         ///  &lt;FilenameFilter&gt;&lt;/FilenameFilter&gt;
@@ -213,6 +214,28 @@ namespace UT_Catch2Interface.Resources {
         internal static string XmlSettings_AllEmptyElements {
             get {
                 return ResourceManager.GetString("XmlSettings_AllEmptyElements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;DebugBreak&gt;off&lt;/DebugBreak&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_DebugBreak_Off {
+            get {
+                return ResourceManager.GetString("XmlSettings_DebugBreak_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_DebugBreak_On {
+            get {
+                return ResourceManager.GetString("XmlSettings_DebugBreak_On", resourceCulture);
             }
         }
         
@@ -279,6 +302,7 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
@@ -296,6 +320,7 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter disabled=&quot;true&quot;&gt;
+        ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
@@ -313,6 +338,7 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter disabled=&quot;false&quot;&gt;
+        ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;

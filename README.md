@@ -19,3 +19,4 @@ For documentation on the **Test Adapter for Catch2** see the followng links.
 - [Settings](Docs/Settings.md)
 - [How to build the test adapter](Docs/Build.md)
 - [Known issues](Docs/Known-issues.md)
+- [Change log](Docs/CHANGELOG.md)

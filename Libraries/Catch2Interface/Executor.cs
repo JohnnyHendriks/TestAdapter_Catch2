@@ -75,9 +75,16 @@ Class :
             }
         }
 
-        public string GenerateCommandlineArguments(string testname)
+        public string GenerateCommandlineArguments(string testname, bool debuggerAttached)
         {
-            return $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes";
+            if(debuggerAttached && _settings.DebugBreak)
+            {
+                return $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes --break";
+            }
+            else
+            {
+                return $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes";
+            }
         }
 
         public TestResult Run(string testname, string source)
@@ -88,7 +95,7 @@ Class :
 
             var process = new Process();
             process.StartInfo.FileName = source;
-            process.StartInfo.Arguments = GenerateCommandlineArguments(testname);
+            process.StartInfo.Arguments = GenerateCommandlineArguments(testname, false);
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;

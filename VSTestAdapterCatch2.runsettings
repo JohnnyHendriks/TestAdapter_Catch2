@@ -12,6 +12,7 @@
 
   <!-- Catch2 adapter -->
   <Catch2Adapter>
+    <DebugBreak>on</DebugBreak>
     <DiscoverCommandLine>--discover</DiscoverCommandLine>
     <DiscoverTimeout>200</DiscoverTimeout>
     <FilenameFilter>^Catch_</FilenameFilter>

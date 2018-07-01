@@ -3,6 +3,7 @@
 In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitely by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
 
 - [`<Catch2Adapter>`](#catch2adapter)
+- [`<DebugBreak>`](#debugbreak) (_not available in v1.0.0_)
 - [`<DiscoverCommandLine>`](#discovercommandline)*
 - [`<DiscoverTimeout>`](#discovertimeout)
 - [`<FilenameFilter>`](#filenamefilter)*
@@ -83,6 +84,14 @@ Minimalistic example to disable the **Test Adapter for Catch2** via the _.runset
  ```
 
 **Note: `disabled` attribute is not available in v1.0.0.**
+
+## DebugBreak
+
+Default: off
+
+With the `<DebugBreak>` option you can turn on or off the break on test failure feature of Catch2 (_i.e._, use the Catch2 command line option`--break`). Valid values for this option are, `on` and `off`. This setting is only considered when a test is started via `Debug Selected Tests` in the Test Explorer.
+
+**Note: This setting is not available in v1.0.0.**
 
 ## DiscoverCommandLine
 

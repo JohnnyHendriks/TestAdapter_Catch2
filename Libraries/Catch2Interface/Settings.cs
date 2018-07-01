@@ -91,6 +91,7 @@ Class :
 
         #region Properties
 
+        public bool                  DebugBreak { get; set; }            = Constants.S_DefaultDebugBreak;
         public bool                  Disabled { get; set; }              = Constants.S_DefaultDisabled;
         public string                DiscoverCommandLine { get; set; }   = Constants.S_DefaultDiscoverCommandline;
         public int                   DiscoverTimeout { get; set; }       = Constants.S_DefaultDiscoverTimeout;
@@ -127,6 +128,15 @@ Class :
                 if (settings.Disabled)
                 {
                     return settings;
+                }
+
+                // DebugBreak
+                var debugbreak = node.SelectSingleNode(Constants.NodeName_DebugBreak)?.FirstChild;
+                if( debugbreak != null
+                 && debugbreak.NodeType == XmlNodeType.Text
+                 && Constants.Rgx_OnOff.IsMatch(debugbreak.Value) )
+                {
+                    settings.DebugBreak = Constants.Rgx_On.IsMatch(debugbreak.Value);
                 }
 
                 // DiscoverCommanline

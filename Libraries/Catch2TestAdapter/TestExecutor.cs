@@ -182,7 +182,7 @@ namespace Catch2TestAdapter
                 _frameworkHandle
                     .LaunchProcessWithDebuggerAttached( test.Source
                                                       , null
-                                                      , _executor.GenerateCommandlineArguments(test.DisplayName)
+                                                      , _executor.GenerateCommandlineArguments(test.DisplayName, true)
                                                       , null );
 
                 // Do not process output in Debug mode

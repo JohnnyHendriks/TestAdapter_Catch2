@@ -192,6 +192,7 @@ cerr 02
   </data>
   <data name="XmlSettings_AllEmptyElements" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
+  &lt;DebugBreak&gt;&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;&lt;/DiscoverTimeout&gt;
   &lt;FilenameFilter&gt;&lt;/FilenameFilter&gt;
@@ -199,6 +200,16 @@ cerr 02
   &lt;Logging&gt;&lt;/Logging&gt;
   &lt;StackTraceFormat&gt;&lt;/StackTraceFormat&gt;
   &lt;TestCaseTimeout&gt;&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettings_DebugBreak_Off" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;DebugBreak&gt;off&lt;/DebugBreak&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettings_DebugBreak_On" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_Disabled_Minimal" xml:space="preserve">
@@ -228,6 +239,7 @@ cerr 02
   </data>
   <data name="XmlSettings_FullyCustom" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
@@ -239,6 +251,7 @@ cerr 02
   </data>
   <data name="XmlSettings_FullyCustom_Disabled" xml:space="preserve">
     <value>&lt;Catch2Adapter disabled="true"&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
@@ -250,6 +263,7 @@ cerr 02
   </data>
   <data name="XmlSettings_FullyCustom_NotDisabled" xml:space="preserve">
     <value>&lt;Catch2Adapter disabled="false"&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;

@@ -40,6 +40,7 @@ Class :
 
         // Settings Xml nodes
         public const string SettingsName = "Catch2Adapter";
+        public const string NodeName_DebugBreak = "DebugBreak";
         public const string NodeName_DiscoverCommanline = "DiscoverCommandLine";
         public const string NodeName_DiscoverTimeout = "DiscoverTimeout";
         public const string NodeName_FilenameFilter = "FilenameFilter";
@@ -50,6 +51,7 @@ Class :
         public const string NodeName_WorkingDirectoryRoot = "WorkingDirectoryRoot";
 
         // Settings Default Values
+        public const bool   S_DefaultDebugBreak = false;
         public const bool   S_DefaultDisabled = false;
         public const string S_DefaultDiscoverCommandline = ""; // By default give invalid value
         public const int    S_DefaultDiscoverTimeout = 500; // Time in milliseconds
@@ -67,6 +69,8 @@ Class :
         public static readonly Regex Rgx_IsHiddenTag = new Regex(@"^(\..*)|(!hide)$");
         public static readonly Regex Rgx_TrueFalse = new Regex(@"^(?i:true)$|^(?i:false)$", RegexOptions.Singleline);
         public static readonly Regex Rgx_True = new Regex(@"^(?i:true)$", RegexOptions.Singleline);
+        public static readonly Regex Rgx_OnOff = new Regex(@"^(?i:on)$|^(?i:off)$", RegexOptions.Singleline);
+        public static readonly Regex Rgx_On = new Regex(@"^(?i:on)$", RegexOptions.Singleline);
 
     }
 }
