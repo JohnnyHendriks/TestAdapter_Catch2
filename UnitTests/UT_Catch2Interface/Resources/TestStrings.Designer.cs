@@ -378,6 +378,17 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;Logging&gt;Debug&lt;/Logging&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_Logging_Debug {
+            get {
+                return ResourceManager.GetString("XmlSettings_Logging_Debug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
         ///  &lt;Logging&gt;Normal&lt;/Logging&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>

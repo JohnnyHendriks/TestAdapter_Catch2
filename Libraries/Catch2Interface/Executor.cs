@@ -28,7 +28,7 @@ Class :
     {
         #region Fields
 
-        private StringBuilder _verboselogbuilder = new StringBuilder();
+        private StringBuilder _logbuilder = new StringBuilder();
         private Settings      _settings;
 
         private string _solutiondir;
@@ -48,7 +48,7 @@ Class :
 
         #region Properties
 
-        public string VerboseLog { get; private set; } = string.Empty;
+        public string Log { get; private set; } = string.Empty;
 
         #endregion // Properties
 
@@ -91,7 +91,7 @@ Class :
         {
             if(_cancelled) return new TestResult();
 
-            _verboselogbuilder.Clear();
+            _logbuilder.Clear();
 
             var process = new Process();
             process.StartInfo.FileName = source;
@@ -101,8 +101,9 @@ Class :
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.WorkingDirectory = WorkingDirectory(source);
 
-            _verboselogbuilder.Append($"Commandline arguments used to run tests case: {process.StartInfo.Arguments}{Environment.NewLine}");
-
+            LogDebug($"Source for test case: {source}{Environment.NewLine}");
+            LogDebug($"Commandline arguments used to run tests case: {process.StartInfo.Arguments}{Environment.NewLine}");
+            LogDebug($"Run test case: {testname}{Environment.NewLine}");
             process.Start();
             _process = process;
 
@@ -121,9 +122,9 @@ Class :
             {
                 process.Kill();
                 _process = null;
-                _verboselogbuilder.Append($"Killed process. Threw away following output:{Environment.NewLine}{output.Result}{Environment.NewLine}");
+                LogVerbose($"Killed process. Threw away following output:{Environment.NewLine}{output.Result}{Environment.NewLine}");
 
-                VerboseLog = _verboselogbuilder.ToString();
+                Log = _logbuilder.ToString();
 
                 return new TestResult( new TimeSpan(0, 0, 0, 0, _settings.TestCaseTimeout)
                                      , "Testcase timed out."
@@ -133,11 +134,11 @@ Class :
             {
                 _process = null;
 
-                _verboselogbuilder.Append(output.Result);
-                VerboseLog = _verboselogbuilder.ToString();
+                LogDebug(output.Result);
+                Log = _logbuilder.ToString();
 
                 // Process testrun output (should have result from a single testcase)
-                return new Catch2Interface.TestResult(output.Result, _settings);
+                return new TestResult(output.Result, _settings);
             }
         }
 
@@ -181,5 +182,39 @@ Class :
         }
 
         #endregion // Private Methods
+
+        #region Private Logging Methods
+
+        private void LogDebug(string msg)
+        {
+            if (_settings == null
+             || _settings.LoggingLevel == LoggingLevels.Debug)
+            {
+                _logbuilder.Append(msg);
+            }
+        }
+
+        private void LogNormal(string msg)
+        {
+            if (_settings == null
+             || _settings.LoggingLevel == LoggingLevels.Normal
+             || _settings.LoggingLevel == LoggingLevels.Verbose
+             || _settings.LoggingLevel == LoggingLevels.Debug)
+            {
+                _logbuilder.Append(msg);
+            }
+        }
+
+        private void LogVerbose(string msg)
+        {
+            if (_settings == null
+             || _settings.LoggingLevel == LoggingLevels.Verbose
+             || _settings.LoggingLevel == LoggingLevels.Debug)
+            {
+                _logbuilder.Append(msg);
+            }
+        }
+
+        #endregion // Private Logging Methods
     }
 }

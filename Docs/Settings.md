@@ -214,7 +214,9 @@ The `<IncludeHidden>` option is a flag to indicate if you want to include hidden
 
 Default: normal
 
-The `<Logging>` option has three settings, `quiet`, `normal`, and `verbose`. The `verbose` setting is mostly useful for debugging purposes. The `normal` setting provides minimal output and basically serves as a way to make sure the **Test Adapter for Catch2** is being called by the test platform. The `quiet` option is there for people that do not want to see any output from the **Test Adapter for Catch2**.
+The `<Logging>` option has four settings, `quiet`, `normal`, `verbose`, and `debug`. The `debug` setting is mostly useful for development purposes. The `verbose` setting is  useful as a sanity check and for basic debugging purposes. The `normal` setting provides minimal output and basically serves as a way to make sure the **Test Adapter for Catch2** is being called by the test platform. The `quiet` option is there for people that do not want to see any output from the **Test Adapter for Catch2**.
+
+**Note: The `debug` level setting is not available in v1.0.0. In v1.0.0 the `verbose` level is similar to the `debug` level.**
 
 ## StackTraceFormat
 

@@ -417,6 +417,29 @@ namespace UT_Catch2Interface
         }
 
         [TestMethod]
+        public void TestExtractLoggingOnly_Debug()
+        {
+            var xml = new XmlDocument();
+            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_Logging_Debug));
+            reader.Read();
+            var settings = Settings.Extract(xml.ReadNode(reader));
+
+            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+
+            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
+            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
+            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
+            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
+            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
+            Assert.AreEqual(LoggingLevels.Debug, settings.LoggingLevel);
+            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsTrue(settings.UseXmlDiscovery);
+            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+        }
+
+        [TestMethod]
         public void TestExtractStacktraceFormatOnly_Filename()
         {
             var xml = new XmlDocument();

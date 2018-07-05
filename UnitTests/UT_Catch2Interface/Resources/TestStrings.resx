@@ -283,6 +283,11 @@ cerr 02
   &lt;IncludeHidden&gt;true&lt;/IncludeHidden&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
+  <data name="XmlSettings_Logging_Debug" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;Logging&gt;Debug&lt;/Logging&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
   <data name="XmlSettings_Logging_Normal" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
   &lt;Logging&gt;Normal&lt;/Logging&gt;

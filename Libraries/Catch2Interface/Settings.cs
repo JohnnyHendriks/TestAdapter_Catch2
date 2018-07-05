@@ -25,7 +25,8 @@ Enum :
     {
         Quiet,
         Normal,
-        Verbose
+        Verbose,
+        Debug
     }
 
 /*YAML
@@ -74,6 +75,7 @@ Class :
         static readonly Regex _rgxTestNamesOnly = new Regex(@"^(--list-test-names-only)( .*)?$", RegexOptions.Singleline);
         static readonly Regex _rgxValidDiscover = new Regex(@"^(--[a-zA-Z]|-[a-zA-Z])", RegexOptions.Singleline);
 
+        static readonly Regex _rgxLogLevel_Debug = new Regex(@"^(?i:debug)$", RegexOptions.Singleline);
         static readonly Regex _rgxLogLevel_Normal = new Regex(@"^(?i:normal)$", RegexOptions.Singleline);
         static readonly Regex _rgxLogLevel_Quiet = new Regex(@"^(?i:quiet)$", RegexOptions.Singleline);
         static readonly Regex _rgxLogLevel_Verbose = new Regex(@"^(?i:verbose)$", RegexOptions.Singleline);
@@ -224,19 +226,24 @@ Class :
 
         private static LoggingLevels ConvertToLoggingLevel(string level)
         {
-            if( _rgxLogLevel_Normal.IsMatch(level) )
-            {
-                return LoggingLevels.Normal;
-            }
-
             if( _rgxLogLevel_Quiet.IsMatch(level) )
             {
                 return LoggingLevels.Quiet;
             }
 
+            if( _rgxLogLevel_Normal.IsMatch(level) )
+            {
+                return LoggingLevels.Normal;
+            }
+
             if( _rgxLogLevel_Verbose.IsMatch(level) )
             {
                 return LoggingLevels.Verbose;
+            }
+
+            if( _rgxLogLevel_Debug.IsMatch(level) )
+            {
+                return LoggingLevels.Debug;
             }
 
             return LoggingLevels.Normal;

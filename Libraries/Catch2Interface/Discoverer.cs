@@ -30,7 +30,7 @@ Class :
     {
         #region Fields
 
-        private StringBuilder _verboselogbuilder = new StringBuilder();
+        private StringBuilder _logbuilder = new StringBuilder();
         private Settings      _settings;
         private Regex         _rgx_filter;
 
@@ -42,7 +42,7 @@ Class :
 
         #region Properties
 
-        public string VerboseLog { get; private set; } = string.Empty;
+        public string Log { get; private set; } = string.Empty;
 
         #endregion // Properties
 
@@ -60,34 +60,39 @@ Class :
 
         public List<TestCase> GetTests(IEnumerable<string> sources)
         {
-            _verboselogbuilder.Clear();
+            _logbuilder.Clear();
 
             var tests = new List<TestCase>();
 
             // Make sure the discovery commandline to be used is valid
             if( _settings.Disabled || !_settings.HasValidDiscoveryCommandline )
             {
+                LogDebug("Test adapter disabled or invalid discovery commandline, should not be able to get here via Test Explorer");
                 return tests;
             }
 
             // Retrieve test cases for each provided source
             foreach (var source in sources)
             {
-                _verboselogbuilder.Append($"Source: {source}");
-                if (CheckSource(source))
+                LogVerbose($"Source: {source}{Environment.NewLine}");
+                if (!File.Exists(source))
+                {
+                    LogVerbose($"  File not found.{Environment.NewLine}");
+                }
+                else if (CheckSource(source))
                 {
                     var foundtests = ExtractTestCases(source);
-                    _verboselogbuilder.Append($"  Testcase count: {foundtests.Count}{Environment.NewLine}");
+                    LogVerbose($"  Testcase count: {foundtests.Count}{Environment.NewLine}");
                     tests.AddRange(foundtests);
-                    _verboselogbuilder.Append($"  Accumulated Testcase count: {tests.Count}{Environment.NewLine}");
                 }
                 else
                 {
-                    _verboselogbuilder.Append($"  Source is invalid.");
+                    LogVerbose($"  Invalid source.{Environment.NewLine}");
                 }
+                LogDebug($"  Accumulated Testcase count: {tests.Count}{Environment.NewLine}");
             }
 
-            VerboseLog = _verboselogbuilder.ToString();
+            Log = _logbuilder.ToString();
 
             return tests;
         }
@@ -102,13 +107,13 @@ Class :
             {
                 var name = Path.GetFileNameWithoutExtension(source);
 
-                _verboselogbuilder.Append($"CheckSource name: {name}{Environment.NewLine}");
+                LogDebug($"CheckSource name: {name}{Environment.NewLine}");
 
                 return _rgx_filter.IsMatch(name) && File.Exists(source);
             }
             catch(Exception e)
             {
-                _verboselogbuilder.Append($"CheckSource Exception: {e.Message}{Environment.NewLine}");
+                LogDebug($"CheckSource Exception: {e.Message}{Environment.NewLine}");
             }
 
             return false;
@@ -119,12 +124,12 @@ Class :
             var output = GetTestCaseInfo(source);
             if(_settings.UseXmlDiscovery)
             {
-                _verboselogbuilder.Append($"  XML Discovery:{Environment.NewLine}{output}");
+                LogDebug($"  XML Discovery:{Environment.NewLine}{output}");
                 return ProcessXmlOutput(output, source);
             }
             else
             {
-                _verboselogbuilder.Append($"  Default Discovery:{Environment.NewLine}{output}");
+                LogDebug($"  Default Discovery:{Environment.NewLine}{output}");
                 return ProcessDefaultOutput(output, source);
             }
         }
@@ -154,7 +159,7 @@ Class :
             if( !process.HasExited )
             {
                 process.Kill();
-                _verboselogbuilder.Append($"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
+                _logbuilder.Append($"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
                 return string.Empty;
             }
             else
@@ -294,5 +299,40 @@ Class :
         }
 
         #endregion // Private Methods
+
+        #region Private Logging Methods
+
+        private void LogDebug(string msg)
+        {
+            if (_settings == null
+             || _settings.LoggingLevel == LoggingLevels.Debug)
+            {
+                _logbuilder.Append(msg);
+            }
+        }
+
+        private void LogNormal(string msg)
+        {
+            if (_settings == null
+             || _settings.LoggingLevel == LoggingLevels.Normal
+             || _settings.LoggingLevel == LoggingLevels.Verbose
+             || _settings.LoggingLevel == LoggingLevels.Debug)
+            {
+                _logbuilder.Append(msg);
+            }
+        }
+
+        private void LogVerbose(string msg)
+        {
+            if (_settings == null
+             || _settings.LoggingLevel == LoggingLevels.Verbose
+             || _settings.LoggingLevel == LoggingLevels.Debug)
+            {
+                _logbuilder.Append(msg);
+            }
+        }
+
+        #endregion // Private Logging Methods
+
     }
 }

@@ -229,7 +229,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\..\ReferenceTests\_unittest64\Release\Catch_Dummy.exe";
+                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Dummy.exe";
                 return Path.GetFullPath(path);
             }
         }
@@ -238,7 +238,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\..\ReferenceTests\_unittest64\Release\Catch_NoExist.exe";
+                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_NoExist.exe";
                 return Path.GetFullPath(path);
             }
         }
@@ -248,7 +248,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\..\ReferenceTests\_unittest64\Release\Catch_Testset01.exe";
+                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Testset01.exe";
                 return Path.GetFullPath(path);
             }
         }
@@ -257,7 +257,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\..\ReferenceTests\_unittest64\Release\Catch_Testset02.exe";
+                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Testset02.exe";
                 return Path.GetFullPath(path);
             }
         }
@@ -266,7 +266,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\..\ReferenceTests\_unittest64\Release\Catch_Testset03.exe";
+                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Testset03.exe";
                 return Path.GetFullPath(path);
             }
         }

@@ -136,8 +136,11 @@ namespace Catch2TestAdapter
 
             var testcases = discoverer.GetTests(sources);
 
-            LogVerbose(TestMessageLevel.Informational, discoverer.VerboseLog);
-            LogVerbose(TestMessageLevel.Informational, "Testcase count: " + testcases.Count.ToString());
+            if (discoverer.Log != null && discoverer.Log != string.Empty)
+            {
+                LogNormal(TestMessageLevel.Informational, $"Discover log:{Environment.NewLine}{discoverer.Log}");
+            }
+            LogDebug(TestMessageLevel.Informational, $"Testcase count: {testcases.Count}");
 
             foreach (var testcase in testcases)
             {
@@ -163,10 +166,10 @@ namespace Catch2TestAdapter
 
         private TestResult RunTest(TestCase test)
         {
-            LogVerbose(TestMessageLevel.Informational, $"RunTest: {test.FullyQualifiedName}");
-            LogVerbose(TestMessageLevel.Informational, $"Source: {test.Source}");
-            LogVerbose(TestMessageLevel.Informational, $"SolutionDirectory: {_runContext.SolutionDirectory}");
-            LogVerbose(TestMessageLevel.Informational, $"TestRunDirectory: {_runContext.TestRunDirectory}");
+            LogVerbose(TestMessageLevel.Informational, $"Run test: {test.FullyQualifiedName}");
+            LogDebug(TestMessageLevel.Informational, $"Source: {test.Source}");
+            LogDebug(TestMessageLevel.Informational, $"SolutionDirectory: {_runContext.SolutionDirectory}");
+            LogDebug(TestMessageLevel.Informational, $"TestRunDirectory: {_runContext.TestRunDirectory}");
 
             TestResult result = new TestResult(test);
 
@@ -179,6 +182,7 @@ namespace Catch2TestAdapter
             // Run test
             if (_runContext.IsBeingDebugged)
             {
+                LogVerbose(TestMessageLevel.Informational, "Start debug run.");
                 _frameworkHandle
                     .LaunchProcessWithDebuggerAttached( test.Source
                                                       , null
@@ -191,12 +195,16 @@ namespace Catch2TestAdapter
             else
             {
                 var testresult = _executor.Run(test.DisplayName, test.Source);
+                
+                if(_executor.Log != null && _executor.Log != string.Empty)
+                {
+                    LogNormal(TestMessageLevel.Informational, $"Executor log:{Environment.NewLine}{_executor.Log}");
+                }
 
                 // Process test results
                 if( testresult.TimedOut )
                 {
-                    LogVerbose(TestMessageLevel.Warning, _executor.VerboseLog);
-
+                    LogVerbose(TestMessageLevel.Warning, "Time out");
                     result.Outcome = TestOutcome.Skipped;
                     result.ErrorMessage = testresult.ErrorMessage;
                     result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, testresult.StandardOut));
@@ -208,8 +216,6 @@ namespace Catch2TestAdapter
                 }
                 else
                 {
-                    LogVerbose(TestMessageLevel.Informational, _executor.VerboseLog);
-
                     result.Outcome = testresult.Success ? TestOutcome.Passed : TestOutcome.Failed;
                     result.Duration = testresult.Duration;
                     result.ErrorMessage = testresult.ErrorMessage;
@@ -227,7 +233,7 @@ namespace Catch2TestAdapter
                 }
             }
 
-            LogVerbose(TestMessageLevel.Informational, $"RunTest Finished: {test.FullyQualifiedName}");
+            LogVerbose(TestMessageLevel.Informational, $"Finished test: {test.FullyQualifiedName}");
 
             return result;
         }
@@ -258,13 +264,25 @@ namespace Catch2TestAdapter
 
     #region Private Logging Methods
 
+        private void LogDebug(TestMessageLevel level, string msg)
+        {
+            if (_frameworkHandle == null) return;
+
+            if (_settings == null
+             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
+            {
+                _frameworkHandle.SendMessage(level, msg);
+            }
+        }
+
         private void LogNormal(TestMessageLevel level, string msg)
         {
             if(_frameworkHandle == null) return;
 
             if( _settings == null
              || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Normal
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose )
+             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
+             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
             {
                 _frameworkHandle.SendMessage(level, msg);
             }
@@ -275,7 +293,8 @@ namespace Catch2TestAdapter
             if(_frameworkHandle == null) return;
 
             if( _settings == null
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose )
+             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
+             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
             {
                 _frameworkHandle.SendMessage(level, msg);
             }

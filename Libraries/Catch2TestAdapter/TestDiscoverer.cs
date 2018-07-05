@@ -14,6 +14,7 @@ Notes: None
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
+using System;
 using System.Collections.Generic;
 
 namespace Catch2TestAdapter
@@ -22,7 +23,7 @@ namespace Catch2TestAdapter
     [FileExtension(".exe")]
     public class TestDiscoverer : ITestDiscoverer
     {
-    #region Fields
+        #region Fields
 
         private IDiscoveryContext      _discoveryContext = null;
         private ITestCaseDiscoverySink _discoverySink = null;
@@ -30,9 +31,9 @@ namespace Catch2TestAdapter
 
         private Catch2Interface.Settings _settings = null;
 
-    #endregion // Fields
+        #endregion // Fields
 
-    #region ITestDiscoverer
+        #region ITestDiscoverer
 
         public void DiscoverTests(IEnumerable<string> sources, IDiscoveryContext discoveryContext, IMessageLogger logger, ITestCaseDiscoverySink discoverySink)
         {
@@ -57,7 +58,7 @@ namespace Catch2TestAdapter
             // Check Catch2Adapter Settings
             if(!_settings.HasValidDiscoveryCommandline)
             {
-                LogVerbose(TestMessageLevel.Error, "Discover Commandline: " + _settings.DiscoverCommandLine);
+                LogDebug(TestMessageLevel.Error, "Discover Commandline: " + _settings.DiscoverCommandLine);
                 LogNormal(TestMessageLevel.Error, Resources.ErrorStrings.SettingsInvalidDiscoveryCommandline);
                 return;
             }
@@ -76,32 +77,28 @@ namespace Catch2TestAdapter
             LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.FinishedDiscovery);
         }
 
-    #endregion // ITestDiscoverer
+        #endregion // ITestDiscoverer
 
-    #region Private Methods
+        #region Private Methods
 
         private void DiscoverTests(IEnumerable<string> sources)
         {
             var discoverer = new Catch2Interface.Discoverer(_settings);
 
-            if(_settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose)
+            var testcases = discoverer.GetTests(sources);
+            if(discoverer.Log != null && discoverer.Log != string.Empty)
             {
-                foreach( var source in sources )
-                {
-                    LogVerbose(TestMessageLevel.Informational, source);
-                }
+                LogNormal(TestMessageLevel.Informational, $"Discover log:{Environment.NewLine}{discoverer.Log}");
             }
 
-            var testcases = discoverer.GetTests(sources);
-            LogVerbose(TestMessageLevel.Informational, discoverer.VerboseLog);
-            LogVerbose(TestMessageLevel.Informational, "Testcase count: " + testcases.Count.ToString());
-
             // Add testcases to discovery sink
+            LogDebug(TestMessageLevel.Informational, "Start adding test cases to discovery sink");
             foreach(var testcase in testcases)
             {
                 _discoverySink.SendTestCase(SharedUtils.ConvertTestcase(testcase));
-                LogVerbose(TestMessageLevel.Informational, testcase.Name);
+                LogDebug(TestMessageLevel.Informational, $"  {testcase.Name}");
             }
+            LogDebug(TestMessageLevel.Informational, "Finished adding test cases to discovery sink");
         }
 
         private bool UpdateSettings()
@@ -113,9 +110,20 @@ namespace Catch2TestAdapter
             return _settings != null;
         }
 
-    #endregion // Private Methods
+        #endregion // Private Methods
 
-    #region Private Logging Methods
+        #region Private Logging Methods
+
+        private void LogDebug(TestMessageLevel level, string msg)
+        {
+            if (_logger == null) return;
+
+            if (_settings == null
+             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug)
+            {
+                _logger.SendMessage(level, msg);
+            }
+        }
 
         void LogNormal(TestMessageLevel level, string msg)
         {
@@ -123,7 +131,8 @@ namespace Catch2TestAdapter
 
             if( _settings == null
              || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Normal 
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose )
+             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
+             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug)
             {
                 _logger.SendMessage(level, msg);
             }
@@ -134,13 +143,14 @@ namespace Catch2TestAdapter
             if(_logger == null) return;
 
             if( _settings == null
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose )
+             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
+             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
             {
                 _logger.SendMessage(level, msg);
             }
         }
 
-    #endregion // Private Logging Methods
+        #endregion // Private Logging Methods
 
     }
 }
