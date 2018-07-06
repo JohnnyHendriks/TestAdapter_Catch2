@@ -44,8 +44,16 @@ int main(int argc, char* argv[])
 
     if(doDiscover)
     {
-        Discover(session);
-        return 0;
+        try
+        {
+            Discover(session);
+            return 0;
+        }
+        catch( std::exception& ex )
+        {
+            Catch::cerr() << ex.what() << std::endl;
+            return Catch::MaxExitCode;
+        }
     }
 
     return session.run();

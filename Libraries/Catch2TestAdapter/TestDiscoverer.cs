@@ -63,7 +63,7 @@ namespace Catch2TestAdapter
                 return;
             }
 
-            if (_settings.FilenameFilter == string.Empty)
+            if (string.IsNullOrEmpty(_settings.FilenameFilter))
             {
                 LogNormal(TestMessageLevel.Error, Resources.ErrorStrings.SettingsEmptyFilenameFilter);
                 return;
@@ -86,7 +86,7 @@ namespace Catch2TestAdapter
             var discoverer = new Catch2Interface.Discoverer(_settings);
 
             var testcases = discoverer.GetTests(sources);
-            if(discoverer.Log != null && discoverer.Log != string.Empty)
+            if(!string.IsNullOrEmpty(discoverer.Log))
             {
                 LogNormal(TestMessageLevel.Informational, $"Discover log:{Environment.NewLine}{discoverer.Log}");
             }

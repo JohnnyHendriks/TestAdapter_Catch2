@@ -133,10 +133,9 @@ namespace Catch2TestAdapter
 
             var discoverer = new Catch2Interface.Discoverer(_settings);
 
-
             var testcases = discoverer.GetTests(sources);
 
-            if (discoverer.Log != null && discoverer.Log != string.Empty)
+            if (!string.IsNullOrEmpty(discoverer.Log))
             {
                 LogNormal(TestMessageLevel.Informational, $"Discover log:{Environment.NewLine}{discoverer.Log}");
             }
@@ -196,7 +195,7 @@ namespace Catch2TestAdapter
             {
                 var testresult = _executor.Run(test.DisplayName, test.Source);
                 
-                if(_executor.Log != null && _executor.Log != string.Empty)
+                if(!string.IsNullOrEmpty(_executor.Log))
                 {
                     LogNormal(TestMessageLevel.Informational, $"Executor log:{Environment.NewLine}{_executor.Log}");
                 }

@@ -142,10 +142,12 @@ Class :
             process.StartInfo.Arguments = _settings.DiscoverCommandLine;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
             process.StartInfo.UseShellExecute = false;
             process.Start();
 
             var output = process.StandardOutput.ReadToEndAsync();
+            var erroroutput = process.StandardError.ReadToEndAsync();
 
             if(_settings.DiscoverTimeout > 0)
             {
@@ -159,13 +161,27 @@ Class :
             if( !process.HasExited )
             {
                 process.Kill();
-                _logbuilder.Append($"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
+                LogVerbose($"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
                 return string.Empty;
             }
             else
             {
-                // Extract tests
-                return output.Result;
+                if(!string.IsNullOrEmpty(erroroutput.Result))
+                {
+                    LogNormal($"  Error Occured (exit code {process.ExitCode}):{Environment.NewLine}{erroroutput.Result}");
+                    LogDebug($"  output:{Environment.NewLine}{output.Result}");
+                    return string.Empty;
+                }
+
+                if (!string.IsNullOrEmpty(output.Result))
+                {
+                    return output.Result;
+                }
+                else
+                {
+                    LogDebug($"  No output{Environment.NewLine}");
+                    return string.Empty;
+                }
             }
         }
 

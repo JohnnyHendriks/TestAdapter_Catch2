@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Catch_Testset03", "MSBuild\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Catch_Dummy", "MSBuild\Projects\Catch_Dummy\Catch_Dummy.vcxproj", "{EA4A2711-386D-4A1B-9234-CBFFE3D23307}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Catch_Testset04", "MSBuild\Projects\Catch_Testset04\Catch_Testset04.vcxproj", "{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{EA4A2711-386D-4A1B-9234-CBFFE3D23307}.Release|x64.Build.0 = Release|x64
 		{EA4A2711-386D-4A1B-9234-CBFFE3D23307}.Release|x86.ActiveCfg = Release|Win32
 		{EA4A2711-386D-4A1B-9234-CBFFE3D23307}.Release|x86.Build.0 = Release|Win32
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Debug|x64.ActiveCfg = Debug|x64
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Debug|x64.Build.0 = Debug|x64
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Debug|x86.ActiveCfg = Debug|Win32
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Debug|x86.Build.0 = Debug|Win32
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Release|x64.ActiveCfg = Release|x64
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Release|x64.Build.0 = Release|x64
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Release|x86.ActiveCfg = Release|Win32
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -131,8 +131,16 @@ int main(int argc, char* argv[])
     // Check if custom discovery needs to be performed
     if(doDiscover)
     {
-        Discover(session);
-        return 0;
+        try
+        {
+            Discover(session);
+            return 0;
+        }
+        catch( std::exception& ex )
+        {
+            Catch::cerr() << ex.what() << std::endl;
+            return Catch::MaxExitCode;
+        }
     }
 
     // Let Catch2 do its thing

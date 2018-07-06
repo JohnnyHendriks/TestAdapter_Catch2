@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catch2TestAdapter", "Librar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSTestAdapterCatch2", "VSIX\VSTestAdapterCatch2\VSTestAdapterCatch2.csproj", "{289EE75E-CBB6-4179-B61C-8EED1554CFF7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Catch_Testset04", "ReferenceTests\MSBuild\Projects\Catch_Testset04\Catch_Testset04.vcxproj", "{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,16 @@ Global
 		{289EE75E-CBB6-4179-B61C-8EED1554CFF7}.Release|x64.Build.0 = Release|Any CPU
 		{289EE75E-CBB6-4179-B61C-8EED1554CFF7}.Release|x86.ActiveCfg = Release|Any CPU
 		{289EE75E-CBB6-4179-B61C-8EED1554CFF7}.Release|x86.Build.0 = Release|Any CPU
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Debug|x64.ActiveCfg = Debug|x64
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Debug|x64.Build.0 = Debug|x64
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Debug|x86.ActiveCfg = Debug|Win32
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Debug|x86.Build.0 = Debug|Win32
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Release|Any CPU.ActiveCfg = Release|Win32
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Release|x64.ActiveCfg = Release|x64
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Release|x64.Build.0 = Release|x64
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Release|x86.ActiveCfg = Release|Win32
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,6 +150,7 @@ Global
 		{080FBAE5-1808-4022-A1AF-14F43D8E6030} = {B4A54678-F45D-4252-8CDF-9D549E42797A}
 		{30A41C70-7668-40F7-9DC3-1870F440ABB1} = {B4A54678-F45D-4252-8CDF-9D549E42797A}
 		{289EE75E-CBB6-4179-B61C-8EED1554CFF7} = {D2773C29-88F8-4B67-9874-4534A47A9D74}
+		{6F30DB9F-419F-4EAC-AAFC-17C97C94DA9A} = {C04B9095-2EFB-4974-88A7-D3DC051C98BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA93387E-2359-4A31-9AE3-693830AEC329}

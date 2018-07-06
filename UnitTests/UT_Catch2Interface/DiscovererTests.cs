@@ -132,6 +132,23 @@ namespace UT_Catch2Interface
         }
 
         [TestMethod]
+        public void TestGetTestsDuplicateTestname()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--list-tests";
+            settings.FilenameFilter = ".*";
+            settings.IncludeHidden = false;
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Testset04 };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(0, tests.Count);
+            Assert.IsFalse(string.IsNullOrEmpty(discoverer.Log));
+            Assert.IsTrue(discoverer.Log.Contains("Error Occured"));
+        }
+
+        [TestMethod]
         public void TestGetTestsXml()
         {
             var settings = new Settings();
@@ -220,6 +237,16 @@ namespace UT_Catch2Interface
             get
             {
                 string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Testset02.exe";
+                return Path.GetFullPath(path);
+            }
+        }
+
+        // Contains duplicate name
+        private string Path_Testset04
+        {
+            get
+            {
+                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Testset04.exe";
                 return Path.GetFullPath(path);
             }
         }

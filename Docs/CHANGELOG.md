@@ -10,4 +10,4 @@
 ### Extended Features
 
  - Added `Debug` level option to `<Logging>` setting and updated what is logged in the `Verbose` level.
- 
+ - Improve error handling, specifically when a duplicate testname is used, the potential resulting error is logged. 
