@@ -64,17 +64,20 @@ Class :
                         case Constants.NodeName_Expression:
                             Children.Add(new Expression(child));
                             break;
-                        case Constants.NodeName_Info:
-                            Children.Add(new Info(child));
-                            break;
-                        case Constants.NodeName_Section:
-                            Children.Add(new Section(child));
-                            break;
                         case Constants.NodeName_Failure:
                             Children.Add(new Failure(child));
                             break;
+                        case Constants.NodeName_FatalErrorCondition:
+                            Children.Add(new FatalErrorCondition(child));
+                            break;
+                        case Constants.NodeName_Info:
+                            Children.Add(new Info(child));
+                            break;
                         case Constants.NodeName_OverallResult:
                             OverallResult = new OverallResult(child);
+                            break;
+                        case Constants.NodeName_Section:
+                            Children.Add(new Section(child));
                             break;
                         case Constants.NodeName_Warning:
                             Children.Add(new Warning(child));

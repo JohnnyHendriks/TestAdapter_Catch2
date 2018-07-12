@@ -161,6 +161,27 @@ Class :
             ResetInfo();
         }
 
+        private void AppendFatalErrorCondition(Reporter.FatalErrorCondition fatal)
+        {
+            AppendToStackTrace(fatal.Filename, fatal.Line);
+            _msgbuilder.Append(fatal.GenerateFailureInfo());
+            if (_infobuilder.Length > 0)
+            {
+                if (_infocount > 1)
+                {
+                    _msgbuilder.Append($"with additional messages:{Environment.NewLine}");
+                }
+                else
+                {
+                    _msgbuilder.Append($"with additional message:{Environment.NewLine}");
+                }
+                _msgbuilder.Append(_infobuilder.ToString());
+            }
+            _msgbuilder.AppendLine();
+
+            ResetInfo();
+        }
+
         private void AppendSection(Reporter.Section section)
         {
             _msgbuilder.Append($"Start Section: {section.Name}{Environment.NewLine}");
@@ -170,9 +191,6 @@ Class :
             {
                 switch( child )
                 {
-                    case Reporter.Info info:
-                        AppendInfo(info.Message);
-                        break;
                     case Reporter.Exception exception:
                         AppendException(exception);
                         break;
@@ -182,8 +200,14 @@ Class :
                     case Reporter.Failure failure:
                         AppendFailure(failure);
                         break;
+                    case Reporter.FatalErrorCondition fatal:
+                        AppendFatalErrorCondition(fatal);
+                        break;
+                    case Reporter.Info info:
+                        AppendInfo(info.Message);
+                        break;
                     case Reporter.Section innersection:
-                        if (innersection.OverallResults.Failures > 0)
+                        if (innersection.HasFailuresOrWarnings)
                         {
                             AppendSection(innersection);
                         }
@@ -236,9 +260,6 @@ Class :
             {
                 switch( child )
                 {
-                    case Reporter.Info info:
-                        AppendInfo(info.Message);
-                        break;
                     case Reporter.Exception exception:
                         AppendException(exception);
                         break;
@@ -248,8 +269,14 @@ Class :
                     case Reporter.Failure failure:
                         AppendFailure(failure);
                         break;
+                    case Reporter.FatalErrorCondition fatal:
+                        AppendFatalErrorCondition(fatal);
+                        break;
+                    case Reporter.Info info:
+                        AppendInfo(info.Message);
+                        break;
                     case Reporter.Section section:
-                        if (section.OverallResults.Failures > 0)
+                        if (section.HasFailuresOrWarnings)
                         {
                             AppendSection(section);
                         }
@@ -332,11 +359,21 @@ Class :
             try
             {
                 var xml = new XmlDocument();
-                xml.LoadXml(_xmloutput);
-
-                var nodeGroup = xml.SelectSingleNode("Catch/Group");
-
-                ExtractTestResult(nodeGroup);
+                // Determine the part of the xmloutput string to parse
+                // In some cases Catch2 output contains additional lines of output after the
+                // xml-output. The XmlDocument parser doesn't like this so let's make sure those
+                // extra lines are ignored.
+                var idx = _xmloutput.IndexOf(@"</Catch>"); // Find first occurance of </Catch>
+                if(idx == -1)                              // Make sure closing tag was found
+                {
+                    SetInvalidTestRunnerOutput();
+                }
+                else
+                {
+                    xml.LoadXml(_xmloutput.Substring(0,idx+8));
+                    var nodeGroup = xml.SelectSingleNode("Catch/Group");
+                    ExtractTestResult(nodeGroup);
+                }
             }
             catch
             {

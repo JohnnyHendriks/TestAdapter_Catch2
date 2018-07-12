@@ -43,6 +43,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Discoverer.cs" />
     <Compile Include="Executor.cs" />
+    <Compile Include="Reporter\FatalErrorCondition.cs" />
     <Compile Include="Reporter\Exception.cs" />
     <Compile Include="Reporter\Expression.cs" />
     <Compile Include="Reporter\Warning.cs" />

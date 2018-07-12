@@ -30,6 +30,7 @@ Class :
         public const string NodeName_Exception = "Exception";
         public const string NodeName_Expression = "Expression";
         public const string NodeName_Failure = "Failure";
+        public const string NodeName_FatalErrorCondition = "FatalErrorCondition";
         public const string NodeName_Info = "Info";
         public const string NodeName_OverallResult = "OverallResult";
         public const string NodeName_OverallResults = "OverallResults";

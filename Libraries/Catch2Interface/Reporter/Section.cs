@@ -31,6 +31,33 @@ Class :
         public string         Name { get; set; }
         public OverallResults OverallResults { get; set; }
 
+        public bool HasFailuresOrWarnings
+        {
+            get
+            {
+                // Check for failures
+                if( OverallResults == null ) return false;
+                if( OverallResults.Failures > 0) return true;
+
+                // Check for warnings
+                foreach(var child in Children)
+                {
+                    switch(child)
+                    {
+                        case Section section:
+                            if(section.HasFailuresOrWarnings) return true;
+                            break;
+                        case Warning warning:
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+
+                return false;
+            }
+        }
+
         #endregion // Properties
 
         #region Constructor
@@ -59,17 +86,23 @@ Class :
                         case Constants.NodeName_Expression:
                             Children.Add(new Expression(child));
                             break;
+                        case Constants.NodeName_Failure:
+                            Children.Add(new Failure(child));
+                            break;
+                        case Constants.NodeName_FatalErrorCondition:
+                            Children.Add(new FatalErrorCondition(child));
+                            break;
                         case Constants.NodeName_Info:
                             Children.Add(new Info(child));
+                            break;
+                        case Constants.NodeName_OverallResults:
+                            OverallResults = new OverallResults(child);
                             break;
                         case Constants.NodeName_Section:
                             Children.Add(new Section(child));
                             break;
-                        case Constants.NodeName_Failure:
-                            Children.Add(new Failure(child));
-                            break;
-                        case Constants.NodeName_OverallResults:
-                            OverallResults = new OverallResults(child);
+                        case Constants.NodeName_Warning:
+                            Children.Add(new Warning(child));
                             break;
                         default:
                             break;

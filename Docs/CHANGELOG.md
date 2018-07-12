@@ -10,4 +10,10 @@
 ### Extended Features
 
  - Added `Debug` level option to `<Logging>` setting and updated what is logged in the `Verbose` level.
- - Improve error handling, specifically when a duplicate testname is used, the potential resulting error is logged. 
+ - Improve error handling, specifically when a duplicate testname is used, the potential resulting error is logged.
+ - Add support for reporting Fatal Error Conditions
+
+ ### Bug fixes
+
+ - Bug: Warnings in Sections are not displayed when there are no failures. Fixed.
+ - Bug: Get invalid test runner output error when Catch2 xml output produces additional text after xml report. Additional text is now ignored.

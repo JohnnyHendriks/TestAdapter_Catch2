@@ -69,7 +69,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestStrings_Executor.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\TestStrings_TestResult.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestStrings_TestResult.resx</DependentUpon>
+    </Compile>
     <Compile Include="SettingsTests.cs" />
+    <Compile Include="TestResultTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -82,6 +88,10 @@
     <EmbeddedResource Include="Resources\TestStrings_Executor.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TestStrings_Executor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\TestStrings_TestResult.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestStrings_TestResult.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
