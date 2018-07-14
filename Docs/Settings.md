@@ -3,7 +3,7 @@
 In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitely by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
 
 - [`<Catch2Adapter>`](#catch2adapter)
-- [`<DebugBreak>`](#debugbreak) (_not available in v1.0.0_)
+- [`<DebugBreak>`](#debugbreak) (_introduced in v1.1.0_)
 - [`<DiscoverCommandLine>`](#discovercommandline)*
 - [`<DiscoverTimeout>`](#discovertimeout)
 - [`<FilenameFilter>`](#filenamefilter)*
@@ -24,6 +24,7 @@ The following _.runsettings_ file examples only contains settings specific to th
 
     <!-- Adapter Specific sections -->
     <Catch2Adapter>
+        <DebugBreak>on</DebugBreak><!-- Introduced in v1.1.0 -->
         <DiscoverCommandLine>--list-tests *</DiscoverCommandLine>
         <DiscoverTimeout>500</DiscoverTimeout><!-- Milliseconds -->
         <FilenameFilter>^Catch_</FilenameFilter><!-- Regex filter -->
@@ -38,7 +39,7 @@ The following _.runsettings_ file examples only contains settings specific to th
 </RunSettings>
  ```
 
- To have the **Test Adapter for Catch2** discover tests, at least the following settings need to be required. Essentially, this is an example of a minimalistic _.runsettings_ file.
+ To have the **Test Adapter for Catch2** discover tests, at least the following settings need to be provided. Essentially, this is an example of a minimalistic _.runsettings_ file.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -83,7 +84,7 @@ Minimalistic example to disable the **Test Adapter for Catch2** via the _.runset
 </RunSettings>
  ```
 
-**Note: `disabled` attribute is not available in v1.0.0.**
+**Note: `disabled` attribute was introduced in v1.1.0.**
 
 ## DebugBreak
 
@@ -91,7 +92,7 @@ Default: off
 
 With the `<DebugBreak>` option you can turn on or off the break on test failure feature of Catch2 (_i.e._, use the Catch2 command line option`--break`). Valid values for this option are, `on` and `off`. This setting is only considered when a test is started via `Debug Selected Tests` in the Test Explorer.
 
-**Note: This setting is not available in v1.0.0.**
+**Note: This setting was introduced in v1.1.0.**
 
 ## DiscoverCommandLine
 
@@ -193,6 +194,20 @@ void Discover(Catch::Session& session)
 }
 ```
 
+This is an example of a minimal _.runsettings_ file for using this custom discovery algorithm.
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+
+    <!-- Adapter Specific sections -->
+    <Catch2Adapter disabled="false">
+        <DiscoverCommandLine>--discover *</DiscoverCommandLine>
+        <FilenameFilter>.*</FilenameFilter><!-- Regex filter -->
+    </Catch2Adapter>
+
+</RunSettings>
+ ```
+
 ## DiscoverTimeout
 
 Default: 500 ms
@@ -224,7 +239,7 @@ Default: normal
 
 The `<Logging>` option has four settings, `quiet`, `normal`, `verbose`, and `debug`. The `debug` setting is mostly useful for development purposes. The `verbose` setting is  useful as a sanity check and for basic debugging purposes. The `normal` setting provides minimal output and basically serves as a way to make sure the **Test Adapter for Catch2** is being called by the test platform. The `quiet` option is there for people that do not want to see any output from the **Test Adapter for Catch2**.
 
-**Note: The `debug` level setting is not available in v1.0.0. In v1.0.0 the `verbose` level is similar to the `debug` level.**
+**Note: The `debug` level setting was introduced in v1.1.0. In v1.0.0 the `verbose` level is similar to the `debug` level.**
 
 ## StackTraceFormat
 

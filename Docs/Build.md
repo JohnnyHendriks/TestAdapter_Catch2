@@ -4,7 +4,7 @@ The easiest way to build the **Test Adapter for Catch2** yourself is to open the
 
 ## Creating a signed vsix-file
 
-If you need the generated assembly (vsix-file) to be digitally signed you need to add a key-file, named "key.snk" in the root of the 'VSTestAdapterCatch2'-project folder. When you then reload the project this key-file will be used to sign the assembly.
+If you need the generated assembly (vsix-file) to be digitally signed you need to add a key-file, named "key.snk" in the root of the 'VSTestAdapterCatch2'-project folder. When you then reload the project this key-file will be used to sign the assembly. The same is set up for the 'Catch2Interface' and 'Catch2Adapter' class-library projects, _i.e._, if a "key.snk"-file is copied to their respective project folders, the generated assemblies will be signed using the copied key-file.
 
 ## atom.xml
 

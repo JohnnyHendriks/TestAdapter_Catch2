@@ -19,6 +19,7 @@ The following is an example _.runsettings_ file that contains options specific f
 
     <!-- Adapter Specific sections -->
     <Catch2Adapter>
+        <DebugBreak>on</DebugBreak><!-- Introduced in v1.1.0 -->
         <DiscoverCommandLine>--list-tests *</DiscoverCommandLine>
         <DiscoverTimeout>500</DiscoverTimeout><!-- Milliseconds -->
         <FilenameFilter>^Catch_</FilenameFilter><!-- Regex filter -->
@@ -38,6 +39,7 @@ The following is an example _.runsettings_ file that contains options specific f
 For a more detailed description see the following pages:
 
 - [Capabilities](Capabilities.md)
+- [Walkthrough: using the Test Adapter for Catch2](Walkthrough.md)
 - [Settings](Settings.md)
 - [How to build the test adapter](Build.md)
 - [Known issues](Known-issues.md)

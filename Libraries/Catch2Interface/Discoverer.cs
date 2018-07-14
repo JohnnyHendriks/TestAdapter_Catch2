@@ -168,7 +168,7 @@ Class :
             {
                 if(!string.IsNullOrEmpty(erroroutput.Result))
                 {
-                    LogNormal($"  Error Occured (exit code {process.ExitCode}):{Environment.NewLine}{erroroutput.Result}");
+                    LogNormal($"  Error Occurred (exit code {process.ExitCode}):{Environment.NewLine}{erroroutput.Result}");
                     LogDebug($"  output:{Environment.NewLine}{output.Result}");
                     return string.Empty;
                 }

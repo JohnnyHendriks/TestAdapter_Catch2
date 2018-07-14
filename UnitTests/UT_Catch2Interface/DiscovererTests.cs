@@ -145,7 +145,7 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(0, tests.Count);
             Assert.IsFalse(string.IsNullOrEmpty(discoverer.Log));
-            Assert.IsTrue(discoverer.Log.Contains("Error Occured"));
+            Assert.IsTrue(discoverer.Log.Contains("Error Occurred"));
         }
 
         [TestMethod]
