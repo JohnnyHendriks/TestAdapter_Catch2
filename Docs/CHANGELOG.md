@@ -2,6 +2,12 @@
 
 Changes are relative to v1.0.0
 
+## Changes since v1.1.0
+
+### Bug fixes
+
+- Bug: CHECK_FALSE and REQUIRE_FALSE failed output expansion shows '!' in front of value results. _E.g._, "CHECK_FALSE( !true )", should be "CHECK_FALSE( true )". Fixed.
+
 ## Changes for v1.1.0
 
 ### New Features

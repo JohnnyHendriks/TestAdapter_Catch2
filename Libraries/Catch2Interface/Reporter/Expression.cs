@@ -29,7 +29,8 @@ Class :
     {
         #region Fields
 
-        private Regex _rgx_stripfalse = new Regex(@"^\!\((.*)\)$");
+        private Regex _rgx_stripfalse1 = new Regex(@"^\!\((.*)\)$");
+        private Regex _rgx_stripfalse2 = new Regex(@"^\!(.*)$");
 
         #endregion // Fields
 
@@ -147,14 +148,29 @@ Class :
                 case "CHECK_FALSE":
                 case "REQUIRE_FALSE":
                 {
-                    var match = _rgx_stripfalse.Match(expression);
-                    if( match.Groups[1].Captures.Count == 1)
+                    if(_rgx_stripfalse1.IsMatch(expression))
                     {
-                        return match.Groups[1].Captures[0].Value;
+                        var match = _rgx_stripfalse1.Match(expression);
+                        if( match.Groups[1].Captures.Count == 1)
+                        {
+                            return match.Groups[1].Captures[0].Value;
+                        }
+                        else
+                        {
+                            return expression;
+                        }
                     }
                     else
                     {
-                        return expression;
+                        var match = _rgx_stripfalse2.Match(expression);
+                        if (match.Groups[1].Captures.Count == 1)
+                        {
+                            return match.Groups[1].Captures[0].Value;
+                        }
+                        else
+                        {
+                            return expression;
+                        }
                     }
                 }
                 default:

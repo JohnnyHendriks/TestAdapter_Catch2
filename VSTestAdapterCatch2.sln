@@ -31,6 +31,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Catch_Testset04", "Referenc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Catch_NoSEH", "ReferenceTests\MSBuild\Projects\Catch_NoSEH\Catch_NoSEH.vcxproj", "{93AAED31-C6A6-4BFE-ABED-D750C575BA10}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A12ED758-A9CF-49ED-ADC8-8B09CCC59955}"
+	ProjectSection(SolutionItems) = preProject
+		VSTestAdapterCatch2.runsettings = VSTestAdapterCatch2.runsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -17,6 +17,7 @@
     <DiscoverTimeout>200</DiscoverTimeout>
     <FilenameFilter>^Catch_</FilenameFilter>
     <IncludeHidden>true</IncludeHidden>
+    <Logging>Normal</Logging>
     <TestCaseTimeout>20000</TestCaseTimeout><!-- Milliseconds -->
   </Catch2Adapter>
 
