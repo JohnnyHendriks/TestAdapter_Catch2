@@ -161,7 +161,15 @@ Class :
             if( !process.HasExited )
             {
                 process.Kill();
-                LogVerbose($"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
+                LogNormal($"  Warning: Discovery timeout for {source}{Environment.NewLine}");
+                if(output.Result.Length == 0)
+                {
+                    LogVerbose($"  Killed process. There was no output.{Environment.NewLine}");
+                }
+                else
+                {
+                    LogVerbose($"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
+                }
                 return string.Empty;
             }
             else
