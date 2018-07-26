@@ -25,7 +25,7 @@
     <FilenameFilter>^Catch_</FilenameFilter>
     <IncludeHidden>true</IncludeHidden>
     <Logging>verbose</Logging>
-    <StackTraceFormat>Filename</StackTraceFormat>
+    <StackTraceFormat>FilePath</StackTraceFormat>
     <TestCaseTimeout>20000</TestCaseTimeout><!-- Milliseconds -->
     <WorkingDirectory></WorkingDirectory>
     <WorkingDirectoryRoot>Executable</WorkingDirectoryRoot>

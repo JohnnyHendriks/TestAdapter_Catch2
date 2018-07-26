@@ -4,6 +4,10 @@ Changes are relative to v1.0.0
 
 ## Changes since v1.1.0
 
+### Extended Features
+
+- Enable stack trace links in the Test Explorer detail view. With the help of Microsoft I was able to figure out the correct string format to use for the Stacktrace info in order to turn it into a source link. As a result the `<StackTraceFormat>` option was also altered and now has the options `None`and `ShortInfo`, the latter being the default or fall-back value.
+
 ### Bug fixes
 
 - Bug: CHECK_FALSE and REQUIRE_FALSE failed output expansion shows '!' in front of value results. _E.g._, "CHECK_FALSE( !true )", should be "CHECK_FALSE( true )". Fixed.

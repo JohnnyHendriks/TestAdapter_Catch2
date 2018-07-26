@@ -96,7 +96,7 @@ Class :
 
         private void AppendException(Reporter.Exception exception)
         {
-            AppendToStackTrace(exception.Filename, exception.Line);
+            AppendToStackTrace(exception.GenerateShortFailureInfo(), exception.Filename, exception.Line);
             _msgbuilder.Append(exception.GenerateFailureInfo());
             if (_infobuilder.Length > 0)
             {
@@ -119,7 +119,7 @@ Class :
         {
             if (!expression.Success)
             {
-                AppendToStackTrace(expression.Filename, expression.Line);
+                AppendToStackTrace(expression.GenerateShortFailureInfo(), expression.Filename, expression.Line);
                 _msgbuilder.Append(expression.GenerateFailureInfo());
                 if (_infobuilder.Length > 0)
                 {
@@ -142,7 +142,7 @@ Class :
 
         private void AppendFailure(Reporter.Failure failure)
         {
-            AppendToStackTrace(failure.Filename, failure.Line);
+            AppendToStackTrace(failure.GenerateShortFailureInfo(), failure.Filename, failure.Line);
             _msgbuilder.Append(failure.GenerateFailureInfo());
             if (_infobuilder.Length > 0)
             {
@@ -163,7 +163,7 @@ Class :
 
         private void AppendFatalErrorCondition(Reporter.FatalErrorCondition fatal)
         {
-            AppendToStackTrace(fatal.Filename, fatal.Line);
+            AppendToStackTrace(fatal.GenerateShortFailureInfo(), fatal.Filename, fatal.Line);
             _msgbuilder.Append(fatal.GenerateFailureInfo());
             if (_infobuilder.Length > 0)
             {
@@ -225,18 +225,14 @@ Class :
             _msgbuilder.AppendLine();
         }
 
-        private void AppendToStackTrace(string filename, int line)
+        private void AppendToStackTrace(string description, string filename, int line)
         {
             switch(_settings.StacktraceFormat)
             {
-                case StacktraceFormats.Filename:
-                    _stacktracebuilder.Append($"{Path.GetFileName(filename)} line {line}{Environment.NewLine}");
-                    break;
                 case StacktraceFormats.None:
                     break;
-                case StacktraceFormats.FullPath:
                 default:
-                    _stacktracebuilder.Append($"{'"'}{filename}{'"'} line {line}{Environment.NewLine}");
+                    _stacktracebuilder.Append($"at {description} in {filename}:line {line}{Environment.NewLine}");
                     break;
             }
         }

@@ -62,7 +62,7 @@ Class :
         public const string S_DefaultWorkingDirectory = "";
 
         public const LoggingLevels         S_DefaultLoggingLevel = LoggingLevels.Normal;
-        public const StacktraceFormats     S_DefaultStackTraceFormat = StacktraceFormats.FullPath;
+        public const StacktraceFormats     S_DefaultStackTraceFormat = StacktraceFormats.ShortInfo;
         public const WorkingDirectoryRoots S_DefaultWorkingDirectoryRoot = WorkingDirectoryRoots.Executable;
 
         // Regex

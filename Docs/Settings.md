@@ -243,9 +243,19 @@ The `<Logging>` option has four settings, `quiet`, `normal`, `verbose`, and `deb
 
 ## StackTraceFormat
 
+### post v1.1.0
+
+Default: ShortInfo
+
+The `<StackTraceFormat>` option has two settings, `ShortInfo` and `None`. The reasoning behind this option stems from a problem getting the stack trace entry to show up as a link to the source code line where the failure occurred. Now this is fixed the setting remains in an altered form. You can still turn off creation of stack trace entries with the `None` setting. The default and fall-back value in case of an unsupported setting value is now the `ShortInfo` setting. With this setting a stack trace link is created for each failure. Here the text used for the link gives a short description of the failure. In future more setting values may be added for different formats for the link text.
+
+The string format expected by the Test Explorer is "`at {description} in {filename}:line {line}`", where the curly bracket parts are replaced by appropriate values. I have not tested if it is possible to break the link by generating an (in)appropriate failure description, but the description that is generated should typically be safe.
+
+### v1.1.0 and v1.0.0
+
 Default: FullPath
 
-The `<StackTraceFormat>` option has three settings, `FullPath`, `Filename`, and `None`. The reasoning behind this option stems from a problem getting the stack trace entry to show up as a link to the source code line where the failure occurred. Though this may be fixed in the future, the current solution is to either have a non-link stack trace entry or no entry at all. The `FullPath` setting should have resulted in it being converted to a link by the Test Explorer, which it is currently failing to do for the **Test Adapter for Catch2**. As showing the full path to the source file can be a bit unwieldy, you can also set the setting to `Filename` which shows just the filename of the source file instead of the full path. As it is of less interest to have a stack trace entry that is not a link, you can turn of stack trace entries by setting this setting to `None`. 
+The `<StackTraceFormat>` option has three settings, `FullPath`, `Filename`, and `None`. The reasoning behind this option stems from a problem getting the stack trace entry to show up as a link to the source code line where the failure occurred. Though this may be fixed in the future, the current solution is to either have a non-link stack trace entry or no entry at all. The `FullPath` setting should have resulted in it being converted to a link by the Test Explorer, which it is currently failing to do for the **Test Adapter for Catch2**. As showing the full path to the source file can be a bit unwieldy, you can also set the setting to `Filename` which shows just the filename of the source file instead of the full path. As it is of less interest to have a stack trace entry that is not a link, you can turn of stack trace entries by setting this setting to `None`.
 
 ## TestCaseTimeout
 

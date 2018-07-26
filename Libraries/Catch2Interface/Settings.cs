@@ -36,9 +36,8 @@ Enum :
 */
     public enum StacktraceFormats
     {
-        FullPath,
-        Filename,
-        None
+        None,
+        ShortInfo
     }
 
 /*YAML
@@ -80,9 +79,8 @@ Class :
         static readonly Regex _rgxLogLevel_Quiet = new Regex(@"^(?i:quiet)$", RegexOptions.Singleline);
         static readonly Regex _rgxLogLevel_Verbose = new Regex(@"^(?i:verbose)$", RegexOptions.Singleline);
 
-        static readonly Regex _rgxStackTraceFormat_FullPath = new Regex(@"^(?i:fullpath)$", RegexOptions.Singleline);
-        static readonly Regex _rgxStackTraceFormat_Filename = new Regex(@"^(?i:filename)$", RegexOptions.Singleline);
         static readonly Regex _rgxStackTraceFormat_None = new Regex(@"^(?i:none)$", RegexOptions.Singleline);
+        static readonly Regex _rgxStackTraceFormat_ShortInfo = new Regex(@"^(?i:shortinfo)$", RegexOptions.Singleline);
 
         static readonly Regex _rgxWorkingDirectoryRoot_Executable = new Regex(@"^(?i:executable)$", RegexOptions.Singleline);
         static readonly Regex _rgxWorkingDirectoryRoot_Solution = new Regex(@"^(?i:solution)$", RegexOptions.Singleline);
@@ -251,14 +249,9 @@ Class :
 
         private static StacktraceFormats ConvertToStacktraceFormat(string format)
         {
-            if (_rgxStackTraceFormat_Filename.IsMatch(format))
+            if (_rgxStackTraceFormat_ShortInfo.IsMatch(format))
             {
-                return StacktraceFormats.Filename;
-            }
-
-            if (_rgxStackTraceFormat_FullPath.IsMatch(format))
-            {
-                return StacktraceFormats.FullPath;
+                return StacktraceFormats.ShortInfo;
             }
 
             if (_rgxStackTraceFormat_None.IsMatch(format))
@@ -266,7 +259,7 @@ Class :
                 return StacktraceFormats.None;
             }
 
-            return StacktraceFormats.FullPath;
+            return StacktraceFormats.ShortInfo;
         }
 
         private static WorkingDirectoryRoots ConvertToWorkingDirectoryRoot(string root)

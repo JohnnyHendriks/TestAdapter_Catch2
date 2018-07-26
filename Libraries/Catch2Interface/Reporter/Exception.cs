@@ -71,6 +71,11 @@ Class :
             return msg.ToString();
         }
 
+        public string GenerateShortFailureInfo()
+        {
+            return $"[{Line}] Exception: {Message}";
+        }
+
         #endregion // Public Methods
     }
 }

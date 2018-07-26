@@ -137,6 +137,21 @@ Class :
             return string.Empty;
         }
 
+        public string GenerateShortFailureInfo()
+        {
+            switch( Type )
+            {
+                case "CHECK_THAT":
+                case "REQUIRE_THAT":
+                    return $"[{Line}] {Expanded} ";
+                case "CHECK_THROWS":
+                case "REQUIRE_THROWS":
+                    return $"[{Line}] No exception thrown";
+                default:
+                    return $"[{Line}] {Type}( {ProcessExpression(Expanded)} )";
+            }
+        }
+
         #endregion // Public Methods
 
         #region Private Methods
