@@ -7,6 +7,7 @@ Changes are relative to v1.0.0
 ### Extended Features
 
 - Improve error handling, specifically when a discovery timeout occurs it is now logged as a warning at logging level normal.
+- Enable stack trace links in the Test Explorer detail view. With the help of Microsoft I was able to figure out the correct string format to use for the Stacktrace info in order to turn it into a source link. As a result the `<StackTraceFormat>` option was also altered and now has the options `None`and `ShortInfo`, the latter being the default or fall-back value.
 
 ### Bug fixes
 

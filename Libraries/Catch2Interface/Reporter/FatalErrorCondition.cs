@@ -71,6 +71,11 @@ namespace Catch2Interface.Reporter
             return msg.ToString();
         }
 
+        public string GenerateShortFailureInfo()
+        {
+            return $"[{Line}] Fatal error: {Message}";
+        }
+
         #endregion // Public Methods
     }
 }
