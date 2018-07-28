@@ -4,6 +4,10 @@ Changes are relative to v1.0.0
 
 ## Changes since v1.1.0
 
+### New Features
+
+- Added `<MessageFormat>` option to configure what information is shown in the message part of the test case detail view. The default is to only show the assertion statistics for the test. It is also possible to choose to show all failure info in the message, or to not have a message at all.
+
 ### Extended Features
 
 - Improve error handling, specifically when a discovery timeout occurs it is now logged as a warning at logging level normal.

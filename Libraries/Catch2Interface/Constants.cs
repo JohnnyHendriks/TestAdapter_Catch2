@@ -35,7 +35,6 @@ Class :
         public const string NodeName_OverallResult = "OverallResult";
         public const string NodeName_OverallResults = "OverallResults";
         public const string NodeName_Section = "Section";
-        public const string NodeName_StackTraceFormat = "StackTraceFormat";
         public const string NodeName_TestCase = "TestCase";
         public const string NodeName_Warning = "Warning";
 
@@ -47,6 +46,8 @@ Class :
         public const string NodeName_FilenameFilter = "FilenameFilter";
         public const string NodeName_IncludeHidden = "IncludeHidden";
         public const string NodeName_Logging = "Logging";
+        public const string NodeName_MessageFormat = "MessageFormat";
+        public const string NodeName_StackTraceFormat = "StackTraceFormat";
         public const string NodeName_TestCaseTimeout = "TestCaseTimeout";
         public const string NodeName_WorkingDirectory = "WorkingDirectory";
         public const string NodeName_WorkingDirectoryRoot = "WorkingDirectoryRoot";
@@ -62,6 +63,7 @@ Class :
         public const string S_DefaultWorkingDirectory = "";
 
         public const LoggingLevels         S_DefaultLoggingLevel = LoggingLevels.Normal;
+        public const MessageFormats        S_DefaultMessageFormat = MessageFormats.StatsOnly;
         public const StacktraceFormats     S_DefaultStackTraceFormat = StacktraceFormats.ShortInfo;
         public const WorkingDirectoryRoots S_DefaultWorkingDirectoryRoot = WorkingDirectoryRoots.Executable;
 

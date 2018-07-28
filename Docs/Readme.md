@@ -25,7 +25,8 @@ The following is an example _.runsettings_ file that contains options specific f
         <FilenameFilter>^Catch_</FilenameFilter><!-- Regex filter -->
         <IncludeHidden>true</IncludeHidden>
         <Logging>normal</Logging>
-        <StackTraceFormat>Filename</StackTraceFormat>
+        <MessageFormat>StatsOnly</MessageFormat>
+        <StackTraceFormat>ShortInfo</StackTraceFormat>
         <TestCaseTimeout>20000</TestCaseTimeout><!-- Milliseconds -->
         <WorkingDirectory>..\TestData</WorkingDirectory>
         <WorkingDirectoryRoot>Executable</WorkingDirectoryRoot>

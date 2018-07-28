@@ -32,6 +32,18 @@ Enum :
 /*YAML
 Enum :
   Description : >
+    This enum represents the valid message format settings.
+*/
+    public enum MessageFormats
+    {
+        None,
+        StatsOnly,
+        Full
+    }
+
+/*YAML
+Enum :
+  Description : >
     This enum represents the valid stack trace format settings.
 */
     public enum StacktraceFormats
@@ -79,6 +91,10 @@ Class :
         static readonly Regex _rgxLogLevel_Quiet = new Regex(@"^(?i:quiet)$", RegexOptions.Singleline);
         static readonly Regex _rgxLogLevel_Verbose = new Regex(@"^(?i:verbose)$", RegexOptions.Singleline);
 
+        static readonly Regex _rgxMessageFormat_Full = new Regex(@"^(?i:full)$", RegexOptions.Singleline);
+        static readonly Regex _rgxMessageFormat_None = new Regex(@"^(?i:none)$", RegexOptions.Singleline);
+        static readonly Regex _rgxMessageFormat_StatsOnly = new Regex(@"^(?i:statsonly)$", RegexOptions.Singleline);
+
         static readonly Regex _rgxStackTraceFormat_None = new Regex(@"^(?i:none)$", RegexOptions.Singleline);
         static readonly Regex _rgxStackTraceFormat_ShortInfo = new Regex(@"^(?i:shortinfo)$", RegexOptions.Singleline);
 
@@ -98,6 +114,7 @@ Class :
         public string                FilenameFilter { get; set; }        = Constants.S_DefaultFilenameFilter;
         public bool                  IncludeHidden { get; set; }         = Constants.S_DefaultIncludeHidden;
         public LoggingLevels         LoggingLevel { get; set; }          = Constants.S_DefaultLoggingLevel;
+        public MessageFormats        MessageFormat { get; set; }         = Constants.S_DefaultMessageFormat;
         public StacktraceFormats     StacktraceFormat { get; set; }      = Constants.S_DefaultStackTraceFormat;
         public int                   TestCaseTimeout { get; set; }       = Constants.S_DefaultTestCaseTimeout;
         public string                WorkingDirectory {  get; set; }     = Constants.S_DefaultWorkingDirectory;
@@ -182,6 +199,14 @@ Class :
                     settings.LoggingLevel = ConvertToLoggingLevel(logging.Value.Trim());
                 }
 
+                // MessageFormat
+                var messageformat = node.SelectSingleNode(Constants.NodeName_MessageFormat)?.FirstChild;
+                if (messageformat != null
+                 && messageformat.NodeType == XmlNodeType.Text)
+                {
+                    settings.MessageFormat = ConvertToMessageFormat(messageformat.Value.Trim());
+                }
+
                 // StacktraceFormat
                 var stacktraceformat = node.SelectSingleNode(Constants.NodeName_StackTraceFormat)?.FirstChild;
                 if (stacktraceformat != null
@@ -244,7 +269,27 @@ Class :
                 return LoggingLevels.Debug;
             }
 
-            return LoggingLevels.Normal;
+            return Constants.S_DefaultLoggingLevel;
+        }
+
+        private static MessageFormats ConvertToMessageFormat(string format)
+        {
+            if (_rgxMessageFormat_Full.IsMatch(format))
+            {
+                return MessageFormats.Full;
+            }
+
+            if (_rgxMessageFormat_None.IsMatch(format))
+            {
+                return MessageFormats.None;
+            }
+
+            if (_rgxMessageFormat_StatsOnly.IsMatch(format))
+            {
+                return MessageFormats.StatsOnly;
+            }
+
+            return Constants.S_DefaultMessageFormat;
         }
 
         private static StacktraceFormats ConvertToStacktraceFormat(string format)
@@ -259,7 +304,7 @@ Class :
                 return StacktraceFormats.None;
             }
 
-            return StacktraceFormats.ShortInfo;
+            return Constants.S_DefaultStackTraceFormat;
         }
 
         private static WorkingDirectoryRoots ConvertToWorkingDirectoryRoot(string root)
@@ -279,7 +324,7 @@ Class :
                 return WorkingDirectoryRoots.TestRun;
             }
 
-            return WorkingDirectoryRoots.Executable;
+            return Constants.S_DefaultWorkingDirectoryRoot;
         }
 
         #endregion // Private Static

@@ -308,7 +308,8 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
-        ///  &lt;StackTraceFormat&gt;Filename&lt;/StackTraceFormat&gt;
+        ///  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+        ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
         ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
@@ -326,7 +327,8 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
-        ///  &lt;StackTraceFormat&gt;Filename&lt;/StackTraceFormat&gt;
+        ///  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+        ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
         ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
@@ -344,7 +346,8 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
-        ///  &lt;StackTraceFormat&gt;Filename&lt;/StackTraceFormat&gt;
+        ///  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+        ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
         ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
@@ -422,23 +425,34 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
-        /// &lt;StackTraceFormat&gt;Filename&lt;/StackTraceFormat&gt;
+        /// &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
-        internal static string XmlSettings_StackTraceFormat_Filename {
+        internal static string XmlSettings_MessageFormat_Full {
             get {
-                return ResourceManager.GetString("XmlSettings_StackTraceFormat_Filename", resourceCulture);
+                return ResourceManager.GetString("XmlSettings_MessageFormat_Full", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
-        /// &lt;StackTraceFormat&gt;FullPath&lt;/StackTraceFormat&gt;
+        /// &lt;MessageFormat&gt;None&lt;/MessageFormat&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
-        internal static string XmlSettings_StackTraceFormat_FullPath {
+        internal static string XmlSettings_MessageFormat_None {
             get {
-                return ResourceManager.GetString("XmlSettings_StackTraceFormat_FullPath", resourceCulture);
+                return ResourceManager.GetString("XmlSettings_MessageFormat_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        /// &lt;MessageFormat&gt;StatsOnly&lt;/MessageFormat&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_MessageFormat_StatsOnly {
+            get {
+                return ResourceManager.GetString("XmlSettings_MessageFormat_StatsOnly", resourceCulture);
             }
         }
         
@@ -450,6 +464,17 @@ namespace UT_Catch2Interface.Resources {
         internal static string XmlSettings_StackTraceFormat_None {
             get {
                 return ResourceManager.GetString("XmlSettings_StackTraceFormat_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        /// &lt;StackTraceFormat&gt;ShortInfo&lt;/StackTraceFormat&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_StackTraceFormat_ShortInfo {
+            get {
+                return ResourceManager.GetString("XmlSettings_StackTraceFormat_ShortInfo", resourceCulture);
             }
         }
         

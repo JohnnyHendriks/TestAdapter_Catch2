@@ -245,7 +245,8 @@ cerr 02
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
   &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
-  &lt;StackTraceFormat&gt;Filename&lt;/StackTraceFormat&gt;
+  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
@@ -257,7 +258,8 @@ cerr 02
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
   &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
-  &lt;StackTraceFormat&gt;Filename&lt;/StackTraceFormat&gt;
+  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
@@ -269,7 +271,8 @@ cerr 02
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
   &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
-  &lt;StackTraceFormat&gt;Filename&lt;/StackTraceFormat&gt;
+  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
@@ -303,19 +306,29 @@ cerr 02
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
-  <data name="XmlSettings_StackTraceFormat_Filename" xml:space="preserve">
+  <data name="XmlSettings_MessageFormat_Full" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
- &lt;StackTraceFormat&gt;Filename&lt;/StackTraceFormat&gt;
+ &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
-  <data name="XmlSettings_StackTraceFormat_FullPath" xml:space="preserve">
+  <data name="XmlSettings_MessageFormat_None" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
- &lt;StackTraceFormat&gt;FullPath&lt;/StackTraceFormat&gt;
+ &lt;MessageFormat&gt;None&lt;/MessageFormat&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettings_MessageFormat_StatsOnly" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+ &lt;MessageFormat&gt;StatsOnly&lt;/MessageFormat&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_StackTraceFormat_None" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettings_StackTraceFormat_ShortInfo" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+ &lt;StackTraceFormat&gt;ShortInfo&lt;/StackTraceFormat&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_TestCaseTimeout" xml:space="preserve">

@@ -76,6 +76,7 @@ Class :
         public string ErrorMessage { get; private set; }
         public string ErrorStackTrace { get; private set; }
 
+        public string AdditionalInfo { get; private set; }
         public string StandardOut { get; private set; }
         public string StandardError { get; private set; }
 
@@ -306,7 +307,7 @@ Class :
                 // Statistics
                 ExtractOverallResults(nodeGroup);
 
-                GenerateErrorMessage();
+                GenerateMessages();
             }
             else
             {
@@ -321,22 +322,56 @@ Class :
             OverallResults = new Reporter.OverallResults(nodeOvRes);
         }
 
-        private void GenerateErrorMessage()
+        private void GenerateMessages()
         {
-            if(OverallResults == null)  // Sanity check
+            if(OverallResults == null) // Sanity check
             {
                 ErrorMessage = string.Empty;
+                return;
             }
-            else if (_msgbuilder.Length == 0)
+
+            if (_msgbuilder.Length == 0)
             {
-                ErrorMessage = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}";
+                AdditionalInfo = string.Empty;
             }
             else
             {
-                ErrorMessage = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
-                             + $"-------------------------------------------------------------------------------{Environment.NewLine}"
-                             + $"{_msgbuilder.ToString()}"
-                             + $"-------------------------------------------------------------------------------";
+                AdditionalInfo = $"-------------------------------------------------------------------------------{Environment.NewLine}"
+                               + $"{_msgbuilder.ToString()}"
+                               + $"-------------------------------------------------------------------------------";
+            }
+
+            switch( _settings.MessageFormat )
+            {
+                case MessageFormats.None:
+                    ErrorMessage = string.Empty;
+
+                    AdditionalInfo = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
+                                   + AdditionalInfo;
+
+                    StandardOut = $"Additional Info:{Environment.NewLine}{AdditionalInfo}{Environment.NewLine}{StandardOut}";
+
+                    break;
+                case MessageFormats.Full:
+                    if ( string.IsNullOrEmpty(AdditionalInfo) )
+                    {
+                        ErrorMessage = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}";
+                    }
+                    else
+                    {
+                        ErrorMessage = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
+                                     + AdditionalInfo;
+                    }
+                    break;
+                default: // MessageFormats.StatsOnly:
+                    ErrorMessage = ErrorMessage = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}";
+
+                    // Prepend AdditionalInfo to StandardOut output
+                    if ( !string.IsNullOrEmpty(AdditionalInfo) )
+                    {
+                        StandardOut = $"Additional Info:{Environment.NewLine}{AdditionalInfo}{Environment.NewLine}{StandardOut}";
+                    }
+                    break;
             }
         }
 
@@ -345,9 +380,9 @@ Class :
             Success = false;
             OverallResults = new Reporter.OverallResults();
             ErrorMessage = $"Invalid test runner output.{Environment.NewLine}"
-                            + $"-------------------------------------------------------------------------------{Environment.NewLine}"
-                            + $"{_xmloutput}"
-                            + $"-------------------------------------------------------------------------------";
+                         + $"-------------------------------------------------------------------------------{Environment.NewLine}"
+                         + $"{_xmloutput}"
+                         + $"-------------------------------------------------------------------------------";
         }
 
         private void ProcessXml()

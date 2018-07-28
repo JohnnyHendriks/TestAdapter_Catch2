@@ -220,14 +220,19 @@ namespace Catch2TestAdapter
                     result.ErrorMessage = testresult.ErrorMessage;
                     result.ErrorStackTrace = testresult.ErrorStackTrace;
 
-                    if(testresult.StandardOut != string.Empty )
+                    if( !string.IsNullOrEmpty(testresult.StandardOut) )
                     {
                         result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, testresult.StandardOut ));
                     }
 
-                    if(testresult.StandardError != string.Empty )
+                    if( !string.IsNullOrEmpty(testresult.StandardError) )
                     {
                         result.Messages.Add(new TestResultMessage(TestResultMessage.StandardErrorCategory, testresult.StandardError ));
+                    }
+
+                    if( !string.IsNullOrEmpty(testresult.AdditionalInfo) )
+                    {
+                        result.Messages.Add(new TestResultMessage(TestResultMessage.AdditionalInfoCategory, testresult.AdditionalInfo ));
                     }
                 }
             }
