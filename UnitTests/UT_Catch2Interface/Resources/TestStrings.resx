@@ -245,7 +245,7 @@ cerr 02
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
   &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
-  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
   &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
@@ -258,7 +258,7 @@ cerr 02
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
   &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
-  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
   &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
@@ -271,7 +271,7 @@ cerr 02
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
   &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
-  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
   &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
@@ -306,9 +306,9 @@ cerr 02
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
-  <data name="XmlSettings_MessageFormat_Full" xml:space="preserve">
+  <data name="XmlSettings_MessageFormat_AdditionalInfo" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
- &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+ &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_MessageFormat_None" xml:space="preserve">

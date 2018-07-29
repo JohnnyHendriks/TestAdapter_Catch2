@@ -269,7 +269,7 @@ namespace Catch_Testset03
         REQUIRE( x <= y );
         REQUIRE( y >= x );
 
-        std::cerr << "Some more standard output when REQUIRE tests pass\n";
+        std::cout << "Some more standard output when REQUIRE tests pass\n";
         std::cerr << "Some more standard error output when REQUIRE tests pass\n";
     }
 
@@ -289,7 +289,7 @@ namespace Catch_Testset03
         REQUIRE( x <= y );
         REQUIRE( y >= x );
 
-        std::cerr << "Some more standard output when REQUIRE tests pass\n";
+        std::cout << "Some more standard output when REQUIRE tests pass\n";
         std::cerr << "Some more standard error output when REQUIRE tests pass\n";
     }
 

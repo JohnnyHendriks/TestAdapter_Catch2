@@ -13,7 +13,6 @@ The following is an example _.runsettings_ file that contains options specific f
     <RunConfiguration>
         <MaxCpuCount>1</MaxCpuCount>
         <ResultsDirectory>.\TestResults</ResultsDirectory><!-- Path relative to solution directory -->
-        <TargetPlatform>x64</TargetPlatform>
         <TestSessionTimeout>60000</TestSessionTimeout><!-- Milliseconds -->
     </RunConfiguration>
 

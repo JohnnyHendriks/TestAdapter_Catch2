@@ -36,6 +36,7 @@ Class :
         StringBuilder _stacktracebuilder = new StringBuilder();
 
         int _infocount = 0;
+        int _warningcount = 0;
 
         Settings          _settings;
         Reporter.TestCase _testcase;
@@ -244,6 +245,7 @@ Class :
             _msgbuilder.Append($"  {warning.Message}{Environment.NewLine}");
             _msgbuilder.AppendLine();
 
+            ++_warningcount;
             ResetInfo();
         }
 
@@ -346,25 +348,24 @@ Class :
                 case MessageFormats.None:
                     ErrorMessage = string.Empty;
 
-                    AdditionalInfo = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
+                    AdditionalInfo = GenerateAssertionInfo()
                                    + AdditionalInfo;
 
                     StandardOut = $"Additional Info:{Environment.NewLine}{AdditionalInfo}{Environment.NewLine}{StandardOut}";
 
                     break;
-                case MessageFormats.Full:
+                case MessageFormats.AdditionalInfo:
                     if ( string.IsNullOrEmpty(AdditionalInfo) )
                     {
-                        ErrorMessage = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}";
+                        ErrorMessage = GenerateAssertionInfo();
                     }
                     else
                     {
-                        ErrorMessage = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
-                                     + AdditionalInfo;
+                        ErrorMessage = GenerateAssertionInfo() + AdditionalInfo;
                     }
                     break;
                 default: // MessageFormats.StatsOnly:
-                    ErrorMessage = ErrorMessage = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}";
+                    ErrorMessage = ErrorMessage = GenerateAssertionInfo();
 
                     // Prepend AdditionalInfo to StandardOut output
                     if ( !string.IsNullOrEmpty(AdditionalInfo) )
@@ -375,6 +376,18 @@ Class :
             }
         }
 
+        private string GenerateAssertionInfo()
+        {
+            if(_warningcount == 0)
+            {
+                return $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}";
+            }
+            else
+            {
+                return $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
+                     + $"{_warningcount} warnings were generated.{Environment.NewLine}";
+            }
+        }
         private void SetInvalidTestRunnerOutput()
         {
             Success = false;

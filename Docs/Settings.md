@@ -1,10 +1,12 @@
 # Settings for Test Adapter for Catch2
 
+**The information on this page is based on **Test Adapter for Catch2** v1.2.0.**
+
 In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitely by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
 
 - [`<Catch2Adapter>`](#catch2adapter)
-- [`<DebugBreak>`](#debugbreak) (_introduced in v1.1.0_)
-- [`<DiscoverCommandLine>`](#discovercommandline)*
+- [`<DebugBreak>`](#debugbreak)
+- [`<DiscoverCommandLine>`](#discovercommandline)
 - [`<DiscoverTimeout>`](#discovertimeout)
 - [`<FilenameFilter>`](#filenamefilter)*
 - [`<IncludeHidden>`](#includehidden)
@@ -49,7 +51,6 @@ The following _.runsettings_ file examples only contains settings specific to th
 
     <!-- Adapter Specific sections -->
     <Catch2Adapter>
-        <DiscoverCommandLine>--list-tests *</DiscoverCommandLine>
         <FilenameFilter>.*</FilenameFilter><!-- Regex filter -->
     </Catch2Adapter>
 
@@ -79,14 +80,11 @@ Minimalistic example to disable the **Test Adapter for Catch2** via the _.runset
 
     <!-- Adapter Specific sections -->
     <Catch2Adapter disabled="false">
-        <DiscoverCommandLine>--list-tests *</DiscoverCommandLine>
         <FilenameFilter>.*</FilenameFilter><!-- Regex filter -->
     </Catch2Adapter>
 
 </RunSettings>
  ```
-
-**Note: `disabled` attribute was introduced in v1.1.0.**
 
 ## DebugBreak
 
@@ -94,11 +92,9 @@ Default: off
 
 With the `<DebugBreak>` option you can turn on or off the break on test failure feature of Catch2 (_i.e._, use the Catch2 command line option`--break`). Valid values for this option are, `on` and `off`. This setting is only considered when a test is started via `Debug Selected Tests` in the Test Explorer.
 
-**Note: This setting was introduced in v1.1.0.**
-
 ## DiscoverCommandLine
 
-Default: ""
+Default: "--list-tests *"
 
 With the `<DiscoverCommandLine>` option you set the commandline arguments to call a Catch2 executable with in order to discover the tests that are contained within the executable. You have the choice of the test discovery options that come out of the Catch2 box (`-l`, `--list-tests`, `--list-test-names-only`) or you can provide a custom one. The only requirement for the custom discoverer is that it generates Xml output according to the Catch2 xml reporter scheme. For the build in discovery options you can add filters to select only a subset of tests. For a custom discovery option, it is up to you if you want to support test filtering on this level. Below is an example implementation of a custom discovery algorithm with filtering and how to activate it in the main-function. The advantage of this is that it enables creating a source file link to the position of a test case for easy navigation via the Test Explorer.
 
@@ -212,9 +208,11 @@ This is an example of a minimal _.runsettings_ file for using this custom discov
 
 ## DiscoverTimeout
 
-Default: 500 ms
+Default: 1000 ms
 
 With the `<DiscoverTimeout>` option you can apply a timeout in milliseconds when calling an executable for discovery. This is mostly needed in case an executable is passed to the adapter as source for discovery that is not a Catch2 executable. Depending on the executable this could potentially lead to an endless wait. Setting the timeout to zero or a negative number turns of the timeout. When the timeout expires when the executable has not exited yet, the process of the executable is killed and discovery for that file is cancelled.
+
+When the timeout value is too small it is possible that test discovery fails. If that happens a warning is displayed in the Test Explorer output to make this clear. There have been situations where discovery intermittently failed (especially when the computer was very busy with other stuff).
 
 ## FilenameFilter
 
@@ -239,35 +237,23 @@ The `<IncludeHidden>` option is a flag to indicate if you want to include hidden
 
 Default: normal
 
-The `<Logging>` option has four settings, `quiet`, `normal`, `verbose`, and `debug`. The `debug` setting is mostly useful for development purposes. The `verbose` setting is  useful as a sanity check and for basic debugging purposes. The `normal` setting provides minimal output and basically serves as a way to make sure the **Test Adapter for Catch2** is being called by the test platform. The `quiet` option is there for people that do not want to see any output from the **Test Adapter for Catch2**.
-
-**Note: The `debug` level setting was introduced in v1.1.0. In v1.0.0 the `verbose` level is similar to the `debug` level.**
+The `<Logging>` option has four settings, `quiet`, `normal`, `verbose`, and `debug`. The `debug` setting is mostly useful for development purposes. The `verbose` setting is  useful as a sanity check and for basic debugging purposes. The `normal` setting provides minimal output and basically serves as a way to make sure the **Test Adapter for Catch2** is being called by the test platform. It also logs certain warnings and errors that help diagnose discovery failures (_i.e._, discovery timeout and duplicate test case names). The `quiet` option is there for people that do not want to see any output from the **Test Adapter for Catch2**.
 
 ## MessageFormat
 
 Default: StatsOnly
 
-The `<MessageFormat>` option has three settings, `Full`, `None` and `StatsOnly`. The addition of this setting is basically the result of fixing the stack trace link issue. Now the stack trace links to source are working, a significant part of the information is duplicated. Also, in case of many failures the stack trace information typically requires scrolling to get to it. Originally the full failure info was never intended to be shown in the error message. Only the test assertion statistics were originally envisioned for this area. As such the default is to only show the assertion statistics as message. To get all failure info in the message set this setting to `Full`. For the minimalists you can also set this setting to `None`, in which case no message is generated.
+The `<MessageFormat>` option has three settings, `AdditionalInfo`, `None` and `StatsOnly`. The addition of this setting is basically the result of fixing the stack trace link issue. Now the stack trace links to source are working, a significant part of the information is duplicated. Also, in case of many failures the stack trace information typically requires scrolling to get to it. Originally the full failure info was never intended to be shown in the error message. Only the test assertion statistics were originally envisioned for this area. As such the default is to only show the assertion statistics as message. To get all additonal info in the message set this setting to `AdditionalInfo`. For the minimalists you can also set this setting to `None`, in which case no message is generated.
 
-When you opt to not have the full failure info in the message, this info is placed in the standard output in front of any standard output actually generated by the test. This info can then be reached via the output link that then appears in the detail view of the test case.
-
-**Note: This setting was introduced after v1.1.0.**
+When you opt to not have the additional info in the message, this info is placed in the standard output in front of any standard output actually generated by the test. This info can then be reached via the output link that then appears in the detail view of the test case.
 
 ## StackTraceFormat
-
-### post v1.1.0
 
 Default: ShortInfo
 
 The `<StackTraceFormat>` option has two settings, `ShortInfo` and `None`. The reasoning behind this option stems from a problem getting the stack trace entry to show up as a link to the source code line where the failure occurred. Now this is fixed the setting remains in an altered form. You can still turn off creation of stack trace entries with the `None` setting. The default and fall-back value in case of an unsupported setting value is now the `ShortInfo` setting. With this setting a stack trace link is created for each failure. Here the text used for the link gives a short description of the failure. In future more setting values may be added for different formats for the link text.
 
 The string format expected by the Test Explorer is "`at {description} in {filename}:line {line}`", where the curly bracket parts are replaced by appropriate values. I have not tested if it is possible to break the link by generating an (in)appropriate failure description, but the description that is generated should typically be safe.
-
-### v1.1.0 and v1.0.0
-
-Default: FullPath
-
-The `<StackTraceFormat>` option has three settings, `FullPath`, `Filename`, and `None`. The reasoning behind this option stems from a problem getting the stack trace entry to show up as a link to the source code line where the failure occurred. Though this may be fixed in the future, the current solution is to either have a non-link stack trace entry or no entry at all. The `FullPath` setting should have resulted in it being converted to a link by the Test Explorer, which it is currently failing to do for the **Test Adapter for Catch2**. As showing the full path to the source file can be a bit unwieldy, you can also set the setting to `Filename` which shows just the filename of the source file instead of the full path. As it is of less interest to have a stack trace entry that is not a link, you can turn of stack trace entries by setting this setting to `None`.
 
 ## TestCaseTimeout
 

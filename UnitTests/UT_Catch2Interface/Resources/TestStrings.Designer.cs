@@ -308,7 +308,7 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
-        ///  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+        ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
         ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///&lt;/Catch2Adapter&gt;.
@@ -327,7 +327,7 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
-        ///  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+        ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
         ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///&lt;/Catch2Adapter&gt;.
@@ -346,7 +346,7 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
-        ///  &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+        ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
         ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///&lt;/Catch2Adapter&gt;.
@@ -425,12 +425,12 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
-        /// &lt;MessageFormat&gt;Full&lt;/MessageFormat&gt;
+        /// &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
-        internal static string XmlSettings_MessageFormat_Full {
+        internal static string XmlSettings_MessageFormat_AdditionalInfo {
             get {
-                return ResourceManager.GetString("XmlSettings_MessageFormat_Full", resourceCulture);
+                return ResourceManager.GetString("XmlSettings_MessageFormat_AdditionalInfo", resourceCulture);
             }
         }
         

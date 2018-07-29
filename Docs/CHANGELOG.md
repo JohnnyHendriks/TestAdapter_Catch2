@@ -2,16 +2,23 @@
 
 Changes are relative to v1.0.0
 
-## Changes since v1.1.0
+## Changes for v1.2.0
+
+This version contains an important fix that enables stack trace links to source code. This is a significant usabilty improvement. Please update to this version and stop using the older ones. Documentation has been adapted to asume you are using this version.
 
 ### New Features
 
-- Added `<MessageFormat>` option to configure what information is shown in the message part of the test case detail view. The default is to only show the assertion statistics for the test. It is also possible to choose to show all failure info in the message, or to not have a message at all.
+- Added `<MessageFormat>` option to configure what information is shown in the message part of the test case detail view. The default is to only show the assertion statistics for the test. It is also possible to choose to show additional info in the message, or to not have a message at all.
 
 ### Extended Features
 
 - Improve error handling, specifically when a discovery timeout occurs it is now logged as a warning at logging level normal.
 - Enable stack trace links in the Test Explorer detail view. With the help of Microsoft I was able to figure out the correct string format to use for the Stacktrace info in order to turn it into a source link. As a result the `<StackTraceFormat>` option was also altered and now has the options `None`and `ShortInfo`, the latter being the default or fall-back value.
+
+### Changes to defaults
+
+- The default value for `<DiscoverCommandLine>` has been set to `--list-tests *`, as having two settings with invalid defaults is not really usefull.
+- The default value for `<DiscoverTimeout>` has been set to 1000 ms. There were situations where 500 ms turned out to be too short, doubling that hopefully will give less problems.
 
 ### Bug fixes
 

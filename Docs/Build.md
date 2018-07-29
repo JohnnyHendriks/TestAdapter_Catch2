@@ -1,10 +1,10 @@
 # How to build Test Adapter for Catch2
 
-The easiest way to build the **Test Adapter for Catch2** yourself is to open the Visual Studio solution file (VSTestAdapterCatch2.sln) and build the 'VSTestAdapterCatch2'-project. By default, this builds an unsigned vsix-file that can be used to install the test adapter in Visual Studio. Be sure to set the Solution Configuration to `Release` if you intend to use the generated vsix-file to install the test adapter.
+The easiest way to build the **Test Adapter for Catch2** yourself is to open the Visual Studio solution file (VSTestAdapterCatch2.sln) and build the 'VSTestAdapterCatch2'-project. By default, this builds unsigned assemblies that can be used to install the test adapter in Visual Studio. Be sure to set the Solution Configuration to `Release` if you intend to use the generated vsix-file to install the test adapter.
 
-## Creating a signed vsix-file
+## Creating signed assemblies
 
-If you need the generated assembly (vsix-file) to be digitally signed you need to add a key-file, named "key.snk" in the root of the 'VSTestAdapterCatch2'-project folder. When you then reload the project this key-file will be used to sign the assembly. The same is set up for the 'Catch2Interface' and 'Catch2Adapter' class-library projects, _i.e._, if a "key.snk"-file is copied to their respective project folders, the generated assemblies will be signed using the copied key-file.
+If you need the generated assemblies to be signed you need to add a key-file, named "key.snk" in the root of the 'VSTestAdapterCatch2'-project folder. When you then reload the project this key-file will be used to sign the assembly. The same is set up for the 'Catch2Interface' and 'Catch2Adapter' class-library projects, _i.e._, if a "key.snk"-file is copied to their respective project folders, the generated assemblies will be signed using the copied key-file.
 
 ## atom.xml
 
@@ -16,7 +16,7 @@ For those that want to add the test adapter to their own extension repository, b
     <title type="text">Test Adapter for Catch2.</title>
     <summary type="text">Visual Studio Test Adaptor for use with Catch2 test framework.</summary>
     <published>2018-06-24T12:17:00Z</published>
-    <updated>2018-06-24T12:17:00Z</updated>
+    <updated>2018-07-29T13:32:00Z</updated>
     <author>
       <name>Johnny Hendriks</name>
     </author>
@@ -25,7 +25,7 @@ For those that want to add the test adapter to their own extension repository, b
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns="http://schemas.microsoft.com/developer/vsx-syndication-schema/2010">  
       <Id>VSTestAdapterCatch2.73ba8471-3771-47bf-bd23-49a1ba09af89</Id>
-      <Version>1.0.0</Version>
+      <Version>1.2.0</Version>
       <References />
       <Rating xsi:nil="true" />
       <RatingCount xsi:nil="true" />

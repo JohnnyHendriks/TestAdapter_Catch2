@@ -30,7 +30,7 @@ namespace UT_Catch2Interface
             string[] sources = { Path_Testset01 };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
-            Assert.AreEqual(0, tests.Count);
+            Assert.AreEqual(6, tests.Count);
         }
 
         [TestMethod]

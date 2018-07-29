@@ -4,7 +4,6 @@
   <RunConfiguration>
     <MaxCpuCount>4</MaxCpuCount>
     <ResultsDirectory>.\TestResults</ResultsDirectory><!-- Path relative to solution directory -->
-    <TargetPlatform>x64</TargetPlatform>
     <TestSessionTimeout>60000</TestSessionTimeout><!-- Milliseconds -->
   </RunConfiguration>
 

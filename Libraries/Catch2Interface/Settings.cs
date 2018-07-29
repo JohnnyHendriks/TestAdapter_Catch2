@@ -38,7 +38,7 @@ Enum :
     {
         None,
         StatsOnly,
-        Full
+        AdditionalInfo
     }
 
 /*YAML
@@ -91,7 +91,7 @@ Class :
         static readonly Regex _rgxLogLevel_Quiet = new Regex(@"^(?i:quiet)$", RegexOptions.Singleline);
         static readonly Regex _rgxLogLevel_Verbose = new Regex(@"^(?i:verbose)$", RegexOptions.Singleline);
 
-        static readonly Regex _rgxMessageFormat_Full = new Regex(@"^(?i:full)$", RegexOptions.Singleline);
+        static readonly Regex _rgxMessageFormat_AdditionalInfo = new Regex(@"^(?i:additionalinfo)$", RegexOptions.Singleline);
         static readonly Regex _rgxMessageFormat_None = new Regex(@"^(?i:none)$", RegexOptions.Singleline);
         static readonly Regex _rgxMessageFormat_StatsOnly = new Regex(@"^(?i:statsonly)$", RegexOptions.Singleline);
 
@@ -274,9 +274,9 @@ Class :
 
         private static MessageFormats ConvertToMessageFormat(string format)
         {
-            if (_rgxMessageFormat_Full.IsMatch(format))
+            if (_rgxMessageFormat_AdditionalInfo.IsMatch(format))
             {
-                return MessageFormats.Full;
+                return MessageFormats.AdditionalInfo;
             }
 
             if (_rgxMessageFormat_None.IsMatch(format))

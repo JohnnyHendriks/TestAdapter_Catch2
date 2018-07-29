@@ -57,8 +57,8 @@ namespace UT_Catch2Interface
             Assert.IsFalse(settings.Disabled);
 
             Assert.IsFalse(settings.DebugBreak);
-            Assert.AreEqual(string.Empty, settings.DiscoverCommandLine);
-            Assert.AreEqual(500, settings.DiscoverTimeout);
+            Assert.AreEqual("--list-tests *", settings.DiscoverCommandLine);
+            Assert.AreEqual(1000, settings.DiscoverTimeout);
             Assert.AreEqual(string.Empty, settings.FilenameFilter);
             Assert.IsTrue(settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Normal, settings.LoggingLevel);
@@ -66,8 +66,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(StacktraceFormats.ShortInfo, settings.StacktraceFormat);
             Assert.AreEqual(-1, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -86,7 +86,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual("^Catch", settings.FilenameFilter);
             Assert.IsFalse(settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
-            Assert.AreEqual(MessageFormats.Full, settings.MessageFormat);
+            Assert.AreEqual(MessageFormats.AdditionalInfo, settings.MessageFormat);
             Assert.AreEqual(StacktraceFormats.None, settings.StacktraceFormat);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
@@ -114,8 +114,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
 
@@ -139,8 +139,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
 
@@ -160,7 +160,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual("^Catch", settings.FilenameFilter);
             Assert.IsFalse(settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
-            Assert.AreEqual(MessageFormats.Full, settings.MessageFormat);
+            Assert.AreEqual(MessageFormats.AdditionalInfo, settings.MessageFormat);
             Assert.AreEqual(StacktraceFormats.None, settings.StacktraceFormat);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
@@ -188,8 +188,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -212,8 +212,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -236,8 +236,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -284,8 +284,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -308,8 +308,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -332,8 +332,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -356,8 +356,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -380,8 +380,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -404,8 +404,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -428,8 +428,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -452,15 +452,15 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
-        public void TestExtractMessageFormatOnly_Full()
+        public void TestExtractMessageFormatOnly_AdditionalInfo()
         {
             var xml = new XmlDocument();
-            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_MessageFormat_Full));
+            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_MessageFormat_AdditionalInfo));
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
@@ -472,12 +472,12 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(MessageFormats.Full, settings.MessageFormat);
+            Assert.AreEqual(MessageFormats.AdditionalInfo, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -500,8 +500,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -524,8 +524,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -548,8 +548,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(StacktraceFormats.None, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -572,8 +572,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(StacktraceFormats.ShortInfo, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -596,8 +596,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -620,8 +620,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -644,8 +644,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -654,8 +654,8 @@ namespace UT_Catch2Interface
             var settings = new Settings();
 
             // Empty
-            Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             // Default discovery

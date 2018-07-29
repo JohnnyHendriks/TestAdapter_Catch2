@@ -4,7 +4,6 @@
   <RunConfiguration>
     <MaxCpuCount>1</MaxCpuCount>
     <ResultsDirectory>.\TestResults</ResultsDirectory><!-- Path relative to solution directory -->
-    <TargetPlatform>x64</TargetPlatform>
     <TestSessionTimeout>60000</TestSessionTimeout><!-- Milliseconds -->
   </RunConfiguration>
 
@@ -13,12 +12,16 @@
   <!-- Catch2 adapter -->
   <Catch2Adapter>
     <DebugBreak>on</DebugBreak>
-    <DiscoverCommandLine>--discover</DiscoverCommandLine>
+    <DiscoverCommandLine>--discover *</DiscoverCommandLine>
     <DiscoverTimeout>200</DiscoverTimeout>
     <FilenameFilter>^Catch_</FilenameFilter>
     <IncludeHidden>true</IncludeHidden>
     <Logging>Normal</Logging>
+    <MessageFormat>StatsOnly</MessageFormat>
+    <StackTraceFormat>ShortInfo</StackTraceFormat>
     <TestCaseTimeout>20000</TestCaseTimeout><!-- Milliseconds -->
+    <WorkingDirectory></WorkingDirectory>
+    <WorkingDirectoryRoot>Executable</WorkingDirectoryRoot>
   </Catch2Adapter>
 
 </RunSettings>
