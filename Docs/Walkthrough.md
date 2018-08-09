@@ -4,7 +4,7 @@
 
 It can be a bit tricky to get the **Test Adapter for Catch2** running. So, if you are having trouble getting the test adapter to work you are not alone. For this Walkthrough I'm using the latest version of Microsoft Visual Studio Community 2017 (version 15.7.5 at the time of writing). This walkthrough makes use of the v1.2.0 release of the **Test Adapter for Catch2**.
 
-I will use the ReferenceTests created for testing the **Test Adapter for Catch2**. You can find the Visual Studio solution in the [ReferenceTests](../ReferenceTests/Readme.md) folder of this GitHub repository. I assume you know how to open the Test Explorer Window.
+I will use the ReferenceTests created for testing the **Test Adapter for Catch2**. You can find the Visual Studio solution in the [ReferenceTests](../ReferenceTests/) folder of this GitHub repository. I assume you know how to open the Test Explorer Window.
 
 The following topics are discussed.
 - [Make sure the test adapter is installed](#make-sure-the-test-adapter-is-installed)
@@ -27,17 +27,19 @@ To make sure the test adapter is installed, open the `Extensions and Updates` di
 
 ## Select a _.runsettings_ file
 
-Out of the box the test adapter does not work. This is by design. Visual Studio provides a list of all the executables in your solution to the test adapter. Note, the **Test Adapter for Catch2** does not discover Catch2 tests inside dll-files. As part of the discovery process the executables are called. A worst-case scenario would be that you have a project in your solution for an executable that when executed formats your C-drive.
+Out of the box the test adapter does not work. This is by design. Visual Studio provides a list of all the executables in your solution to the test adapter. As part of the discovery process the executables are called. A worst-case scenario would be that you have a project in your solution for an executable that when executed formats your C-drive. Note, the **Test Adapter for Catch2** does not discover Catch2 tests inside dll-files. 
 
-After you have opened the [ReferenceTests.sln](../ReferenceTests/Readme.md) in Visual Studio and made sure the Test Explorer window is open, the first thing to do is to select a test settings file.
+After you have opened the [ReferenceTests.sln](../ReferenceTests/) in Visual Studio and made sure the Test Explorer window is open, the first thing to do is to select a test settings file.
 
 ![Select Test Settings File](Images/Walkthrough-02.png)
 
-For this walkthrough we will use the `ReferenceTests.runsettings` that you can find in the [ReferenceTests](../ReferenceTests/Readme.md) folder of this GitHub repository.
+For this walkthrough we will use the `Minimal.runsettings` and `ReferenceTests.runsettings` that you can find in the [ReferenceTests](../ReferenceTests/) folder of this GitHub repository. Note that use is made of custom discovery in the `ReferenceTests.runsettings` file.
 
 ![Select Test Settings File](Images/Walkthrough-03.png)
 
-Note you can load multiple _.runsettings_ files and switch between them. The one with a checkmark next to it is the one that is being used. Also, clicking on a _.runsettings_ file in the `Test Settings` sub-menu that has a checkmark next to it, will deselect it.
+You can load multiple _.runsettings_ files and switch between them. The one with a checkmark next to it is the one that is being used. Also, clicking on a _.runsettings_ file in the `Test Settings` sub-menu that has a checkmark next to it, will deselect it.
+
+![Select Test Settings File](Images/Walkthrough-17.png)
 
 ## Trigger test discovery
 
@@ -150,7 +152,19 @@ In case you enabled [custom test discovery](Settings.md#discovercommandline), yo
 
 ![Test case source link](Images/Walkthrough-06.png) ![Test case source link](Images/Walkthrough-07.png)
 
-Clicking the link will bring focus to the source file and the place the cursor on the line of the TEST_CASE. Note, the availability of the source link has no influence on the similar StackTrace links, they should always work.
+Clicking the link will bring focus to the source file and the place the cursor on the line of the TEST_CASE. Note, the availability of the source link has no influence on the similar StackTrace links, they should always work. Switch to the `ReferenceTests.runsettings` test settings to see the source link. Switch to the `Minimal.runsettings` test settings to reproduce the situation where the source link is not available.
+
+## Test case timeout
+
+The [ReferenceTests.sln](../ReferenceTests/) contains a test ('Catch_Dummy') that will run forever. If you run this test using the `Minimal.runsettings` test settings the test will run until you press the Cancel button in the Test Explorer.
+
+![Test case run forever](Images/Walkthrough-18.png)
+
+If you run this test using the `ReferenceTests.runsettings` test settings the test will be cancelled automatically after 20 seconds. The length of this timeout is set via the [`<TestCaseTimeout>`](Settings.md#testcasetimeout) setting in the _.runsettings_ file.
+
+![Test case timeout](Images/Walkthrough-19.png)
+
+Note, the Test Explorer also has the option to set a timeout, however that one is a timeout for the test session, not for individual tests. For more information on the test session timeout see [Configure unit tests by using a _.runsettings_ file](https://docs.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file) on [Visual Studio Docs](https://docs.microsoft.com/en-us/visualstudio/).
 
 ## Examples of test case detail views
 

@@ -7,19 +7,12 @@
     <TestSessionTimeout>60000</TestSessionTimeout><!-- Milliseconds -->
   </RunConfiguration>
 
-  <!-- Parameters used by tests at runtime -->
-  <TestRunParameters>
-    <Parameter name="webAppUrl" value="http://localhost" />
-    <Parameter name="webAppUserName" value="Admin" />
-    <Parameter name="webAppPassword" value="Password" />
-  </TestRunParameters>
-
   <!-- Adapter Specific sections -->
 
   <!-- Catch2 adapter -->
   <Catch2Adapter disabled="false">
     <DebugBreak>on</DebugBreak>
-    <DiscoverCommandLine>--discover *</DiscoverCommandLine>
+    <DiscoverCommandLine>--discover *</DiscoverCommandLine><!-- Note this custom discoverer is not part of the Catch2 framework -->
     <DiscoverTimeout>500</DiscoverTimeout>
     <FilenameFilter>^Catch_</FilenameFilter>
     <IncludeHidden>true</IncludeHidden>

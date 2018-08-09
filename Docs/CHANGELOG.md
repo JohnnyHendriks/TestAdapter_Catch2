@@ -4,7 +4,7 @@ Changes are relative to v1.0.0
 
 ## Changes for v1.2.0
 
-This version contains an important fix that enables stack trace links to source code. This is a significant usabilty improvement. Please update to this version and stop using the older ones. Documentation has been adapted to asume you are using this version.
+This version contains an important fix that enables stack trace links to source code. This is a significant usability improvement. Please update to this version and stop using the older ones. Documentation has been adapted to assume you are using this version.
 
 ### New Features
 
@@ -17,7 +17,7 @@ This version contains an important fix that enables stack trace links to source 
 
 ### Changes to defaults
 
-- The default value for `<DiscoverCommandLine>` has been set to `--list-tests *`, as having two settings with invalid defaults is not really usefull.
+- The default value for `<DiscoverCommandLine>` has been set to `--list-tests *`, as having two settings with invalid defaults is not really useful.
 - The default value for `<DiscoverTimeout>` has been set to 1000 ms. There were situations where 500 ms turned out to be too short, doubling that hopefully will give less problems.
 
 ### Bug fixes
@@ -34,7 +34,7 @@ This version contains an important fix that enables stack trace links to source 
 ### Extended Features
 
  - Added `Debug` level option to `<Logging>` setting and updated what is logged in the `Verbose` level.
- - Improve error handling, specifically when a duplicate testname is used, the potential resulting error is logged.
+ - Improve error handling, specifically when a duplicate test name is used, the potential resulting error is logged.
  - Add support for reporting Fatal Error Conditions
 
  ### Bug fixes
