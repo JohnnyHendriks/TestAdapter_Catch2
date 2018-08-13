@@ -208,6 +208,7 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;IncludeHidden&gt;&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;&lt;/Logging&gt;
         ///  &lt;StackTraceFormat&gt;&lt;/StackTraceFormat&gt;
+        ///  &lt;StackTracePointReplacement&gt;&lt;/StackTracePointReplacement&gt;
         ///  &lt;TestCaseTimeout&gt;&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
@@ -310,6 +311,7 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
         ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+        ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
         ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
@@ -329,8 +331,9 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
         ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+        ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
         ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
-        ///&lt;/Catch2Adapter&gt;.
+        ///&lt;/Catch2Adapte [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_Disabled {
             get {
@@ -348,8 +351,9 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
         ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+        ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
         ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
-        ///&lt;/Catch2Adapter&gt;.
+        ///&lt;/Catch2Adapt [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_NotDisabled {
             get {
@@ -475,6 +479,17 @@ namespace UT_Catch2Interface.Resources {
         internal static string XmlSettings_StackTraceFormat_ShortInfo {
             get {
                 return ResourceManager.GetString("XmlSettings_StackTraceFormat_ShortInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter disabled=&quot;false&quot;&gt;
+        ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_StackTracePointReplacement {
+            get {
+                return ResourceManager.GetString("XmlSettings_StackTracePointReplacement", resourceCulture);
             }
         }
         

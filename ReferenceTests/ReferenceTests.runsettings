@@ -19,6 +19,7 @@
     <Logging>Verbose</Logging>
     <MessageFormat>StatsOnly</MessageFormat>
     <StackTraceFormat>ShortInfo</StackTraceFormat>
+    <StackTracePointReplacement>,</StackTracePointReplacement>
     <TestCaseTimeout>20000</TestCaseTimeout><!-- Milliseconds -->
     <WorkingDirectory></WorkingDirectory>
     <WorkingDirectoryRoot>Executable</WorkingDirectoryRoot>

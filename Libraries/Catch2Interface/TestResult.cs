@@ -14,6 +14,7 @@ Notes: None
 using System;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace Catch2Interface
@@ -31,16 +32,18 @@ Class :
     {
         #region Fields
 
-        StringBuilder _infobuilder = new StringBuilder();
-        StringBuilder _msgbuilder = new StringBuilder();
-        StringBuilder _stacktracebuilder = new StringBuilder();
+        private StringBuilder _infobuilder = new StringBuilder();
+        private StringBuilder _msgbuilder = new StringBuilder();
+        private StringBuilder _stacktracebuilder = new StringBuilder();
 
-        int _infocount = 0;
-        int _warningcount = 0;
+        private int _infocount = 0;
+        private int _warningcount = 0;
 
-        Settings          _settings;
-        Reporter.TestCase _testcase;
-        string            _xmloutput;
+        private Settings          _settings;
+        private Reporter.TestCase _testcase;
+        private string            _xmloutput;
+
+        private Regex _rgx_replace_point = new Regex(@"\.");
 
         #endregion // Fields
 
@@ -234,6 +237,7 @@ Class :
                 case StacktraceFormats.None:
                     break;
                 default:
+                    description = _rgx_replace_point.Replace(description, _settings.StacktracePointReplacement);
                     _stacktracebuilder.Append($"at {description} in {filename}:line {line}{Environment.NewLine}");
                     break;
             }

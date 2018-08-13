@@ -13,6 +13,7 @@ In order for the **Test Adapter for Catch2** to do its job, it requires certain 
 - [`<Logging>`](#logging)
 - [`<MessageFormat>`](#messageformat)
 - [`<StackTraceFormat>`](#stacktraceformat)
+- [`<StackTracePointReplacement>`](#stacktracepointreplacement)
 - [`<TestCaseTimeout>`](#testcasetimeout)
 - [`<WorkingDirectory>`](#workingdirectory)
 - [`<WorkingDirectoryRoot>`](#workingdirectoryroot)
@@ -254,6 +255,12 @@ Default: ShortInfo
 The `<StackTraceFormat>` option has two settings, `ShortInfo` and `None`. The reasoning behind this option stems from a problem getting the stack trace entry to show up as a link to the source code line where the failure occurred. Now this is fixed the setting remains in an altered form. You can still turn off creation of stack trace entries with the `None` setting. The default and fall-back value in case of an unsupported setting value is now the `ShortInfo` setting. With this setting a stack trace link is created for each failure. Here the text used for the link gives a short description of the failure. In future more setting values may be added for different formats for the link text.
 
 The string format expected by the Test Explorer is "`at {description} in {filename}:line {line}`", where the curly bracket parts are replaced by appropriate values. I have not tested if it is possible to break the link by generating an (in)appropriate failure description, but the description that is generated should typically be safe.
+
+## StackTracePointReplacement
+
+Default: ","
+
+The `<StackTracePointReplacement>` option sets the string to use for the replacement of decimal points in StackTrace descriptions. The presence of decimal points in a StackTrace descriptions interferes with the displayed link. A common occurrence of this is when floating point numbers are part of the description. As such decimal points in the StackTrace description are replaced by an alternate string. As a typical occurrence of this problem is with floating point values, the default value for this setting is a comma. However, as this may not be a good option for everyone you can override the default with your personal preference (_e.g._, "`", "_", "·").
 
 ## TestCaseTimeout
 

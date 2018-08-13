@@ -199,6 +199,7 @@ cerr 02
   &lt;IncludeHidden&gt;&lt;/IncludeHidden&gt;
   &lt;Logging&gt;&lt;/Logging&gt;
   &lt;StackTraceFormat&gt;&lt;/StackTraceFormat&gt;
+  &lt;StackTracePointReplacement&gt;&lt;/StackTracePointReplacement&gt;
   &lt;TestCaseTimeout&gt;&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
@@ -247,6 +248,7 @@ cerr 02
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
   &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
   &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
@@ -260,6 +262,7 @@ cerr 02
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
   &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
   &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
@@ -273,6 +276,7 @@ cerr 02
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
   &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
   &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
@@ -329,6 +333,11 @@ cerr 02
   <data name="XmlSettings_StackTraceFormat_ShortInfo" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
  &lt;StackTraceFormat&gt;ShortInfo&lt;/StackTraceFormat&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettings_StackTracePointReplacement" xml:space="preserve">
+    <value>&lt;Catch2Adapter disabled="false"&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_TestCaseTimeout" xml:space="preserve">

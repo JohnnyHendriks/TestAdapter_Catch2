@@ -2,6 +2,16 @@
 
 Changes are relative to v1.0.0
 
+## Post v1.2.0 changes
+
+### Extended Features
+
+- Add option `<StackTracePointReplacement>` to allow replacement of decimal points in StackTrace description with a custom string. This is related to a bug fix, where decimal points in the StackTrace description interferes with the displayed StackTrace link.
+
+### Bug fixes
+
+- Bug: StackTrace link does not display correctly when decimal points are part of the description (_e.g._, when displaying floating point numbers). Fixed.
+
 ## Changes for v1.2.0
 
 This version contains an important fix that enables stack trace links to source code. This is a significant usability improvement. Please update to this version and stop using the older ones. Documentation has been adapted to assume you are using this version.

@@ -107,18 +107,19 @@ Class :
 
         #region Properties
 
-        public bool                  DebugBreak { get; set; }            = Constants.S_DefaultDebugBreak;
-        public bool                  Disabled { get; set; }              = Constants.S_DefaultDisabled;
-        public string                DiscoverCommandLine { get; set; }   = Constants.S_DefaultDiscoverCommandline;
-        public int                   DiscoverTimeout { get; set; }       = Constants.S_DefaultDiscoverTimeout;
-        public string                FilenameFilter { get; set; }        = Constants.S_DefaultFilenameFilter;
-        public bool                  IncludeHidden { get; set; }         = Constants.S_DefaultIncludeHidden;
-        public LoggingLevels         LoggingLevel { get; set; }          = Constants.S_DefaultLoggingLevel;
-        public MessageFormats        MessageFormat { get; set; }         = Constants.S_DefaultMessageFormat;
-        public StacktraceFormats     StacktraceFormat { get; set; }      = Constants.S_DefaultStackTraceFormat;
-        public int                   TestCaseTimeout { get; set; }       = Constants.S_DefaultTestCaseTimeout;
-        public string                WorkingDirectory {  get; set; }     = Constants.S_DefaultWorkingDirectory;
-        public WorkingDirectoryRoots WorkingDirectoryRoot {  get; set; } = Constants.S_DefaultWorkingDirectoryRoot;
+        public bool                  DebugBreak { get; set; }                 = Constants.S_DefaultDebugBreak;
+        public bool                  Disabled { get; set; }                   = Constants.S_DefaultDisabled;
+        public string                DiscoverCommandLine { get; set; }        = Constants.S_DefaultDiscoverCommandline;
+        public int                   DiscoverTimeout { get; set; }            = Constants.S_DefaultDiscoverTimeout;
+        public string                FilenameFilter { get; set; }             = Constants.S_DefaultFilenameFilter;
+        public bool                  IncludeHidden { get; set; }              = Constants.S_DefaultIncludeHidden;
+        public LoggingLevels         LoggingLevel { get; set; }               = Constants.S_DefaultLoggingLevel;
+        public MessageFormats        MessageFormat { get; set; }              = Constants.S_DefaultMessageFormat;
+        public StacktraceFormats     StacktraceFormat { get; set; }           = Constants.S_DefaultStackTraceFormat;
+        public string                StacktracePointReplacement { get; set; } = Constants.S_DefaultStackTracePointReplacement;
+        public int                   TestCaseTimeout { get; set; }            = Constants.S_DefaultTestCaseTimeout;
+        public string                WorkingDirectory {  get; set; }          = Constants.S_DefaultWorkingDirectory;
+        public WorkingDirectoryRoots WorkingDirectoryRoot {  get; set; }      = Constants.S_DefaultWorkingDirectoryRoot;
 
         public bool HasValidDiscoveryCommandline => _rgxValidDiscover.IsMatch(DiscoverCommandLine);
         public bool UseXmlDiscovery => !_rgxDefaultDiscover.IsMatch(DiscoverCommandLine);
@@ -213,6 +214,13 @@ Class :
                  && stacktraceformat.NodeType == XmlNodeType.Text)
                 {
                     settings.StacktraceFormat = ConvertToStacktraceFormat(stacktraceformat.Value.Trim());
+                }
+
+                // StackTracePointReplacement
+                var stacktraceptreplace = node.SelectSingleNode(Constants.NodeName_StackTracePointReplacement)?.FirstChild;
+                if (stacktraceptreplace != null && stacktraceptreplace.NodeType == XmlNodeType.Text)
+                {
+                    settings.StacktracePointReplacement = stacktraceptreplace.Value;
                 }
 
                 // TestCaseTimeout

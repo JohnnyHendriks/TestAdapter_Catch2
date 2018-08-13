@@ -48,6 +48,7 @@ Class :
         public const string NodeName_Logging = "Logging";
         public const string NodeName_MessageFormat = "MessageFormat";
         public const string NodeName_StackTraceFormat = "StackTraceFormat";
+        public const string NodeName_StackTracePointReplacement = "StackTracePointReplacement";
         public const string NodeName_TestCaseTimeout = "TestCaseTimeout";
         public const string NodeName_WorkingDirectory = "WorkingDirectory";
         public const string NodeName_WorkingDirectoryRoot = "WorkingDirectoryRoot";
@@ -61,6 +62,7 @@ Class :
         public const bool   S_DefaultIncludeHidden = true;
         public const int    S_DefaultTestCaseTimeout = -1;   // No timeout
         public const string S_DefaultWorkingDirectory = "";
+        public const string S_DefaultStackTracePointReplacement = ",";
 
         public const LoggingLevels         S_DefaultLoggingLevel = LoggingLevels.Normal;
         public const MessageFormats        S_DefaultMessageFormat = MessageFormats.StatsOnly;
