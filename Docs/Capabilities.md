@@ -14,14 +14,21 @@ The Visual Studio Test Explorer enables grouping of test cases in various ways. 
 
 ## Notes on test case names
 
+### Test Explorer specific
 The Visual Studio Test Explorer tries to extract extra information from a test case name. Basically, it tries to split a test case name into three sections if possible: namespace, class, and description. The delimiters used for this are "." and "::". Here the last two delimiters in the test case name determine the split. See the table below for examples.
 
-| Example | Namepsace | Class | Description |
+| Example | Namespace | Class | Description |
 |---------|-----------|-------|-------------|
 | `std::vector. Test` | `std` | `vector` | `Test` |
 | `Root.Level0.Level1.Name. Test 01` | `Root.Level0.Level1` | `Name` | `Test 01` |
 |  `Root::Level0. Fraction=0.1` | `Root::Level0` |  `Fraction=0` |  `1` |
 
-I suggest to experiment with this and (ab)use this functionality as appropriate for your case. Be aware though that trailing spaces are automatically removed from a test case name, and that names ending in a backslash ("\\") cannot be called by the **Test Adapter for Catch2**. Also, if you want to call a specific test case form the command line you need to escape any comma, double quote, open square bracket and backslash characters (_i.e._, use "\\,", "\\"", "\\[" and "\\\\"). This is basically what the **Test Adapter for Catch2** does internally when it calls a test.
+I suggest to experiment with this and (ab)use this functionality as appropriate for your case.
 
-In closing, test case names are semi case sensitive. Test cases which only differ in case are separate test cases as far as Catch2 is concerned. However, they cannot be called individually via the command line. As such, when such a test is called, all tests with the same case insensitive name are run. At this time the **Test Adapter for Catch2** does not handle this corner case well and may therefore report the wrong result in that case.
+### Special characters
+
+Be aware that trailing spaces are automatically removed from a test case name, and that names ending in a backslash ("\\") cannot be called by the **Test Adapter for Catch2**. If you want to call a specific test case from the command line you need to escape any comma, double quote, open square bracket and backslash characters (_i.e._, use "\\,", "\\"", "\\[" and "\\\\"). This is basically what the **Test Adapter for Catch2** does internally when it calls a test. Otherwise any printable ASCII character can be safely used in a test name. No guarantees are given for the use of other characters (_e.g._, UTF-8).
+
+### Catch2 specific
+
+Test case names are semi case sensitive. Test cases which only differ in case are separate test cases as far as Catch2 is concerned. However, they cannot be called individually via the command line. As such, when such a test is called, all tests with the same case insensitive name are run. As of version 1.3 of the **Test Adapter for Catch2** this situation is handled more gracefully and at least the correct test results is shown for the test case. The assertion statistics shown for the test case are those of all the run tests, including the ones with only differ in case. As a result, it is possible that a passed test case contains failed assertions in the shown assertion statistics. For clarity a note is added to the test case result message to indicate this. Before version 1.3 of the **Test Adapter for Catch2** this corner case was not handled well and therefore could report the wrong result for those test cases.

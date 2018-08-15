@@ -82,6 +82,55 @@ namespace UT_Catch2Interface.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This is not XML.
+        ///It is invalid input..
+        /// </summary>
+        internal static string Invalid {
+            get {
+                return ResourceManager.GetString("Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;Catch name=&quot;QDummy.exe&quot;&gt;
+        ///  &lt;Group name=&quot;QDummy.exe&quot;&gt;
+        ///    &lt;CaseTest name=&quot;Dummy&quot; filename=&quot;d:\dummy.cpp&quot; line=&quot;64&quot;&gt;
+        ///      &lt;OverallResult success=&quot;true&quot; durationInSeconds=&quot;0.000981&quot;/&gt;
+        ///    &lt;/CaseTest&gt;
+        ///    &lt;OverallResults successes=&quot;6&quot; failures=&quot;0&quot; expectedFailures=&quot;0&quot;/&gt;
+        ///  &lt;/Group&gt;
+        ///  &lt;OverallResults successes=&quot;6&quot; failures=&quot;1&quot; expectedFailures=&quot;0&quot;/&gt;
+        ///&lt;/Catch&gt;.
+        /// </summary>
+        internal static string InvalidXml {
+            get {
+                return ResourceManager.GetString("InvalidXml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;Catch name=&quot;QDummy.exe&quot;&gt;
+        ///  &lt;Group name=&quot;QDummy.exe&quot;&gt;
+        ///    &lt;TestCase name=&quot;dummy&quot; filename=&quot;d:\dummy.cpp&quot; line=&quot;64&quot;&gt;
+        ///      &lt;OverallResult success=&quot;true&quot; durationInSeconds=&quot;0.000981&quot;/&gt;
+        ///    &lt;/TestCase&gt;
+        ///    &lt;TestCase name=&quot;Dummy&quot; filename=&quot;d:\dummy.cpp&quot; line=&quot;64&quot;&gt;
+        ///      &lt;Expression success=&quot;false&quot; filename=&quot;d:\dummy.cpp&quot; line=&quot;64&quot;&gt;
+        ///        &lt;Original&gt;
+        ///          {Unknown expression after the reported line}
+        ///        &lt;/Original&gt;
+        ///        &lt;Expanded&gt;
+        ///          {Unknown [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MultipleTestCases {
+            get {
+                return ResourceManager.GetString("MultipleTestCases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         ///&lt;Catch name=&quot;QDummy.exe&quot;&gt;
         ///  &lt;Group name=&quot;QDummy.exe&quot;&gt;
@@ -99,6 +148,24 @@ namespace UT_Catch2Interface.Resources {
         internal static string PostXmlText {
             get {
                 return ResourceManager.GetString("PostXmlText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;Catch name=&quot;QDummy.exe&quot;&gt;
+        ///  &lt;Group name=&quot;QDummy.exe&quot;&gt;
+        ///    &lt;TestCase name=&quot;Dummy&quot; filename=&quot;d:\dummy.cpp&quot; line=&quot;64&quot;&gt;
+        ///      &lt;OverallResult success=&quot;true&quot; durationInSeconds=&quot;0.000981&quot;/&gt;
+        ///    &lt;/TestCase&gt;
+        ///    &lt;OverallResults successes=&quot;6&quot; failures=&quot;0&quot; expectedFailures=&quot;0&quot;/&gt;
+        ///  &lt;/Group&gt;
+        ///  &lt;OverallResults successes=&quot;6&quot; failures=&quot;1&quot; expectedFailures=&quot;0&quot;/&gt;
+        ///&lt;/Catch&gt;.
+        /// </summary>
+        internal static string SingleTestCase {
+            get {
+                return ResourceManager.GetString("SingleTestCase", resourceCulture);
             }
         }
     }

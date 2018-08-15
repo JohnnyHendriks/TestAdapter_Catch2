@@ -37,10 +37,12 @@ Class :
         private StringBuilder _stacktracebuilder = new StringBuilder();
 
         private int _infocount = 0;
+        private int _testcasecount = 0;
         private int _warningcount = 0;
 
         private Settings          _settings;
         private Reporter.TestCase _testcase;
+        private string            _testname;
         private string            _xmloutput;
 
         private Regex _rgx_replace_point = new Regex(@"\.");
@@ -54,9 +56,10 @@ Class :
             Cancelled = true;
         }
 
-        public TestResult(string xmloutput, Settings settings)
+        public TestResult(string xmloutput, string testname, Settings settings)
         {
             _settings = settings ?? new Settings();
+            _testname = testname;
             _xmloutput = xmloutput;
             ProcessXml();
         }
@@ -297,11 +300,16 @@ Class :
 
         void ExtractTestResult(XmlNode nodeGroup)
         {
-            // Success
-            var nodeTestCase = nodeGroup.SelectSingleNode("TestCase");
-            if(nodeTestCase != null)
+            // Retrieve data from TestCases that were run
+            var nodesTestCases = nodeGroup.SelectNodes("TestCase");
+
+            _testcasecount = nodesTestCases.Count;
+            foreach (XmlNode nodeTestCase in nodesTestCases)
             {
-                _testcase = new Reporter.TestCase(nodeTestCase);
+                var testcase = new Reporter.TestCase(nodeTestCase);
+                if(_testcasecount != 1 && testcase.Name != _testname) continue;
+
+                _testcase = testcase;
 
                 Success = _testcase.OverallResult.Success;
                 Duration = _testcase.OverallResult.Duration;
@@ -314,11 +322,10 @@ Class :
                 ExtractOverallResults(nodeGroup);
 
                 GenerateMessages();
+                return;
             }
-            else
-            {
-                SetInvalidTestRunnerOutput();
-            }
+
+            SetInvalidTestRunnerOutput();
         }
 
         private void ExtractOverallResults(XmlNode nodeGroup)
@@ -382,15 +389,28 @@ Class :
 
         private string GenerateAssertionInfo()
         {
-            if(_warningcount == 0)
+            string msg;
+            switch(_warningcount)
             {
-                return $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}";
+                case 0:
+                    msg = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}";
+                    break;
+                case 1:
+                    msg = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
+                        + $"1 warning was generated.{Environment.NewLine}";
+                    break;
+                default:
+                    msg = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
+                        + $"{_warningcount} warnings were generated.{Environment.NewLine}";
+                    break;
             }
-            else
+
+            if(_testcasecount > 1)
             {
-                return $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
-                     + $"{_warningcount} warnings were generated.{Environment.NewLine}";
+                msg += $"Note: Assertion stats are for multiple testcases with names differing only in case.{Environment.NewLine}";
             }
+
+            return msg;
         }
         private void SetInvalidTestRunnerOutput()
         {

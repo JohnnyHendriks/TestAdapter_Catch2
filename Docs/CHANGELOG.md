@@ -8,6 +8,8 @@ Changes are relative to v1.0.0
 
 - Add option `<StackTracePointReplacement>` to allow replacement of decimal points in StackTrace description with a custom string. This is related to a bug fix, where decimal points in the StackTrace description interferes with the displayed StackTrace link.
 
+- Handle test cases with names differing only in case more gracefully (_e.g._, "TestName", "TESTNAME", and "testname"). Test cases with names that only differ by case are always run together. Now the correct test result and failures are shown for those tests. Shown assertion statistics are of all tests that were run, and a note is added to the test result message to indicate this.
+
 ### Bug fixes
 
 - Bug: StackTrace link does not display correctly when decimal points are part of the description (_e.g._, when displaying floating point numbers). Fixed.
