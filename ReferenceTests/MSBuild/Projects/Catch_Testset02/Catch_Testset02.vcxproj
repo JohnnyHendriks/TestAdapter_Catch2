@@ -14,6 +14,7 @@
     <ClCompile Include="..\..\..\Src\Catch2\Catch_Testset02\UT_Tests02.cpp" />
     <ClCompile Include="..\..\..\Src\Catch2\Catch_Testset02\UT_Tests03.cpp" />
     <ClCompile Include="..\..\..\Src\Catch2\Catch_Testset02\UT_Tests04.cpp" />
+    <ClCompile Include="..\..\..\Src\Catch2\Catch_Testset02\UT_Tests05.cpp" />
     <ClCompile Include="..\..\..\Src\Catch2\main.cpp" />
   </ItemGroup>
 </Project>

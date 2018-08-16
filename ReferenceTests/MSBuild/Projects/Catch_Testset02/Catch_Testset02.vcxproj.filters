@@ -24,5 +24,8 @@
     <ClCompile Include="..\..\..\Src\Catch2\Catch_Testset02\UT_Tests04.cpp">
       <Filter>Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Src\Catch2\Catch_Testset02\UT_Tests05.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -13,6 +13,7 @@ Changes are relative to v1.0.0
 ### Bug fixes
 
 - Bug: StackTrace link does not display correctly when decimal points are part of the description (_e.g._, when displaying floating point numbers). Fixed.
+- Bug: Test cases with names ending in '\' generate invalid output. Fixed.
 
 ## Changes for v1.2.0
 

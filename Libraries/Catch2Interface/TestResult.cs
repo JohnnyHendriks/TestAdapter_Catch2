@@ -407,7 +407,7 @@ Class :
 
             if(_testcasecount > 1)
             {
-                msg += $"Note: Assertion stats are for multiple testcases with names differing only in case.{Environment.NewLine}";
+                msg += $"Note: Assertion stats are for multiple testcases. Consider changing the test case name.{Environment.NewLine}";
             }
 
             return msg;

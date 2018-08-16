@@ -28,21 +28,36 @@ Notes: None
 
 namespace CatchTestset02
 {
-    TEST_CASE( "Testset02::Tests05. Construction", "[Loops]" )
+    TEST_CASE( R"(Testset02::Tests05. 1\)", "[Backslash]" )
     {
-        int x = 3;
+        int x = 42;
+        int y = 42;
 
-        INFO("Start");
+        CHECK( x == y );
+    }
 
-        SECTION("Only Section")
-        {
-            for (int idx = 0; idx < 5; ++idx)
-            {
-                INFO("Index " << idx);
+    TEST_CASE( R"(Testset02::Tests05. 2\ \)", "[Backslash]" )
+    {
+        int x = 42;
+        int y = 47;
 
-                CHECK( idx < x );
-            }
-        }
+        CHECK( x == y );
+    }
+
+    TEST_CASE( R"(Testset02::Tests05. 3\)", "[Backslash]" )
+    {
+        int x = 42;
+        int y = 42;
+
+        CHECK( x == y );
+    }
+
+    TEST_CASE( R"(Testset02::Tests05. 3\ \ \)", "[Backslash]" )
+    {
+        int x = 42;
+        int y = 47;
+
+        CHECK( x == y );
     }
 
 } // End namespace: CatchTestset02

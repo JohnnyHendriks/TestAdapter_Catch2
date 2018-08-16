@@ -178,6 +178,12 @@ Class :
             convertedname = _rgx_doublequotes.Replace(convertedname, @"\""");
             convertedname = _rgx_squarebracket.Replace(convertedname, @"\[");
 
+            if( convertedname.EndsWith(@"\"))
+            {
+                char[] trimchars = {'\\', ' ' };
+                convertedname = convertedname.TrimEnd(trimchars);
+                convertedname += @"*";
+            }
             return $"{'"'}{convertedname}{'"'}";
         }
 
