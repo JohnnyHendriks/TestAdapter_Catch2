@@ -139,12 +139,12 @@ namespace UT_Catch2Interface
 
             // Special case, a test case name with a '\' at the end of the name,
             // cannot be called specifically via the Catch2 commandline.
-            // It will fail with Invalid test runner output (and thus 0 failures and 0 successes).
+            // Needs to be called in a special way.
             result = executor.Run(@"Testset02.Tests01. \", Path_Testset02);
-            Assert.IsFalse(result.Success);
+            Assert.IsTrue(result.Success);
             Assert.IsFalse(result.TimedOut);
             Assert.AreEqual(0, result.OverallResults.Failures);
-            Assert.AreEqual(0, result.OverallResults.Successes);
+            Assert.AreEqual(6, result.OverallResults.Successes);
 
             // No issues with '\' elsewhere in the name/
             result = executor.Run(@"\Testset02.Tests01. name", Path_Testset02);
@@ -192,11 +192,11 @@ namespace UT_Catch2Interface
 
             // Special case, a test case name with a '\' at the end of the name,
             // cannot be called specifically via the Catch2 commandline.
-            // It will fail with Invalid test runner output (and thus 0 failures and 0 successes).
+            // Needs to be called in a special way.
             result = executor.Run(@"Testset02.Tests02. \", Path_Testset02);
             Assert.IsFalse(result.Success);
             Assert.IsFalse(result.TimedOut);
-            Assert.AreEqual(0, result.OverallResults.Failures);
+            Assert.AreEqual(6, result.OverallResults.Failures);
             Assert.AreEqual(0, result.OverallResults.Successes);
 
             // No issues with '\' elsewhere in the name/
