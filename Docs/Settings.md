@@ -1,6 +1,6 @@
 # Settings for Test Adapter for Catch2
 
-**The information on this page is based on **Test Adapter for Catch2** v1.2.0.**
+> The information on this page is based on **Test Adapter for Catch2** v1.2.0.
 
 In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitely by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
 
@@ -13,7 +13,7 @@ In order for the **Test Adapter for Catch2** to do its job, it requires certain 
 - [`<Logging>`](#logging)
 - [`<MessageFormat>`](#messageformat)
 - [`<StackTraceFormat>`](#stacktraceformat)
-- [`<StackTracePointReplacement>`](#stacktracepointreplacement)
+- [`<StackTracePointReplacement>`](#stacktracepointreplacement) (_v1.3.0_)
 - [`<TestCaseTimeout>`](#testcasetimeout)
 - [`<WorkingDirectory>`](#workingdirectory)
 - [`<WorkingDirectoryRoot>`](#workingdirectoryroot)
@@ -261,6 +261,8 @@ The string format expected by the Test Explorer is "`at {description} in {filena
 Default: ","
 
 The `<StackTracePointReplacement>` option sets the string to use for the replacement of decimal points in StackTrace descriptions. The presence of decimal points in a StackTrace descriptions interferes with the displayed link. A common occurrence of this is when floating point numbers are part of the description. As such decimal points in the StackTrace description are replaced by an alternate string. As a typical occurrence of this problem is with floating point values, the default value for this setting is a comma. However, as this may not be a good option for everyone you can override the default with your personal preference (_e.g._, "`", "_", "·").
+
+> Introduced in v1.3.0
 
 ## TestCaseTimeout
 

@@ -16,7 +16,7 @@ For those that want to add the test adapter to their own extension repository, b
     <title type="text">Test Adapter for Catch2.</title>
     <summary type="text">Visual Studio Test Adaptor for use with Catch2 test framework.</summary>
     <published>2018-06-24T12:17:00Z</published>
-    <updated>2018-07-29T13:32:00Z</updated>
+    <updated>2018-08-18T08:17:00Z</updated>
     <author>
       <name>Johnny Hendriks</name>
     </author>
@@ -25,7 +25,7 @@ For those that want to add the test adapter to their own extension repository, b
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns="http://schemas.microsoft.com/developer/vsx-syndication-schema/2010">  
       <Id>VSTestAdapterCatch2.73ba8471-3771-47bf-bd23-49a1ba09af89</Id>
-      <Version>1.2.0</Version>
+      <Version>1.3.0</Version>
       <References />
       <Rating xsi:nil="true" />
       <RatingCount xsi:nil="true" />

@@ -21,13 +21,19 @@ The Visual Studio Test Explorer tries to extract extra information from a test c
 |---------|-----------|-------|-------------|
 | `std::vector. Test` | `std` | `vector` | `Test` |
 | `Root.Level0.Level1.Name. Test 01` | `Root.Level0.Level1` | `Name` | `Test 01` |
-|  `Root::Level0. Fraction=0.1` | `Root::Level0` |  `Fraction=0` |  `1` |
+| `Root::Level0. Fraction=0.1` | `Root::Level0` |  `Fraction=0` |  `1` |
 
-I suggest to experiment with this and (ab)use this functionality as appropriate for your case.
+I suggest to experiment with this and (ab)use this functionality as appropriate for your case. Personally I prefer to use the "." as a delimiter using the following scheme:
+
+> `<Category>.<Filename>. <Description>`
+
+Here `<Category>` may have several "." delimiters. This scheme helps me to keep test case names unique, and it nicely organizes test cases in the Visual Studio Test Explorer hierarchical view.
 
 ### Special characters
 
-Be aware that trailing spaces are automatically removed from a test case name, and that names ending in a backslash ("\\") cannot be called by the **Test Adapter for Catch2**. If you want to call a specific test case from the command line you need to escape any comma, double quote, open square bracket and backslash characters (_i.e._, use "\\,", "\\"", "\\[" and "\\\\"). This is basically what the **Test Adapter for Catch2** does internally when it calls a test. Otherwise any printable ASCII character can be safely used in a test name. No guarantees are given for the use of other characters (_e.g._, UTF-8).
+Be aware that trailing spaces are automatically removed from a test case name. Also, names ending in a backslash ("\\") cannot be called specifically by the **Test Adapter for Catch2**. As of v1.3.0 a workaround is used where basically the backslashes are stripped from the end of the name. Subsequently all tests that start with the remaining test name are called. So there is a chance more than one test case will be called. This is handled in the same way as test case names that differ only in case (see [below](#catch2-specific)).
+
+If you want to call a specific test case from the command line you need to escape any comma, double quote, open square bracket and backslash characters (_i.e._, use "\\,", "\\"", "\\[" and "\\\\"). This is basically what the **Test Adapter for Catch2** does internally when it calls a test. Otherwise any printable ASCII character can be safely used in a test case name. No guarantees are given for the use of other characters (_e.g._, UTF-8).
 
 ### Catch2 specific
 
