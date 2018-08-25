@@ -70,6 +70,16 @@ namespace CatchTestset02
         CHECK(x == y);
     }
 
+    TEST_CASE_METHOD(TestFixture, "Testset02.Tests02. End with space ", "[Testname]")
+    {
+        CHECK( x == y );
+    }
+
+    TEST_CASE_METHOD(TestFixture, "Testset02.Tests02. End with spaces   ", "[Testname]")
+    {
+        CHECK( x == y );
+    }
+
 } // End namespace: CatchTestset02
 
 /************

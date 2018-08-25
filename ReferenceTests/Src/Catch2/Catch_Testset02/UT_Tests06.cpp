@@ -28,68 +28,47 @@ Notes: None
 
 namespace CatchTestset02
 {
-    int ThrowFunc()
+    TEST_CASE( "Testset02::Tests06. Given when then", "[Passing]" )
     {
-        throw std::exception("Unexpected exception", 42);
-    }
-
-    int NoThrowFunc()
-    {
-        return 66;
-    }
-
-    TEST_CASE( "Testset02::Tests06. Unexpected exception 01", "[Exception]" )
-    {
-        CHECK( ThrowFunc() == 66 );
-    }
-
-    TEST_CASE( "Testset02::Tests06. Unexpected exception 02", "[Exception]" )
-    {
-        int x = 99;
-
-        INFO( "Info 01" );
-
-        SECTION("Ony Section")
+        GIVEN("x and y")
         {
-            CHECK( ThrowFunc() == 66 );
-            CHECK( x == 66 );
+            int x = 42;
+            int y = 42;
+
+            WHEN("equal")
+            {
+                CHECK( x == y );
+                CHECK( y == x );
+
+                THEN("do not compare the same")
+                {
+                    CHECK_FALSE( x != y );
+                    CHECK_FALSE( y != x );
+                }
+            }
         }
     }
 
-    TEST_CASE( "Testset02::Tests06. No Throw", "[Exception]" )
+    TEST_CASE( "Testset02::Tests06. Given when then fail", "[Failing]" )
     {
-        int x = 99;
-
-        INFO( "Info 01" );
-
-        CHECK_NOTHROW( ThrowFunc() == 66 );
-
-        INFO( "Info 02" );
-
-        SECTION("Only Section")
+        GIVEN("x and y")
         {
-            CHECK_NOTHROW( ThrowFunc() == 66 );
-            CHECK( x == 66 );
+            int x = 42;
+            int y = 47;
+
+            WHEN("equal")
+            {
+                CHECK( x == y );
+                CHECK( y == x );
+
+                THEN("do not compare the same")
+                {
+                    CHECK_FALSE( x != y );
+                    CHECK_FALSE( y != x );
+                }
+            }
         }
     }
-
-    TEST_CASE( "Testset02::Tests06. Throw", "[Exception]" )
-    {
-        int x = 99;
-
-        INFO( "Info 01" );
-
-        CHECK_THROWS( NoThrowFunc() == 66 );
-
-        INFO( "Info 02" );
-
-        SECTION("Only Section")
-        {
-            CHECK_THROWS( NoThrowFunc() == 66 );
-            CHECK( x == 66 );
-        }
-    }
-
 } // End namespace: CatchTestset02
 
 /************

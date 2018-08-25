@@ -81,6 +81,22 @@ namespace CatchTestset02
         CHECK(x == y);
     }
 
+    TEST_CASE("Testset02.Tests01. End with space ", "[Testname]")
+    {
+        int x = 42;
+        int y = 42;
+
+        CHECK( x == y );
+    }
+
+    TEST_CASE("Testset02.Tests01. End with spaces   ", "[Testname]")
+    {
+        int x = 42;
+        int y = 42;
+
+        CHECK( x == y );
+    }
+
 } // End namespace: CatchTestset02
 
 /************
