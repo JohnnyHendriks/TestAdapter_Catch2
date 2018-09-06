@@ -2,6 +2,12 @@
 
 Changes are relative to v1.0.0
 
+## Changes for next version
+
+### Extended Features
+
+- Improve Additional info output with respect to section. Is now more like standard Catch2 output.
+
 ## Changes for v1.3.0
 
 ### Extended Features

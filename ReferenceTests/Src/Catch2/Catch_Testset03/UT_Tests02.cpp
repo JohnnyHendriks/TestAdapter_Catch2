@@ -34,7 +34,7 @@ namespace CatchTestset03
         FAIL_CHECK("Unreachable Soft Failure");
     }
 
-    TEST_CASE( "Testset03.Tests02. 02p Sections", "[Failing]" )
+    TEST_CASE( "Testset03.Tests02. 02f Sections", "[Failing]" )
     {
         INFO("Root");
 

@@ -190,25 +190,58 @@ Class :
             ResetInfo();
         }
 
-        private void AppendSection(Reporter.Section section)
+        private void AppendSection(Reporter.Section section, string startstring, string endstring, int level)
         {
-            _msgbuilder.Append($"Start Section: {section.Name}{Environment.NewLine}");
-            _msgbuilder.AppendLine();
+            if(level == 0)
+            {
+                startstring = $"================================================================================{Environment.NewLine}{section.Name}{Environment.NewLine}";
+                endstring = $"{section.Name}{Environment.NewLine}================================================================================{Environment.NewLine}";
+            }
+            else
+            {
+                startstring = $"{startstring}{new string(' ', level*2)}{section.Name}{Environment.NewLine}";
+                endstring = $"{new string(' ', level * 2)}{section.Name}{Environment.NewLine}{endstring}";
+            }
+
+            bool appendstart = true;
+
+            //_msgbuilder.Append($"Start Section: {section.Name}{Environment.NewLine}");
+            //_msgbuilder.AppendLine();
 
             foreach (var child in section.Children)
             {
                 switch( child )
                 {
                     case Reporter.Exception exception:
+                        if(appendstart)
+                        {
+                            AppendSectionStart(startstring);
+                            appendstart = false;
+                        }
                         AppendException(exception);
                         break;
                     case Reporter.Expression expression:
+                        if (appendstart)
+                        {
+                            AppendSectionStart(startstring);
+                            appendstart = false;
+                        }
                         AppendExpression(expression);
                         break;
                     case Reporter.Failure failure:
+                        if (appendstart)
+                        {
+                            AppendSectionStart(startstring);
+                            appendstart = false;
+                        }
                         AppendFailure(failure);
                         break;
                     case Reporter.FatalErrorCondition fatal:
+                        if (appendstart)
+                        {
+                            AppendSectionStart(startstring);
+                            appendstart = false;
+                        }
                         AppendFatalErrorCondition(fatal);
                         break;
                     case Reporter.Info info:
@@ -217,19 +250,47 @@ Class :
                     case Reporter.Section innersection:
                         if (innersection.HasFailuresOrWarnings)
                         {
-                            AppendSection(innersection);
+                            if (!appendstart)
+                            {
+                                AppendSectionEnd(endstring);
+                                appendstart = true;
+                            }
+                            AppendSection(innersection, startstring, endstring, level + 1);
                         }
                         break;
                     case Reporter.Warning warning:
+                        if (appendstart)
+                        {
+                            AppendSectionStart(startstring);
+                            appendstart = false;
+                        }
                         AppendWarning(warning);
                         break;
                     default:
                         break;
-
                 }
             }
 
-            _msgbuilder.Append($"End Section: {section.Name}{Environment.NewLine}");
+            if (!appendstart)
+            {
+                AppendSectionEnd(endstring);
+                appendstart = true;
+            }
+            //_msgbuilder.Append($"End Section: {section.Name}{Environment.NewLine}");
+            //_msgbuilder.AppendLine();
+        }
+
+        private void AppendSectionEnd(string endstring)
+        {
+            _msgbuilder.Append($"--------------------------------------------------------------------------------{Environment.NewLine}");
+            _msgbuilder.Append(endstring);
+            _msgbuilder.AppendLine();
+        }
+
+        private void AppendSectionStart(string startstring)
+        {
+            _msgbuilder.Append(startstring);
+            _msgbuilder.Append($"--------------------------------------------------------------------------------{Environment.NewLine}");
             _msgbuilder.AppendLine();
         }
 
@@ -284,7 +345,7 @@ Class :
                     case Reporter.Section section:
                         if (section.HasFailuresOrWarnings)
                         {
-                            AppendSection(section);
+                            AppendSection(section, String.Empty, String.Empty, 0);
                         }
                         break;
                     case Reporter.Warning warning:
@@ -349,9 +410,9 @@ Class :
             }
             else
             {
-                AdditionalInfo = $"-------------------------------------------------------------------------------{Environment.NewLine}"
+                AdditionalInfo = $"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{Environment.NewLine}"
                                + $"{_msgbuilder.ToString()}"
-                               + $"-------------------------------------------------------------------------------";
+                               + $"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
             }
 
             switch( _settings.MessageFormat )
