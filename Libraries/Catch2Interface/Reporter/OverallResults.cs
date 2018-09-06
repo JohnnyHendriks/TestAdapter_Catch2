@@ -12,6 +12,7 @@ Notes: None
 ** Basic Info **/
 
 using System;
+using System.Globalization;
 using System.Xml;
 
 namespace Catch2Interface.Reporter
@@ -24,6 +25,13 @@ Class :
 */
     public class OverallResults
     {
+        #region Fields
+
+        private static NumberStyles _style   = NumberStyles.Float;
+        private static CultureInfo  _culture = CultureInfo.CreateSpecificCulture("en-US");
+
+        #endregion // Fields
+
         #region Properties
 
         public int      Successes { get; set; } = 0;
@@ -63,7 +71,7 @@ Class :
                 }
 
                 double duration = 0.0;
-                if (double.TryParse(node.Attributes["durationInSeconds"]?.Value, out duration))
+                if (double.TryParse(node.Attributes["durationInSeconds"]?.Value, _style, _culture, out duration))
                 {
                     Duration = new TimeSpan((Int64)(duration * TimeSpan.TicksPerSecond)); ;
                 }

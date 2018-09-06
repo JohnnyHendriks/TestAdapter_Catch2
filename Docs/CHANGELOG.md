@@ -8,6 +8,10 @@ Changes are relative to v1.0.0
 
 - Improve Additional info output with respect to section. Is now more like standard Catch2 output.
 
+### Bug fixes
+
+- Bug: Test durations in Test Explorer are wrong for systems setup with a decimal symbol that is not '.'. Fixed.
+
 ## Changes for v1.3.0
 
 ### Extended Features
