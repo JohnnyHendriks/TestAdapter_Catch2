@@ -137,7 +137,7 @@ Class :
                 LogDebug(output.Result);
                 Log = _logbuilder.ToString();
 
-                // Process testrun output (should have result from a single testcase)
+                // Process testrun output
                 return new TestResult(output.Result, testname, _settings);
             }
         }

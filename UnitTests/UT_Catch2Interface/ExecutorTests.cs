@@ -86,16 +86,14 @@ namespace UT_Catch2Interface
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             
             var result = executor.Run("Testset03.Tests01. 01p Basic", Path_Testset03);
-            Assert.IsTrue(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
             Assert.AreEqual(0, result.OverallResults.Failures);
             Assert.AreEqual(4, result.OverallResults.Successes);
             Assert.AreEqual(4, result.OverallResults.TotalAssertions);
 
             result = executor.Run("Testset03.Tests01. 01f Basic", Path_Testset03);
 
-            Assert.IsFalse(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.AreEqual(2, result.OverallResults.Failures);
             Assert.AreEqual(1, result.OverallResults.Successes);
             Assert.AreEqual(3, result.OverallResults.TotalAssertions);
@@ -108,32 +106,28 @@ namespace UT_Catch2Interface
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             
             var result = executor.Run("Testset02.Tests01. abcdefghijklmnopqrstuvwxyz", Path_Testset02);
-            Assert.IsTrue(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
             Assert.AreEqual(0, result.OverallResults.Failures);
             Assert.AreEqual(1, result.OverallResults.Successes);
 
             result = executor.Run("Testset02.Tests01. ZXYWVUTSRQPONMLKJIHGFEDCBA", Path_Testset02);
-            Assert.IsTrue(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
             Assert.AreEqual(0, result.OverallResults.Failures);
             Assert.AreEqual(1, result.OverallResults.Successes);
 
             result = executor.Run("Testset02.Tests01. 0123456789", Path_Testset02);
-            Assert.IsTrue(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
+
             Assert.AreEqual(0, result.OverallResults.Failures);
             Assert.AreEqual(1, result.OverallResults.Successes);
 
             result = executor.Run(@"Testset02.Tests01. []{}!@#$%^&*()_-+=|\?/><,~`';:", Path_Testset02);
-            Assert.IsTrue(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
             Assert.AreEqual(0, result.OverallResults.Failures);
             Assert.AreEqual(1, result.OverallResults.Successes);
 
             result = executor.Run("Testset02.Tests01. \"name\"", Path_Testset02);
-            Assert.IsTrue(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
             Assert.AreEqual(0, result.OverallResults.Failures);
             Assert.AreEqual(1, result.OverallResults.Successes);
 
@@ -141,17 +135,25 @@ namespace UT_Catch2Interface
             // cannot be called specifically via the Catch2 commandline.
             // Needs to be called in a special way.
             result = executor.Run(@"Testset02.Tests01. \", Path_Testset02);
-            Assert.IsTrue(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
             Assert.AreEqual(0, result.OverallResults.Failures);
-            Assert.AreEqual(6, result.OverallResults.Successes);
+            Assert.AreEqual(8, result.OverallResults.Successes);
 
             // No issues with '\' elsewhere in the name/
             result = executor.Run(@"\Testset02.Tests01. name", Path_Testset02);
-            Assert.IsTrue(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
             Assert.AreEqual(0, result.OverallResults.Failures);
             Assert.AreEqual(1, result.OverallResults.Successes);
+
+            // Another special case, test names that end in spaces.
+            // The spaces are lost in discovery resulting in the testcase not being found.
+            result = executor.Run(@"Testset02.Tests02. End with space", Path_Testset02);
+            Assert.AreEqual(result.Outcome, TestOutcomes.Skipped);
+            Assert.AreEqual(new TimeSpan(0), result.Duration);
+
+            result = executor.Run(@"Testset02.Tests02. End with spaces", Path_Testset02);
+            Assert.AreEqual(result.Outcome, TestOutcomes.Skipped);
+            Assert.AreEqual(new TimeSpan(0), result.Duration);
         }
 
         [TestMethod]
@@ -159,34 +161,29 @@ namespace UT_Catch2Interface
         {
             var settings = new Settings();
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
-            
+
             var result = executor.Run("Testset02.Tests02. abcdefghijklmnopqrstuvwxyz", Path_Testset02);
-            Assert.IsFalse(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.AreEqual(1, result.OverallResults.Failures);
             Assert.AreEqual(0, result.OverallResults.Successes);
 
             result = executor.Run("Testset02.Tests02. ZXYWVUTSRQPONMLKJIHGFEDCBA", Path_Testset02);
-            Assert.IsFalse(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.AreEqual(1, result.OverallResults.Failures);
             Assert.AreEqual(0, result.OverallResults.Successes);
 
             result = executor.Run("Testset02.Tests02. 0123456789", Path_Testset02);
-            Assert.IsFalse(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.AreEqual(1, result.OverallResults.Failures);
             Assert.AreEqual(0, result.OverallResults.Successes);
 
             result = executor.Run(@"Testset02.Tests02. []{}!@#$%^&*()_-+=|\?/><,~`';:", Path_Testset02);
-            Assert.IsFalse(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.AreEqual(1, result.OverallResults.Failures);
             Assert.AreEqual(0, result.OverallResults.Successes);
 
             result = executor.Run("Testset02.Tests02. \"name\"", Path_Testset02);
-            Assert.IsFalse(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.AreEqual(1, result.OverallResults.Failures);
             Assert.AreEqual(0, result.OverallResults.Successes);
 
@@ -194,17 +191,25 @@ namespace UT_Catch2Interface
             // cannot be called specifically via the Catch2 commandline.
             // Needs to be called in a special way.
             result = executor.Run(@"Testset02.Tests02. \", Path_Testset02);
-            Assert.IsFalse(result.Success);
-            Assert.IsFalse(result.TimedOut);
-            Assert.AreEqual(6, result.OverallResults.Failures);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
+            Assert.AreEqual(8, result.OverallResults.Failures);
             Assert.AreEqual(0, result.OverallResults.Successes);
 
             // No issues with '\' elsewhere in the name/
             result = executor.Run(@"\Testset02.Tests02. name", Path_Testset02);
-            Assert.IsFalse(result.Success);
-            Assert.IsFalse(result.TimedOut);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.AreEqual(1, result.OverallResults.Failures);
             Assert.AreEqual(0, result.OverallResults.Successes);
+
+            // Another special case, test names that end in spaces.
+            // The spaces are lost in discovery resulting in the testcase not being found.
+            result = executor.Run(@"Testset02.Tests02. End with space", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Skipped, result.Outcome);
+            Assert.AreEqual(new TimeSpan(0), result.Duration);
+
+            result = executor.Run(@"Testset02.Tests02. End with spaces", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Skipped, result.Outcome);
+            Assert.AreEqual(new TimeSpan(0), result.Duration);
         }
 
         [TestMethod]
@@ -215,8 +220,7 @@ namespace UT_Catch2Interface
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             
             var result = executor.Run("Wait forever", Path_Dummy);
-            Assert.IsFalse(result.Success);
-            Assert.IsTrue(result.TimedOut);
+            Assert.AreEqual(result.Outcome, TestOutcomes.Timedout);
             Assert.AreEqual(new TimeSpan(0,0,0,0,2000), result.Duration);
         }
 

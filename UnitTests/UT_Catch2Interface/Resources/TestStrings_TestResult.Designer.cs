@@ -94,12 +94,12 @@ namespace UT_Catch2Interface.Resources {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         ///&lt;Catch name=&quot;QDummy.exe&quot;&gt;
-        ///  &lt;Group name=&quot;QDummy.exe&quot;&gt;
-        ///    &lt;CaseTest name=&quot;Dummy&quot; filename=&quot;d:\dummy.cpp&quot; line=&quot;64&quot;&gt;
+        ///  &lt;BadGroup name=&quot;QDummy.exe&quot;&gt;
+        ///    &lt;TestCase name=&quot;Dummy&quot; filename=&quot;d:\dummy.cpp&quot; line=&quot;64&quot;&gt;
         ///      &lt;OverallResult success=&quot;true&quot; durationInSeconds=&quot;0.000981&quot;/&gt;
-        ///    &lt;/CaseTest&gt;
+        ///    &lt;/TestCase&gt;
         ///    &lt;OverallResults successes=&quot;6&quot; failures=&quot;0&quot; expectedFailures=&quot;0&quot;/&gt;
-        ///  &lt;/Group&gt;
+        ///  &lt;/BadGroup&gt;
         ///  &lt;OverallResults successes=&quot;6&quot; failures=&quot;1&quot; expectedFailures=&quot;0&quot;/&gt;
         ///&lt;/Catch&gt;.
         /// </summary>

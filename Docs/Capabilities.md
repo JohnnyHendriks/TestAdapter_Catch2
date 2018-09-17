@@ -31,9 +31,11 @@ Here `<Category>` may have several "." delimiters. This scheme helps me to keep 
 
 ### Special characters
 
-Be aware that trailing spaces are automatically removed from a test case name. Also, names ending in a backslash ("\\") cannot be called specifically by the **Test Adapter for Catch2**. As of v1.3.0 a workaround is used where basically the backslashes are stripped from the end of the name. Subsequently all tests that start with the remaining test name are called. So there is a chance more than one test case will be called. This is handled in the same way as test case names that differ only in case (see [below](#catch2-specific)).
+Be aware that names ending in a backslash ("\\") cannot be called specifically by the **Test Adapter for Catch2**. As of v1.3.0 a workaround is used where basically the backslashes are stripped from the end of the name. Subsequently all tests that start with the remaining test name are called. So there is a chance more than one test case will be called. This is handled in the same way as test case names that differ only in case (see [below](#catch2-specific)).
 
 If you want to call a specific test case from the command line you need to escape any comma, double quote, open square bracket and backslash characters (_i.e._, use "\\,", "\\"", "\\[" and "\\\\"). This is basically what the **Test Adapter for Catch2** does internally when it calls a test. Otherwise any printable ASCII character can be safely used in a test case name. No guarantees are given for the use of other characters (_e.g._, UTF-8).
+
+During test case name discovery trailing spaces are automatically removed from a test case name. Consequently, test cases with names that end in a space character cannot be specifically run by the **Test Adapter for Catch2**. 
 
 ### Catch2 specific
 

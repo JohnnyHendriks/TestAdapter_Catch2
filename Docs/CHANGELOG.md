@@ -7,6 +7,7 @@ Changes are relative to v1.0.0
 ### Extended Features
 
 - Improve Additional info output with respect to section. Is now more like standard Catch2 output.
+- Improve how is dealt with problematic test case names. Tests with such names are now marked as skipped, with an error message that suggests a possible solution.  
 
 ### Bug fixes
 

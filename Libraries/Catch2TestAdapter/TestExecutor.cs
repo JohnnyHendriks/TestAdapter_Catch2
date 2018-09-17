@@ -201,39 +201,50 @@ namespace Catch2TestAdapter
                 }
 
                 // Process test results
-                if( testresult.TimedOut )
+                switch (testresult.Outcome)
                 {
-                    LogVerbose(TestMessageLevel.Warning, "Time out");
-                    result.Outcome = TestOutcome.Skipped;
-                    result.ErrorMessage = testresult.ErrorMessage;
-                    result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, testresult.StandardOut));
-                    result.Duration = testresult.Duration;
-                }
-                else if( testresult.Cancelled )
-                {
-                    result.Outcome = TestOutcome.None;
-                }
-                else
-                {
-                    result.Outcome = testresult.Success ? TestOutcome.Passed : TestOutcome.Failed;
-                    result.Duration = testresult.Duration;
-                    result.ErrorMessage = testresult.ErrorMessage;
-                    result.ErrorStackTrace = testresult.ErrorStackTrace;
+                    case Catch2Interface.TestOutcomes.Timedout:
+                        LogVerbose(TestMessageLevel.Warning, "Time out");
+                        result.Outcome = TestOutcome.Skipped;
+                        result.ErrorMessage = testresult.ErrorMessage;
+                        result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, testresult.StandardOut));
+                        result.Duration = testresult.Duration;
+                        break;
+                    case Catch2Interface.TestOutcomes.Cancelled:
+                        result.Outcome = TestOutcome.None;
+                        break;
+                    case Catch2Interface.TestOutcomes.Skipped:
+                        result.Outcome = TestOutcome.Skipped;
+                        result.ErrorMessage = testresult.ErrorMessage;
+                        break;
+                    default:
+                        if( testresult.Outcome == Catch2Interface.TestOutcomes.Passed)
+                        {
+                            result.Outcome = TestOutcome.Passed;
+                        }
+                        else
+                        {
+                            result.Outcome = TestOutcome.Failed;
+                        }
+                        result.Duration = testresult.Duration;
+                        result.ErrorMessage = testresult.ErrorMessage;
+                        result.ErrorStackTrace = testresult.ErrorStackTrace;
 
-                    if( !string.IsNullOrEmpty(testresult.StandardOut) )
-                    {
-                        result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, testresult.StandardOut ));
-                    }
+                        if (!string.IsNullOrEmpty(testresult.StandardOut))
+                        {
+                            result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, testresult.StandardOut));
+                        }
 
-                    if( !string.IsNullOrEmpty(testresult.StandardError) )
-                    {
-                        result.Messages.Add(new TestResultMessage(TestResultMessage.StandardErrorCategory, testresult.StandardError ));
-                    }
+                        if (!string.IsNullOrEmpty(testresult.StandardError))
+                        {
+                            result.Messages.Add(new TestResultMessage(TestResultMessage.StandardErrorCategory, testresult.StandardError));
+                        }
 
-                    if( !string.IsNullOrEmpty(testresult.AdditionalInfo) )
-                    {
-                        result.Messages.Add(new TestResultMessage(TestResultMessage.AdditionalInfoCategory, testresult.AdditionalInfo ));
-                    }
+                        if (!string.IsNullOrEmpty(testresult.AdditionalInfo))
+                        {
+                            result.Messages.Add(new TestResultMessage(TestResultMessage.AdditionalInfoCategory, testresult.AdditionalInfo));
+                        }
+                        break;
                 }
             }
 

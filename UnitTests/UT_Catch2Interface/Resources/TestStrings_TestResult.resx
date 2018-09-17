@@ -147,12 +147,12 @@ It is invalid input.</value>
   <data name="InvalidXml" xml:space="preserve">
     <value>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;Catch name="QDummy.exe"&gt;
-  &lt;Group name="QDummy.exe"&gt;
-    &lt;CaseTest name="Dummy" filename="d:\dummy.cpp" line="64"&gt;
+  &lt;BadGroup name="QDummy.exe"&gt;
+    &lt;TestCase name="Dummy" filename="d:\dummy.cpp" line="64"&gt;
       &lt;OverallResult success="true" durationInSeconds="0.000981"/&gt;
-    &lt;/CaseTest&gt;
+    &lt;/TestCase&gt;
     &lt;OverallResults successes="6" failures="0" expectedFailures="0"/&gt;
-  &lt;/Group&gt;
+  &lt;/BadGroup&gt;
   &lt;OverallResults successes="6" failures="1" expectedFailures="0"/&gt;
 &lt;/Catch&gt;</value>
   </data>

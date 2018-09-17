@@ -20,7 +20,7 @@ namespace UT_Catch2Interface
             var settings = new Settings();
             var result = new Catch2Interface.TestResult(Resources.TestStrings_TestResult.Incomplete, "Dummy", settings);
 
-            Assert.IsFalse(result.Success);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.IsTrue(result.ErrorMessage.Contains("Invalid test runner output."));
         }
 
@@ -30,7 +30,7 @@ namespace UT_Catch2Interface
             var settings = new Settings();
             var result = new Catch2Interface.TestResult(Resources.TestStrings_TestResult.Invalid, "Dummy", settings);
 
-            Assert.IsFalse(result.Success);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.IsTrue(result.ErrorMessage.Contains("Invalid test runner output."));
         }
 
@@ -40,7 +40,7 @@ namespace UT_Catch2Interface
             var settings = new Settings();
             var result = new Catch2Interface.TestResult(Resources.TestStrings_TestResult.InvalidXml, "Dummy", settings);
 
-            Assert.IsFalse(result.Success);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.IsTrue(result.ErrorMessage.Contains("Invalid test runner output."));
         }
 
@@ -50,7 +50,7 @@ namespace UT_Catch2Interface
             var settings = new Settings();
             var result = new Catch2Interface.TestResult(Resources.TestStrings_TestResult.MultipleTestCases, "dummy", settings);
 
-            Assert.IsTrue(result.Success);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
             Assert.IsFalse(result.ErrorMessage.Contains("Invalid test runner output."));
         }
 
@@ -60,7 +60,7 @@ namespace UT_Catch2Interface
             var settings = new Settings();
             var result = new Catch2Interface.TestResult(Resources.TestStrings_TestResult.MultipleTestCases, "Dummy", settings);
 
-            Assert.IsFalse(result.Success);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.IsFalse(result.ErrorMessage.Contains("Invalid test runner output."));
         }
 
@@ -70,7 +70,7 @@ namespace UT_Catch2Interface
             var settings = new Settings();
             var result = new Catch2Interface.TestResult(Resources.TestStrings_TestResult.MultipleTestCases, "DUMMY", settings);
 
-            Assert.IsFalse(result.Success);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.IsTrue(result.ErrorMessage.Contains("Invalid test runner output."));
         }
 
@@ -80,7 +80,7 @@ namespace UT_Catch2Interface
             var settings = new Settings();
             var result = new Catch2Interface.TestResult(Resources.TestStrings_TestResult.PostXmlText, "Dummy", settings);
 
-            Assert.IsFalse(result.Success);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
             Assert.IsFalse(result.ErrorMessage.Contains("Invalid test runner output."));
         }
 
@@ -91,7 +91,7 @@ namespace UT_Catch2Interface
             var settings = new Settings();
             var result = new Catch2Interface.TestResult(Resources.TestStrings_TestResult.SingleTestCase, "Dummy", settings);
 
-            Assert.IsTrue(result.Success);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
             Assert.IsFalse(result.ErrorMessage.Contains("Invalid test runner output."));
         }
 
@@ -101,7 +101,7 @@ namespace UT_Catch2Interface
             var settings = new Settings();
             var result = new Catch2Interface.TestResult(Resources.TestStrings_TestResult.SingleTestCase, "OtherName", settings);
 
-            Assert.IsTrue(result.Success);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
             Assert.IsFalse(result.ErrorMessage.Contains("Invalid test runner output."));
         }
     }

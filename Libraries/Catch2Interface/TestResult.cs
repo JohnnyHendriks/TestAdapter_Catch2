@@ -21,6 +21,20 @@ namespace Catch2Interface
 {
 
 /*YAML
+Enum :
+  Description : >
+    This enum represents the test result outcomes.
+*/
+    public enum TestOutcomes
+    {
+        Cancelled,
+        Failed,
+        Passed,
+        Skipped,
+        Timedout
+    }
+
+/*YAML
 Class :
   Description : >
     This class is intended as a kind of mirror for the
@@ -53,7 +67,7 @@ Class :
 
         public TestResult()
         {
-            Cancelled = true;
+            Outcome = TestOutcomes.Cancelled;
         }
 
         public TestResult(string xmloutput, string testname, Settings settings)
@@ -68,8 +82,8 @@ Class :
                          , string msg
                          , string standardout )
         {
-            TimedOut = true;
             Duration = duration;
+            Outcome = TestOutcomes.Timedout;
             StandardOut = standardout;
         }
         #endregion // Costructor
@@ -87,10 +101,7 @@ Class :
         public string StandardOut { get; private set; }
         public string StandardError { get; private set; }
 
-        public bool Cancelled { get; private set; } = false;
-        public bool TimedOut { get; private set; } = false;
-
-        public bool Success { get; private set; } = false;
+        public TestOutcomes Outcome { get; private set; }
 
         #endregion // Properties
 
@@ -365,25 +376,39 @@ Class :
             var nodesTestCases = nodeGroup.SelectNodes("TestCase");
 
             _testcasecount = nodesTestCases.Count;
-            foreach (XmlNode nodeTestCase in nodesTestCases)
+
+            if(_testcasecount == 0)
             {
-                var testcase = new Reporter.TestCase(nodeTestCase);
-                if(_testcasecount != 1 && testcase.Name != _testname) continue;
-
-                _testcase = testcase;
-
-                Success = _testcase.OverallResult.Success;
-                Duration = _testcase.OverallResult.Duration;
-                StandardOut = _testcase.OverallResult.StdOut;
-                StandardError = _testcase.OverallResult.StdErr;
-
-                ExtractMessages();
-
-                // Statistics
-                ExtractOverallResults(nodeGroup);
-
-                GenerateMessages();
+                // Special case. It appears the used test case name could not be found by Catch2.
+                // As such the test case is effectively skipped.
+                // This is an edge case that can typically be resolved by changing the test case name.
+                // So tell the user about it.
+                Outcome = TestOutcomes.Skipped;
+                ErrorMessage = $"Testcase could not be run. Probably the used testcase name is the cause. Change the testcase name and try again. Typically, this problem is encountered when the last character of the testcase name is a space.";
                 return;
+            }
+            else
+            {
+                foreach (XmlNode nodeTestCase in nodesTestCases)
+                {
+                    var testcase = new Reporter.TestCase(nodeTestCase);
+                    if(_testcasecount != 1 && testcase.Name != _testname) continue;
+
+                    _testcase = testcase;
+
+                    Outcome = _testcase.OverallResult.Success ? TestOutcomes.Passed : TestOutcomes.Failed;
+                    Duration = _testcase.OverallResult.Duration;
+                    StandardOut = _testcase.OverallResult.StdOut;
+                    StandardError = _testcase.OverallResult.StdErr;
+
+                    ExtractMessages();
+
+                    // Statistics
+                    ExtractOverallResults(nodeGroup);
+
+                    GenerateMessages();
+                    return;
+                }
             }
 
             SetInvalidTestRunnerOutput();
@@ -475,7 +500,7 @@ Class :
         }
         private void SetInvalidTestRunnerOutput()
         {
-            Success = false;
+            Outcome = TestOutcomes.Failed;
             OverallResults = new Reporter.OverallResults();
             ErrorMessage = $"Invalid test runner output.{Environment.NewLine}"
                          + $"-------------------------------------------------------------------------------{Environment.NewLine}"
