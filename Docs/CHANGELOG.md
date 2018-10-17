@@ -2,7 +2,7 @@
 
 Changes are relative to v1.0.0
 
-## Changes for next version
+## Changes for v1.4.0
 
 ### Extended Features
 

@@ -1,3 +1,11 @@
+Release Notes for v1.4.0 of the Test Adapter for Catch2
+This version is mostly a bug fix release.
+# Extended Features
+- Improve Additional info output with respect to section. Is now more like standard Catch2 output.
+- Improve how is dealt with problematic test case names. Tests with such names are now marked as skipped, with an error message that suggests a possible solution.  
+# Bug fixes
+- Bug: Test durations in Test Explorer are wrong for systems setup with a decimal symbol that is not '.'. Fixed.
+
 Release Notes for v1.3.0 of the Test Adapter for Catch2
 This version is mostly a bug fix release.
 # Extended Features
