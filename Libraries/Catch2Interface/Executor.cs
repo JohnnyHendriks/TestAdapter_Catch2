@@ -164,7 +164,10 @@ Class :
                     break;
             }
 
-            return Path.GetFullPath( Path.Combine(root, _settings.WorkingDirectory) );
+            var workdir = Path.GetFullPath(Path.Combine(root, _settings.WorkingDirectory));
+            Directory.CreateDirectory(workdir); // Make sure directory exists
+
+            return workdir;
         }
 
         #endregion // Public Methods

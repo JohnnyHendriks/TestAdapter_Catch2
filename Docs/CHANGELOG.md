@@ -2,6 +2,12 @@
 
 Changes are relative to v1.0.0
 
+## Changes for next release
+
+### Bug fixes
+
+- Bug: When tests are run via "Debug Selected Tests" the working directory is set incorrectly. Fixed.
+
 ## Changes for v1.4.0
 
 ### Extended Features

@@ -184,7 +184,7 @@ namespace Catch2TestAdapter
                 LogVerbose(TestMessageLevel.Informational, "Start debug run.");
                 _frameworkHandle
                     .LaunchProcessWithDebuggerAttached( test.Source
-                                                      , null
+                                                      , _executor.WorkingDirectory(test.Source)
                                                       , _executor.GenerateCommandlineArguments(test.DisplayName, true)
                                                       , null );
 
