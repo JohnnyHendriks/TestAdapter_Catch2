@@ -70,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel">
-      <Version>15.7.2</Version>
+      <Version>15.9.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

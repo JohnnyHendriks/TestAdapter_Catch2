@@ -2,6 +2,10 @@
 
 Changes are relative to v1.0.0
 
+## Changes for v1.4.1
+
+This version adds support for VS2019. It also updates the Microsoft.TestPlatform.ObjectModel to version 15.9.0.
+
 ## Changes for v1.4.0
 
 ### Extended Features
