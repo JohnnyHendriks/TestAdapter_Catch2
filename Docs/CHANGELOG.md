@@ -2,15 +2,13 @@
 
 Changes are relative to v1.0.0
 
-## Changes for next release
+## Changes for v1.4.2
+
+This version adds support for VS2019. It also updates the Microsoft.TestPlatform.ObjectModel to version 15.9.0.
 
 ### Bug fixes
 
 - Bug: When tests are run via "Debug Selected Tests" the working directory is set incorrectly. Fixed.
-
-## Changes for v1.4.1
-
-This version adds support for VS2019. It also updates the Microsoft.TestPlatform.ObjectModel to version 15.9.0.
 
 ## Changes for v1.4.0
 

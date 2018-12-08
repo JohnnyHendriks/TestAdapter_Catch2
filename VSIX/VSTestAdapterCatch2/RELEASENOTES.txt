@@ -1,5 +1,8 @@
 Release Notes for v1.4.1 of the Test Adapter for Catch2
 This version adds support for VS2019. It also updates the Microsoft.TestPlatform.ObjectModel to version 15.9.0.
+# Bug fixes
+- Bug: When tests are run via "Debug Selected Tests" the working directory is set incorrectly. Fixed.
+
 Release Notes for v1.4.0 of the Test Adapter for Catch2
 This version is mostly a bug fix release.
 # Extended Features
