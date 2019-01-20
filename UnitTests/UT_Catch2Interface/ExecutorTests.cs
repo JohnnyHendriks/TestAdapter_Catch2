@@ -137,7 +137,7 @@ namespace UT_Catch2Interface
             result = executor.Run(@"Testset02.Tests01. \", Path_Testset02);
             Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
             Assert.AreEqual(0, result.OverallResults.Failures);
-            Assert.AreEqual(8, result.OverallResults.Successes);
+            Assert.AreEqual(10, result.OverallResults.Successes);
 
             // No issues with '\' elsewhere in the name/
             result = executor.Run(@"\Testset02.Tests01. name", Path_Testset02);
@@ -146,14 +146,30 @@ namespace UT_Catch2Interface
             Assert.AreEqual(1, result.OverallResults.Successes);
 
             // Another special case, test names that end in spaces.
-            // The spaces are lost in discovery resulting in the testcase not being found.
+            // The spaces are lost in (xml) discovery resulting in the testcase not being found.
             result = executor.Run(@"Testset02.Tests02. End with space", Path_Testset02);
-            Assert.AreEqual(result.Outcome, TestOutcomes.Skipped);
+            Assert.AreEqual(TestOutcomes.Skipped, result.Outcome);
             Assert.AreEqual(new TimeSpan(0), result.Duration);
 
             result = executor.Run(@"Testset02.Tests02. End with spaces", Path_Testset02);
-            Assert.AreEqual(result.Outcome, TestOutcomes.Skipped);
+            Assert.AreEqual(TestOutcomes.Skipped, result.Outcome);
             Assert.AreEqual(new TimeSpan(0), result.Duration);
+
+            // Test cases with very long names
+            result = executor.Run(@"Testset02Tests01LongName01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
+            Assert.AreEqual(0, result.OverallResults.Failures);
+            Assert.AreEqual(1, result.OverallResults.Successes);
+
+            result = executor.Run(@"Testset02.Tests01. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
+            Assert.AreEqual(0, result.OverallResults.Failures);
+            Assert.AreEqual(1, result.OverallResults.Successes);
+
+            result = executor.Run(@"Testset02.Tests01. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
+            Assert.AreEqual(0, result.OverallResults.Failures);
+            Assert.AreEqual(1, result.OverallResults.Successes);
         }
 
         [TestMethod]
@@ -192,7 +208,7 @@ namespace UT_Catch2Interface
             // Needs to be called in a special way.
             result = executor.Run(@"Testset02.Tests02. \", Path_Testset02);
             Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
-            Assert.AreEqual(8, result.OverallResults.Failures);
+            Assert.AreEqual(10, result.OverallResults.Failures);
             Assert.AreEqual(0, result.OverallResults.Successes);
 
             // No issues with '\' elsewhere in the name/
@@ -210,6 +226,22 @@ namespace UT_Catch2Interface
             result = executor.Run(@"Testset02.Tests02. End with spaces", Path_Testset02);
             Assert.AreEqual(TestOutcomes.Skipped, result.Outcome);
             Assert.AreEqual(new TimeSpan(0), result.Duration);
+
+            // Test cases with very long names
+            result = executor.Run(@"Testset02Tests02LongName01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
+            Assert.AreEqual(1, result.OverallResults.Failures);
+            Assert.AreEqual(0, result.OverallResults.Successes);
+
+            result = executor.Run(@"Testset02.Tests02. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
+            Assert.AreEqual(1, result.OverallResults.Failures);
+            Assert.AreEqual(0, result.OverallResults.Successes);
+
+            result = executor.Run(@"Testset02.Tests02. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
+            Assert.AreEqual(1, result.OverallResults.Failures);
+            Assert.AreEqual(0, result.OverallResults.Successes);
         }
 
         [TestMethod]

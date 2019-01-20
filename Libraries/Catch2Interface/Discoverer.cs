@@ -36,6 +36,7 @@ Class :
 
         private static readonly Regex _rgxDefaultFirstLine = new Regex(@"^All available test cases:|^Matching test cases:");
         private static readonly Regex _rgxDefaultTestCaseLine = new Regex(@"^[ ]{2}([^ ].*)");
+        private static readonly Regex _rgxDefaultTestCaseLineExtented = new Regex(@"^[ ]{4}([^ ].*)");
         private static readonly Regex _rgxDefaultTagsLine = new Regex(@"^[ ]{6}([^ ].*)");
 
         #endregion // Fields
@@ -227,17 +228,89 @@ Class :
                 {
                     if(_rgxDefaultTestCaseLine.IsMatch(line))
                     {
-                        // Create testcase
+                        // Contrsuct Test Case name
                         var match = _rgxDefaultTestCaseLine.Match(line);
-                        var testcase = new TestCase();
-                        testcase.Name = match.Groups[1].Value;
-                        testcase.Source = source;
+                        string testcasename = match.Groups[1].Value;
 
                         line = reader.ReadLine();
-                        if(line != null && _rgxDefaultTagsLine.IsMatch(line))
+                        if(line != null && _rgxDefaultTestCaseLineExtented.IsMatch(line))
                         {
-                            testcase.Tags = Reporter.TestCase.ExtractTags(line);
+                            if(testcasename.EndsWith("-"))
+                            {
+                                if(testcasename.Length == 77)
+                                {
+                                    testcasename = testcasename.Substring(0,76);
+                                }
+                            }
+                            else
+                            {
+                                testcasename += " ";
+                            }
+                            match = _rgxDefaultTestCaseLineExtented.Match(line);
+                            string extend = match.Groups[1].Value;
                             line = reader.ReadLine();
+                            while(line != null && _rgxDefaultTestCaseLineExtented.IsMatch(line))
+                            {
+                                if(extend.EndsWith("-"))
+                                {
+                                    if(extend.Length == 75)
+                                    {
+                                        extend = extend.Substring(0,74);
+                                    }
+                                }
+                                else
+                                {
+                                    extend += " ";
+                                }
+                                testcasename += extend;
+                                match = _rgxDefaultTestCaseLineExtented.Match(line);
+                                extend = match.Groups[1].Value;
+
+                                line = reader.ReadLine();
+                            }
+                            testcasename += extend;
+                        }
+
+                        // Create testcase
+                        var testcase = new TestCase();
+                        testcase.Name = testcasename;
+                        testcase.Source = source;
+
+                        // Add Tags
+                        {
+                            string tagstr = "";
+                            while(line != null && _rgxDefaultTagsLine.IsMatch(line))
+                            {
+                                var matchtag = _rgxDefaultTagsLine.Match(line);
+                                string tagline = matchtag.Groups[1].Value;
+
+                                if(tagline.EndsWith("]"))
+                                {
+                                    tagstr += tagline;
+                                }
+                                else
+                                {
+                                    if(tagline.EndsWith("-"))
+                                    {
+                                        if(tagline.Length == 73)
+                                        {
+                                            tagstr += tagline.Substring(0,72);
+                                        }
+                                        else
+                                        {
+                                            tagstr += tagline;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        tagstr += tagline + " ";
+                                    }
+                                }
+
+                                line = reader.ReadLine();
+                            }
+                            var tags = Reporter.TestCase.ExtractTags(tagstr);
+                            testcase.Tags = tags;
                         }
 
                         // Add testcase

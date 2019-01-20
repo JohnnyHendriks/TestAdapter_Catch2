@@ -117,6 +117,186 @@ namespace UT_Catch2Interface
         }
 
         [TestMethod]
+        public void TestGetTestsManyTags()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--list-tests \"Testset02.Tests07. Manytags\"";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Testset02 };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(1, tests.Count);
+            Assert.AreEqual(15, tests[0].Tags.Count);
+            Assert.AreEqual("Manytags1" , tests[0].Tags[0]);
+            Assert.AreEqual("Manytags10", tests[0].Tags[1]);
+            Assert.AreEqual("Manytags11", tests[0].Tags[2]);
+            Assert.AreEqual("Manytags12", tests[0].Tags[3]);
+            Assert.AreEqual("Manytags13", tests[0].Tags[4]);
+            Assert.AreEqual("Manytags14", tests[0].Tags[5]);
+            Assert.AreEqual("Manytags15", tests[0].Tags[6]);
+            Assert.AreEqual("Manytags2" , tests[0].Tags[7]);
+            Assert.AreEqual("Manytags3" , tests[0].Tags[8]);
+            Assert.AreEqual("Manytags4" , tests[0].Tags[9]);
+            Assert.AreEqual("Manytags5" , tests[0].Tags[10]);
+            Assert.AreEqual("Manytags6" , tests[0].Tags[11]);
+            Assert.AreEqual("Manytags7" , tests[0].Tags[12]);
+            Assert.AreEqual("Manytags8" , tests[0].Tags[13]);
+            Assert.AreEqual("Manytags9" , tests[0].Tags[14]);
+        }
+
+        [TestMethod]
+        public void TestGetTestsManyTagsD()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--discover \"Testset02.Tests07. Manytags\"";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Testset02 };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(1, tests.Count);
+            Assert.AreEqual(15, tests[0].Tags.Count);
+            Assert.AreEqual("Manytags1" , tests[0].Tags[0]);
+            Assert.AreEqual("Manytags10", tests[0].Tags[1]);
+            Assert.AreEqual("Manytags11", tests[0].Tags[2]);
+            Assert.AreEqual("Manytags12", tests[0].Tags[3]);
+            Assert.AreEqual("Manytags13", tests[0].Tags[4]);
+            Assert.AreEqual("Manytags14", tests[0].Tags[5]);
+            Assert.AreEqual("Manytags15", tests[0].Tags[6]);
+            Assert.AreEqual("Manytags2" , tests[0].Tags[7]);
+            Assert.AreEqual("Manytags3" , tests[0].Tags[8]);
+            Assert.AreEqual("Manytags4" , tests[0].Tags[9]);
+            Assert.AreEqual("Manytags5" , tests[0].Tags[10]);
+            Assert.AreEqual("Manytags6" , tests[0].Tags[11]);
+            Assert.AreEqual("Manytags7" , tests[0].Tags[12]);
+            Assert.AreEqual("Manytags8" , tests[0].Tags[13]);
+            Assert.AreEqual("Manytags9" , tests[0].Tags[14]);
+        }
+
+        [TestMethod]
+        public void TestGetTestsLongTag1()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--list-tests \"Testset02.Tests07. Longtag1\"";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Testset02 };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(1, tests.Count);
+            Assert.AreEqual(1, tests[0].Tags.Count);
+            Assert.AreEqual("Long tag 01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+                           , tests[0].Tags[0] );
+        }
+
+        [TestMethod]
+        public void TestGetTestsLongTag1D()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--discover \"Testset02.Tests07. Longtag1\"";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Testset02 };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(1, tests.Count);
+            Assert.AreEqual(1, tests[0].Tags.Count);
+            Assert.AreEqual("Long tag 01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+                           , tests[0].Tags[0] );
+        }
+
+        [TestMethod]
+        public void TestGetTestsLongTag2()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--list-tests \"Testset02.Tests07. Longtag2\"";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Testset02 };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(1, tests.Count);
+            Assert.AreEqual(1, tests[0].Tags.Count);
+            Assert.AreEqual("This is a long tag name, a very long tag name. Did I say it was a long tag name. Yes, it is a long tag name and it just growing and growing and growing. Where it ends, well it doesn't end here. It ends all the way over here."
+                           , tests[0].Tags[0] );
+        }
+
+        [TestMethod]
+        public void TestGetTestsLongTag2D()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--discover \"Testset02.Tests07. Longtag2\"";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Testset02 };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(1, tests.Count);
+            Assert.AreEqual(1, tests[0].Tags.Count);
+            Assert.AreEqual("This is a long tag name, a very long tag name. Did I say it was a long tag name. Yes, it is a long tag name and it just growing and growing and growing. Where it ends, well it doesn't end here. It ends all the way over here."
+                           , tests[0].Tags[0] );
+        }
+
+        [TestMethod]
+        public void TestGetTestsCaseNames()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--list-tests Testset02.Tests01.*";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Testset02 };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(10, tests.Count);
+            Assert.AreEqual("Testset02.Tests01. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
+            Assert.AreEqual("Testset02.Tests01. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
+            Assert.AreEqual("Testset02.Tests01. 0123456789"                     , tests[2].Name );
+            Assert.AreEqual("Testset02.Tests01. []{}!@#$%^&*()_-+=|\\?/><,~`';:", tests[3].Name );
+            Assert.AreEqual("Testset02.Tests01. \"name\""                       , tests[4].Name );
+            Assert.AreEqual("Testset02.Tests01. \\"                             , tests[5].Name );
+            Assert.AreEqual("Testset02.Tests01. End with space "                , tests[6].Name );
+            Assert.AreEqual("Testset02.Tests01. End with spaces   "             , tests[7].Name );
+            Assert.AreEqual("Testset02.Tests01. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+                           , tests[8].Name );
+            Assert.AreEqual("Testset02.Tests01. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
+                           , tests[9].Name );
+        }
+
+        [TestMethod]
+        public void TestGetTestsCaseNamesD()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--discover Testset02.Tests01.*";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Testset02 };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(10, tests.Count);
+            Assert.AreEqual("Testset02.Tests01. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
+            Assert.AreEqual("Testset02.Tests01. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
+            Assert.AreEqual("Testset02.Tests01. 0123456789"                     , tests[2].Name );
+            Assert.AreEqual("Testset02.Tests01. []{}!@#$%^&*()_-+=|\\?/><,~`';:", tests[3].Name );
+            Assert.AreEqual("Testset02.Tests01. \"name\""                       , tests[4].Name );
+            Assert.AreEqual("Testset02.Tests01. \\"                             , tests[5].Name );
+            Assert.AreEqual("Testset02.Tests01. End with space"                 , tests[6].Name ); // Name is trimmed
+            Assert.AreEqual("Testset02.Tests01. End with spaces"                , tests[7].Name ); // Name is trimmed
+            Assert.AreEqual("Testset02.Tests01. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+                           , tests[8].Name );
+            Assert.AreEqual("Testset02.Tests01. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
+                           , tests[9].Name );
+        }
+
+        [TestMethod]
         public void TestGetTestsDefaultTag1NoHidden()
         {
             var settings = new Settings();

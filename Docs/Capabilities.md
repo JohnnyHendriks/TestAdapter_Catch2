@@ -35,7 +35,17 @@ Be aware that names ending in a backslash ("\\") cannot be called specifically b
 
 If you want to call a specific test case from the command line you need to escape any comma, double quote, open square bracket and backslash characters (_i.e._, use "\\,", "\\"", "\\[" and "\\\\"). This is basically what the **Test Adapter for Catch2** does internally when it calls a test. Otherwise any printable ASCII character can be safely used in a test case name. No guarantees are given for the use of other characters (_e.g._, UTF-8).
 
-During test case name discovery trailing spaces are automatically removed from a test case name. Consequently, test cases with names that end in a space character cannot be specifically run by the **Test Adapter for Catch2**. 
+During test case name discovery trailing spaces are automatically removed from a test case name in case xml based custom discovery is used that makes use of the build in Catch2 xml reporter. Consequently, test cases with names that end in a space character cannot be specifically run by the **Test Adapter for Catch2** in this case.
+
+### Long test case names
+
+When default test discovery is used (_i.e._, using the "--list-tests" or "-l" Catch2 discovery option), long test case names are split over multiple lines during discovery when they contain more than 77 characters. In the resulting split some information may be lost. Typically, a split may occur at the location of a space character. Should that location be a sequence of multiple space characters then information about the additional space characters is lost. The result is that though the test will show up in the Test Explorer, it cannot be run from the Test Explorer.
+
+Very long character sequences without spaces may get split as well in which case a dash '-' is added to indicate the split. There are corner cases where a dash is part of the name but may be interpreted as a split character. This would again result in in an inability to run the test from the Test Explorer.
+
+Basically, it is assumed that the split of the line requires a single space to be added to the name at that point. Note, this also is assumed if the split occurs at the '.' character. Similar restrictions apply to the Tag names.
+
+Note, when a [customized discovery mechanism](Settings.md#discovercommandline) is used, these problems do not occur.
 
 ### Catch2 specific
 

@@ -96,7 +96,7 @@ Class :
         public static List<string> ExtractTags(string str)
         {
             var tags = new List<string>();
-            if (str != null)
+            if (!string.IsNullOrEmpty(str))
             {
                 foreach (Match match in Constants.Rgx_Tags.Matches(str))
                 {

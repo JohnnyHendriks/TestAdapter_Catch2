@@ -2,6 +2,12 @@
 
 Changes are relative to v1.0.0
 
+## Changes for next release
+
+### Bug fixes
+
+- Bug: Test cases and tags with long names are not detected correctly using default discovery settings. Mostly fixed, there are a few corner cases that cannot be fixed.
+
 ## Changes for v1.4.2
 
 This version adds support for VS2019. It also updates the Microsoft.TestPlatform.ObjectModel to version 15.9.0.
