@@ -4,6 +4,14 @@ Changes are relative to v1.0.0
 
 ## Changes for next release
 
+### Extended Features
+
+- Added support for verbose default discovery. This enables creating a source file link to the position of a test case for easy navigation via the Test Explorer, by using default discovery. This removes the need to add a custom Xml-based discovery mechanism to enable this test case navigation feature in the Test Explorer.
+
+### Changes to defaults
+
+- The default value for `<DiscoverCommandLine>` has been set to `--verbosity high --list-tests *`, this enables creating a source file link to the position of a test case for easy navigation via the Test Explorer.
+
 ### Bug fixes
 
 - Bug: Test cases and tags with long names are not detected correctly using default discovery settings. Mostly fixed, there are a few corner cases that cannot be fixed.

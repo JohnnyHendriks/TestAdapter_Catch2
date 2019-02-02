@@ -82,9 +82,10 @@ Class :
         #region Fields
 
         // Regex
-        static readonly Regex _rgxDefaultDiscover = new Regex(@"^(--list-tests|-l|--list-test-names-only)( .*)?$", RegexOptions.Singleline);
-        static readonly Regex _rgxTestNamesOnly = new Regex(@"^(--list-test-names-only)( .*)?$", RegexOptions.Singleline);
+        static readonly Regex _rgxDefaultDiscover = new Regex(@"(--list-tests|-l|--list-test-names-only)( .*)?$", RegexOptions.Singleline);
+        static readonly Regex _rgxTestNamesOnly = new Regex(@"(--list-test-names-only)( .*)?$", RegexOptions.Singleline);
         static readonly Regex _rgxValidDiscover = new Regex(@"^(--[a-zA-Z]|-[a-zA-Z])", RegexOptions.Singleline);
+        static readonly Regex _rgxVerbosityHigh = new Regex(@"(--verbosity|-v)( *high)( .*)?$", RegexOptions.Singleline);
 
         static readonly Regex _rgxLogLevel_Debug = new Regex(@"^(?i:debug)$", RegexOptions.Singleline);
         static readonly Regex _rgxLogLevel_Normal = new Regex(@"^(?i:normal)$", RegexOptions.Singleline);
@@ -122,6 +123,7 @@ Class :
         public WorkingDirectoryRoots WorkingDirectoryRoot {  get; set; }      = Constants.S_DefaultWorkingDirectoryRoot;
 
         public bool HasValidDiscoveryCommandline => _rgxValidDiscover.IsMatch(DiscoverCommandLine);
+        public bool IsVerbosityHigh => _rgxVerbosityHigh.IsMatch(DiscoverCommandLine);
         public bool UseXmlDiscovery => !_rgxDefaultDiscover.IsMatch(DiscoverCommandLine);
         public bool UsesTestNameOnlyDiscovery => _rgxTestNamesOnly.IsMatch(DiscoverCommandLine);
 

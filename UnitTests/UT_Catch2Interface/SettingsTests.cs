@@ -57,7 +57,7 @@ namespace UT_Catch2Interface
             Assert.IsFalse(settings.Disabled);
 
             Assert.IsFalse(settings.DebugBreak);
-            Assert.AreEqual("--list-tests *", settings.DiscoverCommandLine);
+            Assert.AreEqual("--verbosity high --list-tests *", settings.DiscoverCommandLine);
             Assert.AreEqual(1000, settings.DiscoverTimeout);
             Assert.AreEqual(string.Empty, settings.FilenameFilter);
             Assert.IsTrue(settings.IncludeHidden);
@@ -67,6 +67,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(",", settings.StacktracePointReplacement);
             Assert.AreEqual(-1, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -92,6 +93,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual("_", settings.StacktracePointReplacement);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -117,6 +119,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -143,6 +146,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -169,6 +173,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual("_", settings.StacktracePointReplacement);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -194,6 +199,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -219,6 +225,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -244,6 +251,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -269,6 +277,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -294,6 +303,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -319,6 +329,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -344,6 +355,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -369,6 +381,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -394,6 +407,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -419,6 +433,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -444,6 +459,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -469,6 +485,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -494,6 +511,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -519,6 +537,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -544,6 +563,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -569,6 +589,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -594,6 +615,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -619,6 +641,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual("_", settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -644,6 +667,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -669,6 +693,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
@@ -694,111 +719,477 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
-        public void TestDiscoverCommandLine()
+        public void TestDiscoverCommandLineEmpty()
         {
             var settings = new Settings();
 
             // Empty
+            Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
+        }
+
+        [TestMethod]
+        public void TestDiscoverCommandLineDefault()
+        {
+            var settings = new Settings();
+
             // Default discovery
 
             settings.DiscoverCommandLine = "--list-tests";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests [Tag]";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests *";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests bla bla bla";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l [Tag]";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l *";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l bla bla bla";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only [Tag]";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only *";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only bla bla bla";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
+        }
+
+        [TestMethod]
+        public void TestDiscoverCommandLineDefaultVerbose1()
+        {
+            var settings = new Settings();
+
+            // Default discovery - "--verbosity high" in front
+
+            settings.DiscoverCommandLine = "--verbosity high --list-tests";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--verbosity high -l";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--verbosity high --list-test-names-only";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--verbosity high --list-tests [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--verbosity high --list-tests *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--verbosity high --list-tests bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--verbosity high -l [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--verbosity high -l *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--verbosity high -l bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--verbosity high --list-test-names-only [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--verbosity high --list-test-names-only *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--verbosity high --list-test-names-only bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+        }
+
+        [TestMethod]
+        public void TestDiscoverCommandLineDefaultVerbose2()
+        {
+            var settings = new Settings();
+
+            // Default discovery - "-v high" in front
+
+            settings.DiscoverCommandLine = "-v high --list-tests";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-v high -l";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-v high --list-test-names-only";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-v high --list-tests [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-v high --list-tests *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-v high --list-tests bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-v high -l [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-v high -l *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-v high -l bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-v high --list-test-names-only [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-v high --list-test-names-only *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-v high --list-test-names-only bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+        }
+
+        [TestMethod]
+        public void TestDiscoverCommandLineDefaultVerbose3()
+        {
+            var settings = new Settings();
+
+            // Default discovery - "--verbosity high" in behind
+
+            settings.DiscoverCommandLine = "--list-tests --verbosity high";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-l --verbosity high";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-test-names-only --verbosity high";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-tests --verbosity high [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-tests --verbosity high *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-tests --verbosity high bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-l --verbosity high [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-l --verbosity high *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-l --verbosity high bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-test-names-only --verbosity high [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-test-names-only --verbosity high *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-test-names-only --verbosity high bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+        }
+
+        [TestMethod]
+        public void TestDiscoverCommandLineDefaultVerbose4()
+        {
+            var settings = new Settings();
+
+            // Default discovery - "-v high" in behind
+
+            settings.DiscoverCommandLine = "--list-tests -v high";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-l -v high";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-test-names-only -v high";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-tests -v high [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-tests -v high *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-tests -v high bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-l -v high [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-l -v high *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "-l -v high bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-test-names-only -v high [Tag]";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-test-names-only -v high *";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+            settings.DiscoverCommandLine = "--list-test-names-only -v high bla bla bla";
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
+
+        }
+
+        [TestMethod]
+        public void TestDiscoverCommandLineXml()
+        {
+            var settings = new Settings();
+
             // Xml Discovery
             settings.DiscoverCommandLine = "--discover";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
 
             settings.DiscoverCommandLine = "-z";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
 
             settings.DiscoverCommandLine = "-d yes";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
 
             settings.DiscoverCommandLine = "--duration no";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
 
+        }
+
+        [TestMethod]
+        public void TestDiscoverCommandLineInvalid()
+        {
+            var settings = new Settings();
+
             // Invalid
             settings.DiscoverCommandLine = "duration no";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsFalse(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "[Tag]";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsFalse(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "bla bla bla";
+            Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsFalse(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);

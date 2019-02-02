@@ -51,6 +51,40 @@ namespace UT_Catch2Interface
 
             tests = discoverer.GetTests(sources2) as List<TestCase>;
             Assert.AreEqual(7, tests.Count);
+            Assert.AreEqual(-1, tests[0].Line);
+            Assert.AreEqual(-1, tests[1].Line);
+            Assert.AreEqual(-1, tests[2].Line);
+            Assert.AreEqual(-1, tests[3].Line);
+            Assert.AreEqual(-1, tests[4].Line);
+            Assert.AreEqual(-1, tests[5].Line);
+            Assert.AreEqual(-1, tests[6].Line);
+        }
+
+        [TestMethod]
+        public void TestGetTestsNameOnlyVerbose()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--verbosity high --list-test-names-only *";
+            settings.FilenameFilter = ".*";
+            settings.IncludeHidden = false; // With use of "--list-test-names-only" this parameter is effectively ignored
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Testset01 };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(6, tests.Count);
+
+            // Also check with multiple sources
+            string[] sources2 = { Path_Testset01, Path_Dummy };
+
+            tests = discoverer.GetTests(sources2) as List<TestCase>;
+            Assert.AreEqual(7, tests.Count);
+            Assert.AreEqual(28, tests[0].Line);
+            Assert.AreEqual(33, tests[1].Line);
+            Assert.AreEqual(38, tests[2].Line);
+            Assert.AreEqual(43, tests[3].Line);
+            Assert.AreEqual(48, tests[4].Line);
+            Assert.AreEqual(53, tests[5].Line);
+            Assert.AreEqual(31, tests[6].Line);
         }
 
         [TestMethod]
@@ -294,6 +328,54 @@ namespace UT_Catch2Interface
                            , tests[8].Name );
             Assert.AreEqual("Testset02.Tests01. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
                            , tests[9].Name );
+        }
+
+        [TestMethod]
+        public void TestGetTestsCaseNamesVerbose()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "-v high --list-tests Testset02.Tests01.*";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Testset02 };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(10, tests.Count);
+            Assert.AreEqual("Testset02.Tests01. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
+            Assert.AreEqual("Testset02.Tests01. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
+            Assert.AreEqual("Testset02.Tests01. 0123456789"                     , tests[2].Name );
+            Assert.AreEqual("Testset02.Tests01. []{}!@#$%^&*()_-+=|\\?/><,~`';:", tests[3].Name );
+            Assert.AreEqual("Testset02.Tests01. \"name\""                       , tests[4].Name );
+            Assert.AreEqual("Testset02.Tests01. \\"                             , tests[5].Name );
+            Assert.AreEqual("Testset02.Tests01. End with space "                , tests[6].Name );
+            Assert.AreEqual("Testset02.Tests01. End with spaces   "             , tests[7].Name );
+            Assert.AreEqual("Testset02.Tests01. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+                           , tests[8].Name );
+            Assert.AreEqual("Testset02.Tests01. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
+                           , tests[9].Name );
+
+            Assert.IsTrue( tests[0].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
+            Assert.IsTrue( tests[1].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
+            Assert.IsTrue( tests[2].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
+            Assert.IsTrue( tests[3].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
+            Assert.IsTrue( tests[4].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
+            Assert.IsTrue( tests[5].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
+            Assert.IsTrue( tests[6].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
+            Assert.IsTrue( tests[7].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
+            Assert.IsTrue( tests[8].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
+            Assert.IsTrue( tests[9].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
+
+            Assert.AreEqual( 28, tests[0].Line );
+            Assert.AreEqual( 36, tests[1].Line );
+            Assert.AreEqual( 44, tests[2].Line );
+            Assert.AreEqual( 52, tests[3].Line );
+            Assert.AreEqual( 60, tests[4].Line );
+            Assert.AreEqual( 68, tests[5].Line );
+            Assert.AreEqual( 84, tests[6].Line );
+            Assert.AreEqual( 92, tests[7].Line );
+            Assert.AreEqual(108, tests[8].Line );
+            Assert.AreEqual(116, tests[9].Line );
         }
 
         [TestMethod]

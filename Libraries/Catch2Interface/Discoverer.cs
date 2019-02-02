@@ -35,9 +35,16 @@ Class :
         private Regex         _rgx_filter;
 
         private static readonly Regex _rgxDefaultFirstLine = new Regex(@"^All available test cases:|^Matching test cases:");
+        private static readonly Regex _rgxDefaultFilenameLineEnd = new Regex(@"(.*)\(([0-9]*)\)$");
+        private static readonly Regex _rgxDefaultFilenameLineStart = new Regex(@"^[a-zA-Z]:\\");
         private static readonly Regex _rgxDefaultTestCaseLine = new Regex(@"^[ ]{2}([^ ].*)");
         private static readonly Regex _rgxDefaultTestCaseLineExtented = new Regex(@"^[ ]{4}([^ ].*)");
         private static readonly Regex _rgxDefaultTagsLine = new Regex(@"^[ ]{6}([^ ].*)");
+        private static readonly Regex _rgxDefaultTestNameOnlyVerbose = new Regex(@"^(.*)\t@(.*)\(([0-9]*)\)$");
+        private static readonly Regex _rgxNoTestCases = new Regex(@"^0 matching test cases$");
+
+        //private static readonly Regex _rgxBreakableAfter = "])}>.,:;*+-=&/\\";
+        //private static readonly Regex _rgxBreakableBefore = "[({<|";
 
         #endregion // Fields
 
@@ -101,6 +108,64 @@ Class :
         #endregion // Public Methods
 
         #region Private Methods
+
+        private bool CheckTestCaseName(string source, string name, int linenumber)
+        {
+            // Retrieve test cases
+            var process = new Process();
+            process.StartInfo.FileName = source;
+            if(linenumber < 0)
+            {
+                process.StartInfo.Arguments = $"--list-tests {'"'}{name}{'"'}";
+            }
+            else
+            {
+                process.StartInfo.Arguments = $"--verbosity high --list-tests {'"'}{name}{'"'}";
+            }
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = false;
+            process.StartInfo.UseShellExecute = false;
+            process.Start();
+
+            var output = process.StandardOutput.ReadToEndAsync();
+
+            if(_settings.DiscoverTimeout > 0)
+            {
+                process.WaitForExit(_settings.DiscoverTimeout);
+            }
+            else
+            {
+                process.WaitForExit();
+            }
+
+            if( !process.HasExited ) // Sanity check
+            {
+                process.Kill();
+                return false;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(output.Result))
+                {
+                    return false;
+                }
+                else
+                {
+                    // Check output
+                    var reader = new StringReader(output.Result);
+                    var line = reader.ReadLine();
+                    line = reader.ReadLine();
+                    if( line == null || _rgxNoTestCases.IsMatch(line))
+                    {
+                        return false;
+                    }
+
+                    // TODO: additional checks
+                    return true;
+                }
+            }
+        }
 
         private bool CheckSource(string source)
         {
@@ -194,14 +259,364 @@ Class :
             }
         }
 
+        private List<string> MakeTagList(List<string> taglines)
+        {
+            if(taglines.Count <= 0)
+            {
+                return new List<string>();
+            }
+
+            StringBuilder tagstr = new StringBuilder();
+            foreach(string tagline in taglines)
+            {
+                if(tagline.EndsWith("]"))
+                {
+                    tagstr.Append(tagline);
+                }
+                else
+                {
+                    if(tagline.EndsWith("-"))
+                    {
+                        if(tagline.Length == 73)
+                        {
+                            tagstr.Append(tagline.Substring(0,72));
+                        }
+                        else
+                        {
+                            tagstr.Append(tagline);
+                        }
+                    }
+                    else
+                    {
+                        tagstr.Append(tagline);
+                        tagstr.Append(" ");
+                    }
+                }
+            }
+            return Reporter.TestCase.ExtractTags(tagstr.ToString());
+        }
+
+        private string MakeTestCaseFilename(List<string> filenamelines)
+        {
+            if(filenamelines.Count == 1)
+            {
+                var m = _rgxDefaultFilenameLineEnd.Match(filenamelines[0]);
+                return m.Groups[1].Value;
+            }
+
+            // Concatenate name
+            StringBuilder filename = new StringBuilder();
+            for(int i = 0; i < filenamelines.Count-1; ++i)
+            {
+                if(filenamelines[i].EndsWith("-"))
+                {
+                    if(filenamelines[i].Length == 75)
+                    {
+                        filename.Append(filenamelines[i].Substring(0,74));
+                    }
+                    else
+                    {
+                        filename.Append(filenamelines[i]);
+                    }
+                }
+                else
+                {
+                    filename.Append(filenamelines[i]);
+                    if( !filenamelines[i].EndsWith("\\") )
+                    {
+                        filename.Append(" ");
+                    }
+                }
+            }
+            // Remove line number from last filename line
+            var match = _rgxDefaultFilenameLineEnd.Match(filenamelines[filenamelines.Count - 1]);
+            filename.Append(match.Groups[1].Value);
+
+            return filename.ToString();
+        }
+
+        private int MakeTestCaseLine(List<string> filenamelines)
+        {
+            var match = _rgxDefaultFilenameLineEnd.Match(filenamelines[filenamelines.Count - 1]);
+            
+            return int.Parse(match.Groups[2].Value);
+        }
+
+        private string MakeTestCaseName(List<string> namelines, string source, int linenumber)
+        {
+            if(namelines.Count == 1)
+            {
+                return namelines[0];
+            }
+
+            // Concatenate name
+            string name = "";
+            int numoptions = 1 << namelines.Count;
+            for(int i = 0; i < numoptions; ++i)
+            {
+                name = MakeTestCaseName(namelines, i);
+                if(CheckTestCaseName(source, name, linenumber))
+                {
+                    return name.ToString();
+                }
+            }
+
+            return name.ToString();
+        }
+
+        private string MakeTestCaseName(List<string> namelines, int iteration)
+        {
+            // Concatenate name
+            StringBuilder name = new StringBuilder();
+            int maxlength = 77; // First line has max lenth of 77, rest of lines have maxlength of 75.
+            for(int i = 0; i < namelines.Count; ++i, maxlength = 75)
+            {
+                if(namelines[i].EndsWith("-"))
+                {
+                    if(namelines[i].Length == maxlength)
+                    {
+                        name.Append(namelines[i].Substring(0,maxlength-1));
+                        continue;
+                    }
+                    else
+                    {
+                        name.Append(namelines[i]);
+                    }
+                }
+                else
+                {
+                    name.Append(namelines[i]);
+                }
+
+                // Append space if needed
+                if( i < namelines.Count-1)
+                {
+                    bool addspace = iteration % (1 << (i+1)) < (1 << i);
+                    if(addspace)
+                    {
+                        name.Append(" ");
+                    }
+                }
+            }
+
+            return name.ToString();
+        }
+
         private List<TestCase> ProcessDefaultOutput(string output, string source)
+        {
+            if(_settings.UsesTestNameOnlyDiscovery)
+            {
+                return ProcessDefaultTestNameOnly(output, source);
+            }
+
+            if(_settings.IsVerbosityHigh)
+            {
+                return ProcessDefaultTestsVerbose(output, source);
+            }
+            else
+            {
+                return ProcessDefaultTestsNormal(output, source);
+            }
+        }
+
+        private List<TestCase> ProcessDefaultTestsNormal(string output, string source)
         {
             var tests = new List<TestCase>();
 
             var reader = new StringReader(output);
             var line = reader.ReadLine();
 
-            if(_settings.UsesTestNameOnlyDiscovery)
+            // Check first line
+            if( line == null || !_rgxDefaultFirstLine.IsMatch(line))
+            {
+                return tests;
+            }
+
+            line = reader.ReadLine();
+
+            // Extract test cases
+            while(line != null)
+            {
+                if(_rgxDefaultTestCaseLine.IsMatch(line))
+                {
+                    List<string> testcasenamelines = new List<string>();
+
+                    // Contrsuct Test Case name
+                    var match = _rgxDefaultTestCaseLine.Match(line);
+                    testcasenamelines.Add(match.Groups[1].Value);
+
+                    line = reader.ReadLine();
+                    while(line != null && _rgxDefaultTestCaseLineExtented.IsMatch(line))
+                    {
+                        match = _rgxDefaultTestCaseLineExtented.Match(line);
+                        testcasenamelines.Add(match.Groups[1].Value);
+
+                        line = reader.ReadLine();
+                    }
+
+                    // Create testcase
+                    var testcase = new TestCase();
+                    testcase.Name = MakeTestCaseName(testcasenamelines, source, -1);
+                    testcase.Source = source;
+
+                    // Add Tags
+                    {
+                        List<string> taglines = new List<string>();
+                        while(line != null && _rgxDefaultTagsLine.IsMatch(line))
+                        {
+                            var matchtag = _rgxDefaultTagsLine.Match(line);
+                            taglines.Add(matchtag.Groups[1].Value);
+
+                            line = reader.ReadLine();
+                        }
+                        testcase.Tags = MakeTagList(taglines);
+                    }
+
+                    // Add testcase
+                    if(CanAddTestCase(testcase))
+                    {
+                        tests.Add(testcase);
+                    }
+                }
+                else
+                {
+                    line = reader.ReadLine();
+                }
+            }
+
+            return tests;
+        }
+
+        private List<TestCase> ProcessDefaultTestsVerbose(string output, string source)
+        {
+            var tests = new List<TestCase>();
+
+            var reader = new StringReader(output);
+            var line = reader.ReadLine();
+
+            // Check first line
+            if( line == null || !_rgxDefaultFirstLine.IsMatch(line))
+            {
+                return tests;
+            }
+
+            line = reader.ReadLine();
+
+            // Extract test cases
+            while(line != null)
+            {
+                if(_rgxDefaultTestCaseLine.IsMatch(line))
+                {
+                    List<string> testcasenamelines = new List<string>();
+
+                    // Contrsuct Test Case name
+                    var match = _rgxDefaultTestCaseLine.Match(line);
+                    testcasenamelines.Add(match.Groups[1].Value);
+
+                    line = reader.ReadLine();
+                    while(line != null && _rgxDefaultTestCaseLineExtented.IsMatch(line))
+                    {
+
+                        match = _rgxDefaultTestCaseLineExtented.Match(line);
+                        if(_rgxDefaultFilenameLineStart.IsMatch(match.Groups[1].Value))
+                        {
+                            break;
+                        }
+                        testcasenamelines.Add(match.Groups[1].Value);
+
+                        line = reader.ReadLine();
+                    }
+
+                    // Sanity check
+                    if(!_rgxDefaultFilenameLineStart.IsMatch(match.Groups[1].Value))
+                    {
+                        continue;
+                    }
+
+                    // Construct filename
+                    List<string> testcasefilenamelines = new List<string>();
+
+                    while(line != null && _rgxDefaultTestCaseLineExtented.IsMatch(line))
+                    {
+                        match = _rgxDefaultTestCaseLineExtented.Match(line);
+                        testcasefilenamelines.Add(match.Groups[1].Value);
+                        if(_rgxDefaultFilenameLineEnd.IsMatch(line))
+                        {
+                            line = reader.ReadLine();
+                            break;
+                        }
+
+                        line = reader.ReadLine();
+                    }
+
+                    // Ignore description
+                    while(line != null && _rgxDefaultTestCaseLineExtented.IsMatch(line))
+                    {
+                        line = reader.ReadLine();
+                    }
+
+                    // Create testcase
+                    var testcase = new TestCase();
+                    testcase.Filename = MakeTestCaseFilename(testcasefilenamelines);
+                    testcase.Line = MakeTestCaseLine(testcasefilenamelines);
+                    testcase.Name = MakeTestCaseName(testcasenamelines, source, testcase.Line);
+                    testcase.Source = source;
+
+                    // Add Tags
+                    {
+                        List<string> taglines = new List<string>();
+                        while(line != null && _rgxDefaultTagsLine.IsMatch(line))
+                        {
+                            var matchtag = _rgxDefaultTagsLine.Match(line);
+                            taglines.Add(matchtag.Groups[1].Value);
+
+                            line = reader.ReadLine();
+                        }
+                        testcase.Tags = MakeTagList(taglines);
+                    }
+
+                    // Add testcase
+                    if(CanAddTestCase(testcase))
+                    {
+                        tests.Add(testcase);
+                    }
+                }
+                else
+                {
+                    line = reader.ReadLine();
+                }
+            }
+
+            return tests;
+        }
+
+        private List<TestCase> ProcessDefaultTestNameOnly(string output, string source)
+        {
+            var tests = new List<TestCase>();
+
+            var reader = new StringReader(output);
+            var line = reader.ReadLine();
+
+            if( _settings.IsVerbosityHigh )
+            {
+                while(line != null)
+                {
+                    if(_rgxDefaultTestNameOnlyVerbose.IsMatch(line))
+                    {
+                        var match = _rgxDefaultTestNameOnlyVerbose.Match(line);
+                        var testcase = new TestCase();
+                        testcase.Name = match.Groups[1].Value;
+                        testcase.Filename = match.Groups[2].Value;
+                        testcase.Line = int.Parse(match.Groups[3].Value);
+                        testcase.Source = source;
+
+                        tests.Add(testcase);
+                    }
+
+                    line = reader.ReadLine();
+                }
+            }
+            else
             {
                 while(line != null)
                 {
@@ -212,117 +627,6 @@ Class :
                     tests.Add(testcase);
 
                     line = reader.ReadLine();
-                }
-            }
-            else
-            {
-                // Check first line
-                if( line == null || !_rgxDefaultFirstLine.IsMatch(line))
-                {
-                    return tests;
-                }
-
-                line = reader.ReadLine();
-                // Extract test cases
-                while(line != null)
-                {
-                    if(_rgxDefaultTestCaseLine.IsMatch(line))
-                    {
-                        // Contrsuct Test Case name
-                        var match = _rgxDefaultTestCaseLine.Match(line);
-                        string testcasename = match.Groups[1].Value;
-
-                        line = reader.ReadLine();
-                        if(line != null && _rgxDefaultTestCaseLineExtented.IsMatch(line))
-                        {
-                            if(testcasename.EndsWith("-"))
-                            {
-                                if(testcasename.Length == 77)
-                                {
-                                    testcasename = testcasename.Substring(0,76);
-                                }
-                            }
-                            else
-                            {
-                                testcasename += " ";
-                            }
-                            match = _rgxDefaultTestCaseLineExtented.Match(line);
-                            string extend = match.Groups[1].Value;
-                            line = reader.ReadLine();
-                            while(line != null && _rgxDefaultTestCaseLineExtented.IsMatch(line))
-                            {
-                                if(extend.EndsWith("-"))
-                                {
-                                    if(extend.Length == 75)
-                                    {
-                                        extend = extend.Substring(0,74);
-                                    }
-                                }
-                                else
-                                {
-                                    extend += " ";
-                                }
-                                testcasename += extend;
-                                match = _rgxDefaultTestCaseLineExtented.Match(line);
-                                extend = match.Groups[1].Value;
-
-                                line = reader.ReadLine();
-                            }
-                            testcasename += extend;
-                        }
-
-                        // Create testcase
-                        var testcase = new TestCase();
-                        testcase.Name = testcasename;
-                        testcase.Source = source;
-
-                        // Add Tags
-                        {
-                            string tagstr = "";
-                            while(line != null && _rgxDefaultTagsLine.IsMatch(line))
-                            {
-                                var matchtag = _rgxDefaultTagsLine.Match(line);
-                                string tagline = matchtag.Groups[1].Value;
-
-                                if(tagline.EndsWith("]"))
-                                {
-                                    tagstr += tagline;
-                                }
-                                else
-                                {
-                                    if(tagline.EndsWith("-"))
-                                    {
-                                        if(tagline.Length == 73)
-                                        {
-                                            tagstr += tagline.Substring(0,72);
-                                        }
-                                        else
-                                        {
-                                            tagstr += tagline;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        tagstr += tagline + " ";
-                                    }
-                                }
-
-                                line = reader.ReadLine();
-                            }
-                            var tags = Reporter.TestCase.ExtractTags(tagstr);
-                            testcase.Tags = tags;
-                        }
-
-                        // Add testcase
-                        if(CanAddTestCase(testcase))
-                        {
-                            tests.Add(testcase);
-                        }
-                    }
-                    else
-                    {
-                        line = reader.ReadLine();
-                    }
                 }
             }
 

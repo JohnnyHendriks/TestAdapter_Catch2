@@ -56,7 +56,7 @@ Class :
         // Settings Default Values
         public const bool   S_DefaultDebugBreak = false;
         public const bool   S_DefaultDisabled = false;
-        public const string S_DefaultDiscoverCommandline = "--list-tests *";
+        public const string S_DefaultDiscoverCommandline = "--verbosity high --list-tests *";
         public const int    S_DefaultDiscoverTimeout = 1000; // Time in milliseconds
         public const string S_DefaultFilenameFilter = "";    // By default give invalid value
         public const bool   S_DefaultIncludeHidden = true;

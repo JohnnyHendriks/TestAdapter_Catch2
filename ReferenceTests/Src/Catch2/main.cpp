@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
         catch( std::exception& ex )
         {
             Catch::cerr() << ex.what() << std::endl;
-            return Catch::MaxExitCode;
+            return 255;
         }
     }
 
