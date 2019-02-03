@@ -22,6 +22,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+_unittest32/
+_unittest64/
 
 # Visual Studio 2015 cache/options directory
 .vs/

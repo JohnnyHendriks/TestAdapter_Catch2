@@ -265,8 +265,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Dummy.exe";
-                return Path.GetFullPath(path);
+                return Paths.Dummy(TestContext);
             }
         }
 
@@ -274,18 +273,15 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_NoExist.exe";
-                return Path.GetFullPath(path);
+                return Paths.NoExist(TestContext);
             }
         }
-
 
         private string Path_Testset01
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Testset01.exe";
-                return Path.GetFullPath(path);
+                return Paths.Testset01(TestContext);
             }
         }
 
@@ -293,8 +289,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Testset02.exe";
-                return Path.GetFullPath(path);
+                return Paths.Testset02(TestContext);
             }
         }
 
@@ -302,8 +297,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Testset03.exe";
-                return Path.GetFullPath(path);
+                return Paths.Testset03(TestContext);
             }
         }
 

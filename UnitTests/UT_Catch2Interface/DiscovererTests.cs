@@ -98,7 +98,11 @@ namespace UT_Catch2Interface
             string[] sources = { Path_Testset01 };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
+            #if TA_CATCH2_V2_0_1 || TA_CATCH2_V2_1_0 || TA_CATCH2_V2_1_1 || TA_CATCH2_V2_1_2
+            Assert.AreEqual(6, tests.Count);
+            #else
             Assert.AreEqual(2, tests.Count);
+            #endif
         }
 
         [TestMethod]
@@ -106,7 +110,7 @@ namespace UT_Catch2Interface
         {
             var settings = new Settings();
             settings.DiscoverCommandLine = "--list-tests *";
-            //settings.FilenameFilter = ".*";
+            settings.FilenameFilter = ".*";
             settings.IncludeHidden = true;
             var discoverer = new Discoverer(settings);
             string[] sources = { Path_Testset01 };
@@ -445,7 +449,7 @@ namespace UT_Catch2Interface
         public void TestGetTestsTimeout()
         {
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--sleep 5000 --discover";
+            settings.DiscoverCommandLine = "--sleep 5000 --discover *";
             settings.DiscoverTimeout = 2000;
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = false;
@@ -458,7 +462,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(0, tests.Count);
 
             // Sanity check to see tests could be discovered with less sleep
-            settings.DiscoverCommandLine = "--sleep 1000 --discover";
+            settings.DiscoverCommandLine = "--sleep 1000 --discover *";
 
             tests = discoverer.GetTests(sources) as List<TestCase>;
 
@@ -471,8 +475,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Dummy.exe";
-                return Path.GetFullPath(path);
+                return Paths.Dummy(TestContext);
             }
         }
 
@@ -480,8 +483,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_NoExist.exe";
-                return Path.GetFullPath(path);
+                return Paths.NoExist(TestContext);
             }
         }
 
@@ -489,8 +491,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Testset01.exe";
-                return Path.GetFullPath(path);
+                return Paths.Testset01(TestContext);
             }
         }
 
@@ -498,8 +499,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Testset02.exe";
-                return Path.GetFullPath(path);
+                return Paths.Testset02(TestContext);
             }
         }
 
@@ -508,8 +508,7 @@ namespace UT_Catch2Interface
         {
             get
             {
-                string path = TestContext.TestRunDirectory + @"\..\..\ReferenceTests\_unittest64\Release\Catch_Testset04.exe";
-                return Path.GetFullPath(path);
+                return Paths.Testset04(TestContext);
             }
         }
 

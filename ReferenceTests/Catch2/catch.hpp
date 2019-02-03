@@ -29,7 +29,7 @@ Notes: None
 
 #elif defined TA_CATCH2_V2_1_2
 
-#include "v2.2.0/catch.hpp"
+#include "v2.1.2/catch.hpp"
 
 #elif defined TA_CATCH2_V2_2_0
 
