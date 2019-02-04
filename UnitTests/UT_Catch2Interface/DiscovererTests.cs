@@ -27,7 +27,7 @@ namespace UT_Catch2Interface
         public void TestGetTestsDefaultSettings()
         {
             var discoverer = new Discoverer(null);
-            string[] sources = { Path_Testset01 };
+            string[] sources = { Path_Hidden };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(6, tests.Count);
@@ -41,13 +41,13 @@ namespace UT_Catch2Interface
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = false; // With use of "--list-test-names-only" this parameter is effectively ignored
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset01 };
+            string[] sources = { Path_Hidden };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(6, tests.Count);
 
             // Also check with multiple sources
-            string[] sources2 = { Path_Testset01, Path_Dummy };
+            string[] sources2 = { Path_Hidden, Path_Dummy };
 
             tests = discoverer.GetTests(sources2) as List<TestCase>;
             Assert.AreEqual(7, tests.Count);
@@ -68,22 +68,22 @@ namespace UT_Catch2Interface
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = false; // With use of "--list-test-names-only" this parameter is effectively ignored
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset01 };
+            string[] sources = { Path_Hidden };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(6, tests.Count);
 
             // Also check with multiple sources
-            string[] sources2 = { Path_Testset01, Path_Dummy };
+            string[] sources2 = { Path_Hidden, Path_Dummy };
 
             tests = discoverer.GetTests(sources2) as List<TestCase>;
             Assert.AreEqual(7, tests.Count);
-            Assert.AreEqual(28, tests[0].Line);
-            Assert.AreEqual(33, tests[1].Line);
-            Assert.AreEqual(38, tests[2].Line);
-            Assert.AreEqual(43, tests[3].Line);
-            Assert.AreEqual(48, tests[4].Line);
-            Assert.AreEqual(53, tests[5].Line);
+            Assert.AreEqual(29, tests[0].Line);
+            Assert.AreEqual(34, tests[1].Line);
+            Assert.AreEqual(39, tests[2].Line);
+            Assert.AreEqual(44, tests[3].Line);
+            Assert.AreEqual(30, tests[4].Line);
+            Assert.AreEqual(35, tests[5].Line);
             Assert.AreEqual(31, tests[6].Line);
         }
 
@@ -95,7 +95,7 @@ namespace UT_Catch2Interface
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = true; // With use of "--list-test-names-only" this parameter is effectively ignored
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset01 };
+            string[] sources = { Path_Hidden };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             #if TA_CATCH2_V2_0_1 || TA_CATCH2_V2_1_0 || TA_CATCH2_V2_1_1 || TA_CATCH2_V2_1_2
@@ -113,13 +113,13 @@ namespace UT_Catch2Interface
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = true;
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset01 };
+            string[] sources = { Path_Hidden };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(6, tests.Count);
 
             // Also check with multiple sources
-            string[] sources2 = { Path_Testset01, Path_Dummy };
+            string[] sources2 = { Path_Hidden, Path_Dummy };
 
             tests = discoverer.GetTests(sources2) as List<TestCase>;
             Assert.AreEqual(7, tests.Count);
@@ -134,7 +134,7 @@ namespace UT_Catch2Interface
             settings.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset01 };
+            string[] sources = { Path_Hidden };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(2, tests.Count);
@@ -148,7 +148,7 @@ namespace UT_Catch2Interface
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset01 };
+            string[] sources = { Path_Hidden };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(4, tests.Count);
@@ -158,11 +158,11 @@ namespace UT_Catch2Interface
         public void TestGetTestsManyTags()
         {
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests \"Testset02.Tests07. Manytags\"";
+            settings.DiscoverCommandLine = "--list-tests \"Tags. Manytags\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset02 };
+            string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(1, tests.Count);
@@ -188,11 +188,11 @@ namespace UT_Catch2Interface
         public void TestGetTestsManyTagsD()
         {
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover \"Testset02.Tests07. Manytags\"";
+            settings.DiscoverCommandLine = "--discover \"Tags. Manytags\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset02 };
+            string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(1, tests.Count);
@@ -218,11 +218,11 @@ namespace UT_Catch2Interface
         public void TestGetTestsLongTag1()
         {
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests \"Testset02.Tests07. Longtag1\"";
+            settings.DiscoverCommandLine = "--list-tests \"Tags. Longtag1\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset02 };
+            string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(1, tests.Count);
@@ -235,11 +235,11 @@ namespace UT_Catch2Interface
         public void TestGetTestsLongTag1D()
         {
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover \"Testset02.Tests07. Longtag1\"";
+            settings.DiscoverCommandLine = "--discover \"Tags. Longtag1\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset02 };
+            string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(1, tests.Count);
@@ -252,11 +252,11 @@ namespace UT_Catch2Interface
         public void TestGetTestsLongTag2()
         {
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests \"Testset02.Tests07. Longtag2\"";
+            settings.DiscoverCommandLine = "--list-tests \"Tags. Longtag2\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset02 };
+            string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(1, tests.Count);
@@ -269,11 +269,11 @@ namespace UT_Catch2Interface
         public void TestGetTestsLongTag2D()
         {
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover \"Testset02.Tests07. Longtag2\"";
+            settings.DiscoverCommandLine = "--discover \"Tags. Longtag2\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset02 };
+            string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(1, tests.Count);
@@ -286,100 +286,113 @@ namespace UT_Catch2Interface
         public void TestGetTestsCaseNames()
         {
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests Testset02.Tests01.*";
+            settings.DiscoverCommandLine = "--list-tests *TestCases*";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset02 };
+            string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
-            Assert.AreEqual(10, tests.Count);
-            Assert.AreEqual("Testset02.Tests01. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
-            Assert.AreEqual("Testset02.Tests01. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
-            Assert.AreEqual("Testset02.Tests01. 0123456789"                     , tests[2].Name );
-            Assert.AreEqual("Testset02.Tests01. []{}!@#$%^&*()_-+=|\\?/><,~`';:", tests[3].Name );
-            Assert.AreEqual("Testset02.Tests01. \"name\""                       , tests[4].Name );
-            Assert.AreEqual("Testset02.Tests01. \\"                             , tests[5].Name );
-            Assert.AreEqual("Testset02.Tests01. End with space "                , tests[6].Name );
-            Assert.AreEqual("Testset02.Tests01. End with spaces   "             , tests[7].Name );
-            Assert.AreEqual("Testset02.Tests01. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
-                           , tests[8].Name );
-            Assert.AreEqual("Testset02.Tests01. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
+            Assert.AreEqual(12, tests.Count);
+            Assert.AreEqual("TestCases. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
+            Assert.AreEqual("TestCases. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
+            Assert.AreEqual("TestCases. 0123456789"                     , tests[2].Name );
+            Assert.AreEqual("TestCases. []{}!@#$%^&*()_-+=|\\?/><,~`';:", tests[3].Name );
+            Assert.AreEqual("TestCases. \"name\""                       , tests[4].Name );
+            Assert.AreEqual("TestCases. \\"                             , tests[5].Name );
+            Assert.AreEqual("\\TestCases. name"                         , tests[6].Name );
+            Assert.AreEqual("TestCases. End with space "                , tests[7].Name );
+            Assert.AreEqual("TestCases. End with spaces   "             , tests[8].Name );
+            Assert.AreEqual("TestCasesLongName01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
                            , tests[9].Name );
+            Assert.AreEqual("TestCases. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+                           , tests[10].Name );
+            Assert.AreEqual("TestCases. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
+                           , tests[11].Name );
         }
 
         [TestMethod]
         public void TestGetTestsCaseNamesD()
         {
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover Testset02.Tests01.*";
+            settings.DiscoverCommandLine = "--discover *TestCases*";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset02 };
+            string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
-            Assert.AreEqual(10, tests.Count);
-            Assert.AreEqual("Testset02.Tests01. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
-            Assert.AreEqual("Testset02.Tests01. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
-            Assert.AreEqual("Testset02.Tests01. 0123456789"                     , tests[2].Name );
-            Assert.AreEqual("Testset02.Tests01. []{}!@#$%^&*()_-+=|\\?/><,~`';:", tests[3].Name );
-            Assert.AreEqual("Testset02.Tests01. \"name\""                       , tests[4].Name );
-            Assert.AreEqual("Testset02.Tests01. \\"                             , tests[5].Name );
-            Assert.AreEqual("Testset02.Tests01. End with space"                 , tests[6].Name ); // Name is trimmed
-            Assert.AreEqual("Testset02.Tests01. End with spaces"                , tests[7].Name ); // Name is trimmed
-            Assert.AreEqual("Testset02.Tests01. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
-                           , tests[8].Name );
-            Assert.AreEqual("Testset02.Tests01. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
+            Assert.AreEqual(12, tests.Count);
+            Assert.AreEqual("TestCases. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
+            Assert.AreEqual("TestCases. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
+            Assert.AreEqual("TestCases. 0123456789"                     , tests[2].Name );
+            Assert.AreEqual("TestCases. []{}!@#$%^&*()_-+=|\\?/><,~`';:", tests[3].Name );
+            Assert.AreEqual("TestCases. \"name\""                       , tests[4].Name );
+            Assert.AreEqual("TestCases. \\"                             , tests[5].Name );
+            Assert.AreEqual("\\TestCases. name"                         , tests[6].Name );
+            Assert.AreEqual("TestCases. End with space"                 , tests[7].Name ); // Name is trimmed
+            Assert.AreEqual("TestCases. End with spaces"                , tests[8].Name ); // Name is trimmed
+            Assert.AreEqual("TestCasesLongName01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
                            , tests[9].Name );
+            Assert.AreEqual("TestCases. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+                           , tests[10].Name );
+            Assert.AreEqual("TestCases. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
+                           , tests[11].Name );
         }
 
         [TestMethod]
         public void TestGetTestsCaseNamesVerbose()
         {
             var settings = new Settings();
-            settings.DiscoverCommandLine = "-v high --list-tests Testset02.Tests01.*";
+            settings.DiscoverCommandLine = "-v high --list-tests *TestCases*";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset02 };
+            string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
-            Assert.AreEqual(10, tests.Count);
-            Assert.AreEqual("Testset02.Tests01. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
-            Assert.AreEqual("Testset02.Tests01. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
-            Assert.AreEqual("Testset02.Tests01. 0123456789"                     , tests[2].Name );
-            Assert.AreEqual("Testset02.Tests01. []{}!@#$%^&*()_-+=|\\?/><,~`';:", tests[3].Name );
-            Assert.AreEqual("Testset02.Tests01. \"name\""                       , tests[4].Name );
-            Assert.AreEqual("Testset02.Tests01. \\"                             , tests[5].Name );
-            Assert.AreEqual("Testset02.Tests01. End with space "                , tests[6].Name );
-            Assert.AreEqual("Testset02.Tests01. End with spaces   "             , tests[7].Name );
-            Assert.AreEqual("Testset02.Tests01. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
-                           , tests[8].Name );
-            Assert.AreEqual("Testset02.Tests01. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
+            Assert.AreEqual(12, tests.Count);
+            Assert.AreEqual("TestCases. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
+            Assert.AreEqual("TestCases. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
+            Assert.AreEqual("TestCases. 0123456789"                     , tests[2].Name );
+            Assert.AreEqual("TestCases. []{}!@#$%^&*()_-+=|\\?/><,~`';:", tests[3].Name );
+            Assert.AreEqual("TestCases. \"name\""                       , tests[4].Name );
+            Assert.AreEqual("TestCases. \\"                             , tests[5].Name );
+            Assert.AreEqual("\\TestCases. name"                         , tests[6].Name );
+            Assert.AreEqual("TestCases. End with space "                , tests[7].Name );
+            Assert.AreEqual("TestCases. End with spaces   "             , tests[8].Name );
+            Assert.AreEqual("TestCasesLongName01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
                            , tests[9].Name );
+            Assert.AreEqual("TestCases. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+                           , tests[10].Name );
+            Assert.AreEqual("TestCases. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
+                           , tests[11].Name );
 
-            Assert.IsTrue( tests[0].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
-            Assert.IsTrue( tests[1].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
-            Assert.IsTrue( tests[2].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
-            Assert.IsTrue( tests[3].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
-            Assert.IsTrue( tests[4].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
-            Assert.IsTrue( tests[5].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
-            Assert.IsTrue( tests[6].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
-            Assert.IsTrue( tests[7].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
-            Assert.IsTrue( tests[8].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
-            Assert.IsTrue( tests[9].Filename.EndsWith(@"catch_testset02\ut_tests01.cpp") );
+            Assert.IsTrue( tests[0].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[1].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[2].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[3].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[4].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[5].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[6].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[7].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[8].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[9].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[10].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[11].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
 
-            Assert.AreEqual( 28, tests[0].Line );
-            Assert.AreEqual( 36, tests[1].Line );
-            Assert.AreEqual( 44, tests[2].Line );
-            Assert.AreEqual( 52, tests[3].Line );
-            Assert.AreEqual( 60, tests[4].Line );
-            Assert.AreEqual( 68, tests[5].Line );
-            Assert.AreEqual( 84, tests[6].Line );
-            Assert.AreEqual( 92, tests[7].Line );
-            Assert.AreEqual(108, tests[8].Line );
-            Assert.AreEqual(116, tests[9].Line );
+            Assert.AreEqual( 29, tests[0].Line );
+            Assert.AreEqual( 34, tests[1].Line );
+            Assert.AreEqual( 39, tests[2].Line );
+            Assert.AreEqual( 44, tests[3].Line );
+            Assert.AreEqual( 49, tests[4].Line );
+            Assert.AreEqual( 54, tests[5].Line );
+            Assert.AreEqual( 59, tests[6].Line );
+            Assert.AreEqual( 64, tests[7].Line );
+            Assert.AreEqual( 69, tests[8].Line );
+            Assert.AreEqual( 74, tests[9].Line );
+            Assert.AreEqual( 79, tests[10].Line );
+            Assert.AreEqual( 84, tests[11].Line );
         }
 
         [TestMethod]
@@ -391,7 +404,7 @@ namespace UT_Catch2Interface
             settings.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset01 };
+            string[] sources = { Path_Hidden };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(2, tests.Count);
@@ -423,7 +436,7 @@ namespace UT_Catch2Interface
 
             var discoverer = new Discoverer(settings);
 
-            string[] sources = { Path_Testset01 };
+            string[] sources = { Path_Hidden };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(6, tests.Count);
@@ -439,7 +452,7 @@ namespace UT_Catch2Interface
 
             var discoverer = new Discoverer(settings);
 
-            string[] sources = { Path_Testset01 };
+            string[] sources = { Path_Hidden };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(2, tests.Count);
@@ -471,6 +484,14 @@ namespace UT_Catch2Interface
 
         #region Helper properties
 
+        private string Path_Discover
+        {
+            get
+            {
+                return Paths.Discover(TestContext);
+            }
+        }
+
         private string Path_Dummy
         {
             get
@@ -487,19 +508,11 @@ namespace UT_Catch2Interface
             }
         }
 
-        private string Path_Testset01
+        private string Path_Hidden
         {
             get
             {
-                return Paths.Testset01(TestContext);
-            }
-        }
-
-        private string Path_Testset02
-        {
-            get
-            {
-                return Paths.Testset02(TestContext);
+                return Paths.Hidden(TestContext);
             }
         }
 

@@ -269,22 +269,6 @@ namespace UT_Catch2Interface
             }
         }
 
-        private string Path_NoExist
-        {
-            get
-            {
-                return Paths.NoExist(TestContext);
-            }
-        }
-
-        private string Path_Testset01
-        {
-            get
-            {
-                return Paths.Testset01(TestContext);
-            }
-        }
-
         private string Path_Testset02
         {
             get

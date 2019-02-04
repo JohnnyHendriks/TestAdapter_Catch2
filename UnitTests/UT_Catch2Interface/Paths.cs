@@ -26,9 +26,21 @@ namespace UT_Catch2Interface
 
         #region Public Static Methods
 
+        static public string Discover(TestContext ctx)
+        {
+            string path = ctx.TestRunDirectory + _basepath + @"Catch_Discover.exe";
+            return Path.GetFullPath(path);
+        }
+
         static public string Dummy(TestContext ctx)
         {
             string path = ctx.TestRunDirectory + _basepath + @"Catch_Dummy.exe";
+            return Path.GetFullPath(path);
+        }
+
+        static public string Hidden(TestContext ctx)
+        {
+            string path = ctx.TestRunDirectory + _basepath + @"Catch_Hidden.exe";
             return Path.GetFullPath(path);
         }
 
