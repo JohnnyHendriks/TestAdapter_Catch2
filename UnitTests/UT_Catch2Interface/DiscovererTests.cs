@@ -23,6 +23,8 @@ namespace UT_Catch2Interface
     {
         public TestContext TestContext { get; set; }
 
+        #region Hidden
+
         [TestMethod]
         public void TestGetTestsDefaultSettings()
         {
@@ -155,6 +157,25 @@ namespace UT_Catch2Interface
         }
 
         [TestMethod]
+        public void TestGetTestsDefaultTag1NoHidden()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--list-tests [Tag1]";
+            settings.FilenameFilter = ".*";
+            settings.IncludeHidden = false;
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Hidden };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(2, tests.Count);
+        }
+
+        #endregion // Hidden
+
+        #region Tags
+
+        [TestMethod]
         public void TestGetTestsManyTags()
         {
             var settings = new Settings();
@@ -282,6 +303,10 @@ namespace UT_Catch2Interface
                            , tests[0].Tags[0] );
         }
 
+        #endregion // Tags
+
+        #region TestCases
+
         [TestMethod]
         public void TestGetTestsCaseNames()
         {
@@ -395,20 +420,123 @@ namespace UT_Catch2Interface
             Assert.AreEqual( 84, tests[11].Line );
         }
 
+        #endregion // TestCases
+
+        #region LongTestCaseNames
+
         [TestMethod]
-        public void TestGetTestsDefaultTag1NoHidden()
+        public void TestGetLongTestsCaseNames()
         {
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests [Tag1]";
+            settings.DiscoverCommandLine = "--list-tests LongTestCaseNames*";
             settings.FilenameFilter = ".*";
-            settings.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Hidden };
+            string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
-            Assert.AreEqual(2, tests.Count);
+            // Note, due to the lack of linenumber check here,
+            // the order is different as that found in TestGetTestsCaseNamesVerbose
+            Assert.AreEqual(8, tests.Count);
+            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                           , tests[0].Name );
+            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                           , tests[1].Name );
+            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                           , tests[2].Name );
+            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                           , tests[3].Name );
+            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                           , tests[4].Name );
+            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                           , tests[5].Name );
+            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                           , tests[6].Name );
+            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                           , tests[7].Name );
         }
+
+        [TestMethod]
+        public void TestGetLongTestsCaseNamesNotDiscoverable()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--list-tests NotDefaultDiscoverable*";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Discover };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(0, tests.Count);
+            Assert.IsTrue( discoverer.Log.Contains("Error"));
+        }
+
+        [TestMethod]
+        public void TestGetLongTestsCaseNamesVerbose()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "-v high --list-tests LongTestCaseNames*";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Discover };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(8, tests.Count);
+            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                           , tests[0].Name );
+            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                           , tests[1].Name );
+            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                           , tests[2].Name );
+            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                           , tests[3].Name );
+            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                           , tests[4].Name );
+            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                           , tests[5].Name );
+            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                           , tests[6].Name );
+            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                           , tests[7].Name );
+
+            Assert.IsTrue( tests[0].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
+            Assert.IsTrue( tests[1].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
+            Assert.IsTrue( tests[2].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
+            Assert.IsTrue( tests[3].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
+            Assert.IsTrue( tests[4].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
+            Assert.IsTrue( tests[5].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
+            Assert.IsTrue( tests[6].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
+            Assert.IsTrue( tests[7].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
+
+            Assert.AreEqual( 29, tests[0].Line );
+            Assert.AreEqual( 34, tests[1].Line );
+            Assert.AreEqual( 39, tests[2].Line );
+            Assert.AreEqual( 44, tests[3].Line );
+            Assert.AreEqual( 49, tests[4].Line );
+            Assert.AreEqual( 54, tests[5].Line );
+            Assert.AreEqual( 59, tests[6].Line );
+            Assert.AreEqual( 64, tests[7].Line );
+        }
+
+        [TestMethod]
+        public void TestGetLongTestsCaseNamesVerboseNotDiscoverable()
+        {
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "-v high --list-tests NotDefaultDiscoverable*";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { Path_Discover };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(0, tests.Count);
+            Assert.IsTrue( discoverer.Log.Contains("Error"));
+            Assert.IsTrue( discoverer.Log.Contains("Line: 29"));
+            Assert.IsTrue( discoverer.Log.Contains("Line: 34"));
+        }
+
+        #endregion // LongTestCaseNames
 
         [TestMethod]
         public void TestGetTestsDuplicateTestname()
@@ -419,7 +547,7 @@ namespace UT_Catch2Interface
             settings.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Testset04 };
+            string[] sources = { Path_Duplicates };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(0, tests.Count);
@@ -500,6 +628,14 @@ namespace UT_Catch2Interface
             }
         }
 
+        private string Path_Duplicates
+        {
+            get
+            {
+                return Paths.Duplicates(TestContext);
+            }
+        }
+
         private string Path_NoExist
         {
             get
@@ -513,15 +649,6 @@ namespace UT_Catch2Interface
             get
             {
                 return Paths.Hidden(TestContext);
-            }
-        }
-
-        // Contains duplicate name
-        private string Path_Testset04
-        {
-            get
-            {
-                return Paths.Testset04(TestContext);
             }
         }
 

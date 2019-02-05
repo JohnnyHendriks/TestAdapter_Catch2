@@ -38,6 +38,12 @@ namespace UT_Catch2Interface
             return Path.GetFullPath(path);
         }
 
+        static public string Duplicates(TestContext ctx)
+        {
+            string path = ctx.TestRunDirectory + _basepath + @"Catch_Duplicates.exe";
+            return Path.GetFullPath(path);
+        }
+
         static public string Hidden(TestContext ctx)
         {
             string path = ctx.TestRunDirectory + _basepath + @"Catch_Hidden.exe";

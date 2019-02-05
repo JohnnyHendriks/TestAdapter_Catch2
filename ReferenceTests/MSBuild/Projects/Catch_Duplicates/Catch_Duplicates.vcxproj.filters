@@ -12,7 +12,7 @@
     <ClCompile Include="..\..\..\Src\Catch2\main.cpp">
       <Filter>Files\Catch</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Src\Catch2\Catch_Testset04\UT_Tests01.cpp">
+    <ClCompile Include="..\..\..\Src\Catch2\Catch_Duplicates\UT_SameTestNames.cpp">
       <Filter>Files</Filter>
     </ClCompile>
   </ItemGroup>

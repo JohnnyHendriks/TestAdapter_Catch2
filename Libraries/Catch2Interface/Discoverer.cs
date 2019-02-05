@@ -30,9 +30,10 @@ Class :
     {
         #region Fields
 
-        private StringBuilder _logbuilder = new StringBuilder();
-        private Settings      _settings;
-        private Regex         _rgx_filter;
+        private StringBuilder  _logbuilder = new StringBuilder();
+        private Settings       _settings;
+        private Regex          _rgx_filter;
+        private List<TestCase> _testcases;
 
         private static readonly Regex _rgxDefaultFirstLine = new Regex(@"^All available test cases:|^Matching test cases:");
         private static readonly Regex _rgxDefaultFilenameLineEnd = new Regex(@"(.*)\(([0-9]*)\)$");
@@ -89,9 +90,9 @@ Class :
                 }
                 else if (CheckSource(source))
                 {
-                    var foundtests = ExtractTestCases(source);
-                    LogVerbose($"  Testcase count: {foundtests.Count}{Environment.NewLine}");
-                    tests.AddRange(foundtests);
+                    ExtractTestCases(source);
+                    LogVerbose($"  Testcase count: {_testcases.Count}{Environment.NewLine}");
+                    tests.AddRange(_testcases);
                 }
                 else
                 {
@@ -111,6 +112,12 @@ Class :
 
         private bool CheckTestCaseName(string source, string name, int linenumber)
         {
+            // Check if testcase name is already in the testcase list
+            if(HasTestCaseName(name))
+            {
+                return false;
+            }
+
             // Retrieve test cases
             var process = new Process();
             process.StartInfo.FileName = source;
@@ -161,7 +168,36 @@ Class :
                         return false;
                     }
 
-                    // TODO: additional checks
+                    // Check line number
+                    if( linenumber > 0 )
+                    {
+                        
+                        while( line != null && _rgxDefaultTestCaseLineExtented.IsMatch(line) )
+                        {
+                            var match = _rgxDefaultTestCaseLineExtented.Match(line);
+                            if(_rgxDefaultFilenameLineStart.IsMatch(match.Groups[1].Value))
+                            {
+                                break;
+                            }
+                            line = reader.ReadLine();
+                            match = _rgxDefaultTestCaseLineExtented.Match(line);
+                        }
+
+                        while(line != null && !_rgxDefaultFilenameLineEnd.IsMatch(line))
+                        {
+                            line = reader.ReadLine();
+                        }
+
+                        if( line == null)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            var match = _rgxDefaultFilenameLineEnd.Match(line);
+                            return int.Parse(match.Groups[2].Value) == linenumber;
+                        }
+                    }
                     return true;
                 }
             }
@@ -185,18 +221,20 @@ Class :
             return false;
         }
 
-        private List<TestCase> ExtractTestCases(string source)
+        private void ExtractTestCases(string source)
         {
             var output = GetTestCaseInfo(source);
             if(_settings.UseXmlDiscovery)
             {
                 LogDebug($"  XML Discovery:{Environment.NewLine}{output}");
-                return ProcessXmlOutput(output, source);
+                ProcessXmlOutput(output, source);
+                return;
             }
             else
             {
                 LogDebug($"  Default Discovery:{Environment.NewLine}{output}");
-                return ProcessDefaultOutput(output, source);
+                ProcessDefaultOutput(output, source);
+                return;
             }
         }
 
@@ -257,6 +295,18 @@ Class :
                     return string.Empty;
                 }
             }
+        }
+
+        private bool HasTestCaseName(string name)
+        {
+            foreach( var testcase in _testcases )
+            {
+                if(testcase.Name == name)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private List<string> MakeTagList(List<string> taglines)
@@ -342,7 +392,7 @@ Class :
             return int.Parse(match.Groups[2].Value);
         }
 
-        private string MakeTestCaseName(List<string> namelines, string source, int linenumber)
+        private string MakeTestCaseName(List<string> namelines, string source, string filename = null, int linenumber = -1)
         {
             if(namelines.Count == 1)
             {
@@ -361,10 +411,26 @@ Class :
                 }
             }
 
-            return name.ToString();
+            // No valid name found
+            if(linenumber < 0)
+            {
+                LogNormal(  $"  Error: Unable to reconstruct long test name{Environment.NewLine}"
+                          + $"    Source: {source}{Environment.NewLine}"
+                          + $"    Name: {MakeTestCaseName(namelines)}{Environment.NewLine}");
+            }
+            else
+            {
+                LogNormal(  $"  Error: Unable to reconstruct long test name{Environment.NewLine}"
+                          + $"    Source: {source}{Environment.NewLine}"
+                          + $"    Name: {MakeTestCaseName(namelines)}{Environment.NewLine}"
+                          + $"    File: {filename}{Environment.NewLine}"
+                          + $"    Line: {linenumber}{Environment.NewLine}" );
+            }
+
+            return string.Empty;
         }
 
-        private string MakeTestCaseName(List<string> namelines, int iteration)
+        private string MakeTestCaseName(List<string> namelines, int iteration = -1)
         {
             // Concatenate name
             StringBuilder name = new StringBuilder();
@@ -391,10 +457,18 @@ Class :
                 // Append space if needed
                 if( i < namelines.Count-1)
                 {
-                    bool addspace = iteration % (1 << (i+1)) < (1 << i);
-                    if(addspace)
+                    if( iteration < 0 )
                     {
-                        name.Append(" ");
+                        // Generate failed to detect name for use in logging
+                        name.Append("{???}");
+                    }
+                    else
+                    {
+                        bool addspace = ( iteration % (1 << (i+1)) ) < (1 << i);
+                        if(addspace)
+                        {
+                            name.Append(" ");
+                        }
                     }
                 }
             }
@@ -402,26 +476,29 @@ Class :
             return name.ToString();
         }
 
-        private List<TestCase> ProcessDefaultOutput(string output, string source)
+        private void ProcessDefaultOutput(string output, string source)
         {
             if(_settings.UsesTestNameOnlyDiscovery)
             {
-                return ProcessDefaultTestNameOnly(output, source);
+                ProcessDefaultTestNameOnly(output, source);
+                return;
             }
 
             if(_settings.IsVerbosityHigh)
             {
-                return ProcessDefaultTestsVerbose(output, source);
+                ProcessDefaultTestsVerbose(output, source);
+                return;
             }
             else
             {
-                return ProcessDefaultTestsNormal(output, source);
+                ProcessDefaultTestsNormal(output, source);
+                return; 
             }
         }
 
-        private List<TestCase> ProcessDefaultTestsNormal(string output, string source)
+        private void ProcessDefaultTestsNormal(string output, string source)
         {
-            var tests = new List<TestCase>();
+            _testcases = new List<TestCase>();
 
             var reader = new StringReader(output);
             var line = reader.ReadLine();
@@ -429,7 +506,7 @@ Class :
             // Check first line
             if( line == null || !_rgxDefaultFirstLine.IsMatch(line))
             {
-                return tests;
+                return;
             }
 
             line = reader.ReadLine();
@@ -456,7 +533,7 @@ Class :
 
                     // Create testcase
                     var testcase = new TestCase();
-                    testcase.Name = MakeTestCaseName(testcasenamelines, source, -1);
+                    testcase.Name = MakeTestCaseName(testcasenamelines, source);
                     testcase.Source = source;
 
                     // Add Tags
@@ -475,7 +552,7 @@ Class :
                     // Add testcase
                     if(CanAddTestCase(testcase))
                     {
-                        tests.Add(testcase);
+                        _testcases.Add(testcase);
                     }
                 }
                 else
@@ -483,13 +560,11 @@ Class :
                     line = reader.ReadLine();
                 }
             }
-
-            return tests;
         }
 
-        private List<TestCase> ProcessDefaultTestsVerbose(string output, string source)
+        private void ProcessDefaultTestsVerbose(string output, string source)
         {
-            var tests = new List<TestCase>();
+            _testcases = new List<TestCase>();
 
             var reader = new StringReader(output);
             var line = reader.ReadLine();
@@ -497,7 +572,7 @@ Class :
             // Check first line
             if( line == null || !_rgxDefaultFirstLine.IsMatch(line))
             {
-                return tests;
+                return;
             }
 
             line = reader.ReadLine();
@@ -559,7 +634,7 @@ Class :
                     var testcase = new TestCase();
                     testcase.Filename = MakeTestCaseFilename(testcasefilenamelines);
                     testcase.Line = MakeTestCaseLine(testcasefilenamelines);
-                    testcase.Name = MakeTestCaseName(testcasenamelines, source, testcase.Line);
+                    testcase.Name = MakeTestCaseName(testcasenamelines, source, testcase.Filename, testcase.Line);
                     testcase.Source = source;
 
                     // Add Tags
@@ -578,7 +653,7 @@ Class :
                     // Add testcase
                     if(CanAddTestCase(testcase))
                     {
-                        tests.Add(testcase);
+                        _testcases.Add(testcase);
                     }
                 }
                 else
@@ -586,13 +661,11 @@ Class :
                     line = reader.ReadLine();
                 }
             }
-
-            return tests;
         }
 
-        private List<TestCase> ProcessDefaultTestNameOnly(string output, string source)
+        private void ProcessDefaultTestNameOnly(string output, string source)
         {
-            var tests = new List<TestCase>();
+            _testcases = new List<TestCase>();
 
             var reader = new StringReader(output);
             var line = reader.ReadLine();
@@ -610,7 +683,7 @@ Class :
                         testcase.Line = int.Parse(match.Groups[3].Value);
                         testcase.Source = source;
 
-                        tests.Add(testcase);
+                        _testcases.Add(testcase);
                     }
 
                     line = reader.ReadLine();
@@ -624,18 +697,16 @@ Class :
                     testcase.Name = line;
                     testcase.Source = source;
 
-                    tests.Add(testcase);
+                    _testcases.Add(testcase);
 
                     line = reader.ReadLine();
                 }
             }
-
-            return tests;
         }
 
-        private List<TestCase> ProcessXmlOutput(string output, string source)
+        private void ProcessXmlOutput(string output, string source)
         {
-            var tests = new List<TestCase>();
+            _testcases = new List<TestCase>();
 
             try
             {
@@ -669,7 +740,7 @@ Class :
                     // Add testcase
                     if(CanAddTestCase(testcase))
                     {
-                        tests.Add(testcase);
+                        _testcases.Add(testcase);
                     }
                 }
             }
@@ -677,12 +748,15 @@ Class :
             {
                 // For now ignore Xml parsing errors
             }
-
-            return tests;
         }
 
         private bool CanAddTestCase(TestCase testcase)
         {
+            if( string.IsNullOrEmpty(testcase.Name) )
+            {
+                return false;
+            }
+
             if(_settings.IncludeHidden)
             {
                 return true;

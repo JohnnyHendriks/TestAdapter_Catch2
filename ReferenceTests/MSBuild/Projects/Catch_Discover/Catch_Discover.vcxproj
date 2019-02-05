@@ -10,6 +10,8 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Src\Catch2\Catch_Discover\UT_LongTestCaseNames.cpp" />
+    <ClCompile Include="..\..\..\Src\Catch2\Catch_Discover\UT_NotDefaultDiscoverable.cpp" />
     <ClCompile Include="..\..\..\Src\Catch2\main.cpp" />
     <ClCompile Include="..\..\..\Src\Catch2\Catch_Discover\UT_Tags.cpp" />
     <ClCompile Include="..\..\..\Src\Catch2\Catch_Discover\UT_TestCases.cpp" />

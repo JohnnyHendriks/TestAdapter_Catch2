@@ -23,9 +23,9 @@ Notes: None
  * Start code *
  **************/
 
-namespace CatchTestset01
+namespace CatchDuplicates
 {
-    TEST_CASE( "Testset04.Tests01. Duplicate", "[Passing]" )
+    TEST_CASE( "SameTestNames. Duplicate", "[Passing]" )
     {
         int x = 42;
         int y = 42;
@@ -39,7 +39,7 @@ namespace CatchTestset01
         REQUIRE( y >= x );
     }
 
-    TEST_CASE( "Testset04.Tests01. Duplicate", "[Failing]" )
+    TEST_CASE( "SameTestNames. Duplicate", "[Failing]" )
     {
         int x = 42;
         int y = 47;
@@ -53,7 +53,7 @@ namespace CatchTestset01
         REQUIRE( y >= x );
     }
 
-} // End namespace: CatchTestset01
+} // End namespace: CatchDuplicates
 
 /************
  * End code *
