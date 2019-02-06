@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Discoverer.cs" />
+    <Compile Include="Discover\TestNameOnly.cs" />
     <Compile Include="Executor.cs" />
     <Compile Include="Reporter\FatalErrorCondition.cs" />
     <Compile Include="Reporter\Exception.cs" />

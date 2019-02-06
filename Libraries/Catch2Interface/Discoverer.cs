@@ -480,7 +480,12 @@ Class :
         {
             if(_settings.UsesTestNameOnlyDiscovery)
             {
-                ProcessDefaultTestNameOnly(output, source);
+                var processor = new Discover.TestNameOnly(_settings);
+                _testcases = processor.ExtractTests(output, source);
+                if(!string.IsNullOrEmpty(processor.Log))
+                {
+                    _logbuilder.Append(processor.Log);
+                }
                 return;
             }
 
@@ -658,47 +663,6 @@ Class :
                 }
                 else
                 {
-                    line = reader.ReadLine();
-                }
-            }
-        }
-
-        private void ProcessDefaultTestNameOnly(string output, string source)
-        {
-            _testcases = new List<TestCase>();
-
-            var reader = new StringReader(output);
-            var line = reader.ReadLine();
-
-            if( _settings.IsVerbosityHigh )
-            {
-                while(line != null)
-                {
-                    if(_rgxDefaultTestNameOnlyVerbose.IsMatch(line))
-                    {
-                        var match = _rgxDefaultTestNameOnlyVerbose.Match(line);
-                        var testcase = new TestCase();
-                        testcase.Name = match.Groups[1].Value;
-                        testcase.Filename = match.Groups[2].Value;
-                        testcase.Line = int.Parse(match.Groups[3].Value);
-                        testcase.Source = source;
-
-                        _testcases.Add(testcase);
-                    }
-
-                    line = reader.ReadLine();
-                }
-            }
-            else
-            {
-                while(line != null)
-                {
-                    var testcase = new TestCase();
-                    testcase.Name = line;
-                    testcase.Source = source;
-
-                    _testcases.Add(testcase);
-
                     line = reader.ReadLine();
                 }
             }
