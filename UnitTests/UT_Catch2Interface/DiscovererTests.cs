@@ -467,8 +467,15 @@ namespace UT_Catch2Interface
             string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
+            Assert.IsTrue( discoverer.Log.Contains("Error"));
+            Assert.IsTrue( discoverer.Log.Contains("{???}"));
+
+            #if TA_CATCH2_V2_0_1 || TA_CATCH2_V2_1_0 || TA_CATCH2_V2_1_1 || TA_CATCH2_V2_1_2 || TA_CATCH2_V2_2_0 || TA_CATCH2_V2_2_1 || TA_CATCH2_V2_2_2 || TA_CATCH2_V2_2_3 || TA_CATCH2_V2_3_0 || TA_CATCH2_V2_4_0 || TA_CATCH2_V2_4_1
             Assert.AreEqual(0, tests.Count);
             Assert.IsTrue( discoverer.Log.Contains("Error"));
+            #else
+            Assert.AreEqual(1, tests.Count);
+            #endif
         }
 
         [TestMethod]
@@ -530,10 +537,19 @@ namespace UT_Catch2Interface
             string[] sources = { Path_Discover };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
-            Assert.AreEqual(0, tests.Count);
             Assert.IsTrue( discoverer.Log.Contains("Error"));
+            Assert.IsTrue( discoverer.Log.Contains("{???}"));
+
+            #if TA_CATCH2_V2_0_1 || TA_CATCH2_V2_1_0 || TA_CATCH2_V2_1_1 || TA_CATCH2_V2_1_2 || TA_CATCH2_V2_2_0 || TA_CATCH2_V2_2_1 || TA_CATCH2_V2_2_2 || TA_CATCH2_V2_2_3 || TA_CATCH2_V2_3_0 || TA_CATCH2_V2_4_0 || TA_CATCH2_V2_4_1
+            Assert.AreEqual(0, tests.Count);
             Assert.IsTrue( discoverer.Log.Contains("Line: 29"));
             Assert.IsTrue( discoverer.Log.Contains("Line: 34"));
+            Assert.IsTrue( discoverer.Log.Contains("Line: 39"));
+            #else
+            Assert.AreEqual(1, tests.Count);
+            Assert.IsTrue( discoverer.Log.Contains("Line: 29"));
+            Assert.IsTrue( discoverer.Log.Contains("Line: 34"));
+            #endif
         }
 
         #endregion // LongTestCaseNames

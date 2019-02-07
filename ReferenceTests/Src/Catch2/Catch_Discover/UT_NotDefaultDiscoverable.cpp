@@ -35,6 +35,11 @@ namespace CatchDiscover
     {
         CHECK( true );
     }
+    //          12345678901234567890123456789012345678901234567890123456789012345678901234567890
+    TEST_CASE( "NotDefaultDiscoverable. a123456789b123456789c123456789d123456789e123456789f123", "[Discover]" )
+    {
+        CHECK( true );
+    }
 
 } // End namespace: CatchDiscover
 

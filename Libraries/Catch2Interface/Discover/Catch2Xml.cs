@@ -1,9 +1,9 @@
 ﻿/** Basic Info **
 
-Copyright: 2018 Johnny Hendriks
+Copyright: 2019 Johnny Hendriks
 
 Author : Johnny Hendriks
-Year   : 2018
+Year   : 2019
 Project: VSTestAdapter for Catch2
 Licence: MIT
 
@@ -13,10 +13,7 @@ Notes: None
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace Catch2Interface.Discover
@@ -26,15 +23,13 @@ Class :
   Description : >
     This class is intended for use in discovering tests via Catch2 test executables.
 */
-    public class TestNameOnly
+    public class Catch2Xml
     {
         #region Fields
 
         private StringBuilder  _logbuilder = new StringBuilder();
         private Settings       _settings;
         private List<TestCase> _testcases;
-
-        private static readonly Regex _rgxDefaultTestNameOnlyVerbose = new Regex(@"^(.*)\t@(.*)\(([0-9]*)\)$");
 
         #endregion // Fields
 
@@ -46,7 +41,7 @@ Class :
 
         #region Constructor
 
-        public TestNameOnly(Settings settings)
+        public Catch2Xml(Settings settings)
         {
             _settings = settings ?? new Settings();
         }
@@ -60,17 +55,8 @@ Class :
             _logbuilder.Clear();
             _testcases = new List<TestCase>();
 
-            
-            if(_settings.IsVerbosityHigh)
-            {
-                LogDebug($"  Default Verbose Testname Only Discovery:{Environment.NewLine}{output}");
-                ProcessVerbose(output, source);
-            }
-            else
-            {
-                LogDebug($"  Default Testname Only Discovery:{Environment.NewLine}{output}");
-                Process(output, source);
-            }
+            LogDebug($"  XML Discovery:{Environment.NewLine}{output}");
+            Process(output, source);
 
             Log = _logbuilder.ToString();
 
@@ -83,42 +69,69 @@ Class :
 
         private void Process(string output, string source)
         {
-            var reader = new StringReader(output);
-            var line = reader.ReadLine();
-
-            while(line != null)
+            try
             {
-                var testcase = new TestCase();
-                testcase.Name = line;
-                testcase.Source = source;
+                // Parse Xml
+                var xml = new XmlDocument();
+                xml.LoadXml(output);
 
-                _testcases.Add(testcase);
+                // Get TestCases
+                var nodeGroup = xml.SelectSingleNode("//Group");
 
-                line = reader.ReadLine();
+                var reportedTestCases = new List<Reporter.TestCase>();
+                foreach(XmlNode child in nodeGroup)
+                {
+                    if(child.Name == Constants.NodeName_TestCase)
+                    {
+                        reportedTestCases.Add(new Reporter.TestCase(child));
+                    }
+                }
+
+                // Convert found Xml testcases and add them to TestCase list to be returned
+                foreach (var reportedTestCase in reportedTestCases)
+                {
+                    // Create testcase
+                    var testcase = new TestCase();
+                    testcase.Name = reportedTestCase.Name;
+                    testcase.Source = source;
+                    testcase.Filename = reportedTestCase.Filename;
+                    testcase.Line = reportedTestCase.Line;
+                    testcase.Tags = reportedTestCase.Tags;
+
+                    // Add testcase
+                    if(CanAddTestCase(testcase))
+                    {
+                        _testcases.Add(testcase);
+                    }
+                }
+            }
+            catch(XmlException)
+            {
+                // For now ignore Xml parsing errors
             }
         }
 
-        private void ProcessVerbose(string output, string source)
+        private bool CanAddTestCase(TestCase testcase)
         {
-            var reader = new StringReader(output);
-            var line = reader.ReadLine();
-
-            while(line != null)
+            if( string.IsNullOrEmpty(testcase.Name) )
             {
-                if(_rgxDefaultTestNameOnlyVerbose.IsMatch(line))
-                {
-                    var match = _rgxDefaultTestNameOnlyVerbose.Match(line);
-                    var testcase = new TestCase();
-                    testcase.Name = match.Groups[1].Value;
-                    testcase.Filename = match.Groups[2].Value;
-                    testcase.Line = int.Parse(match.Groups[3].Value);
-                    testcase.Source = source;
-
-                    _testcases.Add(testcase);
-                }
-
-                line = reader.ReadLine();
+                return false;
             }
+
+            if(_settings.IncludeHidden)
+            {
+                return true;
+            }
+
+            // Check tags for hidden signature
+            foreach(var tag in testcase.Tags)
+            {
+                if(Constants.Rgx_IsHiddenTag.IsMatch(tag))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         #endregion // Private Methods

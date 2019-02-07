@@ -53,7 +53,9 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Discoverer.cs" />
-    <Compile Include="Discover\TestNameOnly.cs" />
+    <Compile Include="Discover\Catch2Xml.cs" />
+    <Compile Include="Discover\ListTestNamesOnly.cs" />
+    <Compile Include="Discover\ListTests.cs" />
     <Compile Include="Executor.cs" />
     <Compile Include="Reporter\FatalErrorCondition.cs" />
     <Compile Include="Reporter\Exception.cs" />
