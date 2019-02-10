@@ -218,12 +218,9 @@ class DiscoverReporter : public StreamingReporterBase<DiscoverReporter>
 };
 
 DiscoverReporter::DiscoverReporter( ReporterConfig const& _config )
-:   StreamingReporterBase( _config ),
+  : StreamingReporterBase( _config ),
     m_xml(_config.stream())
-{
-    m_reporterPrefs.shouldRedirectStdOut = false;
-    m_reporterPrefs.shouldReportAllAssertions = false;
-}
+{ }
 
 DiscoverReporter::~DiscoverReporter() = default;
 std::string DiscoverReporter::getDescription()
