@@ -1,3 +1,15 @@
+Release Notes for v1.5.0 of the Test Adapter for Catch2
+This version contains significant improvement in testcase discovery. No longer do you need a custom discovery mechanism to enable source links to the testcase. Also, the discovery mechanism has been made more robust.
+# Extended Features
+- Added support for verbose default discovery. This enables creating a source file link to the position of a testcase for easy navigation via the Test Explorer, by using default discovery. This removes the need to add a custom Xml-based discovery mechanism to enable this testcase navigation feature in the Test Explorer.
+# Changes to defaults
+- The default value for `<DiscoverCommandLine>` has been set to `--verbosity high --list-tests *`, this enables creating a source file link to the position of a testcase for easy navigation via the Test Explorer.
+# Bug fixes
+- Bug: Testcases and tags with long names are not detected correctly using default discovery settings. Mostly fixed, there are a few corner cases that cannot be fixed.
+# Documentation
+- Updated the [walkthrough](Walkthrough.md) to reflect the availability of verbose default discovery.
+- Added a page on the [discovery mechanism](Discovery.md). This includes an updated and improved custom discovery example.
+
 Release Notes for v1.4.1 of the Test Adapter for Catch2
 This version adds support for VS2019. It also updates the Microsoft.TestPlatform.ObjectModel to version 15.9.0.
 # Bug fixes

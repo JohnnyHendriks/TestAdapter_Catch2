@@ -2,19 +2,26 @@
 
 Changes are relative to v1.0.0
 
-## Changes for next release
+## Changes for v1.5.0
+
+This version contains significant improvements in testcase discovery. No longer do you need a custom discovery mechanism to enable source links to the testcase. Also, the discovery mechanism has been made more robust.
 
 ### Extended Features
 
-- Added support for verbose default discovery. This enables creating a source file link to the position of a test case for easy navigation via the Test Explorer, by using default discovery. This removes the need to add a custom Xml-based discovery mechanism to enable this test case navigation feature in the Test Explorer.
+- Issue #18: Added support for verbose default discovery. This enables creating a source file link to the position of a testcase for easy navigation via the Test Explorer, by using default discovery. This removes the need to add a custom Xml-based discovery mechanism to enable this testcase navigation feature in the Test Explorer.
 
 ### Changes to defaults
 
-- The default value for `<DiscoverCommandLine>` has been set to `--verbosity high --list-tests *`, this enables creating a source file link to the position of a test case for easy navigation via the Test Explorer.
+- The default value for `<DiscoverCommandLine>` has been set to `--verbosity high --list-tests *`, this enables creating a source file link to the position of a testcase for easy navigation via the Test Explorer.
 
 ### Bug fixes
 
-- Bug: Test cases and tags with long names are not detected correctly using default discovery settings. Mostly fixed, there are a few corner cases that cannot be fixed.
+- Issue #17: Testcases and tags with long names are not detected correctly using default discovery settings. Mostly fixed, there are a few corner cases that cannot be fixed.
+
+### Documentation
+
+- Updated the [walkthrough](Walkthrough.md) to reflect the availability of verbose default discovery.
+- Added a page on the [discovery mechanism](Discovery.md). This includes an updated and improved custom discovery example.
 
 ## Changes for v1.4.2
 

@@ -41,5 +41,6 @@ For a more detailed description see the following pages:
 - [Capabilities](Capabilities.md)
 - [Walkthrough: using the Test Adapter for Catch2](Walkthrough.md)
 - [Settings](Settings.md)
+- [Testcase Discovery](Discovery.md)
 - [How to build the test adapter](Build.md)
 - [Known issues](Known-issues.md)

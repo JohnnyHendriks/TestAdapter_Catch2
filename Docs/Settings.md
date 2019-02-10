@@ -1,6 +1,6 @@
 # Settings for Test Adapter for Catch2
 
-> The information on this page is based on **Test Adapter for Catch2** v1.2.0.
+> The information on this page is based on **Test Adapter for Catch2** v1.5.0.
 
 In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitely by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
 
@@ -13,7 +13,7 @@ In order for the **Test Adapter for Catch2** to do its job, it requires certain 
 - [`<Logging>`](#logging)
 - [`<MessageFormat>`](#messageformat)
 - [`<StackTraceFormat>`](#stacktraceformat)
-- [`<StackTracePointReplacement>`](#stacktracepointreplacement) (_v1.3.0_)
+- [`<StackTracePointReplacement>`](#stacktracepointreplacement)
 - [`<TestCaseTimeout>`](#testcasetimeout)
 - [`<WorkingDirectory>`](#workingdirectory)
 - [`<WorkingDirectoryRoot>`](#workingdirectoryroot)
@@ -29,13 +29,14 @@ The following _.runsettings_ file examples only contains settings specific to th
     <!-- Adapter Specific sections -->
     <Catch2Adapter>
         <DebugBreak>on</DebugBreak><!-- Introduced in v1.1.0 -->
-        <DiscoverCommandLine>--list-tests *</DiscoverCommandLine>
+        <DiscoverCommandLine>--verbosity high --list-tests *</DiscoverCommandLine>
         <DiscoverTimeout>500</DiscoverTimeout><!-- Milliseconds -->
         <FilenameFilter>^Catch_</FilenameFilter><!-- Regex filter -->
         <IncludeHidden>true</IncludeHidden>
         <Logging>normal</Logging>
         <MessageFormat>StatsOnly</MessageFormat>
         <StackTraceFormat>ShortInfo</StackTraceFormat>
+        <StackTracePointReplacement>,</StackTracePointReplacement><!-- Introduced in v1.3.0 -->
         <TestCaseTimeout>20000</TestCaseTimeout><!-- Milliseconds -->
         <WorkingDirectory>..\TestData</WorkingDirectory>
         <WorkingDirectoryRoot>Executable</WorkingDirectoryRoot>
@@ -95,117 +96,11 @@ With the `<DebugBreak>` option you can turn on or off the break on test failure 
 
 ## DiscoverCommandLine
 
-Default: "--list-tests *"
+Default: "--verbosity high --list-tests *"
 
-With the `<DiscoverCommandLine>` option you set the commandline arguments to call a Catch2 executable with in order to discover the tests that are contained within the executable. You have the choice of the test discovery options that come out of the Catch2 box (`-l`, `--list-tests`, `--list-test-names-only`) or you can provide a custom one. The only requirement for the custom discoverer is that it generates Xml output according to the Catch2 xml reporter scheme. For the build in discovery options you can add filters to select only a subset of tests. For a custom discovery option, it is up to you if you want to support test filtering on this level. Below is an example implementation of a custom discovery algorithm with filtering and how to activate it in the main-function. The advantage of this is that it enables creating a source file link to the position of a test case for easy navigation via the Test Explorer.
+With the `<DiscoverCommandLine>` option you set the commandline arguments to call a Catch2 executable with in order to discover the tests that are contained within the executable. You have the choice of the test discovery options that come out of the Catch2 box (`-l`, `--list-tests`, `--list-test-names-only`) or you can provide a custom one. The only requirement for the custom discoverer is that it generates Xml output according to the Catch2 xml reporter scheme. For the build in discovery options you can add filters to select only a subset of tests. For a custom discovery option, it is up to you if you want to support test filtering on this level. For a detailed description about the discovery process see the [discovery documentation page](Discovery.md) where you can also find a custom discovery example.
 
-```cpp
-#define CATCH_CONFIG_RUNNER
-
-#include <catch.hpp>
-
-void Discover(Catch::Session& session);
-
-int main(int argc, char* argv[])
-{
-    Catch::Session session;
-
-    bool doDiscover = false;
-
-    // Add option to commandline
-    {
-        using namespace Catch::clara;
-
-        auto cli = session.cli()
-            | Opt(doDiscover)
-              ["--discover"]
-              ("Perform VS Test Adaptor discovery");
-
-        session.cli(cli);
-    }
-
-    // Process commandline
-    int returnCode = session.applyCommandLine(argc, argv);
-    if (returnCode != 0) return returnCode;
-
-    // Check if custom discovery needs to be performed
-    if(doDiscover)
-    {
-        try
-        {
-            Discover(session);
-            return 0;
-        }
-        catch( std::exception& ex )
-        {
-            Catch::cerr() << ex.what() << std::endl;
-            return Catch::MaxExitCode;
-        }
-    }
-
-    // Let Catch2 do its thing
-    return session.run();
-}
-
-void Discover(Catch::Session& session)
-{
-    using namespace Catch;
-
-    // Retrieve testcases
-    const auto& config = session.config();
-    auto testspec = config.testSpec();
-    auto testcases = filterTests( Catch::getAllTestCasesSorted(config)
-                                , testspec
-                                , config );
-
-    // Setup reporter
-    TestRunInfo runInfo(config.name());
-
-    auto pConfig = std::make_shared<Config const>(session.configData());
-    auto reporter = getRegistryHub()
-                      .getReporterRegistry()
-                      .create("xml", pConfig);
-
-    Catch::Totals totals;
-
-    reporter->testRunStarting(runInfo);
-    reporter->testGroupStarting(GroupInfo(config.name(), 1, 1));
-
-    // Report test cases
-    for (const auto& testcase : testcases)
-    {
-        Catch::TestCaseInfo caseinfo( testcase.name
-                                    , testcase.className
-                                    , testcase.description
-                                    , testcase.tags
-                                    , testcase.lineInfo );
-        reporter->testCaseStarting(caseinfo);
-        reporter->testCaseEnded( Catch::TestCaseStats( caseinfo
-                                                     , totals
-                                                     , ""
-                                                     , ""
-                                                     , false ) );
-    }
-
-    reporter->testGroupEnded(Catch::GroupInfo(config.name(), 1, 1));
-    TestRunStats testrunstats(runInfo, totals, false);
-    reporter->testRunEnded(testrunstats);
-}
-```
-
-This is an example of a minimal _.runsettings_ file for using this custom discovery algorithm.
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<RunSettings>
-
-    <!-- Adapter Specific sections -->
-    <Catch2Adapter disabled="false">
-        <DiscoverCommandLine>--discover *</DiscoverCommandLine>
-        <FilenameFilter>.*</FilenameFilter><!-- Regex filter -->
-    </Catch2Adapter>
-
-</RunSettings>
- ```
+> Default value changed in v1.5.0
 
 ## DiscoverTimeout
 
@@ -238,7 +133,7 @@ The `<IncludeHidden>` option is a flag to indicate if you want to include hidden
 
 Default: normal
 
-The `<Logging>` option has four settings, `quiet`, `normal`, `verbose`, and `debug`. The `debug` setting is mostly useful for development purposes. The `verbose` setting is  useful as a sanity check and for basic debugging purposes. The `normal` setting provides minimal output and basically serves as a way to make sure the **Test Adapter for Catch2** is being called by the test platform. It also logs certain warnings and errors that help diagnose discovery failures (_i.e._, discovery timeout and duplicate test case names). The `quiet` option is there for people that do not want to see any output from the **Test Adapter for Catch2**.
+The `<Logging>` option has four settings, `quiet`, `normal`, `verbose`, and `debug`. The `debug` setting is mostly useful for development purposes. The `verbose` setting is  useful as a sanity check and for basic debugging purposes. The `normal` setting provides minimal output and basically serves as a way to make sure the **Test Adapter for Catch2** is being called by the test platform. It also logs certain warnings and errors that help diagnose discovery failures (_i.e._, discovery timeout, duplicate test case names, and test case name reconstruction failures ). The `quiet` option is there for people that do not want to see any output from the **Test Adapter for Catch2**.
 
 ## MessageFormat
 
@@ -254,7 +149,7 @@ Default: ShortInfo
 
 The `<StackTraceFormat>` option has two settings, `ShortInfo` and `None`. The reasoning behind this option stems from a problem getting the stack trace entry to show up as a link to the source code line where the failure occurred. Now this is fixed the setting remains in an altered form. You can still turn off creation of stack trace entries with the `None` setting. The default and fall-back value in case of an unsupported setting value is now the `ShortInfo` setting. With this setting a stack trace link is created for each failure. Here the text used for the link gives a short description of the failure. In future more setting values may be added for different formats for the link text.
 
-The string format expected by the Test Explorer is "`at {description} in {filename}:line {line}`", where the curly bracket parts are replaced by appropriate values. I have not tested if it is possible to break the link by generating an (in)appropriate failure description, but the description that is generated should typically be safe.
+The string format expected by the Test Explorer is "`at {description} in {filename}:line {line}`", where the curly bracket parts are replaced by appropriate values. In some cases the link is broken as a result of the generated description, but mostly the description that is generated should not break the link.
 
 ## StackTracePointReplacement
 

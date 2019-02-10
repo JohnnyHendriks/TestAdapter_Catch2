@@ -25,4 +25,9 @@
       <Filter>Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Src\Catch2\catch_discover.hpp">
+      <Filter>Files\Catch</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

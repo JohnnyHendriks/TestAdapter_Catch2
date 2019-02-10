@@ -119,8 +119,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Discover\Catch2XmlTests.cs" />
+    <Compile Include="Discover\ListTestNamesOnlyTests.cs" />
+    <Compile Include="Discover\ListTestsTests.cs" />
     <Compile Include="Paths.cs" />
-    <Compile Include="DiscovererTests.cs" />
     <Compile Include="ExecutorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reporter\SectionTest.cs" />

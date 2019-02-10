@@ -2,7 +2,7 @@
 
 ## Introduction
 
-It can be a bit tricky to get the **Test Adapter for Catch2** running. So, if you are having trouble getting the test adapter to work you are not alone. For this Walkthrough I'm using the latest version of Microsoft Visual Studio Community 2017 (version 15.7.5 at the time of writing). This walkthrough makes use of the v1.2.0 release of the **Test Adapter for Catch2**.
+It can be a bit tricky to get the **Test Adapter for Catch2** running. So, if you are having trouble getting the test adapter to work you are not alone. For this Walkthrough I'm using the latest version of Microsoft Visual Studio Community 2017 (version 15.9.6 at the time of writing). This walkthrough makes use of the v1.5.0 release of the **Test Adapter for Catch2**.
 
 I will use the ReferenceTests created for testing the **Test Adapter for Catch2**. You can find the Visual Studio solution in the [ReferenceTests](../ReferenceTests/) folder of this GitHub repository. I assume you know how to open the Test Explorer Window.
 
@@ -47,50 +47,54 @@ This is where it can get a bit annoying. Changing or setting a _.runsettings_ fi
 
 If all went well the tests will appear in the test explorer. In the output window you should see output similar to the following. Make sure you selected `Show output from: Tests`.
 ```
-[29/07/2018 09:52:04 Informational] ------ Discover test started ------
-[29/07/2018 09:52:06 Informational] Started Catch2Adapter test discovery...
-[29/07/2018 09:52:07 Informational] Discover log:
+[10/02/2019 21:11:43 Informational] ------ Discover test started ------
+[10/02/2019 21:11:44 Informational] Started Catch2Adapter test discovery...
+[10/02/2019 21:11:44 Informational] Discover log:
+Source: D:\GitHub\TestAdapter_Catch2\ReferenceTests\_unittest64\Release\Catch_Discover.exe
+  Testcase count: 26
 Source: D:\GitHub\TestAdapter_Catch2\ReferenceTests\_unittest64\Release\Catch_Dummy.exe
   Testcase count: 1
+Source: D:\GitHub\TestAdapter_Catch2\ReferenceTests\_unittest64\Release\Catch_Duplicates.exe
+  Error Occurred (exit code 255):
+error: TEST_CASE( "SameTestNames. Duplicate" ) already defined.
+	First seen at d:\github\testadapter_catch2\referencetests\src\catch2\catch_duplicates\ut_sametestnames.cpp(28)
+	Redefined at d:\github\testadapter_catch2\referencetests\src\catch2\catch_duplicates\ut_sametestnames.cpp(42)
+  Testcase count: 0
+Source: D:\GitHub\TestAdapter_Catch2\ReferenceTests\_unittest64\Release\Catch_Hidden.exe
+  Testcase count: 6
 Source: D:\GitHub\TestAdapter_Catch2\ReferenceTests\_unittest64\Release\Catch_NoSEH.exe
   Testcase count: 3
 Source: D:\GitHub\TestAdapter_Catch2\ReferenceTests\_unittest64\Release\Catch_Testset01.exe
   Testcase count: 6
 Source: D:\GitHub\TestAdapter_Catch2\ReferenceTests\_unittest64\Release\Catch_Testset02.exe
-  Testcase count: 22
+  Testcase count: 45
 Source: D:\GitHub\TestAdapter_Catch2\ReferenceTests\_unittest64\Release\Catch_Testset03.exe
-  Testcase count: 41
-Source: D:\GitHub\TestAdapter_Catch2\ReferenceTests\_unittest64\Release\Catch_Testset04.exe
-  Error Occurred (exit code 255):
-error: TEST_CASE( "Testset04.Tests01. Duplicate" ) already defined.
-  First seen at d:\github\testadapter_catch2\referencetests\src\catch2\catch_testset04\ut_tests01.cpp(28)
-  Redefined at d:\github\testadapter_catch2\referencetests\src\catch2\catch_testset04\ut_tests01.cpp(42)
-  Testcase count: 0
+  Testcase count: 44
 
-[29/07/2018 09:52:07 Informational] Finished Catch2Adapter test discovery.
-[29/07/2018 09:52:07 Informational] ========== Discover test finished: 73 found (0:00:01,4365586) ==========
+[10/02/2019 21:11:44 Informational] Finished Catch2Adapter test discovery.
+[10/02/2019 21:11:44 Informational] ========== Discover test finished: 131 found (0:00:01,7058933) ==========
 ```
 
-This is the output using the verbose logging setting. Note that the `Catch_Testset04.exe` contains tests with duplicate names, which is why those tests do not appear in the Test Explorer. With logging set to normal the ouput would look something like the following.
+This is the output using the verbose logging setting. Note that the `Catch_Duplicates.exe` contains tests with duplicate names, which is why those tests do not appear in the Test Explorer. With logging set to normal the ouput would look something like the following.
 ```
-[29/07/2018 09:59:39 Informational] ------ Discover test started ------
-[29/07/2018 09:59:40 Informational] Started Catch2Adapter test discovery...
-[29/07/2018 09:59:40 Informational] Discover log:
+[10/02/2019 21:15:50 Informational] ------ Discover test started ------
+[10/02/2019 21:15:51 Informational] Started Catch2Adapter test discovery...
+[10/02/2019 21:15:52 Informational] Discover log:
   Error Occurred (exit code 255):
-error: TEST_CASE( "Testset04.Tests01. Duplicate" ) already defined.
-  First seen at d:\github\testadapter_catch2\referencetests\src\catch2\catch_testset04\ut_tests01.cpp(28)
-  Redefined at d:\github\testadapter_catch2\referencetests\src\catch2\catch_testset04\ut_tests01.cpp(42)
+error: TEST_CASE( "SameTestNames. Duplicate" ) already defined.
+	First seen at d:\github\testadapter_catch2\referencetests\src\catch2\catch_duplicates\ut_sametestnames.cpp(28)
+	Redefined at d:\github\testadapter_catch2\referencetests\src\catch2\catch_duplicates\ut_sametestnames.cpp(42)
 
-[29/07/2018 09:59:40 Informational] Finished Catch2Adapter test discovery.
-[29/07/2018 09:59:40 Informational] ========== Discover test finished: 73 found (0:00:01,4360052) ==========
+[10/02/2019 21:15:52 Informational] Finished Catch2Adapter test discovery.
+[10/02/2019 21:15:52 Informational] ========== Discover test finished: 131 found (0:00:01,7030783) ==========
 ```
 
 In case there are no errors the normal logging output would have looked something like the following.
 ```
-[29/07/2018 10:03:51 Informational] ------ Discover test started ------
-[29/07/2018 10:03:52 Informational] Started Catch2Adapter test discovery...
-[29/07/2018 10:03:52 Informational] Finished Catch2Adapter test discovery.
-[29/07/2018 10:03:52 Informational] ========== Discover test finished: 73 found (0:00:01,326946) ==========
+[10/02/2019 21:17:16 Informational] ------ Discover test started ------
+[10/02/2019 21:17:17 Informational] Started Catch2Adapter test discovery...
+[10/02/2019 21:17:17 Informational] Finished Catch2Adapter test discovery.
+[10/02/2019 21:17:17 Informational] ========== Discover test finished: 131 found (0:00:01,5681499) ==========
 ```
 
 ### Solving problems with discovery
@@ -99,41 +103,41 @@ There are many ways discovery can go wrong or provide you with unexpected result
 
 - In case you do not have a _.runsettings_ file selected you may get output similar to the following.
 ```
-[29/07/2018 10:14:12 Informational] ------ Discover test started ------
-[29/07/2018 10:14:13 Error] Catch2 Test Adapter Settings not found, Catch2 test discovery is cancelled. Add Catch2Adapter settings to runsettings-file.
-[29/07/2018 10:14:13 Informational] ========== Discover test finished: 0 found (0:00:01,257901) ==========
+[10/02/2019 21:18:43 Informational] ------ Discover test started ------
+[10/02/2019 21:18:44 Error] Catch2 Test Adapter Settings not found, Catch2 test discovery is cancelled. Add Catch2Adapter settings to runsettings-file.
+[10/02/2019 21:18:44 Informational] ========== Discover test finished: 0 found (0:00:01,1664477) ==========
 ```
 
 - In case the **Test Adapter for Catch2** is disabled you may get output similar to the following.
 ```
-[29/07/2018 10:16:46 Informational] ------ Discover test started ------
-[29/07/2018 10:16:47 Informational] Catch2Adapter is disabled.
-[29/07/2018 10:16:47 Informational] ========== Discover test finished: 0 found (0:00:01,2465205) ==========
+[10/02/2019 21:20:53 Informational] ------ Discover test started ------
+[10/02/2019 21:20:54 Informational] Catch2Adapter is disabled.
+[10/02/2019 21:20:54 Informational] ========== Discover test finished: 0 found (0:00:01,1415663) ==========
 ```
 
 - In case you provided an invalid `<DiscoverCommandLine>` option in the _.runsettings_ file you may get output similar to the following. See explanation of this [Setting](Settings.md#discovercommandline) on how to resolve this problem.
 ```
-[29/07/2018 10:24:54 Informational] ------ Discover test started ------
-[29/07/2018 10:24:55 Error] Catch2 Test Adapter Settings contain an invalid discovery commandline. Catch2 test discovery is cancelled. Add Valid DiscoverCommandLine to Catch2Adapter Settings in runsettings-file.
-[29/07/2018 10:24:55 Informational] ========== Discover test finished: 0 found (0:00:01,2138568) ==========
+[10/02/2019 21:26:36 Informational] ------ Discover test started ------
+[10/02/2019 21:26:37 Error] Catch2 Test Adapter Settings contain an invalid discovery commandline. Catch2 test discovery is cancelled. Add Valid DiscoverCommandLine to Catch2Adapter Settings in runsettings-file.
+[10/02/2019 21:26:37 Informational] ========== Discover test finished: 0 found (0:00:01,1516882) ==========
 ```
 
 - In case you did not provide the `<FilenameFilter>` option in the _.runsettings_ file you may get output similar to the following. See explanation of this [Setting](Settings.md#filenamefilter) on how to resolve this problem.
 ```
-[29/07/2018 10:27:53 Informational] ------ Discover test started ------
-[29/07/2018 10:27:55 Error] Catch2 Test Adapter Settings contains an empty filename filter, Catch2 test discovery is cancelled. Add a valid FilenameFilter to Catch2Adapter Settings in runsettings-file.
-[29/07/2018 10:27:55 Informational] ========== Discover test finished: 0 found (0:00:01,2244513) ==========
+[10/02/2019 21:28:20 Informational] ------ Discover test started ------
+[10/02/2019 21:28:21 Error] Catch2 Test Adapter Settings contains an empty filename filter, Catch2 test discovery is cancelled. Add a valid FilenameFilter to Catch2Adapter Settings in runsettings-file.
+[10/02/2019 21:28:21 Informational] ========== Discover test finished: 0 found (0:00:01,1263644) ==========
 ```
 
 - In some cases, it is possible that test case discovery fails every now and then causing previously discovered tests to disappear from the Test Explorer. This may occur if you set the `<DiscoverTimeout>` option to a relatively short time. In this case increasing this timeout may solve your problems. See explanation of this [Setting](Settings.md#discovertimeout) for more information. Of course, setting this timeout to a very small value may also result in test case discovery to always fail. To help with this problem output similar to the following is produced when a timeout occurs.
 ```
-[29/07/2018 10:34:20 Informational] ------ Discover test started ------
-[29/07/2018 10:34:21 Informational] Started Catch2Adapter test discovery...
-[29/07/2018 10:34:22 Informational] Discover log:
+[10/02/2019 21:31:06 Informational] ------ Discover test started ------
+[10/02/2019 21:31:07 Informational] Started Catch2Adapter test discovery...
+[10/02/2019 21:31:07 Informational] Discover log:
   Warning: Discovery timeout for D:\GitHub\TestAdapter_Catch2\ReferenceTests\_unittest64\Release\Catch_Dummy.exe
 
-[29/07/2018 10:34:22 Informational] Finished Catch2Adapter test discovery.
-[29/07/2018 10:34:22 Informational] ========== Discover test finished: 0 found (0:00:01,5158472) ==========
+[10/02/2019 21:31:07 Informational] Finished Catch2Adapter test discovery.
+[10/02/2019 21:31:07 Informational] ========== Discover test finished: 0 found (0:00:01,5329554) ==========
 ```
 
 - In some cases, other test adapters may interfere with Catch2 test discovery. In those cases, look in the `Tests` output for hints. Worst case you may have to disable the test adapter that is causing trouble. For instance, if the output includes `Could not locate debug symbols`, that is probably output from the Boost Test Adapter, which can be disabled from the Tools...Extensions and Updates... menu item. By the way, this is the reason a feature was added to the **Test Adapter for Catch2** to disable it via the _.runsettings_ file. So in case the reverse happens and the **Test Adapter for Catch2** interferes with another test adapter, you have an easy way to disable the **Test Adapter for Catch2** via the _.runsettings_ file.
@@ -145,14 +149,6 @@ You can of course run all tests using the `Run All` button in the Test Explorer.
 ![Run selected tests](Images/Walkthrough-04.png) ![Run selected tests](Images/Walkthrough-05.png)
 
 Similarly, you can debug selected tests, though there you would typically only select a single test case to debug. You can set your own break points and/or enable the [DebugBreak feature](Settings.md#debugbreak) to help with debugging your code.
-
-## Jump to TEST_CASE in source
-
-In case you enabled [custom test discovery](Settings.md#discovercommandline), you will be provided with a link to the source of the test case in the detailed view of the test case (see left image). Otherwise the source link will not be available (see right image)
-
-![Test case source link](Images/Walkthrough-06.png) ![Test case source link](Images/Walkthrough-07.png)
-
-Clicking the link will bring focus to the source file and the place the cursor on the line of the TEST_CASE. Note, the availability of the source link has no influence on the similar StackTrace links, they should always work. Switch to the `ReferenceTests.runsettings` test settings to see the source link. Switch to the `Minimal.runsettings` test settings to reproduce the situation where the source link is not available.
 
 ## Test case timeout
 
@@ -169,6 +165,12 @@ Note, the Test Explorer also has the option to set a timeout, however that one i
 ## Examples of test case detail views
 
 To finish this walkthrough some screenshots of the detailed view for various test cases. Note the assertion statistics are displayed as part of the message. This is done for both Failed and Successful tests.
+
+### Link to source
+
+![Test case source link](Images/Walkthrough-06.png)
+
+The details view will typically provide a link to the source of the test case in the detailed view of the test case. Clicking the link will bring focus to the source file and the place the cursor on the line of the TEST_CASE. This link is available regardless of whether the test was run or not, as such it can be used to quickly navigate to a specific test case.
 
 ### Successful test
 
