@@ -2,6 +2,10 @@
 
 Changes are relative to v1.0.0
 
+## Changes for v1.5.1
+
+This version fixes a problem installing the Test Adapter for Catch2 on VS2019 RC.
+
 ## Changes for v1.5.0
 
 This version contains significant improvements in testcase discovery. No longer do you need a custom discovery mechanism to enable source links to the testcase. Also, the discovery mechanism has been made more robust.
