@@ -121,6 +121,10 @@ namespace UT_Catch2Interface
             return @"\..\..\ReferenceTests\_unittest64\Rel-v2.5.0\";
             #elif TA_CATCH2_V2_6_0
             return @"\..\..\ReferenceTests\_unittest64\Rel-v2.6.0\";
+            #elif TA_CATCH2_V2_6_1
+            return @"\..\..\ReferenceTests\_unittest64\Rel-v2.6.1\";
+            #elif TA_CATCH2_V2_7_0
+            return @"\..\..\ReferenceTests\_unittest64\Rel-v2.7.0\";
             #else
             return @"\..\..\ReferenceTests\_unittest64\Release\";
             #endif

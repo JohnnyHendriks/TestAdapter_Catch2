@@ -71,9 +71,17 @@ Notes: None
 
 #include "v2.6.0/catch.hpp"
 
+#elif defined TA_CATCH2_V2_6_1
+
+#include "v2.6.1/catch.hpp"
+
+#elif defined TA_CATCH2_V2_7_0
+
+#include "v2.7.0/catch.hpp"
+
 #else
 
-#include "v2.6.0/catch.hpp"
+#include "v2.7.0/catch.hpp"
 
 #endif
 

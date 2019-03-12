@@ -40,6 +40,12 @@
     <ClCompile Condition="'$(Configuration)'=='Release'">
       <PreprocessorDefinitions>TA_CATCH2_V2_6_0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Condition="'$(Configuration)'=='Rel-v2.7.0'">
+      <PreprocessorDefinitions>TA_CATCH2_V2_7_0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Condition="'$(Configuration)'=='Rel-v2.6.1'">
+      <PreprocessorDefinitions>TA_CATCH2_V2_6_1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <ClCompile Condition="'$(Configuration)'=='Rel-v2.6.0'">
       <PreprocessorDefinitions>TA_CATCH2_V2_6_0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>

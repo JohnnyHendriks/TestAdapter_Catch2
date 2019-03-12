@@ -161,6 +161,26 @@
       <Platform>Win32</Platform>
       <DebugOrRelease>Release</DebugOrRelease>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Rel-v2.6.1|x64">
+      <Configuration>Rel-v2.6.1</Configuration>
+      <Platform>x64</Platform>
+      <DebugOrRelease>Release</DebugOrRelease>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Rel-v2.6.1|Win32">
+      <Configuration>Rel-v2.6.1</Configuration>
+      <Platform>Win32</Platform>
+      <DebugOrRelease>Release</DebugOrRelease>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Rel-v2.7.0|x64">
+      <Configuration>Rel-v2.7.0</Configuration>
+      <Platform>x64</Platform>
+      <DebugOrRelease>Release</DebugOrRelease>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Rel-v2.7.0|Win32">
+      <Configuration>Rel-v2.7.0</Configuration>
+      <Platform>Win32</Platform>
+      <DebugOrRelease>Release</DebugOrRelease>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)'=='Debug'">
     <UseDebugLibraries>true</UseDebugLibraries>
