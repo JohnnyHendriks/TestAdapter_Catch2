@@ -10,8 +10,8 @@ namespace UT_Catch2Interface
     {
         #region Fields
 
-        private string _pathSolution = @"D:\Dummy\Solution";
-        private string _pathTestRun = @"D:\Dummy\TestRun";
+        private string _pathSolution = @"C:\Dummy\Solution";
+        private string _pathTestRun = @"C:\Dummy\TestRun";
 
         #endregion // Fields
 
@@ -27,8 +27,8 @@ namespace UT_Catch2Interface
         public void TestNoSettingsWorkDir()
         {
             var executor = new Executor(null, _pathSolution, _pathTestRun);
-            var workdir = executor.WorkingDirectory(@"D:\Dummy\Catch_Test.exe");
-            Assert.AreEqual(@"D:\Dummy", workdir);
+            var workdir = executor.WorkingDirectory(@"C:\Dummy\Catch_Test.exe");
+            Assert.AreEqual(@"C:\Dummy", workdir);
         }
 
         [TestMethod]
@@ -39,8 +39,8 @@ namespace UT_Catch2Interface
             settings.WorkingDirectory = "TestData";
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
-            var workdir = executor.WorkingDirectory(@"D:\Dummy\Level0\Level1\Catch_Test.exe");
-            Assert.AreEqual(@"D:\Dummy\Level0\Level1\TestData", workdir);
+            var workdir = executor.WorkingDirectory(@"C:\Dummy\Level0\Level1\Catch_Test.exe");
+            Assert.AreEqual(@"C:\Dummy\Level0\Level1\TestData", workdir);
         }
 
         [TestMethod]
@@ -51,8 +51,8 @@ namespace UT_Catch2Interface
             settings.WorkingDirectory = "TestData";
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
-            var workdir = executor.WorkingDirectory(@"D:\Dummy\Level0\Level1\Catch_Test.exe");
-            Assert.AreEqual(@"D:\Dummy\Solution\TestData", workdir);
+            var workdir = executor.WorkingDirectory(@"C:\Dummy\Level0\Level1\Catch_Test.exe");
+            Assert.AreEqual(@"C:\Dummy\Solution\TestData", workdir);
         }
 
         [TestMethod]
@@ -63,8 +63,8 @@ namespace UT_Catch2Interface
             settings.WorkingDirectory = "TestData";
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
-            var workdir = executor.WorkingDirectory(@"D:\Dummy\Level0\Level1\Catch_Test.exe");
-            Assert.AreEqual(@"D:\Dummy\TestRun\TestData", workdir);
+            var workdir = executor.WorkingDirectory(@"C:\Dummy\Level0\Level1\Catch_Test.exe");
+            Assert.AreEqual(@"C:\Dummy\TestRun\TestData", workdir);
         }
 
         [TestMethod]
@@ -75,8 +75,8 @@ namespace UT_Catch2Interface
             settings.WorkingDirectory = @"..\..\TestData";
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             
-            var workdir = executor.WorkingDirectory(@"D:\Dummy\Level0\Level1\Catch_Test.exe");
-            Assert.AreEqual(@"D:\Dummy\TestData", workdir);
+            var workdir = executor.WorkingDirectory(@"C:\Dummy\Level0\Level1\Catch_Test.exe");
+            Assert.AreEqual(@"C:\Dummy\TestData", workdir);
         }
 
         [TestMethod]

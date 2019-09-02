@@ -205,18 +205,18 @@ namespace UT_Catch2Interface.Discover
             Assert.AreEqual("TestCases. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
                            , tests[11].Name );
 
-            Assert.IsTrue( tests[0].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
-            Assert.IsTrue( tests[1].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
-            Assert.IsTrue( tests[2].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
-            Assert.IsTrue( tests[3].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
-            Assert.IsTrue( tests[4].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
-            Assert.IsTrue( tests[5].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
-            Assert.IsTrue( tests[6].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
-            Assert.IsTrue( tests[7].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
-            Assert.IsTrue( tests[8].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
-            Assert.IsTrue( tests[9].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
-            Assert.IsTrue( tests[10].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
-            Assert.IsTrue( tests[11].Filename.EndsWith(@"catch_discover\ut_testcases.cpp") );
+            Assert.IsTrue( tests[0].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[1].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[2].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[3].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[4].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[5].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[6].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[7].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[8].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[9].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[10].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[11].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
 
             Assert.AreEqual( 29, tests[0].Line );
             Assert.AreEqual( 34, tests[1].Line );
@@ -297,14 +297,14 @@ namespace UT_Catch2Interface.Discover
             Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
                            , tests[7].Name );
 
-            Assert.IsTrue( tests[0].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
-            Assert.IsTrue( tests[1].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
-            Assert.IsTrue( tests[2].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
-            Assert.IsTrue( tests[3].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
-            Assert.IsTrue( tests[4].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
-            Assert.IsTrue( tests[5].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
-            Assert.IsTrue( tests[6].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
-            Assert.IsTrue( tests[7].Filename.EndsWith(@"catch_discover\ut_longtestcasenames.cpp") );
+            Assert.IsTrue( tests[0].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+            Assert.IsTrue( tests[1].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+            Assert.IsTrue( tests[2].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+            Assert.IsTrue( tests[3].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+            Assert.IsTrue( tests[4].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+            Assert.IsTrue( tests[5].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+            Assert.IsTrue( tests[6].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+            Assert.IsTrue( tests[7].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
 
             Assert.AreEqual( 29, tests[0].Line );
             Assert.AreEqual( 34, tests[1].Line );
@@ -335,9 +335,9 @@ namespace UT_Catch2Interface.Discover
             Assert.AreEqual( "NotDefaultDiscoverable. a123456789b123456789c123456789d123456789e123456789f123"
                            , tests[2].Name );
 
-            Assert.IsTrue( tests[0].Filename.EndsWith(@"catch_discover\ut_notdefaultdiscoverable.cpp") );
-            Assert.IsTrue( tests[1].Filename.EndsWith(@"catch_discover\ut_notdefaultdiscoverable.cpp") );
-            Assert.IsTrue( tests[2].Filename.EndsWith(@"catch_discover\ut_notdefaultdiscoverable.cpp") );
+            Assert.IsTrue( tests[0].Filename.EndsWith(@"Catch_Discover\UT_NotDefaultDiscoverable.cpp") );
+            Assert.IsTrue( tests[1].Filename.EndsWith(@"Catch_Discover\UT_NotDefaultDiscoverable.cpp") );
+            Assert.IsTrue( tests[2].Filename.EndsWith(@"Catch_Discover\UT_NotDefaultDiscoverable.cpp") );
 
             Assert.AreEqual( 29, tests[0].Line );
             Assert.AreEqual( 34, tests[1].Line );

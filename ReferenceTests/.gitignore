@@ -1,0 +1,12 @@
+# Visual Studio (Code) Related
+.vscode/
+.vs/
+CMakeSettings.json
+
+# SciDaP specific
+/*/
+!/docs/
+!/external/
+!/src/
+!/tests/
+!/tools/
