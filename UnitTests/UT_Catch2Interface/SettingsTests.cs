@@ -64,6 +64,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(LoggingLevels.Normal, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.StatsOnly, settings.MessageFormat);
             Assert.AreEqual(StacktraceFormats.ShortInfo, settings.StacktraceFormat);
+            Assert.AreEqual(80, settings.StacktraceMaxLength);
             Assert.AreEqual(",", settings.StacktracePointReplacement);
             Assert.AreEqual(-1, settings.TestCaseTimeout);
 
@@ -90,6 +91,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.AdditionalInfo, settings.MessageFormat);
             Assert.AreEqual(StacktraceFormats.None, settings.StacktraceFormat);
+            Assert.AreEqual(120, settings.StacktraceMaxLength);
             Assert.AreEqual("_", settings.StacktracePointReplacement);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
@@ -116,6 +118,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -143,6 +146,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -170,6 +174,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.AdditionalInfo, settings.MessageFormat);
             Assert.AreEqual(StacktraceFormats.None, settings.StacktraceFormat);
+            Assert.AreEqual(120, settings.StacktraceMaxLength);
             Assert.AreEqual("_", settings.StacktracePointReplacement);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
@@ -196,6 +201,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -222,6 +228,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -248,6 +255,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -274,6 +282,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -300,6 +309,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -326,6 +336,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -352,6 +363,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -378,6 +390,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -404,6 +417,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(LoggingLevels.Quiet, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -430,6 +444,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(LoggingLevels.Normal, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -456,6 +471,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -482,6 +498,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(LoggingLevels.Debug, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -508,6 +525,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.AdditionalInfo, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -534,6 +552,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.None, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -560,6 +579,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.StatsOnly, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -586,6 +606,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(StacktraceFormats.None, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -612,6 +633,34 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(StacktraceFormats.ShortInfo, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
+            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
+            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+        }
+
+        [TestMethod]
+        public void TestExtractStacktraceMaxLength()
+        {
+            var xml = new XmlDocument();
+            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_StackTraceMaxLength));
+            reader.Read();
+            var settings = Settings.Extract(xml.ReadNode(reader));
+
+            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+
+            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
+            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
+            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
+            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
+            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
+            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
+            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(120, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -638,6 +687,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual("_", settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -664,6 +714,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
@@ -690,6 +741,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -716,6 +768,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
@@ -1195,5 +1248,43 @@ namespace UT_Catch2Interface
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
         }
+
+        [TestMethod]
+        public void TestProcessStacktraceDescription()
+        {
+            var settings = new Settings();
+
+            Assert.AreEqual(80, settings.StacktraceMaxLength);
+            Assert.AreEqual(",", settings.StacktracePointReplacement);
+
+            var result = settings.ProcessStacktraceDescription("[42] This is a test");
+            Assert.AreEqual("[42] This is a test", result);
+
+            result = settings.ProcessStacktraceDescription("    [42] This is a test");
+            Assert.AreEqual("[42] This is a test", result);
+
+            result = settings.ProcessStacktraceDescription("[42] This is\n a test");
+            Assert.AreEqual("[42] This is", result);
+
+            result = settings.ProcessStacktraceDescription("[42] This is a\r test");
+            Assert.AreEqual("[42] This is a", result);
+
+            result = settings.ProcessStacktraceDescription("    [42] This is \r\n a test");
+            Assert.AreEqual("[42] This is ", result);
+
+            result = settings.ProcessStacktraceDescription("[99] This is test 2.0");
+            Assert.AreEqual("[99] This is test 2,0", result);
+
+            result = settings.ProcessStacktraceDescription("[99] This 1234567890123456789012345678901234567890123456789012345678901234567890 too much");
+            Assert.AreEqual("[99] This 1234567890123456789012345678901234567890123456789012345678901234567890", result);
+
+            result = settings.ProcessStacktraceDescription("[99] This 1234567890\r\n123456789012345678901234567890123456789012345678901234567890 too much");
+            Assert.AreEqual("[99] This 1234567890", result);
+
+            result = settings.ProcessStacktraceDescription("[99] This 1234567890123456789012345678901234567890123456789012345678901234567890 too much\r\n to deal with");
+            Assert.AreEqual("[99] This 1234567890123456789012345678901234567890123456789012345678901234567890", result);
+
+        }
+
     }
 }

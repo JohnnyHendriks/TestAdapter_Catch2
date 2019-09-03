@@ -19,7 +19,7 @@ namespace UT_Catch2Interface.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class TestStrings {
@@ -311,9 +311,9 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
         ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+        ///  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
         ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
-        ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
-        ///&lt;/Catch2Adapter&gt;.
+        ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!- [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom {
             get {
@@ -331,9 +331,9 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
         ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+        ///  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
         ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
-        ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
-        ///&lt;/Catch2Adapte [rest of string was truncated]&quot;;.
+        ///  &lt;TestCaseTimeout&gt;20000&lt;/Tes [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_Disabled {
             get {
@@ -351,9 +351,9 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
         ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+        ///  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
         ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
-        ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
-        ///&lt;/Catch2Adapt [rest of string was truncated]&quot;;.
+        ///  &lt;TestCaseTimeout&gt;20000&lt;/Te [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_NotDisabled {
             get {
@@ -479,6 +479,17 @@ namespace UT_Catch2Interface.Resources {
         internal static string XmlSettings_StackTraceFormat_ShortInfo {
             get {
                 return ResourceManager.GetString("XmlSettings_StackTraceFormat_ShortInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        /// &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_StackTraceMaxLength {
+            get {
+                return ResourceManager.GetString("XmlSettings_StackTraceMaxLength", resourceCulture);
             }
         }
         

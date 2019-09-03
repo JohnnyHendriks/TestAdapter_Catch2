@@ -248,6 +248,7 @@ cerr 02
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
   &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
   &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
   &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
@@ -262,6 +263,7 @@ cerr 02
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
   &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
   &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
   &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
@@ -276,6 +278,7 @@ cerr 02
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
   &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
   &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
   &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
   &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
@@ -333,6 +336,11 @@ cerr 02
   <data name="XmlSettings_StackTraceFormat_ShortInfo" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
  &lt;StackTraceFormat&gt;ShortInfo&lt;/StackTraceFormat&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettings_StackTraceMaxLength" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+ &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_StackTracePointReplacement" xml:space="preserve">

@@ -59,8 +59,6 @@ Class :
         private string            _testname;
         private string            _xmloutput;
 
-        private Regex _rgx_replace_point = new Regex(@"\.");
-
         #endregion // Fields
 
         #region Constructor
@@ -312,9 +310,13 @@ Class :
                 case StacktraceFormats.None:
                     break;
                 default:
-                    description = _rgx_replace_point.Replace(description, _settings.StacktracePointReplacement);
-                    _stacktracebuilder.Append($"at {description} in {filename}:line {line}{Environment.NewLine}");
+                {
+                    // Process description
+                    var mod_description = _settings.ProcessStacktraceDescription(description);
+
+                    _stacktracebuilder.Append($"at {mod_description} in {filename}:line {line}{Environment.NewLine}");
                     break;
+                }
             }
         }
 

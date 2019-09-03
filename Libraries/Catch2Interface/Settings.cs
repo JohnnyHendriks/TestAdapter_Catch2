@@ -103,6 +103,7 @@ Class :
         static readonly Regex _rgxWorkingDirectoryRoot_Solution = new Regex(@"^(?i:solution)$", RegexOptions.Singleline);
         static readonly Regex _rgxWorkingDirectoryRoot_TestRun = new Regex(@"^(?i:testrun)$", RegexOptions.Singleline);
 
+        static readonly Regex _rgx_replace_point = new Regex(@"\.");
 
         #endregion // Fields
 
@@ -117,6 +118,7 @@ Class :
         public LoggingLevels         LoggingLevel { get; set; }               = Constants.S_DefaultLoggingLevel;
         public MessageFormats        MessageFormat { get; set; }              = Constants.S_DefaultMessageFormat;
         public StacktraceFormats     StacktraceFormat { get; set; }           = Constants.S_DefaultStackTraceFormat;
+        public int                   StacktraceMaxLength { get; set; }        = Constants.S_DefaultStackTraceMaxLength;
         public string                StacktracePointReplacement { get; set; } = Constants.S_DefaultStackTracePointReplacement;
         public int                   TestCaseTimeout { get; set; }            = Constants.S_DefaultTestCaseTimeout;
         public string                WorkingDirectory {  get; set; }          = Constants.S_DefaultWorkingDirectory;
@@ -218,6 +220,17 @@ Class :
                     settings.StacktraceFormat = ConvertToStacktraceFormat(stacktraceformat.Value.Trim());
                 }
 
+                // StacktraceMaxLenth
+                var stacktracemaxlength = node.SelectSingleNode(Constants.NodeName_StackTraceMaxLength)?.FirstChild;
+                if (stacktracemaxlength != null
+                 && stacktracemaxlength.NodeType == XmlNodeType.Text)
+                {
+                    if (int.TryParse(stacktracemaxlength.Value, out int maxlenth))
+                    {
+                        settings.StacktraceMaxLength = maxlenth;
+                    }
+                }
+
                 // StackTracePointReplacement
                 var stacktraceptreplace = node.SelectSingleNode(Constants.NodeName_StackTracePointReplacement)?.FirstChild;
                 if (stacktraceptreplace != null && stacktraceptreplace.NodeType == XmlNodeType.Text)
@@ -255,7 +268,36 @@ Class :
 
         #endregion // Static Public
 
-        #region Private Private
+        #region Public Methods
+
+        public string ProcessStacktraceDescription(string description)
+        {
+            // Trim whitespace
+            var mod_description = description.TrimStart();
+
+            // Stop at linebreaks or max length
+            var lengthdescription = mod_description.IndexOfAny("\r\n".ToCharArray());
+            if (lengthdescription < 0)
+            {
+                lengthdescription = mod_description.Length;
+            }
+            if (lengthdescription > StacktraceMaxLength)
+            {
+                mod_description = mod_description.Substring(0, StacktraceMaxLength);
+            }
+            else if (lengthdescription < mod_description.Length)
+            {
+                mod_description = mod_description.Substring(0, lengthdescription);
+            }
+
+            mod_description = _rgx_replace_point.Replace(mod_description, StacktracePointReplacement);
+
+            return mod_description;
+        }
+
+        #endregion // Public Methods
+
+        #region Static Private
 
         private static LoggingLevels ConvertToLoggingLevel(string level)
         {
