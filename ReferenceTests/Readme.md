@@ -7,3 +7,7 @@ For the development of the **Test Adapter for Catch2** some Catch2 tests were cr
 ## Build tests
 
 These tests used to be part of the main VSTestAdapterCatch2.sln. However, at some point extending the solution to add support for new versions of Catch2 became too cumbersome. As such a new approach was chosen, where a seperate solution is generated via CMake. A script is provided that generates a solution using CMake. In addition, a script is provided that generates and builds the tests, and copies the generated executales to the appropriate place for use by the unitests for the different components of the **Test Adapter for Catch2**.
+
+## Walkthrough
+
+The reference tests are also used in the [walkthrough](../Docs/walkthrough.md) to demonstrate the functionality of the **Test Adapter for Catch2**. Therefore for convenience a [handmade solution](./walkthrough) is also provided for use with the [walkthrough](../Docs/walkthrough.md).

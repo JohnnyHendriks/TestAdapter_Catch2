@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Files">
+      <UniqueIdentifier>{e9f92384-33de-4567-ac81-601cc1c65521}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Files\Catch">
+      <UniqueIdentifier>{36abadce-429e-4b62-9e22-98a0b1ba6ed1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(RefTest_SourceDir)main.cpp">
+      <Filter>Files\Catch</Filter>
+    </ClCompile>
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Discover\UT_LongTestCaseNames.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Discover\UT_Tags.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Discover\UT_TestCases.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Discover\UT_NotDefaultDiscoverable.cpp">
+      <Filter>Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(RefTest_SourceDir)catch_discover.hpp">
+      <Filter>Files\Catch</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

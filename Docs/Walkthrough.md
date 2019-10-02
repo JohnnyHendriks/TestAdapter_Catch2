@@ -2,9 +2,9 @@
 
 ## Introduction
 
-It can be a bit tricky to get the **Test Adapter for Catch2** running. So, if you are having trouble getting the test adapter to work you are not alone. For this Walkthrough I'm using the latest version of Microsoft Visual Studio Community 2017 (version 15.9.6 at the time of writing). This walkthrough makes use of the v1.5.0 release of the **Test Adapter for Catch2**.
+It can be a bit tricky to get the **Test Adapter for Catch2** running. So, if you are having trouble getting the test adapter to work you are not alone. For this Walkthrough I'm using the latest version of Microsoft Visual Studio Community 2017 (version 15.9.6 at the time of writing). This walkthrough makes use of the v1.5.0 release of the **Test Adapter for Catch2**. Note, that in Visual Studio 2019 the Test Explorer has undergone a facelift and things work slightly different. An alternate walkthrough for use with Visual Studio 2019 is planned for the near future.
 
-I will use the ReferenceTests created for testing the **Test Adapter for Catch2**. You can find the Visual Studio solution in the [ReferenceTests](../ReferenceTests/) folder of this GitHub repository. I assume you know how to open the Test Explorer Window.
+I will use the ReferenceTests created for testing the **Test Adapter for Catch2**. You can find a Visual Studio solution in the [ReferenceTests](../ReferenceTests/walkthrough/) folder of this GitHub repository. I will assume you know how to open the Test Explorer Window.
 
 The following topics are discussed.
 - [Make sure the test adapter is installed](#make-sure-the-test-adapter-is-installed)

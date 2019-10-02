@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="RefTest_Properties">
+    <RefTest_RootDir Condition="'$(RefTest_RootDir)'==''">$(MSBuildThisFileDirectory)..\..\..\..\</RefTest_RootDir>
+    <RefTest_PropsDir Condition="'$(RefTest_PropsDir)'==''">$(RefTest_RootDir)walkthrough\MSBuild\VS2017\PropertySheets\</RefTest_PropsDir>
+  </PropertyGroup>
+  <Import Project="$(RefTest_PropsDir)RefTest_ProjectConfigs.props" />
+  <Import Project="$(RefTest_PropsDir)RefTest_Paths.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(RefTest_PropsDir)RefTest_Platform_exe.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(RefTest_PropsDir)RefTest_UnitTest_Catch2.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>
