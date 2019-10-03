@@ -10,4 +10,4 @@ These tests used to be part of the main VSTestAdapterCatch2.sln. However, at som
 
 ## Walkthrough
 
-The reference tests are also used in the [walkthrough](../Docs/walkthrough.md) to demonstrate the functionality of the **Test Adapter for Catch2**. Therefore for convenience a [handmade solution](./walkthrough) is also provided for use with the [walkthrough](../Docs/walkthrough.md).
+The reference tests are also used in the [walkthrough](../Docs/Walkthrough.md) to demonstrate the functionality of the **Test Adapter for Catch2**. Therefore for convenience a [handmade solution](./walkthrough/) is also provided for use with the [walkthrough](../Docs/Walkthrough.md).
