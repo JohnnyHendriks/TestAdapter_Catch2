@@ -17,6 +17,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Catch2TestAdapter
@@ -149,22 +150,180 @@ namespace Catch2TestAdapter
             return tests;
         }
 
+        private void RecordTestResult(TestResult result, Catch2Interface.TestResult interfaceresult)
+        {
+            LogDebug(TestMessageLevel.Informational, $"Testcase result for: {result.TestCase.DisplayName}");
+
+            switch (interfaceresult.Outcome)
+            {
+                case Catch2Interface.TestOutcomes.Timedout:
+                    LogVerbose(TestMessageLevel.Warning, "Time out");
+                    result.Outcome = TestOutcome.Skipped;
+                    result.ErrorMessage = interfaceresult.ErrorMessage;
+                    result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, interfaceresult.StandardOut));
+                    result.Duration = interfaceresult.Duration;
+                    break;
+                case Catch2Interface.TestOutcomes.Cancelled:
+                    result.Outcome = TestOutcome.None;
+                    break;
+                case Catch2Interface.TestOutcomes.Skipped:
+                    result.Outcome = TestOutcome.Skipped;
+                    result.ErrorMessage = interfaceresult.ErrorMessage;
+                    break;
+                default:
+                    if (interfaceresult.Outcome == Catch2Interface.TestOutcomes.Passed)
+                    {
+                        result.Outcome = TestOutcome.Passed;
+                    }
+                    else
+                    {
+                        result.Outcome = TestOutcome.Failed;
+                    }
+                    result.Duration = interfaceresult.Duration;
+                    result.ErrorMessage = interfaceresult.ErrorMessage;
+                    result.ErrorStackTrace = interfaceresult.ErrorStackTrace;
+
+                    if (!string.IsNullOrEmpty(interfaceresult.StandardOut))
+                    {
+                        result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, interfaceresult.StandardOut));
+                    }
+
+                    if (!string.IsNullOrEmpty(interfaceresult.StandardError))
+                    {
+                        result.Messages.Add(new TestResultMessage(TestResultMessage.StandardErrorCategory, interfaceresult.StandardError));
+                    }
+
+                    if (!string.IsNullOrEmpty(interfaceresult.AdditionalInfo))
+                    {
+                        result.Messages.Add(new TestResultMessage(TestResultMessage.AdditionalInfoCategory, interfaceresult.AdditionalInfo));
+                    }
+                    break;
+            }
+
+            _frameworkHandle.RecordResult(result);
+            LogVerbose(TestMessageLevel.Informational, $"Finished test: {result.TestCase.FullyQualifiedName}");
+        }
+
         private void RunTests(IEnumerable<TestCase> tests)
         {
             _executor.InitTestRuns();
 
+            LogDebug(TestMessageLevel.Informational, $"RunTests count: {System.Linq.Enumerable.Count(tests)}");
+
+            switch (_settings.ExecutionMode)
+            {
+                case Catch2Interface.ExecutionModes.SingleTestCase:
+                    RunTests_Single(tests);
+                    break;
+
+                default:
+                case Catch2Interface.ExecutionModes.CombineTestCases:
+                    RunTests_Combine(tests);
+                    break;
+            }
+        }
+
+        private void RunTests_Combine(IEnumerable<TestCase> tests)
+        {
+            if (!tests.Any()) return; // Sanity check
+
+            List<TestCase> groupedtests = new List<TestCase>();
+            List<TestCase> singledtests = new List<TestCase>();
+            List<TestCase> remainingtests = new List<TestCase>();
+            Catch2Interface.TestCaseGroup testcasegroup = new Catch2Interface.TestCaseGroup();
+            testcasegroup.Source = tests.First().Source;
+
+            LogDebug(TestMessageLevel.Informational, $"Start Grouping tests for {testcasegroup.Source}");
+
+            // Select tests with the same source
+            foreach (var test in tests)
+            {
+                if (testcasegroup.Source != test.Source)
+                {
+                    remainingtests.Add(test);
+                    continue;
+                }
+
+                if (Catch2Interface.Executor.CanExecuteCombined(test.DisplayName, SharedUtils.GetTags(test)))
+                {
+                    LogDebug(TestMessageLevel.Informational, $"Add to group: {test.DisplayName}");
+                    testcasegroup.Names.Add(test.DisplayName);
+                    _frameworkHandle.RecordStart(test); // Indicate in the GUI test is running
+                    groupedtests.Add(test);
+                }
+                else
+                {
+                    singledtests.Add(test);
+                }
+            }
+
+            // Log sort result
+            LogDebug(TestMessageLevel.Informational, $"Grouped/Singled/Remaining testcase count: {groupedtests.Count}/{singledtests.Count}/{remainingtests.Count}");
+
+            // Check if source actually exists
+            if (!File.Exists(testcasegroup.Source))
+            {
+                LogVerbose(TestMessageLevel.Informational, $"Test executable not found: {testcasegroup.Source}");
+                SkipTests(groupedtests);
+            }
+
+            // Run tests
+            LogVerbose(TestMessageLevel.Informational, $"Run {testcasegroup.Names.Count} grouped testcases.");
+            var testresults = _executor.Run(testcasegroup);
+
+            if (!string.IsNullOrEmpty(_executor.Log))
+            {
+                LogNormal(TestMessageLevel.Informational, $"Executor log:{Environment.NewLine}{_executor.Log}");
+            }
+
+            // Process results
+            LogDebug(TestMessageLevel.Informational, $"Testcase result count: {testresults.TestResults.Count}");
+            foreach (var test in groupedtests)
+            {
+                var testresult = testresults.FindTestResult(test.DisplayName);
+
+                LogDebug(TestMessageLevel.Informational, $"Processed testcase: {test.DisplayName}");
+                TestResult result = new TestResult(test);
+                if(testresult == null)
+                {
+                    LogDebug(TestMessageLevel.Informational, $"Combined testcase result not found for: {test.DisplayName}");
+                    result.Outcome = TestOutcome.None;
+                    _frameworkHandle.RecordResult(result);
+                    singledtests.Add(test);
+                }
+                else
+                {
+                    RecordTestResult(result, testresult);
+                }
+            }
+
+            if (singledtests.Count > 0)
+            {
+                LogDebug(TestMessageLevel.Informational, $"Process singled tests (count: {singledtests.Count})");
+                RunTests_Single(singledtests);
+            }
+
+            if (remainingtests.Count > 0)
+            {
+                LogDebug(TestMessageLevel.Informational, $"Process remaining tests (count: {remainingtests.Count})");
+                RunTests_Combine(remainingtests);
+            }
+        }
+
+        private void RunTests_Single(IEnumerable<TestCase> tests)
+        {
             foreach (var test in tests)
             {
                 if (_cancelled) break;
 
-                _frameworkHandle.RecordStart(test);
-                var result = RunTest(test);
-                _frameworkHandle.RecordResult(result);
+                RunTest(test);
             }
         }
 
-        private TestResult RunTest(TestCase test)
+        private void RunTest(TestCase test)
         {
+            _frameworkHandle.RecordStart(test);
+
             LogVerbose(TestMessageLevel.Informational, $"Run test: {test.FullyQualifiedName}");
             LogDebug(TestMessageLevel.Informational, $"Source: {test.Source}");
             LogDebug(TestMessageLevel.Informational, $"SolutionDirectory: {_runContext.SolutionDirectory}");
@@ -176,6 +335,8 @@ namespace Catch2TestAdapter
             if (!File.Exists(test.Source))
             {
                 result.Outcome = TestOutcome.NotFound;
+                _frameworkHandle.RecordResult(result);
+                return;
             }
 
             // Run test
@@ -185,11 +346,13 @@ namespace Catch2TestAdapter
                 _frameworkHandle
                     .LaunchProcessWithDebuggerAttached( test.Source
                                                       , _executor.WorkingDirectory(test.Source)
-                                                      , _executor.GenerateCommandlineArguments(test.DisplayName, true)
+                                                      , _executor.GenerateCommandlineArguments_Single(test.DisplayName, true)
                                                       , null );
 
                 // Do not process output in Debug mode
                 result.Outcome = TestOutcome.None;
+                _frameworkHandle.RecordResult(result);
+                return;
             }
             else
             {
@@ -201,56 +364,10 @@ namespace Catch2TestAdapter
                 }
 
                 // Process test results
-                switch (testresult.Outcome)
-                {
-                    case Catch2Interface.TestOutcomes.Timedout:
-                        LogVerbose(TestMessageLevel.Warning, "Time out");
-                        result.Outcome = TestOutcome.Skipped;
-                        result.ErrorMessage = testresult.ErrorMessage;
-                        result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, testresult.StandardOut));
-                        result.Duration = testresult.Duration;
-                        break;
-                    case Catch2Interface.TestOutcomes.Cancelled:
-                        result.Outcome = TestOutcome.None;
-                        break;
-                    case Catch2Interface.TestOutcomes.Skipped:
-                        result.Outcome = TestOutcome.Skipped;
-                        result.ErrorMessage = testresult.ErrorMessage;
-                        break;
-                    default:
-                        if( testresult.Outcome == Catch2Interface.TestOutcomes.Passed)
-                        {
-                            result.Outcome = TestOutcome.Passed;
-                        }
-                        else
-                        {
-                            result.Outcome = TestOutcome.Failed;
-                        }
-                        result.Duration = testresult.Duration;
-                        result.ErrorMessage = testresult.ErrorMessage;
-                        result.ErrorStackTrace = testresult.ErrorStackTrace;
-
-                        if (!string.IsNullOrEmpty(testresult.StandardOut))
-                        {
-                            result.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, testresult.StandardOut));
-                        }
-
-                        if (!string.IsNullOrEmpty(testresult.StandardError))
-                        {
-                            result.Messages.Add(new TestResultMessage(TestResultMessage.StandardErrorCategory, testresult.StandardError));
-                        }
-
-                        if (!string.IsNullOrEmpty(testresult.AdditionalInfo))
-                        {
-                            result.Messages.Add(new TestResultMessage(TestResultMessage.AdditionalInfoCategory, testresult.AdditionalInfo));
-                        }
-                        break;
-                }
+                RecordTestResult(result, testresult);
             }
 
             LogVerbose(TestMessageLevel.Informational, $"Finished test: {test.FullyQualifiedName}");
-
-            return result;
         }
 
         private void SkipTests(IEnumerable<TestCase> tests)

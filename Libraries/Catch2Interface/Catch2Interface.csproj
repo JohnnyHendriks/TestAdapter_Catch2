@@ -70,6 +70,8 @@
     <Compile Include="Reporter\Section.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TestCase.cs" />
+    <Compile Include="TestCaseGroup.cs" />
+    <Compile Include="XmlOutput.cs" />
     <Compile Include="TestResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

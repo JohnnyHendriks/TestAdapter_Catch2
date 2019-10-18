@@ -12,6 +12,7 @@ Notes: None
 ** Basic Info **/
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -43,6 +44,7 @@ Class :
         private static readonly Regex _rgx_comma        = new Regex(",");
         private static readonly Regex _rgx_doublequotes = new Regex("\"");
         private static readonly Regex _rgx_squarebracket = new Regex(@"\[");
+        private static readonly Regex _rgx_tag_executesingle = new Regex(@"^(?i:tafc_Single)$", RegexOptions.Singleline);
 
         #endregion // Fields
 
@@ -63,6 +65,26 @@ Class :
 
         #endregion // Constructor
 
+        #region Static Public Methods
+
+        static public bool CanExecuteCombined(string testname, IEnumerable<string> tags)
+        {
+            if ( !(testname.EndsWith(" ") || testname.EndsWith(@"\")) )
+            {
+                foreach( var tag in tags)
+                {
+                    if (_rgx_tag_executesingle.IsMatch(tag)) return false;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion Static Public Methods
+
         #region Public Methods
 
         public void Cancel()
@@ -75,7 +97,7 @@ Class :
             }
         }
 
-        public string GenerateCommandlineArguments(string testname, bool debuggerAttached)
+        public string GenerateCommandlineArguments_Single(string testname, bool debuggerAttached)
         {
             if(debuggerAttached && _settings.DebugBreak)
             {
@@ -87,6 +109,18 @@ Class :
             }
         }
 
+        public string GenerateCommandlineArguments_Combined(string source, bool debuggerAttached)
+        {
+            if (debuggerAttached && _settings.DebugBreak)
+            {
+                return $"--reporter xml --durations yes --break --input-file {source}.testcaselist";
+            }
+            else
+            {
+                return $"--reporter xml --durations yes --input-file {source}.testcaselist";
+            }
+        }
+
         public TestResult Run(string testname, string source)
         {
             if(_cancelled) return new TestResult();
@@ -95,7 +129,7 @@ Class :
 
             var process = new Process();
             process.StartInfo.FileName = source;
-            process.StartInfo.Arguments = GenerateCommandlineArguments(testname, false);
+            process.StartInfo.Arguments = GenerateCommandlineArguments_Single(testname, false);
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;
@@ -142,6 +176,55 @@ Class :
             }
         }
 
+        public XmlOutput Run(TestCaseGroup group)
+        {
+            if (_cancelled) return null;
+
+            _logbuilder.Clear();
+
+            // Prepare testcase list file
+            CreateTestcaseListFile(group);
+
+            // Run tests
+            var process = new Process();
+            process.StartInfo.FileName = group.Source;
+            process.StartInfo.Arguments = GenerateCommandlineArguments_Combined(group.Source, false);
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.WorkingDirectory = WorkingDirectory(group.Source);
+            
+            LogDebug($"Source for test case: {group.Source}{Environment.NewLine}");
+            LogDebug($"Commandline arguments used to run tests case: {process.StartInfo.Arguments}{Environment.NewLine}");
+
+            process.Start();
+            _process = process;
+            
+            var output = process.StandardOutput.ReadToEndAsync();
+            
+            if (_settings.TestCaseTimeout > 0)
+            {
+                process.WaitForExit(_settings.TestCaseTimeout);
+            }
+            else
+            {
+                process.WaitForExit();
+            }
+            
+            if (!process.HasExited)
+            {
+                process.Kill();
+                LogVerbose($"Killed process.{Environment.NewLine}");
+                Log = _logbuilder.ToString();
+            }
+
+            _process = null;
+            LogDebug(output.Result);
+            Log = _logbuilder.ToString();
+
+            return new XmlOutput(output.Result, _settings);
+        }
+
         public void InitTestRuns()
         {
             _cancelled = false;
@@ -173,6 +256,20 @@ Class :
         #endregion // Public Methods
 
         #region Private Methods
+
+        private void CreateTestcaseListFile(TestCaseGroup group)
+        {
+            // Create content to write to file
+            StringBuilder filecontentbuilder = new StringBuilder();
+            foreach (var name in group.Names)
+            {
+                var processedname = GenerateTestnameForCommandline(name);
+                filecontentbuilder.Append($"{processedname}{Environment.NewLine}");
+            }
+
+            var filecontent = filecontentbuilder.ToString();
+            File.WriteAllText($"{group.Source}.testcaselist", filecontent, Encoding.UTF8);
+        }
 
         private string GenerateTestnameForCommandline(string name)
         {

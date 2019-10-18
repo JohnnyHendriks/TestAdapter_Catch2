@@ -12,6 +12,7 @@ Notes: None
 ** Basic Info **/
 
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using System.Collections.Generic;
 
 namespace Catch2TestAdapter
 {
@@ -33,6 +34,21 @@ Class :
             }
 
             return vstestcase;
+        }
+
+        public static List<string> GetTags(TestCase testcase)
+        {
+            List<string> tags = new List<string>();
+
+            foreach (var trait in testcase.Traits)
+            {
+                if (trait.Name == "Tag")
+                {
+                    tags.Add(trait.Value);
+                }
+            }
+
+            return tags;
         }
     }
 }

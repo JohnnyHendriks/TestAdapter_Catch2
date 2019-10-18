@@ -182,6 +182,21 @@ It is invalid input.</value>
   &lt;OverallResults successes="6" failures="1" expectedFailures="0"/&gt;
 &lt;/Catch&gt;</value>
   </data>
+  <data name="PartialMultipleTestCases" xml:space="preserve">
+    <value>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Catch name="Catch_Discover.exe"&gt;
+  &lt;Group name="Catch_Discover.exe"&gt;
+    &lt;TestCase name="Test1" tags="[ut]" filename="D:\Dummy\UT_Test.cpp" line="29"&gt;
+      &lt;OverallResult success="true" durationInSeconds="5.6e-05"/&gt;
+    &lt;/TestCase&gt;
+    &lt;TestCase name="Test2" tags="[ut]" filename="C:\Dummy\UT_Test.cpp" line="34"&gt;
+      &lt;OverallResult success="true" durationInSeconds="2.7e-05"/&gt;
+    &lt;/TestCase&gt;
+    &lt;TestCase name="Test3" tags="[ut]" filename="C:\Dummy\UT_Test.cpp" line="42"&gt;
+      &lt;OverallResult success="true" durationInSeconds="2.7e-05"/&gt;
+    &lt;/TestCase&gt;
+    &lt;TestCase name="Test4" tags="[ut]" filename="C:\Dummy\UT_Test.cpp" line="66"&gt;</value>
+  </data>
   <data name="PostXmlText" xml:space="preserve">
     <value>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;Catch name="QDummy.exe"&gt;

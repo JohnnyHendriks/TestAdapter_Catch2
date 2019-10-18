@@ -28,7 +28,7 @@ Notes: None
 
 namespace CatchTestset01
 {
-    TEST_CASE( "Wait forever" )
+    TEST_CASE( "Wait forever", "[tafc_Single]" )
     {
         while (true)
         {

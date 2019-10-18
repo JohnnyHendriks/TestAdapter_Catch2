@@ -56,7 +56,6 @@ Class :
 
         private Settings          _settings;
         private Reporter.TestCase _testcase;
-        private string            _testname;
         private string            _xmloutput;
 
         #endregion // Fields
@@ -68,12 +67,38 @@ Class :
             Outcome = TestOutcomes.Cancelled;
         }
 
-        public TestResult(string xmloutput, string testname, Settings settings)
+        public TestResult(string xmloutput, string testname, Settings settings, bool processoutput = true)
         {
             _settings = settings ?? new Settings();
-            _testname = testname;
             _xmloutput = xmloutput;
-            ProcessXml();
+
+            Name = testname;
+
+            if(processoutput)
+            {
+                ProcessXml();
+            }
+            else
+            {
+                SetInvalidTestRunnerOutput();
+            }
+        }
+
+        public TestResult(Reporter.TestCase testcase, Settings settings)
+        {
+            _settings = settings ?? new Settings();
+            _testcase = testcase;
+
+            Duration = _testcase.OverallResult.Duration;
+            Name = _testcase.Name;
+            Outcome = _testcase.OverallResult.Success ? TestOutcomes.Passed : TestOutcomes.Failed;
+            StandardOut = _testcase.OverallResult.StdOut;
+            StandardError = _testcase.OverallResult.StdErr;
+
+            OverallResults = new Reporter.OverallResults();
+
+            ExtractMessages();
+            GenerateMessages();
         }
 
         public TestResult( TimeSpan duration
@@ -88,18 +113,15 @@ Class :
 
         #region Properties
 
+        public string AdditionalInfo { get; private set; }
         public TimeSpan Duration { get; private set; }
-
-        public Reporter.OverallResults OverallResults { get; private set; }
-
         public string ErrorMessage { get; private set; }
         public string ErrorStackTrace { get; private set; }
-
-        public string AdditionalInfo { get; private set; }
-        public string StandardOut { get; private set; }
-        public string StandardError { get; private set; }
-
+        public string Name { get; private set; }
+        public Reporter.OverallResults OverallResults { get; private set; }
         public TestOutcomes Outcome { get; private set; }
+        public string StandardError { get; private set; }
+        public string StandardOut { get; private set; }
 
         #endregion // Properties
 
@@ -214,9 +236,6 @@ Class :
 
             bool appendstart = true;
 
-            //_msgbuilder.Append($"Start Section: {section.Name}{Environment.NewLine}");
-            //_msgbuilder.AppendLine();
-
             foreach (var child in section.Children)
             {
                 switch( child )
@@ -285,8 +304,6 @@ Class :
                 AppendSectionEnd(endstring);
                 appendstart = true;
             }
-            //_msgbuilder.Append($"End Section: {section.Name}{Environment.NewLine}");
-            //_msgbuilder.AppendLine();
         }
 
         private void AppendSectionEnd(string endstring)
@@ -394,7 +411,7 @@ Class :
                 foreach (XmlNode nodeTestCase in nodesTestCases)
                 {
                     var testcase = new Reporter.TestCase(nodeTestCase);
-                    if(_testcasecount != 1 && testcase.Name != _testname) continue;
+                    if(_testcasecount != 1 && !testcase.Name.Equals(Name)) continue;
 
                     _testcase = testcase;
 

@@ -158,6 +158,8 @@
     </Compile>
     <Compile Include="SettingsTests.cs" />
     <Compile Include="TestResultTests.cs" />
+    <Compile Include="XmlOutput\PartialXmlOutput.cs" />
+    <Compile Include="XmlOutput\ValidXmlOutput.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\TestStrings.resx">

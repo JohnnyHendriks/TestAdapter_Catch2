@@ -43,6 +43,7 @@ Class :
         public const string NodeName_DebugBreak = "DebugBreak";
         public const string NodeName_DiscoverCommanline = "DiscoverCommandLine";
         public const string NodeName_DiscoverTimeout = "DiscoverTimeout";
+        public const string NodeName_ExecutionMode = "ExecutionMode";
         public const string NodeName_FilenameFilter = "FilenameFilter";
         public const string NodeName_IncludeHidden = "IncludeHidden";
         public const string NodeName_Logging = "Logging";
@@ -66,6 +67,7 @@ Class :
         public const int    S_DefaultStackTraceMaxLength = 80;
         public const string S_DefaultStackTracePointReplacement = ",";
 
+        public const ExecutionModes        S_DefaultExecutionMode = ExecutionModes.SingleTestCase;
         public const LoggingLevels         S_DefaultLoggingLevel = LoggingLevels.Normal;
         public const MessageFormats        S_DefaultMessageFormat = MessageFormats.StatsOnly;
         public const StacktraceFormats     S_DefaultStackTraceFormat = StacktraceFormats.ShortInfo;

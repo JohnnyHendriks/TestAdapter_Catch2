@@ -292,6 +292,72 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_ExMode_Combine1 {
+            get {
+                return ResourceManager.GetString("XmlSettings_ExMode_Combine1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;ExecutionMode&gt;CombineTestcases&lt;/ExecutionMode&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_ExMode_Combine2 {
+            get {
+                return ResourceManager.GetString("XmlSettings_ExMode_Combine2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;ExecutionMode&gt;Combine Testcases&lt;/ExecutionMode&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_ExMode_Combine3 {
+            get {
+                return ResourceManager.GetString("XmlSettings_ExMode_Combine3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;ExecutionMode&gt;Single&lt;/ExecutionMode&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_ExMode_Single1 {
+            get {
+                return ResourceManager.GetString("XmlSettings_ExMode_Single1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;ExecutionMode&gt;SingleTestcase&lt;/ExecutionMode&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_ExMode_Single2 {
+            get {
+                return ResourceManager.GetString("XmlSettings_ExMode_Single2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;ExecutionMode&gt;Single Testcase&lt;/ExecutionMode&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_ExMode_Single3 {
+            get {
+                return ResourceManager.GetString("XmlSettings_ExMode_Single3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
@@ -306,6 +372,7 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+        ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
@@ -313,7 +380,7 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
         ///  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
         ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
-        ///  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!- [rest of string was truncated]&quot;;.
+        ///  &lt; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom {
             get {
@@ -326,14 +393,14 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+        ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
         ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
         ///  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
-        ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
-        ///  &lt;TestCaseTimeout&gt;20000&lt;/Tes [rest of string was truncated]&quot;;.
+        ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointR [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_Disabled {
             get {
@@ -346,14 +413,14 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+        ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
         ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
         ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
         ///  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
-        ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
-        ///  &lt;TestCaseTimeout&gt;20000&lt;/Te [rest of string was truncated]&quot;;.
+        ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePoint [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_NotDisabled {
             get {

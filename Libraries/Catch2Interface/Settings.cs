@@ -19,6 +19,17 @@ namespace Catch2Interface
 /*YAML
 Enum :
   Description : >
+    This enum represents the valid ExecutionMode settings.
+*/
+    public enum ExecutionModes
+    {
+        CombineTestCases,
+        SingleTestCase,
+    }
+
+/*YAML
+Enum :
+  Description : >
     This enum represents the valid Logging Level settings.
 */
     public enum LoggingLevels
@@ -87,6 +98,9 @@ Class :
         static readonly Regex _rgxValidDiscover = new Regex(@"^(--[a-zA-Z]|-[a-zA-Z])", RegexOptions.Singleline);
         static readonly Regex _rgxVerbosityHigh = new Regex(@"(--verbosity|-v)( *high)( .*)?$", RegexOptions.Singleline);
 
+        static readonly Regex _rgxExMode_Combine = new Regex(@"^(?i:combine)(?i: ?testcases)?$", RegexOptions.Singleline);
+        static readonly Regex _rgxExMode_Single = new Regex(@"^(?i:single)(?i: ?testcases)?$", RegexOptions.Singleline);
+
         static readonly Regex _rgxLogLevel_Debug = new Regex(@"^(?i:debug)$", RegexOptions.Singleline);
         static readonly Regex _rgxLogLevel_Normal = new Regex(@"^(?i:normal)$", RegexOptions.Singleline);
         static readonly Regex _rgxLogLevel_Quiet = new Regex(@"^(?i:quiet)$", RegexOptions.Singleline);
@@ -113,6 +127,7 @@ Class :
         public bool                  Disabled { get; set; }                   = Constants.S_DefaultDisabled;
         public string                DiscoverCommandLine { get; set; }        = Constants.S_DefaultDiscoverCommandline;
         public int                   DiscoverTimeout { get; set; }            = Constants.S_DefaultDiscoverTimeout;
+        public ExecutionModes        ExecutionMode { get; set; }              = Constants.S_DefaultExecutionMode;
         public string                FilenameFilter { get; set; }             = Constants.S_DefaultFilenameFilter;
         public bool                  IncludeHidden { get; set; }              = Constants.S_DefaultIncludeHidden;
         public LoggingLevels         LoggingLevel { get; set; }               = Constants.S_DefaultLoggingLevel;
@@ -176,6 +191,14 @@ Class :
                     {
                         settings.DiscoverTimeout = timeout;
                     }
+                }
+
+                // ExecutionMode
+                var exmode = node.SelectSingleNode(Constants.NodeName_ExecutionMode)?.FirstChild;
+                if (exmode != null
+                 && exmode.NodeType == XmlNodeType.Text)
+                {
+                    settings.ExecutionMode = ConvertToExecutionMode(exmode.Value.Trim());
                 }
 
                 // FilenameFilter
@@ -299,24 +322,39 @@ Class :
 
         #region Static Private
 
+        private static ExecutionModes ConvertToExecutionMode(string mode)
+        {
+            if( _rgxExMode_Combine.IsMatch(mode) )
+            {
+                return ExecutionModes.CombineTestCases;
+            }
+
+            if (_rgxExMode_Single.IsMatch(mode))
+            {
+                return ExecutionModes.SingleTestCase;
+            }
+
+            return Constants.S_DefaultExecutionMode;
+        }
+
         private static LoggingLevels ConvertToLoggingLevel(string level)
         {
-            if( _rgxLogLevel_Quiet.IsMatch(level) )
+            if (_rgxLogLevel_Quiet.IsMatch(level))
             {
                 return LoggingLevels.Quiet;
             }
 
-            if( _rgxLogLevel_Normal.IsMatch(level) )
+            if (_rgxLogLevel_Normal.IsMatch(level))
             {
                 return LoggingLevels.Normal;
             }
 
-            if( _rgxLogLevel_Verbose.IsMatch(level) )
+            if (_rgxLogLevel_Verbose.IsMatch(level))
             {
                 return LoggingLevels.Verbose;
             }
 
-            if( _rgxLogLevel_Debug.IsMatch(level) )
+            if (_rgxLogLevel_Debug.IsMatch(level))
             {
                 return LoggingLevels.Debug;
             }

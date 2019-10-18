@@ -132,6 +132,24 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;Catch name=&quot;Catch_Discover.exe&quot;&gt;
+        ///  &lt;Group name=&quot;Catch_Discover.exe&quot;&gt;
+        ///    &lt;TestCase name=&quot;Test1&quot; tags=&quot;[ut]&quot; filename=&quot;D:\Dummy\UT_Test.cpp&quot; line=&quot;29&quot;&gt;
+        ///      &lt;OverallResult success=&quot;true&quot; durationInSeconds=&quot;5.6e-05&quot;/&gt;
+        ///    &lt;/TestCase&gt;
+        ///    &lt;TestCase name=&quot;Test2&quot; tags=&quot;[ut]&quot; filename=&quot;C:\Dummy\UT_Test.cpp&quot; line=&quot;34&quot;&gt;
+        ///      &lt;OverallResult success=&quot;true&quot; durationInSeconds=&quot;2.7e-05&quot;/&gt;
+        ///    &lt;/TestCase&gt;
+        ///    &lt;TestCase name=&quot;Test3&quot; tags=&quot;[ut]&quot; filename=&quot;C:\Dummy\UT_Test. [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PartialMultipleTestCases {
+            get {
+                return ResourceManager.GetString("PartialMultipleTestCases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         ///&lt;Catch name=&quot;QDummy.exe&quot;&gt;
         ///  &lt;Group name=&quot;QDummy.exe&quot;&gt;
         ///    &lt;TestCase name=&quot;Dummy&quot; filename=&quot;d:\dummy.cpp&quot; line=&quot;64&quot;&gt;
