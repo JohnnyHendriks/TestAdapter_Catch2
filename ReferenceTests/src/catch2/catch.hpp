@@ -79,9 +79,45 @@ Notes: None
 
 #include "v2.7.0/catch.hpp"
 
+#elif defined TA_CATCH2_V2_7_1
+
+#include "v2.7.1/catch.hpp"
+
+#elif defined TA_CATCH2_V2_7_2
+
+#include "v2.7.2/catch.hpp"
+
+#elif defined TA_CATCH2_V2_8_0
+
+#include "v2.8.0/catch.hpp"
+
+#elif defined TA_CATCH2_V2_9_0
+
+#include "v2.9.0/catch.hpp"
+
+#elif defined TA_CATCH2_V2_9_1
+
+#include "v2.9.1/catch.hpp"
+
+#elif defined TA_CATCH2_V2_9_2
+
+#include "v2.9.2/catch.hpp"
+
+#elif defined TA_CATCH2_V2_10_0
+
+#include "v2.10.0/catch.hpp"
+
+#elif defined TA_CATCH2_V2_10_1
+
+#include "v2.10.1/catch.hpp"
+
+#elif defined TA_CATCH2_V2_10_2
+
+#include "v2.10.2/catch.hpp"
+
 #else
 
-#include "v2.7.0/catch.hpp"
+#include "v2.10.2/catch.hpp"
 
 #endif
 

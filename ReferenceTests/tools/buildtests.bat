@@ -26,6 +26,15 @@ call :BuildTests Rel_5_0
 call :BuildTests Rel_6_0
 call :BuildTests Rel_6_1
 call :BuildTests Rel_7_0
+call :BuildTests Rel_7_1
+call :BuildTests Rel_7_2
+call :BuildTests Rel_8_0
+call :BuildTests Rel_9_0
+call :BuildTests Rel_9_1
+call :BuildTests Rel_9_2
+call :BuildTests Rel_10_0
+call :BuildTests Rel_10_1
+call :BuildTests Rel_10_2
 
 cd tools
 

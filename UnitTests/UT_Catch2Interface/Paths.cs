@@ -125,9 +125,27 @@ namespace UT_Catch2Interface
             return @"\..\..\_reftests\Rel_6_1\";
 #elif TA_CATCH2_V2_7_0
             return @"\..\..\_reftests\Rel_7_0\";
+#elif TA_CATCH2_V2_7_1
+            return @"\..\..\_reftests\Rel_7_1\";
+#elif TA_CATCH2_V2_7_2
+            return @"\..\..\_reftests\Rel_7_2\";
+#elif TA_CATCH2_V2_8_0
+            return @"\..\..\_reftests\Rel_8_0\";
+#elif TA_CATCH2_V2_9_0
+            return @"\..\..\_reftests\Rel_9_0\";
+#elif TA_CATCH2_V2_9_1
+            return @"\..\..\_reftests\Rel_9_1\";
+#elif TA_CATCH2_V2_9_2
+            return @"\..\..\_reftests\Rel_9_2\";
+#elif TA_CATCH2_V2_10_0
+            return @"\..\..\_reftests\Rel_10_0\";
+#elif TA_CATCH2_V2_10_1
+            return @"\..\..\_reftests\Rel_10_1\";
+#elif TA_CATCH2_V2_10_2
+            return @"\..\..\_reftests\Rel_10_2\";
 #else
             return @"\..\..\_reftests\Release\";
-            #endif
+#endif
         }
 
         #endregion // Private Static Methods

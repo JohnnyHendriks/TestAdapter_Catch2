@@ -70,8 +70,8 @@ macro( add_generic_ut projectname rootname idefolder )
   target_compile_definitions(
     ${projectname}
     PRIVATE
-    $<$<CONFIG:Debug>:TA_CATCH2_V2_6_1>
-    $<$<CONFIG:Release>:TA_CATCH2_V2_7_0>
+    $<$<CONFIG:Debug>:TA_CATCH2_V2_10_2>
+    $<$<CONFIG:Release>:TA_CATCH2_V2_10_2>
     $<$<CONFIG:Rel_0_1>:TA_CATCH2_V2_0_1>
     $<$<CONFIG:Rel_1_0>:TA_CATCH2_V2_1_0>
     $<$<CONFIG:Rel_1_1>:TA_CATCH2_V2_1_1>
@@ -88,6 +88,15 @@ macro( add_generic_ut projectname rootname idefolder )
     $<$<CONFIG:Rel_6_0>:TA_CATCH2_V2_6_0>
     $<$<CONFIG:Rel_6_1>:TA_CATCH2_V2_6_1>
     $<$<CONFIG:Rel_7_0>:TA_CATCH2_V2_7_0>
+    $<$<CONFIG:Rel_7_1>:TA_CATCH2_V2_7_1>
+    $<$<CONFIG:Rel_7_2>:TA_CATCH2_V2_7_2>
+    $<$<CONFIG:Rel_8_0>:TA_CATCH2_V2_8_0>
+    $<$<CONFIG:Rel_9_0>:TA_CATCH2_V2_9_0>
+    $<$<CONFIG:Rel_9_1>:TA_CATCH2_V2_9_1>
+    $<$<CONFIG:Rel_9_2>:TA_CATCH2_V2_9_2>
+    $<$<CONFIG:Rel_10_0>:TA_CATCH2_V2_10_0>
+    $<$<CONFIG:Rel_10_1>:TA_CATCH2_V2_10_1>
+    $<$<CONFIG:Rel_10_2>:TA_CATCH2_V2_10_2>
   )
 
   # Group source files for IDE environments
