@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -41,6 +42,9 @@ Class :
         private static readonly Regex _rgxDefaultTagsLine = new Regex(@"^[ ]{6}([^ ].*)");
         private static readonly Regex _rgxDefaultTestNameOnlyVerbose = new Regex(@"^(.*)\t@(.*)\(([0-9]*)\)$");
         private static readonly Regex _rgxNoTestCases = new Regex(@"^0 matching test cases$");
+
+        private static readonly Regex _rgxBreakableAfter = new Regex(@"[\]\)}>\.,:;\*\+-=&/\\]$");
+        private static readonly Regex _rgxBreakableBefore = new Regex(@"[\[\({<\|]$");
 
         #endregion // Fields
 
@@ -199,34 +203,9 @@ Class :
                 return new List<string>();
             }
 
-            StringBuilder tagstr = new StringBuilder();
-            foreach(string tagline in taglines)
-            {
-                if(tagline.EndsWith("]"))
-                {
-                    tagstr.Append(tagline);
-                }
-                else
-                {
-                    if(tagline.EndsWith("-"))
-                    {
-                        if(tagline.Length == 73)
-                        {
-                            tagstr.Append(tagline.Substring(0,72));
-                        }
-                        else
-                        {
-                            tagstr.Append(tagline);
-                        }
-                    }
-                    else
-                    {
-                        tagstr.Append(tagline);
-                        tagstr.Append(" ");
-                    }
-                }
-            }
-            return Reporter.TestCase.ExtractTags(tagstr.ToString());
+            string tags = MergeLines(taglines, 0, false, 0);
+
+            return Reporter.TestCase.ExtractTags(tags);
         }
 
         private string MakeTestCaseFilename(List<string> filenamelines)
@@ -234,38 +213,41 @@ Class :
             if(filenamelines.Count == 1)
             {
                 var m = _rgxDefaultFilenameLineEnd.Match(filenamelines[0]);
-                return m.Groups[1].Value;
+                return m.Groups[1].Value; // Remove line number
             }
 
-            // Concatenate name
-            StringBuilder filename = new StringBuilder();
-            for(int i = 0; i < filenamelines.Count-1; ++i)
+            int numoptions = 1 << filenamelines.Count;
+            for (int i = 0; i < numoptions; ++i)
             {
-                if(filenamelines[i].EndsWith("-"))
+                // Merge filename
+                string filename = MergeLines(filenamelines, i, false, 0);
+
+                // Remove line number
+                var match = _rgxDefaultFilenameLineEnd.Match(filename);
+                filename = match.Groups[1].Value;
+
+                if (File.Exists(filename))
                 {
-                    if(filenamelines[i].Length == 75)
-                    {
-                        filename.Append(filenamelines[i].Substring(0,74));
-                    }
-                    else
-                    {
-                        filename.Append(filenamelines[i]);
-                    }
-                }
-                else
-                {
-                    filename.Append(filenamelines[i]);
-                    if( !filenamelines[i].EndsWith("\\") )
-                    {
-                        filename.Append(" ");
-                    }
+                    return filename;
                 }
             }
-            // Remove line number from last filename line
-            var match = _rgxDefaultFilenameLineEnd.Match(filenamelines[filenamelines.Count - 1]);
-            filename.Append(match.Groups[1].Value);
 
-            return filename.ToString();
+            for (int i = 0; i < numoptions; ++i)
+            {
+                // Merge filename
+                string filename = MergeLines(filenamelines, i, true, 0);
+
+                // Remove line number
+                var match = _rgxDefaultFilenameLineEnd.Match(filename);
+                filename = match.Groups[1].Value;
+
+                if (File.Exists(filename))
+                {
+                    return filename;
+                }
+            }
+
+            return string.Empty;
         }
 
         private int MakeTestCaseLine(List<string> filenamelines)
@@ -287,76 +269,39 @@ Class :
             int numoptions = 1 << namelines.Count;
             for(int i = 0; i < numoptions; ++i)
             {
-                name = MakeTestCaseName(namelines, i);
+                name = MergeLines(namelines, i, false, 2);
                 if(CheckTestCaseName(source, name, linenumber))
                 {
-                    return name.ToString();
+                    return name;
+                }
+            }
+
+            for (int i = 0; i < numoptions; ++i)
+            {
+                name = MergeLines(namelines, i, true, 2);
+                if (CheckTestCaseName(source, name, linenumber))
+                {
+                    return name;
                 }
             }
 
             // No valid name found
-            if(linenumber < 0)
+            if (linenumber < 0)
             {
                 LogNormal(  $"  Error: Unable to reconstruct long test name{Environment.NewLine}"
                           + $"    Source: {source}{Environment.NewLine}"
-                          + $"    Name: {MakeTestCaseName(namelines)}{Environment.NewLine}");
+                          + $"    Name: {MergeLines(namelines)}{Environment.NewLine}");
             }
             else
             {
                 LogNormal(  $"  Error: Unable to reconstruct long test name{Environment.NewLine}"
                           + $"    Source: {source}{Environment.NewLine}"
-                          + $"    Name: {MakeTestCaseName(namelines)}{Environment.NewLine}"
+                          + $"    Name: {MergeLines(namelines)}{Environment.NewLine}"
                           + $"    File: {filename}{Environment.NewLine}"
                           + $"    Line: {linenumber}{Environment.NewLine}" );
             }
 
             return string.Empty;
-        }
-
-        private string MakeTestCaseName(List<string> namelines, int iteration = -1)
-        {
-            // Concatenate name
-            StringBuilder name = new StringBuilder();
-            int maxlength = 77; // First line has max lenth of 77, rest of lines have maxlength of 75.
-            for(int i = 0; i < namelines.Count; ++i, maxlength = 75)
-            {
-                if(namelines[i].EndsWith("-"))
-                {
-                    if(namelines[i].Length == maxlength)
-                    {
-                        name.Append(namelines[i].Substring(0,maxlength-1));
-                        continue;
-                    }
-                    else
-                    {
-                        name.Append(namelines[i]);
-                    }
-                }
-                else
-                {
-                    name.Append(namelines[i]);
-                }
-
-                // Append space if needed
-                if( i < namelines.Count-1)
-                {
-                    if( iteration < 0 )
-                    {
-                        // Generate failed to detect name for use in logging
-                        name.Append("{???}");
-                    }
-                    else
-                    {
-                        bool addspace = ( iteration % (1 << (i+1)) ) < (1 << i);
-                        if(addspace)
-                        {
-                            name.Append(" ");
-                        }
-                    }
-                }
-            }
-
-            return name.ToString();
         }
 
         private void Process(string output, string source)
@@ -379,7 +324,7 @@ Class :
                 {
                     List<string> testcasenamelines = new List<string>();
 
-                    // Contrsuct Test Case name
+                    // Construct Test Case name
                     var match = _rgxDefaultTestCaseLine.Match(line);
                     testcasenamelines.Add(match.Groups[1].Value);
 
@@ -445,7 +390,7 @@ Class :
                 {
                     List<string> testcasenamelines = new List<string>();
 
-                    // Contrsuct Test Case name
+                    // Construct Test Case name
                     var match = _rgxDefaultTestCaseLine.Match(line);
                     testcasenamelines.Add(match.Groups[1].Value);
 
@@ -548,6 +493,78 @@ Class :
         }
 
         #endregion // Private Methods
+
+        #region Private line reconstruction
+
+        private string MergeLines(List<string> namelines, int iteration = -1, bool ignoredashbreak = false, int firstline_length_offset = 0)
+        {
+            // Determine maxlength
+            int maxlength = namelines[0].Length - firstline_length_offset;
+            for (int i = 1; i < namelines.Count; ++i)
+            {
+                var length = namelines[i].Length;
+                if (maxlength < length) maxlength = length;
+            }
+
+            // Concatenate name
+            StringBuilder name = new StringBuilder();
+
+            int checklength = maxlength + firstline_length_offset;
+            for (int i = 0; i < namelines.Count - 1; ++i, checklength = maxlength)
+            {
+                if (_rgxBreakableAfter.IsMatch(namelines[i]))
+                {
+                    if (namelines[i].EndsWith("-"))
+                    {
+                        if (namelines[i].Length == checklength && !ignoredashbreak)
+                        {
+                            name.Append(namelines[i].Substring(0, checklength - 1));
+                            continue;
+                        }
+                        else
+                        {
+                            name.Append(namelines[i]);
+                        }
+                    }
+                    else
+                    {
+                        name.Append(namelines[i]);
+                    }
+                }
+                else if (_rgxBreakableBefore.IsMatch(namelines[i+1]))
+                {
+                    name.Append(namelines[i]);
+                }
+                else
+                {
+                    name.Append(namelines[i]);
+                    name.Append(" ");
+                }
+
+                // Append extra space if needed
+                if (i < namelines.Count - 1)
+                {
+                    if (iteration < 0)
+                    {
+                        // Generate failed to detect name for use in logging
+                        name.Append("{???}");
+                    }
+                    else
+                    {
+                        bool addspace = (iteration % (1 << (i + 1))) < (1 << i);
+                        if (addspace)
+                        {
+                            name.Append(" ");
+                        }
+                    }
+                }
+            }
+            name.Append(namelines.Last());
+
+            return name.ToString();
+        }
+
+        #endregion Private line reconstruction
 
         #region Private Logging Methods
 
