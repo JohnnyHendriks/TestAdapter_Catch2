@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Timers;
 
 namespace Catch2Interface
 {
@@ -97,9 +98,14 @@ Class :
             }
         }
 
-        public string GenerateCommandlineArguments_Single(string testname, bool debuggerAttached)
+        public string GenerateCommandlineArguments_Single(string testname, string reportfilename)
         {
-            if(debuggerAttached && _settings.DebugBreak)
+            return $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes --out {"\""}{reportfilename}{"\""}";
+        }
+
+        public string GenerateCommandlineArguments_Single_Dbg(string testname)
+        {
+            if (_settings.DebugBreak)
             {
                 return $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes --break";
             }
@@ -109,15 +115,20 @@ Class :
             }
         }
 
-        public string GenerateCommandlineArguments_Combined(string source, bool debuggerAttached)
+        public string GenerateCommandlineArguments_Combined(string caselistfilename, string reportfilename)
         {
-            if (debuggerAttached && _settings.DebugBreak)
+            return $"--reporter xml --durations yes --input-file {"\""}{caselistfilename}{"\""} --out {"\""}{reportfilename}{"\""}";
+        }
+
+        public string GenerateCommandlineArguments_Combined_Dbg(string caselistfilename)
+        {
+            if (_settings.DebugBreak)
             {
-                return $"--reporter xml --durations yes --break --input-file {source}.testcaselist";
+                return $"--reporter xml --durations yes --break --input-file {"\""}{caselistfilename}{"\""}";
             }
             else
             {
-                return $"--reporter xml --durations yes --input-file {source}.testcaselist";
+                return $"--reporter xml --durations yes --input-file {"\""}{caselistfilename}{"\""}";
             }
         }
 
@@ -127,9 +138,11 @@ Class :
 
             _logbuilder.Clear();
 
+            string reportfilename = MakeReportFilename(source);
+
             var process = new Process();
             process.StartInfo.FileName = source;
-            process.StartInfo.Arguments = GenerateCommandlineArguments_Single(testname, false);
+            process.StartInfo.Arguments = GenerateCommandlineArguments_Single(testname, reportfilename);
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;
@@ -141,8 +154,6 @@ Class :
             process.Start();
             _process = process;
 
-            var output = process.StandardOutput.ReadToEndAsync();
-
             if (_settings.TestCaseTimeout > 0)
             {
                 process.WaitForExit(_settings.TestCaseTimeout);
@@ -156,23 +167,38 @@ Class :
             {
                 process.Kill();
                 _process = null;
-                LogVerbose($"Killed process. Threw away following output:{Environment.NewLine}{output.Result}{Environment.NewLine}");
+
+                string report = ReadReport(reportfilename);
+                LogVerbose($"Killed process. Threw away following output:{Environment.NewLine}{report}{Environment.NewLine}");
 
                 Log = _logbuilder.ToString();
 
+                // Cleanup temporary files (don't delete files when loglevel is debug)
+                if (_settings.LoggingLevel != LoggingLevels.Debug)
+                {
+                    File.Delete(reportfilename);
+                }
+
                 return new TestResult( new TimeSpan(0, 0, 0, 0, _settings.TestCaseTimeout)
                                      , "Testcase timed out."
-                                     , output.Result );
+                                     , report );
             }
             else
             {
                 _process = null;
 
-                LogDebug(output.Result);
+                string report = ReadReport(reportfilename);
+                LogDebug(report);
                 Log = _logbuilder.ToString();
 
+                // Cleanup temporary files (don't delete files when loglevel is debug)
+                if (_settings.LoggingLevel != LoggingLevels.Debug)
+                {
+                    File.Delete(reportfilename);
+                }
+
                 // Process testrun output
-                return new TestResult(output.Result, testname, _settings);
+                return new TestResult(report, testname, _settings);
             }
         }
 
@@ -182,26 +208,27 @@ Class :
 
             _logbuilder.Clear();
 
+            string caselistfilename = MakeCaselistFilename(group.Source);
+            string reportfilename = MakeReportFilename(group.Source);
+
             // Prepare testcase list file
-            CreateTestcaseListFile(group);
+            CreateTestcaseListFile(group, caselistfilename);
 
             // Run tests
             var process = new Process();
             process.StartInfo.FileName = group.Source;
-            process.StartInfo.Arguments = GenerateCommandlineArguments_Combined(group.Source, false);
+            process.StartInfo.Arguments = GenerateCommandlineArguments_Combined(caselistfilename, reportfilename);
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.WorkingDirectory = WorkingDirectory(group.Source);
-            
+
             LogDebug($"Source for test case: {group.Source}{Environment.NewLine}");
             LogDebug($"Commandline arguments used to run tests case: {process.StartInfo.Arguments}{Environment.NewLine}");
 
             process.Start();
             _process = process;
-            
-            var output = process.StandardOutput.ReadToEndAsync();
-            
+
             if (_settings.TestCaseTimeout > 0)
             {
                 process.WaitForExit(_settings.TestCaseTimeout);
@@ -210,7 +237,7 @@ Class :
             {
                 process.WaitForExit();
             }
-            
+
             if (!process.HasExited)
             {
                 process.Kill();
@@ -219,10 +246,20 @@ Class :
             }
 
             _process = null;
-            LogDebug(output.Result);
+
+            // Read and process genreated report
+            string report = ReadReport(reportfilename); // Also does cleanup of reportfile
+            LogDebug(report);
             Log = _logbuilder.ToString();
 
-            return new XmlOutput(output.Result, _settings);
+            // Cleanup temporary files (don't delete files when loglevel is debug)
+            if (_settings.LoggingLevel != LoggingLevels.Debug)
+            {
+                File.Delete(caselistfilename);
+                File.Delete(reportfilename);
+            }
+
+            return new XmlOutput(report, _settings);
         }
 
         public void InitTestRuns()
@@ -257,7 +294,7 @@ Class :
 
         #region Private Methods
 
-        private void CreateTestcaseListFile(TestCaseGroup group)
+        public void CreateTestcaseListFile(TestCaseGroup group, string caselistfilename)
         {
             // Create content to write to file
             StringBuilder filecontentbuilder = new StringBuilder();
@@ -268,7 +305,7 @@ Class :
             }
 
             var filecontent = filecontentbuilder.ToString();
-            File.WriteAllText($"{group.Source}.testcaselist", filecontent, Encoding.UTF8);
+            File.WriteAllText(caselistfilename, filecontent, Encoding.UTF8);
         }
 
         private string GenerateTestnameForCommandline(string name)
@@ -285,6 +322,38 @@ Class :
                 convertedname += @"*";
             }
             return $"{'"'}{convertedname}{'"'}";
+        }
+
+        public string MakeCaselistFilename(string source)
+        {
+            return $"{source}.testcaselist.{DateTime.Now.Ticks}";
+        }
+
+        private string MakeReportFilename(string source)
+        {
+            return $"{source}.report.{DateTime.Now.Ticks}.xml";
+        }
+
+        private string ReadReport(string reportfilename)
+        {
+            try
+            {
+                if( File.Exists(reportfilename))
+                {
+                    var file = File.Open(reportfilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    StreamReader reader = new StreamReader(file);
+                    string report = reader.ReadToEnd();
+                    reader.Close();
+                    file.Close();
+                    return report;
+                }
+
+                return string.Empty;
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
 
         #endregion // Private Methods

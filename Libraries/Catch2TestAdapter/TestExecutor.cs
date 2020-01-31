@@ -268,6 +268,30 @@ namespace Catch2TestAdapter
             }
 
             // Run tests
+            if (_runContext.IsBeingDebugged)
+            {
+                string caselistfilename = _executor.MakeCaselistFilename(testcasegroup.Source);
+
+                // Prepare testcase list file
+                _executor.CreateTestcaseListFile(testcasegroup, caselistfilename);
+
+                LogVerbose(TestMessageLevel.Informational, "Start debug run.");
+                _frameworkHandle
+                    .LaunchProcessWithDebuggerAttached( testcasegroup.Source
+                                                      , _executor.WorkingDirectory(testcasegroup.Source)
+                                                      , _executor.GenerateCommandlineArguments_Combined_Dbg(caselistfilename)
+                                                      , null);
+
+                // Do not process output in Debug mode
+                foreach(var test in groupedtests)
+                {
+                    TestResult result = new TestResult(test);
+                    result.Outcome = TestOutcome.None;
+                    _frameworkHandle.RecordResult(result);
+                }
+                return;
+            }
+
             LogVerbose(TestMessageLevel.Informational, $"Run {testcasegroup.Names.Count} grouped testcases.");
             var testresults = _executor.Run(testcasegroup);
 
@@ -346,7 +370,7 @@ namespace Catch2TestAdapter
                 _frameworkHandle
                     .LaunchProcessWithDebuggerAttached( test.Source
                                                       , _executor.WorkingDirectory(test.Source)
-                                                      , _executor.GenerateCommandlineArguments_Single(test.DisplayName, true)
+                                                      , _executor.GenerateCommandlineArguments_Single_Dbg(test.DisplayName)
                                                       , null );
 
                 // Do not process output in Debug mode

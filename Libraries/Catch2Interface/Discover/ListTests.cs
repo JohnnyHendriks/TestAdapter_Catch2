@@ -512,6 +512,8 @@ Class :
             int checklength = maxlength + firstline_length_offset;
             for (int i = 0; i < namelines.Count - 1; ++i, checklength = maxlength)
             {
+                bool addspace = true; // Reset flag to do special add space algorithm
+
                 if (_rgxBreakableAfter.IsMatch(namelines[i]))
                 {
                     if (namelines[i].EndsWith("-"))
@@ -539,10 +541,11 @@ Class :
                 {
                     name.Append(namelines[i]);
                     name.Append(" ");
+                    addspace = false; // No need to run special add space algorithm
                 }
 
-                // Append extra space if needed
-                if (i < namelines.Count - 1)
+                // Append extra space if needed (Special add space algorithm)
+                if (addspace && i < (namelines.Count - 1) )
                 {
                     if (iteration < 0)
                     {
@@ -551,7 +554,7 @@ Class :
                     }
                     else
                     {
-                        bool addspace = (iteration % (1 << (i + 1))) < (1 << i);
+                        addspace = (iteration % (1 << (i + 1))) < (1 << i);
                         if (addspace)
                         {
                             name.Append(" ");

@@ -17,7 +17,7 @@
     <ExecutionMode>Combine</ExecutionMode>
     <FilenameFilter>^Catch_</FilenameFilter>
     <IncludeHidden>true</IncludeHidden>
-    <Logging>Debug</Logging>
+    <Logging>Verbose</Logging>
     <MessageFormat>StatsOnly</MessageFormat>
     <StackTraceFormat>ShortInfo</StackTraceFormat>
     <StackTracePointReplacement>,</StackTracePointReplacement>
