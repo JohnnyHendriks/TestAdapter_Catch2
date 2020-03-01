@@ -56,10 +56,12 @@ namespace UT_Catch2Interface
 
             Assert.IsFalse(settings.Disabled);
 
+            Assert.AreEqual(-1, settings.CombinedTimeout);
             Assert.IsFalse(settings.DebugBreak);
             Assert.AreEqual("--verbosity high --list-tests *", settings.DiscoverCommandLine);
             Assert.AreEqual(1000, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.SingleTestCase, settings.ExecutionMode);
+            Assert.AreEqual(@"(?i:tafc_Single)", settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(string.Empty, settings.FilenameFilter);
             Assert.IsTrue(settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Normal, settings.LoggingLevel);
@@ -84,10 +86,12 @@ namespace UT_Catch2Interface
 
             Assert.IsFalse(settings.Disabled);
 
+            Assert.AreEqual(30000, settings.CombinedTimeout);
             Assert.IsTrue(settings.DebugBreak);
             Assert.AreEqual("--discover", settings.DiscoverCommandLine);
             Assert.AreEqual(2000, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
+            Assert.AreEqual(@"(?i:Slow)", settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual("^Catch", settings.FilenameFilter);
             Assert.IsFalse(settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
@@ -112,10 +116,12 @@ namespace UT_Catch2Interface
 
             Assert.IsTrue(settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -141,10 +147,12 @@ namespace UT_Catch2Interface
 
             Assert.IsTrue(settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -170,10 +178,12 @@ namespace UT_Catch2Interface
 
             Assert.IsFalse(settings.Disabled);
 
+            Assert.AreEqual(30000, settings.CombinedTimeout);
             Assert.IsTrue(settings.DebugBreak);
             Assert.AreEqual("--discover", settings.DiscoverCommandLine);
             Assert.AreEqual(2000, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
+            Assert.AreEqual(@"(?i:Slow)", settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual("^Catch", settings.FilenameFilter);
             Assert.IsFalse(settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
@@ -198,10 +208,42 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
+            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
+            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
+            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
+            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
+            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
+            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+        }
+
+        [TestMethod]
+        public void TestExtractCombinedTimeout()
+        {
+            var xml = new XmlDocument();
+            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_CombinedTimeout));
+            reader.Read();
+            var settings = Settings.Extract(xml.ReadNode(reader));
+
+            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+
+            Assert.AreEqual(30000, settings.CombinedTimeout);
+            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
+            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
+            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
+            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -226,10 +268,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.IsTrue(settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -254,10 +298,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.IsFalse(settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -282,10 +328,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual("--discover", settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -310,10 +358,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(2000, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -338,10 +388,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -366,10 +418,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -394,10 +448,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -422,10 +478,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.SingleTestCase, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -450,10 +508,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.SingleTestCase, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -478,10 +538,42 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.SingleTestCase, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
+            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
+            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
+            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
+            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
+            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
+            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+        }
+
+        [TestMethod]
+        public void TestExtractExecutionModeForceSingleTagRgx()
+        {
+            var xml = new XmlDocument();
+            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_ExecutionModeForceSingleTagRgx));
+            reader.Read();
+            var settings = Settings.Extract(xml.ReadNode(reader));
+
+            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
+            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
+            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
+            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
+            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(@"(?i:Slow)", settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -506,10 +598,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual("^Catch", settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -534,10 +628,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.IsFalse(settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -562,10 +658,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.IsTrue(settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -590,10 +688,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Quiet, settings.LoggingLevel);
@@ -618,10 +718,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Normal, settings.LoggingLevel);
@@ -646,10 +748,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
@@ -674,10 +778,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Debug, settings.LoggingLevel);
@@ -702,10 +808,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -730,10 +838,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -758,10 +868,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -786,10 +898,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -814,10 +928,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -842,10 +958,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -870,10 +988,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -898,10 +1018,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -926,10 +1048,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
@@ -954,10 +1078,12 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
 
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);

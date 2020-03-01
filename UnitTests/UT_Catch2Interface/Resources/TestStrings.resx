@@ -203,6 +203,11 @@ cerr 02
   &lt;TestCaseTimeout&gt;&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
+  <data name="XmlSettings_CombinedTimeout" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
   <data name="XmlSettings_DebugBreak_Off" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
   &lt;DebugBreak&gt;off&lt;/DebugBreak&gt;
@@ -232,6 +237,11 @@ cerr 02
   </data>
   <data name="XmlSettings_EmptyElement" xml:space="preserve">
     <value>&lt;Catch2Adapter/&gt;</value>
+  </data>
+  <data name="XmlSettings_ExecutionModeForceSingleTagRgx" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+&lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_ExMode_Combine1" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
@@ -270,10 +280,12 @@ cerr 02
   </data>
   <data name="XmlSettings_FullyCustom" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
   &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
   &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
   &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
@@ -286,10 +298,12 @@ cerr 02
   </data>
   <data name="XmlSettings_FullyCustom_Disabled" xml:space="preserve">
     <value>&lt;Catch2Adapter disabled="true"&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
   &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
   &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
   &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
   &lt;Logging&gt;Verbose&lt;/Logging&gt;
@@ -302,10 +316,12 @@ cerr 02
   </data>
   <data name="XmlSettings_FullyCustom_NotDisabled" xml:space="preserve">
     <value>&lt;Catch2Adapter disabled="false"&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
   &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
   &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
   &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
   &lt;Logging&gt;Verbose&lt;/Logging&gt;

@@ -220,6 +220,17 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_CombinedTimeout {
+            get {
+                return ResourceManager.GetString("XmlSettings_CombinedTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
         ///  &lt;DebugBreak&gt;off&lt;/DebugBreak&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
@@ -287,6 +298,17 @@ namespace UT_Catch2Interface.Resources {
         internal static string XmlSettings_EmptyElement {
             get {
                 return ResourceManager.GetString("XmlSettings_EmptyElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_ExecutionModeForceSingleTagRgx {
+            get {
+                return ResourceManager.GetString("XmlSettings_ExecutionModeForceSingleTagRgx", resourceCulture);
             }
         }
         
@@ -369,18 +391,17 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
         ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+        ///  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
         ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
-        ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
-        ///  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
-        ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
-        ///  &lt; [rest of string was truncated]&quot;;.
+        ///  &lt;StackTraceForm [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom {
             get {
@@ -390,17 +411,17 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter disabled=&quot;true&quot;&gt;
+        ///  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
         ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+        ///  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
         ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
-        ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
-        ///  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
-        ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointR [rest of string was truncated]&quot;;.
+        ///  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_Disabled {
             get {
@@ -410,17 +431,17 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter disabled=&quot;false&quot;&gt;
+        ///  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
         ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+        ///  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
         ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
-        ///  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
-        ///  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
-        ///  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePoint [rest of string was truncated]&quot;;.
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_NotDisabled {
             get {

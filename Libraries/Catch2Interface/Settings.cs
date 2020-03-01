@@ -123,21 +123,23 @@ Class :
 
         #region Properties
 
-        public bool                  DebugBreak { get; set; }                 = Constants.S_DefaultDebugBreak;
-        public bool                  Disabled { get; set; }                   = Constants.S_DefaultDisabled;
-        public string                DiscoverCommandLine { get; set; }        = Constants.S_DefaultDiscoverCommandline;
-        public int                   DiscoverTimeout { get; set; }            = Constants.S_DefaultDiscoverTimeout;
-        public ExecutionModes        ExecutionMode { get; set; }              = Constants.S_DefaultExecutionMode;
-        public string                FilenameFilter { get; set; }             = Constants.S_DefaultFilenameFilter;
-        public bool                  IncludeHidden { get; set; }              = Constants.S_DefaultIncludeHidden;
-        public LoggingLevels         LoggingLevel { get; set; }               = Constants.S_DefaultLoggingLevel;
-        public MessageFormats        MessageFormat { get; set; }              = Constants.S_DefaultMessageFormat;
-        public StacktraceFormats     StacktraceFormat { get; set; }           = Constants.S_DefaultStackTraceFormat;
-        public int                   StacktraceMaxLength { get; set; }        = Constants.S_DefaultStackTraceMaxLength;
-        public string                StacktracePointReplacement { get; set; } = Constants.S_DefaultStackTracePointReplacement;
-        public int                   TestCaseTimeout { get; set; }            = Constants.S_DefaultTestCaseTimeout;
-        public string                WorkingDirectory {  get; set; }          = Constants.S_DefaultWorkingDirectory;
-        public WorkingDirectoryRoots WorkingDirectoryRoot {  get; set; }      = Constants.S_DefaultWorkingDirectoryRoot;
+        public int                   CombinedTimeout { get; set; }                = Constants.S_DefaultCombinedTimeout;
+        public bool                  DebugBreak { get; set; }                     = Constants.S_DefaultDebugBreak;
+        public bool                  Disabled { get; set; }                       = Constants.S_DefaultDisabled;
+        public string                DiscoverCommandLine { get; set; }            = Constants.S_DefaultDiscoverCommandline;
+        public int                   DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
+        public ExecutionModes        ExecutionMode { get; set; }                  = Constants.S_DefaultExecutionMode;
+        public Regex                 ExecutionModeForceSingleTagRgx { get; set; } = new Regex(Constants.S_DefaultExecutionModeForceSingleTagRgx, RegexOptions.Singleline);
+        public string                FilenameFilter { get; set; }                 = Constants.S_DefaultFilenameFilter;
+        public bool                  IncludeHidden { get; set; }                  = Constants.S_DefaultIncludeHidden;
+        public LoggingLevels         LoggingLevel { get; set; }                   = Constants.S_DefaultLoggingLevel;
+        public MessageFormats        MessageFormat { get; set; }                  = Constants.S_DefaultMessageFormat;
+        public StacktraceFormats     StacktraceFormat { get; set; }               = Constants.S_DefaultStackTraceFormat;
+        public int                   StacktraceMaxLength { get; set; }            = Constants.S_DefaultStackTraceMaxLength;
+        public string                StacktracePointReplacement { get; set; }     = Constants.S_DefaultStackTracePointReplacement;
+        public int                   TestCaseTimeout { get; set; }                = Constants.S_DefaultTestCaseTimeout;
+        public string                WorkingDirectory {  get; set; }              = Constants.S_DefaultWorkingDirectory;
+        public WorkingDirectoryRoots WorkingDirectoryRoot {  get; set; }          = Constants.S_DefaultWorkingDirectoryRoot;
 
         public bool HasValidDiscoveryCommandline => _rgxValidDiscover.IsMatch(DiscoverCommandLine);
         public bool IsVerbosityHigh => _rgxVerbosityHigh.IsMatch(DiscoverCommandLine);
@@ -165,6 +167,16 @@ Class :
                 if (settings.Disabled)
                 {
                     return settings;
+                }
+
+                // CombinedTimeout
+                var combinedtimeout = node.SelectSingleNode(Constants.NodeName_CombinedTimeout)?.FirstChild;
+                if (combinedtimeout != null && combinedtimeout.NodeType == XmlNodeType.Text)
+                {
+                    if (int.TryParse(combinedtimeout.Value, out int timeout))
+                    {
+                        settings.CombinedTimeout = timeout;
+                    }
                 }
 
                 // DebugBreak
@@ -199,6 +211,15 @@ Class :
                  && exmode.NodeType == XmlNodeType.Text)
                 {
                     settings.ExecutionMode = ConvertToExecutionMode(exmode.Value.Trim());
+                }
+
+                // ExecutionModeForceSingleTagRgx
+                var exmodesingletagrgx = node.SelectSingleNode(Constants.NodeName_ExecutionModeForceSingleTagRgx)?.FirstChild;
+                if (exmodesingletagrgx != null
+                 && exmodesingletagrgx.NodeType == XmlNodeType.Text
+                 && exmodesingletagrgx.Value != string.Empty)
+                {
+                    settings.ExecutionModeForceSingleTagRgx = new Regex(exmodesingletagrgx.Value, RegexOptions.Singleline);
                 }
 
                 // FilenameFilter

@@ -117,7 +117,7 @@ namespace Catch2Interface
             // xml-output. The XmlDocument parser doesn't like this so let's make sure those
             // extra lines are ignored.
             var idx = Xml.IndexOf(@"</Catch>"); // Find first occurance of </Catch>
-            if (idx == -1)                             // Make sure closing tag was found
+            if (idx == -1)                      // Make sure closing tag was found
             {
                 // Looks like we have a partial result.
                 // Let's try to process as much as possible

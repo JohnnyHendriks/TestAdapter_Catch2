@@ -146,14 +146,16 @@ namespace UT_Catch2Interface
             Assert.AreEqual(1, result.OverallResults.Successes);
 
             // Another special case, test names that end in spaces.
-            // The spaces are lost in (xml) discovery resulting in the testcase not being found.
-            result = executor.Run(@"Testset02.Tests02. End with space", Path_Testset02);
-            Assert.AreEqual(TestOutcomes.Skipped, result.Outcome);
-            Assert.AreEqual(new TimeSpan(0), result.Duration);
+            // The spaces were lost in discovery in older versions resulting in the testcase not being found. This is fixed now.
+            result = executor.Run(@"Testset02.Tests01. End with space ", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
+            Assert.AreEqual(0, result.OverallResults.Failures);
+            Assert.AreEqual(1, result.OverallResults.Successes);
 
-            result = executor.Run(@"Testset02.Tests02. End with spaces", Path_Testset02);
-            Assert.AreEqual(TestOutcomes.Skipped, result.Outcome);
-            Assert.AreEqual(new TimeSpan(0), result.Duration);
+            result = executor.Run(@"Testset02.Tests01. End with spaces   ", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Passed, result.Outcome);
+            Assert.AreEqual(0, result.OverallResults.Failures);
+            Assert.AreEqual(1, result.OverallResults.Successes);
 
             // Test cases with very long names
             result = executor.Run(@"Testset02Tests01LongName01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", Path_Testset02);
@@ -219,13 +221,15 @@ namespace UT_Catch2Interface
 
             // Another special case, test names that end in spaces.
             // The spaces are lost in discovery resulting in the testcase not being found.
-            result = executor.Run(@"Testset02.Tests02. End with space", Path_Testset02);
-            Assert.AreEqual(TestOutcomes.Skipped, result.Outcome);
-            Assert.AreEqual(new TimeSpan(0), result.Duration);
+            result = executor.Run(@"Testset02.Tests02. End with space ", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
+            Assert.AreEqual(1, result.OverallResults.Failures);
+            Assert.AreEqual(0, result.OverallResults.Successes);
 
-            result = executor.Run(@"Testset02.Tests02. End with spaces", Path_Testset02);
-            Assert.AreEqual(TestOutcomes.Skipped, result.Outcome);
-            Assert.AreEqual(new TimeSpan(0), result.Duration);
+            result = executor.Run(@"Testset02.Tests02. End with spaces   ", Path_Testset02);
+            Assert.AreEqual(TestOutcomes.Failed, result.Outcome);
+            Assert.AreEqual(1, result.OverallResults.Failures);
+            Assert.AreEqual(0, result.OverallResults.Successes);
 
             // Test cases with very long names
             result = executor.Run(@"Testset02Tests02LongName01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789", Path_Testset02);

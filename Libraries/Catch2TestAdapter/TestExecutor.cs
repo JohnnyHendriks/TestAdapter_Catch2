@@ -244,7 +244,7 @@ namespace Catch2TestAdapter
                     continue;
                 }
 
-                if (Catch2Interface.Executor.CanExecuteCombined(test.DisplayName, SharedUtils.GetTags(test)))
+                if (_executor.CanExecuteCombined(test.DisplayName, SharedUtils.GetTags(test)))
                 {
                     LogDebug(TestMessageLevel.Informational, $"Add to group: {test.DisplayName}");
                     testcasegroup.Names.Add(test.DisplayName);
@@ -311,9 +311,8 @@ namespace Catch2TestAdapter
                 if(testresult == null)
                 {
                     LogDebug(TestMessageLevel.Informational, $"Combined testcase result not found for: {test.DisplayName}");
-                    result.Outcome = TestOutcome.None;
+                    result.Outcome = TestOutcome.Skipped; // When test result not found, probably a timeout occured and the test was skipped as a result.
                     _frameworkHandle.RecordResult(result);
-                    singledtests.Add(test);
                 }
                 else
                 {
