@@ -28,9 +28,10 @@ namespace Catch2Interface
 
         #region Construction
 
-        public XmlOutput(string xmloutput, Settings settings)
+        public XmlOutput(string xmloutput, bool timedout, Settings settings)
         {
             _settings = settings ?? new Settings();
+            TimedOut = timedout;
             Xml = xmloutput;
             ProcessXml();
         }
@@ -46,6 +47,8 @@ namespace Catch2Interface
         public Reporter.OverallResults OverallResults { get; private set; }
 
         public List<TestResult> TestResults { get; private set; } = new List<TestResult>();
+
+        public bool TimedOut { get; private set; } = false;
 
         public string Xml { get; private set; }
 
@@ -105,7 +108,7 @@ namespace Catch2Interface
             var testcase = new Reporter.TestCase(nodeTestCase);
 
             // Create TestResult
-            var result = new TestResult(testcase, _settings);
+            var result = new TestResult(testcase, _settings, true);
 
             TestResults.Add(result);
         }
@@ -117,14 +120,7 @@ namespace Catch2Interface
             // xml-output. The XmlDocument parser doesn't like this so let's make sure those
             // extra lines are ignored.
             var idx = Xml.IndexOf(@"</Catch>"); // Find first occurance of </Catch>
-            if (idx == -1)                      // Make sure closing tag was found
-            {
-                // Looks like we have a partial result.
-                // Let's try to process as much as possible
-
-                ProcessXmlPartial();
-            }
-            else
+            if (idx != -1)                      // Make sure closing tag was found
             {
                 try
                 {
@@ -132,19 +128,25 @@ namespace Catch2Interface
                     xml.LoadXml(Xml.Substring(0, idx + 8));
                     var nodeGroup = xml.SelectSingleNode("Catch/Group");
                     ExtractTestResults(nodeGroup);
+                    return;
                 }
                 catch
                 {
                     // Someting went wrong parsing the XML
                     // Treat as partial result and try to parse as much as possible
-                    IsPartialOutput = true;
-
+                    TestResults.Clear(); // Cleanup any TestResults that may already have been processed
                 }
             }
+
+            // Looks like we have a partial result.
+            // Let's try to process as much as possible
+            ProcessXmlPartial();
         }
 
         private void ProcessXmlPartial()
         {
+            IsPartialOutput = true;
+
             int idx_start = 0;
             int idx_end = 0;
             do
@@ -186,12 +188,15 @@ namespace Catch2Interface
 
         private void ProcessPartialXmlTestCase(string testcase)
         {
+            // Do nothing in case timeout occured
+            if (TimedOut) return;
+
             // Try to extract name testcase
             if (_rgxTestCaseName.IsMatch(testcase))
             {
                 var mr = _rgxTestCaseName.Match(testcase);
                 var name = mr.Groups[1].Value;
-                var result = new TestResult(testcase, name, _settings, false);
+                var result = new TestResult(testcase, name, _settings, true, false);
 
                 TestResults.Add(result);
             }

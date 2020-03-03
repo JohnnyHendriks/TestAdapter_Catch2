@@ -197,7 +197,7 @@ Class :
                 }
 
                 // Process testrun output
-                return new TestResult(report, testname, _settings);
+                return new TestResult(report, testname, _settings, false);
             }
         }
 
@@ -227,6 +227,7 @@ Class :
 
             process.Start();
             _process = process;
+            bool timeout = false;
 
             if (_settings.CombinedTimeout > 0)
             {
@@ -242,11 +243,12 @@ Class :
                 process.Kill();
                 LogVerbose($"Killed process.{Environment.NewLine}");
                 Log = _logbuilder.ToString();
+                timeout = true;
             }
 
             _process = null;
 
-            // Read and process genreated report
+            // Read and process generated report
             string report = ReadReport(reportfilename); // Also does cleanup of reportfile
             LogDebug(report);
             Log = _logbuilder.ToString();
@@ -258,7 +260,7 @@ Class :
                 File.Delete(reportfilename);
             }
 
-            return new XmlOutput(report, _settings);
+            return new XmlOutput(report, timeout, _settings);
         }
 
         public void InitTestRuns()

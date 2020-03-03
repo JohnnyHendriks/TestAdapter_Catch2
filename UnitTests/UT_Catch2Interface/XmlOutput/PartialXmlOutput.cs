@@ -31,7 +31,10 @@ namespace UT_Catch2Interface.XmlOutput
         public void MultiTestcase()
         {
             var settings = new Settings();
-            var output = new Catch2Interface.XmlOutput(Resources.TestStrings_TestResult.PartialMultipleTestCases, settings);
+            var output = new Catch2Interface.XmlOutput(Resources.TestStrings_TestResult.PartialMultipleTestCases, false, settings);
+
+            Assert.IsFalse(output.TimedOut);
+            Assert.IsTrue(output.IsPartialOutput);
 
             Assert.AreEqual(4, output.TestResults.Count);
             Assert.AreEqual("Test1", output.TestResults[0].Name);

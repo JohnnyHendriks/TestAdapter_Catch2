@@ -230,6 +230,8 @@ namespace Catch2TestAdapter
             List<TestCase> groupedtests = new List<TestCase>();
             List<TestCase> singledtests = new List<TestCase>();
             List<TestCase> remainingtests = new List<TestCase>();
+            List<TestCase> retrytests = new List<TestCase>();
+
             Catch2Interface.TestCaseGroup testcasegroup = new Catch2Interface.TestCaseGroup();
             testcasegroup.Source = tests.First().Source;
 
@@ -310,14 +312,28 @@ namespace Catch2TestAdapter
                 TestResult result = new TestResult(test);
                 if(testresult == null)
                 {
-                    LogDebug(TestMessageLevel.Informational, $"Combined testcase result not found for: {test.DisplayName}");
-                    result.Outcome = TestOutcome.Skipped; // When test result not found, probably a timeout occured and the test was skipped as a result.
-                    _frameworkHandle.RecordResult(result);
+                    if(testresults.TimedOut)
+                    {
+                        LogDebug(TestMessageLevel.Informational, $"Combined testcase result not found for: {test.DisplayName}");
+                        result.Outcome = TestOutcome.Skipped; // When test result not found, probably a timeout occured and the test was skipped as a result.
+                        result.ErrorMessage = "Timeout of combined testcase execution.";
+                        _frameworkHandle.RecordResult(result);
+                    }
+                    else
+                    {
+                        retrytests.Add(test);
+                    }
                 }
                 else
                 {
                     RecordTestResult(result, testresult);
                 }
+            }
+
+            if (retrytests.Count > 0)
+            {
+                LogDebug(TestMessageLevel.Informational, $"Process retry tests (count: {retrytests.Count})");
+                RunTests_Combine(retrytests);
             }
 
             if (singledtests.Count > 0)

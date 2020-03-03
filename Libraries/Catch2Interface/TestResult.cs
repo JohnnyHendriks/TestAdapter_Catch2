@@ -54,6 +54,8 @@ Class :
         private int _testcasecount = 0;
         private int _warningcount = 0;
 
+        private bool _combined = false;
+
         private Settings          _settings;
         private Reporter.TestCase _testcase;
         private string            _xmloutput;
@@ -67,10 +69,11 @@ Class :
             Outcome = TestOutcomes.Cancelled;
         }
 
-        public TestResult(string xmloutput, string testname, Settings settings, bool processoutput = true)
+        public TestResult(string xmloutput, string testname, Settings settings, bool combined, bool processoutput = true)
         {
             _settings = settings ?? new Settings();
             _xmloutput = xmloutput;
+            _combined = combined;
 
             Name = testname;
 
@@ -84,10 +87,11 @@ Class :
             }
         }
 
-        public TestResult(Reporter.TestCase testcase, Settings settings)
+        public TestResult(Reporter.TestCase testcase, Settings settings, bool combined)
         {
             _settings = settings ?? new Settings();
             _testcase = testcase;
+            _combined = combined;
 
             Duration = _testcase.OverallResult.Duration;
             Name = _testcase.Name;
@@ -495,24 +499,44 @@ Class :
         private string GenerateAssertionInfo()
         {
             string msg;
-            switch(_warningcount)
-            {
-                case 0:
-                    msg = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}";
-                    break;
-                case 1:
-                    msg = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
-                        + $"1 warning was generated.{Environment.NewLine}";
-                    break;
-                default:
-                    msg = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
-                        + $"{_warningcount} warnings were generated.{Environment.NewLine}";
-                    break;
-            }
 
-            if(_testcasecount > 1)
+            if(_combined)
             {
-                msg += $"Note: Assertion stats are for multiple testcases. Consider changing the test case name.{Environment.NewLine}";
+                switch (_warningcount)
+                {
+                    case 0:
+                        msg = string.Empty;
+                        break;
+                    case 1:
+                        msg = $"1 warning was generated.{Environment.NewLine}";
+                        break;
+                    default:
+                        msg = $"{_warningcount} warnings were generated.{Environment.NewLine}";
+                        break;
+                }
+            }
+            else
+            {
+                switch(_warningcount)
+                {
+                    case 0:
+                        msg = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}";
+                        break;
+                    case 1:
+                        msg = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
+                            + $"1 warning was generated.{Environment.NewLine}";
+                        break;
+                    default:
+                        msg = $"Total Assertions: {OverallResults.TotalAssertions} (Passed: {OverallResults.Successes} | Failed: {OverallResults.Failures}){Environment.NewLine}"
+                            + $"{_warningcount} warnings were generated.{Environment.NewLine}";
+                        break;
+                }
+
+                if(_testcasecount > 1)
+                {
+                    msg += $"Note: Assertion stats are for multiple testcases. Consider changing the test case name.{Environment.NewLine}";
+                }
+
             }
 
             return msg;
