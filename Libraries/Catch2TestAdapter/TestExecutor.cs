@@ -319,9 +319,15 @@ namespace Catch2TestAdapter
                         result.ErrorMessage = "Timeout of combined testcase execution.";
                         _frameworkHandle.RecordResult(result);
                     }
+                    else if(testresults.IsPartialOutput)
+                    {
+                        LogDebug(TestMessageLevel.Informational, $"Combined testcase result not found for: {test.DisplayName}{Environment.NewLine}Looks like it was caused by a previous test crashing the test executable. Adding it to the retry list for another combined test execution run.");
+                        retrytests.Add(test);
+                    }
                     else
                     {
-                        retrytests.Add(test);
+                        LogNormal(TestMessageLevel.Warning, $"Combined testcase result not found for: {test.DisplayName}{Environment.NewLine}Trying again by running it in isolation, i.e., not combined with other test cases. To prevent this try updating to a later version of Catch2 or changing the test case name.");
+                        singledtests.Add(test);
                     }
                 }
                 else
