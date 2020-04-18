@@ -1,14 +1,13 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
 
 set( CXX_EXTENSIONS OFF )
 
-project(ut-testadapter VERSION 1.0.0)
-
-include("ut-macros")
+add_subdirectory(Catch_Common)
 
 add_subdirectory(Catch_Discover)
 add_subdirectory(Catch_Dummy)
 add_subdirectory(Catch_Duplicates)
+add_subdirectory(Catch_Execution)
 add_subdirectory(Catch_Hidden)
 add_subdirectory(Catch_NoSEH)
 

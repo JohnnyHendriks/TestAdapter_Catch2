@@ -20,86 +20,139 @@ namespace UT_Catch2Interface.Discover
     [TestClass]
     public class Catch2XmlTests
     {
+        #region Properties
+
         public TestContext TestContext { get; set; }
+
+        public static List<string[]> VersionPaths { get; private set; } = Paths.Versions;
+
+        #endregion // Properties
 
         #region Hidden
 
-        [TestMethod]
-        public void XmlReporter()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void XmlReporter(string versionpath)
         {
+            var source = Paths.TestExecutable_Hidden(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "-r xml *";
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = true;
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Hidden };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(6, tests.Count);
         }
 
-        [TestMethod]
-        public void AllIncludeHidden()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void AllIncludeHidden(string versionpath)
         {
+            var source = Paths.TestExecutable_Hidden(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
+            var source_dummy = Paths.TestExecutable_Dummy(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source_dummy))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--discover *";
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = true;
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Hidden };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(6, tests.Count);
 
             // Also check with multiple sources
-            string[] sources2 = { Path_Hidden, Path_Dummy };
+            string[] sources2 = { source, source_dummy };
 
             tests = discoverer.GetTests(sources2) as List<TestCase>;
             Assert.AreEqual(7, tests.Count);
         }
 
-        [TestMethod]
-        public void AllNoHidden()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void AllNoHidden(string versionpath)
         {
+            var source = Paths.TestExecutable_Hidden(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--discover *";
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Hidden };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(2, tests.Count);
         }
 
-        [TestMethod]
-        public void Tag1IncludeHidden()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void Tag1IncludeHidden(string versionpath)
         {
+            var source = Paths.TestExecutable_Hidden(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--discover [Tag1]";
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = true;
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Hidden };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(4, tests.Count);
         }
 
-        [TestMethod]
-        public void Tag1NoHidden()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void Tag1NoHidden(string versionpath)
         {
+            var source = Paths.TestExecutable_Hidden(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--discover [Tag1]";
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Hidden };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(2, tests.Count);
@@ -109,15 +162,23 @@ namespace UT_Catch2Interface.Discover
 
         #region Tags
 
-        [TestMethod]
-        public void ManyTags()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void ManyTags(string versionpath)
         {
+            var source = Paths.TestExecutable_Discover(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--discover \"Tags. Manytags\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Discover };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(1, tests.Count);
@@ -139,15 +200,23 @@ namespace UT_Catch2Interface.Discover
             Assert.AreEqual("Manytags9" , tests[0].Tags[14]);
         }
 
-        [TestMethod]
-        public void LongTag1()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void LongTag1(string versionpath)
         {
+            var source = Paths.TestExecutable_Discover(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--discover \"Tags. Longtag1\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Discover };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(1, tests.Count);
@@ -156,15 +225,23 @@ namespace UT_Catch2Interface.Discover
                            , tests[0].Tags[0] );
         }
 
-        [TestMethod]
-        public void LongTag2()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void LongTag2(string versionpath)
         {
+            var source = Paths.TestExecutable_Discover(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--discover \"Tags. Longtag2\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Discover };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(1, tests.Count);
@@ -177,15 +254,23 @@ namespace UT_Catch2Interface.Discover
 
         #region TestCases
 
-        [TestMethod]
-        public void Names()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void Names(string versionpath)
         {
+            var source = Paths.TestExecutable_Discover(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--discover *TestCases*";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Discover };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(12, tests.Count);
@@ -236,15 +321,23 @@ namespace UT_Catch2Interface.Discover
 
         #region LongTestCaseNames
 
-        [TestMethod]
-        public void TestGetLongTestsCaseNames()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void TestGetLongTestsCaseNames(string versionpath)
         {
+            var source = Paths.TestExecutable_Discover(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--list-tests LongTestCaseNames*";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Discover };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             // Note, due to the lack of linenumber check here,
@@ -268,15 +361,23 @@ namespace UT_Catch2Interface.Discover
                            , tests[7].Name );
         }
 
-        [TestMethod]
-        public void LongNames()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void LongNames(string versionpath)
         {
+            var source = Paths.TestExecutable_Discover(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--discover LongTestCaseNames*";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Discover };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(8, tests.Count);
@@ -316,15 +417,23 @@ namespace UT_Catch2Interface.Discover
             Assert.AreEqual( 64, tests[7].Line );
         }
 
-        [TestMethod]
-        public void LongNamesNotDiscoverable()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void LongNamesNotDiscoverable(string versionpath)
         {
+            var source = Paths.TestExecutable_Discover(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--discover NotDefaultDiscoverable*";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Discover };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(3, tests.Count);
@@ -346,16 +455,24 @@ namespace UT_Catch2Interface.Discover
 
         #endregion // LongTestCaseNames
 
-        [TestMethod]
-        public void DuplicateTestname()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void DuplicateTestname(string versionpath)
         {
+            var source = Paths.TestExecutable_Duplicates(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
             settings.DiscoverCommandLine = "--discover";
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
-            string[] sources = { Path_Duplicates };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(0, tests.Count);
@@ -363,72 +480,36 @@ namespace UT_Catch2Interface.Discover
             Assert.IsTrue(discoverer.Log.Contains("Error Occurred"));
         }
 
-        [TestMethod]
-        public void Timeout()
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void Timeout(string versionpath)
         {
+            var source = Paths.TestExecutable_Dummy(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--sleep 5000 --discover *";
-            settings.DiscoverTimeout = 2000;
+            settings.DiscoverCommandLine = "--sleep 500 --discover *";
+            settings.DiscoverTimeout = 200;
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
 
-            string[] sources = { Path_Dummy };
+            string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(0, tests.Count);
 
             // Sanity check to see tests could be discovered with less sleep
-            settings.DiscoverCommandLine = "--sleep 1000 --discover *";
+            settings.DiscoverCommandLine = "--sleep 50 --discover *";
 
             tests = discoverer.GetTests(sources) as List<TestCase>;
 
             Assert.AreEqual(1, tests.Count);
         }
-
-        #region Helper properties
-
-        private string Path_Discover
-        {
-            get
-            {
-                return Paths.Discover(TestContext);
-            }
-        }
-
-        private string Path_Dummy
-        {
-            get
-            {
-                return Paths.Dummy(TestContext);
-            }
-        }
-
-        private string Path_Duplicates
-        {
-            get
-            {
-                return Paths.Duplicates(TestContext);
-            }
-        }
-
-        private string Path_NoExist
-        {
-            get
-            {
-                return Paths.NoExist(TestContext);
-            }
-        }
-
-        private string Path_Hidden
-        {
-            get
-            {
-                return Paths.Hidden(TestContext);
-            }
-        }
-
-        #endregion // Helper Methods
     }
 }

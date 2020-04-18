@@ -12,142 +12,137 @@ Notes: None
 ** Basic Info **/
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.IO;
 
 namespace UT_Catch2Interface
 {
     class Paths
     {
-        #region Fields
+        #region Properties
 
-        private static readonly string _basepath = CreateBasepath();
+        static public List<string[]> Versions { get; private set; }
 
-        #endregion //Fields
+        #endregion // Properties
+
+        #region Construction
+
+        static Paths()
+        {
+            Versions = new List<string[]>
+            { new string[]{ "Rel_0_1" }
+            , new string[]{ "Rel_1_0" }
+            , new string[]{ "Rel_1_1" }
+            , new string[]{ "Rel_1_2" }
+            , new string[]{ "Rel_2_0" }
+            , new string[]{ "Rel_2_1" }
+            , new string[]{ "Rel_2_2" }
+            , new string[]{ "Rel_2_3" }
+            , new string[]{ "Rel_3_0" }
+            , new string[]{ "Rel_4_0" }
+            , new string[]{ "Rel_4_1" }
+            , new string[]{ "Rel_4_2" }
+            , new string[]{ "Rel_5_0" }
+            , new string[]{ "Rel_6_0" }
+            , new string[]{ "Rel_6_1" }
+            , new string[]{ "Rel_7_0" }
+            , new string[]{ "Rel_7_1" }
+            , new string[]{ "Rel_7_2" }
+            , new string[]{ "Rel_8_0" }
+            , new string[]{ "Rel_9_0" }
+            , new string[]{ "Rel_9_1" }
+            , new string[]{ "Rel_9_2" }
+            , new string[]{ "Rel_10_0" }
+            , new string[]{ "Rel_10_1" }
+            , new string[]{ "Rel_10_2" }
+            , new string[]{ "Rel_11_0" }
+            , new string[]{ "Rel_11_1" }
+            , new string[]{ "Rel_11_2" }
+            , new string[]{ "Rel_11_3" }
+            };
+        }
+
+        #endregion // Construction
 
         #region Public Static Methods
 
-        static public string Discover(TestContext ctx)
+        static public string TestExecutable_Discover(TestContext ctx, string versionpath)
         {
-            string path = ctx.TestRunDirectory + _basepath + @"Catch_Discover.exe";
-            return Path.GetFullPath(path);
+            var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"Catch_Discover.exe"));
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            return null;
         }
 
-        static public string Dummy(TestContext ctx)
+        static public string TestExecutable_Dummy(TestContext ctx, string versionpath)
         {
-            string path = ctx.TestRunDirectory + _basepath + @"Catch_Dummy.exe";
-            return Path.GetFullPath(path);
+            var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"Catch_Dummy.exe"));
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            return null;
         }
 
-        static public string Duplicates(TestContext ctx)
+        static public string TestExecutable_Duplicates(TestContext ctx, string versionpath)
         {
-            string path = ctx.TestRunDirectory + _basepath + @"Catch_Duplicates.exe";
-            return Path.GetFullPath(path);
+            var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"Catch_Duplicates.exe"));
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            return null;
         }
 
-        static public string Hidden(TestContext ctx)
+        static public string TestExecutable_Execution(TestContext ctx, string versionpath)
         {
-            string path = ctx.TestRunDirectory + _basepath + @"Catch_Hidden.exe";
-            return Path.GetFullPath(path);
+            var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"Catch_Execution.exe"));
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            return null;
         }
 
-        static public string NoExist(TestContext ctx)
+        static public string TestExecutable_Hidden(TestContext ctx, string versionpath)
         {
-            string path = ctx.TestRunDirectory + _basepath + @"Catch_NoExist.exe";
-            return Path.GetFullPath(path);
+            var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"Catch_Hidden.exe"));
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            return null;
         }
 
-        static public string NoSEH(TestContext ctx)
+        static public string TestExecutable_NoExist(TestContext ctx, string versionpath)
         {
-            string path = ctx.TestRunDirectory + _basepath + @"Catch_NoSEH.exe";
-            return Path.GetFullPath(path);
+            var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"Catch_NoExist.exe"));
+            if (!File.Exists(path))
+            {
+                return path;
+            }
+
+            return null;
         }
 
-        static public string Testset01(TestContext ctx)
+        static public string TestExecutable_NoSEH(TestContext ctx, string versionpath)
         {
-            string path = ctx.TestRunDirectory + _basepath + @"Catch_Testset01.exe";
-            return Path.GetFullPath(path);
+            var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"Catch_NoSEH.exe"));
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            return null;
         }
 
-        static public string Testset02(TestContext ctx)
-        {
-            string path = ctx.TestRunDirectory + _basepath + @"Catch_Testset02.exe";
-            return Path.GetFullPath(path);
-        }
-
-        static public string Testset03(TestContext ctx)
-        {
-            string path = ctx.TestRunDirectory + _basepath + @"Catch_Testset03.exe";
-            return Path.GetFullPath(path);
-        }
-
-        // Contains duplicate name
-        static public string Testset04(TestContext ctx)
-        {
-            string path = ctx.TestRunDirectory + _basepath + @"Catch_Testset04.exe";
-            return Path.GetFullPath(path);
-        }
-
-         #endregion // Public Static Methods
-
-        #region Private Static Methods
-
-        static private string CreateBasepath()
-        {
-#if TA_CATCH2_V2_0_1
-            return @"\..\..\_reftests\Rel_0_1\";
-#elif TA_CATCH2_V2_1_0
-            return @"\..\..\_reftests\Rel_1_0\";
-#elif TA_CATCH2_V2_1_1
-            return @"\..\..\_reftests\Rel_1_1\";
-#elif TA_CATCH2_V2_1_2
-            return @"\..\..\_reftests\Rel_1_2\";
-#elif TA_CATCH2_V2_2_0
-            return @"\..\..\_reftests\Rel_2_0\";
-#elif TA_CATCH2_V2_2_1
-            return @"\..\..\_reftests\Rel_2_1\";
-#elif TA_CATCH2_V2_2_2
-            return @"\..\..\_reftests\Rel_2_2\";
-#elif TA_CATCH2_V2_2_3
-            return @"\..\..\_reftests\Rel_2_3\";
-#elif TA_CATCH2_V2_3_0
-            return @"\..\..\_reftests\Rel_3_0\";
-#elif TA_CATCH2_V2_4_0
-            return @"\..\..\_reftests\Rel_4_0\";
-#elif TA_CATCH2_V2_4_1
-            return @"\..\..\_reftests\Rel_4_1\";
-#elif TA_CATCH2_V2_4_2
-            return @"\..\..\_reftests\Rel_4_2\";
-#elif TA_CATCH2_V2_5_0
-            return @"\..\..\_reftests\Rel_5_0\";
-#elif TA_CATCH2_V2_6_0
-            return @"\..\..\_reftests\Rel_6_0\";
-#elif TA_CATCH2_V2_6_1
-            return @"\..\..\_reftests\Rel_6_1\";
-#elif TA_CATCH2_V2_7_0
-            return @"\..\..\_reftests\Rel_7_0\";
-#elif TA_CATCH2_V2_7_1
-            return @"\..\..\_reftests\Rel_7_1\";
-#elif TA_CATCH2_V2_7_2
-            return @"\..\..\_reftests\Rel_7_2\";
-#elif TA_CATCH2_V2_8_0
-            return @"\..\..\_reftests\Rel_8_0\";
-#elif TA_CATCH2_V2_9_0
-            return @"\..\..\_reftests\Rel_9_0\";
-#elif TA_CATCH2_V2_9_1
-            return @"\..\..\_reftests\Rel_9_1\";
-#elif TA_CATCH2_V2_9_2
-            return @"\..\..\_reftests\Rel_9_2\";
-#elif TA_CATCH2_V2_10_0
-            return @"\..\..\_reftests\Rel_10_0\";
-#elif TA_CATCH2_V2_10_1
-            return @"\..\..\_reftests\Rel_10_1\";
-#elif TA_CATCH2_V2_10_2
-            return @"\..\..\_reftests\Rel_10_2\";
-#else
-            return @"\..\..\_reftests\Release\";
-#endif
-        }
-
-        #endregion // Private Static Methods
+        #endregion Public Static Methods
     }
 }

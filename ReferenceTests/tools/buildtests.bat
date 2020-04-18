@@ -35,6 +35,10 @@ call :BuildTests Rel_9_2
 call :BuildTests Rel_10_0
 call :BuildTests Rel_10_1
 call :BuildTests Rel_10_2
+call :BuildTests Rel_11_0
+call :BuildTests Rel_11_1
+call :BuildTests Rel_11_2
+call :BuildTests Rel_11_3
 
 cd tools
 
@@ -43,9 +47,11 @@ echo Done.
 
 pause
 
+exit
+
 :BuildTests
 
 cmake --build ./build/msvc142 --config %~1
-xcopy ".\build\msvc142\_exe\%~1\*.exe" "..\_reftests\%~1" /I /Q
+xcopy ".\build\msvc142\bin\%~1\*.exe" "..\_reftests\%~1" /I /Q
 
 exit /B 0

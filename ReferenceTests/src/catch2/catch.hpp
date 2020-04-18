@@ -115,9 +115,25 @@ Notes: None
 
 #include "v2.10.2/catch.hpp"
 
+#elif defined TA_CATCH2_V2_11_0
+
+#include "v2.11.0/catch.hpp"
+
+#elif defined TA_CATCH2_V2_11_1
+
+#include "v2.11.1/catch.hpp"
+
+#elif defined TA_CATCH2_V2_11_2
+
+#include "v2.11.2/catch.hpp"
+
+#elif defined TA_CATCH2_V2_11_3
+
+#include "v2.11.3/catch.hpp"
+
 #else
 
-#include "v2.10.2/catch.hpp"
+#include "v2.11.3/catch.hpp"
 
 #endif
 

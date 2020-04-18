@@ -1,16 +1,17 @@
 cmake_minimum_required( VERSION 3.16 )
 
-set( targetname Catch_NoSEH )
+set( targetname Catch_Execution )
 
 # Define source files
 set( src_Files
-  UT_Tests01.cpp
+  UT_Fail.cpp
+  UT_Mixed.cpp
+  UT_Names.cpp
+  UT_Pass.cpp
 )
 
 # Add test executable
 tafc2_add_test( ${targetname} "Functionality" )
-
-target_compile_definitions( ${targetname} PRIVATE CATCH_CONFIG_NO_WINDOWS_SEH)
 
 # Add sources
 target_sources(
