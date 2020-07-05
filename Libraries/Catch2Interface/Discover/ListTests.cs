@@ -35,7 +35,7 @@ Class :
         private List<TestCase> _testcases;
 
         private static readonly Regex _rgxDefaultFirstLine = new Regex(@"^All available test cases:|^Matching test cases:");
-        private static readonly Regex _rgxDefaultFilenameLineEnd = new Regex(@"(.*)\(([0-9]*)\)$");
+        private static readonly Regex _rgxDefaultFilenameLineEnd = new Regex(@"(.*)\(([0-9 .,']*)\)$");
         private static readonly Regex _rgxDefaultFilenameLineStart = new Regex(@"^[a-zA-Z]:\\");
         private static readonly Regex _rgxDefaultTestCaseLine = new Regex(@"^[ ]{2}([^ ].*)");
         private static readonly Regex _rgxDefaultTestCaseLineExtented = new Regex(@"^[ ]{4}([^ ].*)");
@@ -175,8 +175,7 @@ Class :
                         }
                         else
                         {
-                            var match = _rgxDefaultFilenameLineEnd.Match(line);
-                            return int.Parse(match.Groups[2].Value) == linenumber;
+                            return ExtractLineNumber(line) == linenumber;
                         }
                     }
                     return true;
@@ -206,6 +205,25 @@ Class :
             string tags = MergeLines(taglines, 0, false, 0);
 
             return Reporter.TestCase.ExtractTags(tags);
+        }
+
+        private int ExtractLineNumber(string filename)
+        {
+            var match = _rgxDefaultFilenameLineEnd.Match(filename);
+
+            // canonicalize the line number format to strip locale-specific nonsense
+            // (we _could_ mess about with locales and number formatting modes,
+            // but since line numbers are always integers it's likely simpler to just do this)
+            var linenumber = Regex.Replace(match.Groups[2].Value, "[ .,']+", "");
+
+            try
+            {
+                return int.Parse(linenumber);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format($"Int32.Parse failed with input \"{linenumber}\": {ex.Message}"));
+            }
         }
 
         private string MakeTestCaseFilename(List<string> filenamelines)
@@ -252,9 +270,7 @@ Class :
 
         private int MakeTestCaseLine(List<string> filenamelines)
         {
-            var match = _rgxDefaultFilenameLineEnd.Match(filenamelines[filenamelines.Count - 1]);
-            
-            return int.Parse(match.Groups[2].Value);
+            return ExtractLineNumber(filenamelines[filenamelines.Count - 1]);
         }
 
         private string MakeTestCaseName(List<string> namelines, string source, string filename = null, int linenumber = -1)
