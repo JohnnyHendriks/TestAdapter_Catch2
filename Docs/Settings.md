@@ -5,14 +5,18 @@
 In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitely by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
 
 - [`<Catch2Adapter>`](#catch2adapter)
+- [`<CombinedTimeout>`](#combinedtimeout)
 - [`<DebugBreak>`](#debugbreak)
 - [`<DiscoverCommandLine>`](#discovercommandline)
 - [`<DiscoverTimeout>`](#discovertimeout)
+- [`<ExecutionMode>`](#executionmode)
+- [`<ExecutionModeForceSingleTagRgx>`](#executionmodeforcesingletagrgx)
 - [`<FilenameFilter>`](#filenamefilter)*
 - [`<IncludeHidden>`](#includehidden)
 - [`<Logging>`](#logging)
 - [`<MessageFormat>`](#messageformat)
 - [`<StackTraceFormat>`](#stacktraceformat)
+- [`<StackTraceMaxLength>`](#stacktracemaxlength)
 - [`<StackTracePointReplacement>`](#stacktracepointreplacement)
 - [`<TestCaseTimeout>`](#testcasetimeout)
 - [`<WorkingDirectory>`](#workingdirectory)
@@ -88,6 +92,14 @@ Minimalistic example to disable the **Test Adapter for Catch2** via the _.runset
 </RunSettings>
  ```
 
+## CombinedTimeout
+
+Default: -1
+
+The `<CombinedTimeout>` option is only relevant when `<ExecutionMode>` is set to `Combined`. It sets the maximum amount of time a combined test run may take. Any tests that were not yet run at the time of a timeout are marked as being skipped. Setting the timeout to zero or a negative number turns of the timeout.
+
+> Introduced in v1.6.0
+
 ## DebugBreak
 
 Default: off
@@ -110,11 +122,33 @@ With the `<DiscoverTimeout>` option you can apply a timeout in milliseconds when
 
 When the timeout value is too small it is possible that test discovery fails. If that happens a warning is displayed in the Test Explorer output to make this clear. There have been situations where discovery intermittently failed (especially when the computer was very busy with other stuff).
 
+## ExecutionMode
+
+Default: Single
+
+With the `<ExecutionMode>` option you can choose the way tests are executed.
+
+| ExecutionMode | Description |
+|:--------------|:------------|
+| Single | For each test case a separate instance of the test executable is started. |
+| Combined | A single test executable is started to run multiple test cases. |
+|||
+
+> Introduced in v1.6.0
+
+## ExecutionModeForceSingleTagRgx
+
+Default: (?i:tafc_Single)
+
+With the `<ExecutionModeForceSingleTagRgx>` option you can set a regex value to match test case Tags that would force a test case to be run in `Single` execution mode, when the `Combined` execution mode is set.
+
+> Introduced in v1.6.0
+
 ## FilenameFilter
 
 Default: ""
 
-Use the `<FilenameFilter>` option to filter supplied source files used for discovery. This should enable you to selectively select the Catch2 executables in your project. By default, this parameter has an invalid value, causing test case discovery to fail. This was done intentionally to prevent non-Catch2 test executables from being called by default during test case discovery, possibly causing unwanted side effects. Note that the filter is applied to the filename with the extension (".exe") stripped from the name.
+Use the `<FilenameFilter>` option to filter the supplied executable files used for discovery. This should enable you to selectively select the Catch2 executables in your project. By default, this parameter has an invalid value, causing test case discovery to fail. This was done intentionally to prevent non-Catch2 test executables from being called by default during test case discovery, possibly causing unwanted side effects. Note that the filter is applied to the filename with the extension (".exe") stripped from the name.
 
 See below for several common options.
 - ".*": Perform discovery for all source filenames
@@ -150,6 +184,14 @@ Default: ShortInfo
 The `<StackTraceFormat>` option has two settings, `ShortInfo` and `None`. The reasoning behind this option stems from a problem getting the stack trace entry to show up as a link to the source code line where the failure occurred. Now this is fixed the setting remains in an altered form. You can still turn off creation of stack trace entries with the `None` setting. The default and fall-back value in case of an unsupported setting value is now the `ShortInfo` setting. With this setting a stack trace link is created for each failure. Here the text used for the link gives a short description of the failure. In future more setting values may be added for different formats for the link text.
 
 The string format expected by the Test Explorer is "`at {description} in {filename}:line {line}`", where the curly bracket parts are replaced by appropriate values. In some cases the link is broken as a result of the generated description, but mostly the description that is generated should not break the link.
+
+## StackTraceMaxLength
+
+Default: 80
+
+The `<StackTraceMaxLength>` is used to limit the length of stacktrace link lines. The stack trace link lines are there mostly for convenience to be able to quickly navigate to the location of a failing test. Full information for the error can be obtained via the output link just above the stacktrace lines.
+
+> Introduced in v1.6.0
 
 ## StackTracePointReplacement
 
