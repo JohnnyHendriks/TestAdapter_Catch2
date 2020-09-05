@@ -17,6 +17,6 @@
     <ClCompile Include="$(RefTest_SourceDir)Catch_Testset02\UT_Tests05.cpp" />
     <ClCompile Include="$(RefTest_SourceDir)Catch_Testset02\UT_Tests06.cpp" />
     <ClCompile Include="$(RefTest_SourceDir)Catch_Testset02\UT_Tests07.cpp" />
-    <ClCompile Include="$(RefTest_SourceDir)main.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Common\main.cpp" />
   </ItemGroup>
 </Project>
