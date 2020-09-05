@@ -11,6 +11,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="$(RefTest_SourceDir)Catch_Duplicates\UT_SameTestNames.cpp" />
-    <ClCompile Include="$(RefTest_SourceDir)main.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Common\main.cpp" />
   </ItemGroup>
 </Project>

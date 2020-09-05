@@ -10,7 +10,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
-    <ClCompile Include="$(RefTest_SourceDir)Catch_Dummy\main.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Common\main.cpp" />
     <ClCompile Include="$(RefTest_SourceDir)Catch_Dummy\UT_Dummy.cpp" />
   </ItemGroup>
 </Project>

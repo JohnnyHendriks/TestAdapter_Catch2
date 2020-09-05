@@ -9,7 +9,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(RefTest_SourceDir)main.cpp">
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Common\main.cpp">
       <Filter>Files\Catch</Filter>
     </ClCompile>
     <ClCompile Include="$(RefTest_SourceDir)Catch_Discover\UT_LongTestCaseNames.cpp">
@@ -26,7 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(RefTest_SourceDir)catch_discover.hpp">
+    <ClInclude Include="$(RefTest_SourceDir)Catch_Common\catch_discover.hpp">
       <Filter>Files\Catch</Filter>
     </ClInclude>
   </ItemGroup>

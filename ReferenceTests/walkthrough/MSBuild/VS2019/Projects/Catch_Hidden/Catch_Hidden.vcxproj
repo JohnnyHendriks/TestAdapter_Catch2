@@ -12,6 +12,6 @@
   <ItemGroup>
     <ClCompile Include="$(RefTest_SourceDir)Catch_Hidden\UT_Hidden.cpp" />
     <ClCompile Include="$(RefTest_SourceDir)Catch_Hidden\UT_NotHidden.cpp" />
-    <ClCompile Include="$(RefTest_SourceDir)main.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Common\main.cpp" />
   </ItemGroup>
 </Project>

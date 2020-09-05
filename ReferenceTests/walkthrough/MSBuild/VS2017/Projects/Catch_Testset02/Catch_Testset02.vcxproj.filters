@@ -15,7 +15,7 @@
     <ClCompile Include="$(RefTest_SourceDir)Catch_Testset02\UT_Tests02.cpp">
       <Filter>Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(RefTest_SourceDir)main.cpp">
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Common\main.cpp">
       <Filter>Files\Catch</Filter>
     </ClCompile>
     <ClCompile Include="$(RefTest_SourceDir)Catch_Testset02\UT_Tests03.cpp">

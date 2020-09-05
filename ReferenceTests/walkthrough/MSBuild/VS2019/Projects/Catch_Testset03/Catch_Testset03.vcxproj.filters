@@ -9,7 +9,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(RefTest_SourceDir)main.cpp">
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Common\main.cpp">
       <Filter>Files\Catch</Filter>
     </ClCompile>
     <ClCompile Include="$(RefTest_SourceDir)Catch_Testset03\UT_Tests01.cpp">
