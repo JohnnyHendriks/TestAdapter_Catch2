@@ -2,7 +2,7 @@
 
 ## Introduction
 
-It can be a bit tricky to get the **Test Adapter for Catch2** running. So, if you are having trouble getting the test adapter to work you are not alone. For this Walkthrough I'm using the latest version of Microsoft Visual Studio Community 2019 (version 16.7 at the time of writing). This walkthrough makes use of the v1.6.0 release of the **Test Adapter for Catch2**. Note, that in Visual Studio 2019 the Test Explorer has undergone a facelift and things work slightly different. There is an alternate [walkthrough for use with Visual Studio 2017](walkthough.md).
+It can be a bit tricky to get the **Test Adapter for Catch2** running. So, if you are having trouble getting the test adapter to work you are not alone. For this Walkthrough I'm using the latest version of Microsoft Visual Studio Community 2019 (version 16.9 at the time of writing). This walkthrough makes use of the v1.6.0 release of the **Test Adapter for Catch2**. Note, that in Visual Studio 2019 the Test Explorer has undergone a facelift and things work slightly different. There is an alternate [walkthrough for use with Visual Studio 2017](walkthough.md).
 
 I will use the ReferenceTests created for testing the **Test Adapter for Catch2**. You can find a Visual Studio solution in the [ReferenceTests](../ReferenceTests/walkthrough/) folder of this GitHub repository. I will assume you know how to open the Test Explorer Window.
 
@@ -134,7 +134,6 @@ No test is available in D:\GitHub\TestAdapter_Catch2\ReferenceTests\walkthrough\
 - In some cases, it is possible that test case discovery fails every now and then causing previously discovered tests to disappear from the Test Explorer. This may occur if you set the `<DiscoverTimeout>` option to a relatively short time. In this case increasing this timeout may solve your problems. See explanation of this [Setting](Settings.md#discovertimeout) for more information. Of course, setting this timeout to a very small value may also result in test case discovery to always fail. To help with this problem output similar to the following is produced when a timeout occurs.
 ```
 ---------- Starting test discovery ----------
----------- Starting test discovery ----------
 Started Catch2Adapter test discovery...
 Discover log:
   Warning: Discovery timeout for D:\GitHub\TestAdapter_Catch2\ReferenceTests\walkthrough\_unittest64\VS2019\Release\Catch_Discover.exe
@@ -144,7 +143,7 @@ No test is available in D:\GitHub\TestAdapter_Catch2\ReferenceTests\walkthrough\
 ========== Test discovery finished: 0 Tests found in 1.6 sec ==========
 ```
 
-- In some cases, other test adapters may interfere with Catch2 test discovery. In those cases, look in the `Tests` output for hints. Worst case you may have to disable the test adapter that is causing trouble. For instance, if the output includes `Could not locate debug symbols`, that is probably output from the Boost Test Adapter, which can be disabled from the Tools...Extensions and Updates... menu item. By the way, this is the reason a feature was added to the **Test Adapter for Catch2** to disable it via the _.runsettings_ file. So in case the reverse happens and the **Test Adapter for Catch2** interferes with another test adapter, you have an easy way to disable the **Test Adapter for Catch2** via the _.runsettings_ file.
+- In some cases, other test adapters may interfere with Catch2 test discovery. In those cases, look in the `Tests` output for hints. Worst case you may have to disable the test adapter that is causing trouble. For instance, if the output includes `Could not locate debug symbols`, that is probably output from the Boost Test Adapter, which can be disabled from the \[Extensions]->\[Manage Extensions] menu item. By the way, this is the reason a feature was added to the **Test Adapter for Catch2** to disable it via the _.runsettings_ file. So in case the reverse happens and the **Test Adapter for Catch2** interferes with another test adapter, you have an easy way to disable the **Test Adapter for Catch2** via the _.runsettings_ file.
 
 ### Logging level
 

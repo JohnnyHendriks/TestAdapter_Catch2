@@ -8,7 +8,6 @@ This version introduces some major changes in the way the backend works. Where b
 
 Furthermore, the test results are no longer written to memory, but to a temporary file before being processed. Though needed to make the above change possible, the positive side effect is that the test explorer now no longer has problems with tests that write information to the terminal in a way that is not intercepted by Catch2. In addition, the backend is better able to handle partial xml test result output, which typically occurs when the test executable instance needs to be killed due to a timeout, or when the test executable is prematurely terminated.
 
-
 ## Changes for v1.5.1
 
 This version fixes a problem installing the Test Adapter for Catch2 on VS2019 RC.
