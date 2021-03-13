@@ -1,8 +1,8 @@
 # Settings for Test Adapter for Catch2
 
-> The information on this page is based on **Test Adapter for Catch2** v1.5.0.
+> The information on this page is based on **Test Adapter for Catch2** v1.6.0.
 
-In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitely by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
+In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitly by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
 
 - [`<Catch2Adapter>`](#catch2adapter)
 - [`<CombinedTimeout>`](#combinedtimeout)
@@ -32,15 +32,19 @@ The following _.runsettings_ file examples only contains settings specific to th
 
     <!-- Adapter Specific sections -->
     <Catch2Adapter>
-        <DebugBreak>on</DebugBreak><!-- Introduced in v1.1.0 -->
+        <CombinedTimeout>60000</CombinedTimeout><!-- Milliseconds; Introduced in v1.6.0 -->
+        <DebugBreak>on</DebugBreak>
         <DiscoverCommandLine>--verbosity high --list-tests *</DiscoverCommandLine>
         <DiscoverTimeout>500</DiscoverTimeout><!-- Milliseconds -->
+        <ExecutionMode>Combined</ExecutionMode><!-- Introduced in v1.6.0 -->
+        <ExecutionModeForceSingleTagRgx>Slow</ExecutionModeForceSingleTagRgx><!-- Introduced in v1.6.0 -->
         <FilenameFilter>^Catch_</FilenameFilter><!-- Regex filter -->
         <IncludeHidden>true</IncludeHidden>
         <Logging>normal</Logging>
         <MessageFormat>StatsOnly</MessageFormat>
         <StackTraceFormat>ShortInfo</StackTraceFormat>
-        <StackTracePointReplacement>,</StackTracePointReplacement><!-- Introduced in v1.3.0 -->
+        <StackTraceMaxLength>60</StackTraceMaxLength><!-- Introduced in v1.6.0 -->
+        <StackTracePointReplacement>,</StackTracePointReplacement>
         <TestCaseTimeout>20000</TestCaseTimeout><!-- Milliseconds -->
         <WorkingDirectory>..\TestData</WorkingDirectory>
         <WorkingDirectoryRoot>Executable</WorkingDirectoryRoot>

@@ -16,8 +16,8 @@ For documentation on the **Test Adapter for Catch2** see the followng links.
 
 - [Overview](Docs/Readme.md)
 - [Capabilities](Docs/Capabilities.md)
-- [Walkthrough VS2019: using the Test Adapter for Catch2](Docs/Walkthrough-2019.md)
-- [Walkthrough VS2017: using the Test Adapter for Catch2](Docs/Walkthrough-2017.md)
+- [Walkthrough VS2019: using the Test Adapter for Catch2](Docs/Walkthrough-vs2019.md)
+- [Walkthrough VS2017: using the Test Adapter for Catch2](Docs/Walkthrough-vs2017.md)
 - [Settings](Docs/Settings.md)
 - [Testcase Discovery](Docs/Discovery.md)
 - [How to build the test adapter](Docs/Build.md)

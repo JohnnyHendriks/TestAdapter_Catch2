@@ -18,17 +18,36 @@ The following is an example _.runsettings_ file that contains options specific f
 
     <!-- Adapter Specific sections -->
     <Catch2Adapter>
+        <CombinedTimeout>60000</CombinedTimeout><!-- Milliseconds; Introduced in v1.6.0 -->
         <DebugBreak>on</DebugBreak><!-- Introduced in v1.1.0 -->
-        <DiscoverCommandLine>--list-tests *</DiscoverCommandLine>
+        <DiscoverCommandLine>--verbosity high --list-tests *</DiscoverCommandLine>
         <DiscoverTimeout>500</DiscoverTimeout><!-- Milliseconds -->
+        <ExecutionMode>Combined</ExecutionMode><!-- Introduced in v1.6.0 -->
+        <ExecutionModeForceSingleTagRgx>Slow</ExecutionModeForceSingleTagRgx><!-- Introduced in v1.6.0 -->
         <FilenameFilter>^Catch_</FilenameFilter><!-- Regex filter -->
         <IncludeHidden>true</IncludeHidden>
         <Logging>normal</Logging>
         <MessageFormat>StatsOnly</MessageFormat>
         <StackTraceFormat>ShortInfo</StackTraceFormat>
+        <StackTraceMaxLength>60</StackTraceMaxLength><!-- Introduced in v1.6.0 -->
+        <StackTracePointReplacement>,</StackTracePointReplacement><!-- Introduced in v1.3.0 -->
         <TestCaseTimeout>20000</TestCaseTimeout><!-- Milliseconds -->
         <WorkingDirectory>..\TestData</WorkingDirectory>
         <WorkingDirectoryRoot>Executable</WorkingDirectoryRoot>
+    </Catch2Adapter>
+
+</RunSettings>
+ ```
+
+Not all settings need to be provided though, the following is an example of a minimalistic _.runsettings_ file.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+
+    <!-- Adapter Specific sections -->
+    <Catch2Adapter>
+        <FilenameFilter>.*</FilenameFilter><!-- Regex filter -->
     </Catch2Adapter>
 
 </RunSettings>
@@ -39,7 +58,8 @@ The following is an example _.runsettings_ file that contains options specific f
 For a more detailed description see the following pages:
 
 - [Capabilities](Capabilities.md)
-- [Walkthrough: using the Test Adapter for Catch2](Walkthrough.md)
+- [Walkthrough VS2019: using the Test Adapter for Catch2](Walkthrough-vs2019.md)
+- [Walkthrough VS2017: using the Test Adapter for Catch2](Walkthrough-vs2017.md)
 - [Settings](Settings.md)
 - [Testcase Discovery](Discovery.md)
 - [How to build the test adapter](Build.md)
