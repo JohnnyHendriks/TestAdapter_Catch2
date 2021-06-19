@@ -2,6 +2,10 @@
 
 Changes are relative to v1.0.0
 
+## Changes for upcoming release
+
+Adds support for Visual Studio 2022.
+
 ## Changes for v1.6.0
 
 This version introduces some major changes in the way the backend works. Where before for each test case an instance of the test executable was started (still the default behavior), now it is possible to run multiple test cases in a single instance of the test executable, improving test execution time significantly. Related to this there is also a mechanism introduced to force a test case to be run in its own test executable instance, when using the new way of executing test cases.
