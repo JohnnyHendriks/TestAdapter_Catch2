@@ -14,6 +14,10 @@
     <DebugBreak>on</DebugBreak>
     <DiscoverCommandLine>--discover *</DiscoverCommandLine><!-- Note this custom discoverer is not part of the Catch2 framework -->
     <DiscoverTimeout>500</DiscoverTimeout>
+    <Environment>
+      <MyCustomEnvSetting>Welcome</MyCustomEnvSetting>
+      <MyOtherCustomEnvSetting value="debug&lt;0&gt;"/>
+    </Environment>
     <FilenameFilter>^Catch_</FilenameFilter>
     <IncludeHidden>true</IncludeHidden>
     <Logging>Normal</Logging>

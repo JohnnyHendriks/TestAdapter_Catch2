@@ -13,6 +13,7 @@ Notes: None
 
 using Catch2Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Specialized;
 using System.IO;
 using System.Xml;
 
@@ -50,6 +51,67 @@ namespace UT_Catch2Interface
         #endregion
 
         [TestMethod]
+        public void TestAddEnviromentVariables()
+        {
+            StringDictionary src = null;
+            var settings = new Settings();
+
+            // Null checks part 1
+            settings.AddEnviromentVariables(src);
+            Assert.IsNull(settings.Environment);
+            Assert.IsNull(src);
+
+            // Null checks part 2
+            src = new StringDictionary();
+            Assert.AreEqual(0, src.Count);
+
+            settings.AddEnviromentVariables(src);
+            Assert.AreEqual(0, src.Count);
+
+            // Add Environment variable to empty src
+            settings.Environment = new StringDictionary();
+            settings.Environment.Add("Key1", "Value1");
+            settings.AddEnviromentVariables(src);
+            Assert.AreEqual(1, src.Count);
+            Assert.AreEqual("Value1", src["Key1"]);
+
+            // Add Environment variable to non-empty src
+            settings.Environment.Clear();
+            settings.Environment.Add("Key2", "Value2");
+            Assert.AreEqual(1, settings.Environment.Count);
+            settings.AddEnviromentVariables(src);
+            Assert.AreEqual(2, src.Count);
+            Assert.AreEqual("Value1", src["Key1"]);
+            Assert.AreEqual("Value2", src["Key2"]);
+
+            // Add Environment variables to non-empty src
+            settings.Environment.Clear();
+            settings.Environment.Add("Key3", "Value3");
+            settings.Environment.Add("Key4", "Value4");
+            settings.Environment.Add("Key5", "Value5");
+            Assert.AreEqual(3, settings.Environment.Count);
+            settings.AddEnviromentVariables(src);
+            Assert.AreEqual(5, src.Count);
+            Assert.AreEqual("Value1", src["Key1"]);
+            Assert.AreEqual("Value2", src["Key2"]);
+            Assert.AreEqual("Value3", src["Key3"]);
+            Assert.AreEqual("Value4", src["Key4"]);
+            Assert.AreEqual("Value5", src["Key5"]);
+
+            // Overwrite value
+            settings.Environment.Clear();
+            settings.Environment.Add("Key3", "Overwritten3");
+            Assert.AreEqual(1, settings.Environment.Count);
+            settings.AddEnviromentVariables(src);
+            Assert.AreEqual(5, src.Count);
+            Assert.AreEqual("Value1", src["Key1"]);
+            Assert.AreEqual("Value2", src["Key2"]);
+            Assert.AreEqual("Overwritten3", src["Key3"]);
+            Assert.AreEqual("Value4", src["Key4"]);
+            Assert.AreEqual("Value5", src["Key5"]);
+        }
+
+        [TestMethod]
         public void TestDefaultConstructed()
         {
             var settings = new Settings();
@@ -70,6 +132,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(80, settings.StacktraceMaxLength);
             Assert.AreEqual(",", settings.StacktracePointReplacement);
             Assert.AreEqual(-1, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -101,6 +165,11 @@ namespace UT_Catch2Interface
             Assert.AreEqual("_", settings.StacktracePointReplacement);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
+            Assert.IsNotNull(settings.Environment);
+            Assert.AreEqual(2, settings.Environment.Count);
+            Assert.AreEqual(@"D:\MyPath; D:\MyOtherPath", settings.Environment["PATH"]);
+            Assert.AreEqual("debug<0>", settings.Environment["MyCustomEnvSetting"]);
+
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -130,6 +199,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -162,6 +233,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -193,6 +266,11 @@ namespace UT_Catch2Interface
             Assert.AreEqual("_", settings.StacktracePointReplacement);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
+            Assert.IsNotNull(settings.Environment);
+            Assert.AreEqual(2, settings.Environment.Count);
+            Assert.AreEqual(@"D:\MyPath; D:\MyOtherPath", settings.Environment["PATH"]);
+            Assert.AreEqual("debug<0>", settings.Environment["MyCustomEnvSetting"]);
+
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -222,6 +300,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -253,6 +333,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -282,6 +364,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -313,6 +397,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -342,6 +428,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
@@ -373,6 +461,43 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
+            Assert.IsTrue(settings.IsVerbosityHigh);
+            Assert.IsFalse(settings.UseXmlDiscovery);
+            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+        }
+
+        [TestMethod]
+        public void TestExtractEnvironment()
+        {
+            var xml = new XmlDocument();
+            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_Environment));
+            reader.Read();
+            var settings = Settings.Extract(xml.ReadNode(reader));
+
+            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+
+            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
+            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
+            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
+            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
+            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
+            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
+            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
+            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
+            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
+            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
+            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNotNull(settings.Environment);
+            Assert.AreEqual(2, settings.Environment.Count);
+            Assert.AreEqual(@"D:\MyPath; D:\MyOtherPath", settings.Environment["PATH"]);
+            Assert.AreEqual("debug<0>", settings.Environment["MyCustomEnvSetting"]);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -402,6 +527,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -433,6 +560,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -462,6 +591,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -493,6 +624,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -522,6 +655,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -553,6 +688,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -582,6 +719,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -613,6 +752,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -642,6 +783,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -673,6 +816,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -702,6 +847,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -733,6 +880,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -762,6 +911,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -793,6 +944,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -822,6 +975,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -853,6 +1008,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -882,6 +1039,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -913,6 +1072,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -942,6 +1103,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -973,6 +1136,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -1002,6 +1167,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual("_", settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
@@ -1033,6 +1200,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -1063,6 +1232,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
+            Assert.IsNull(settings.Environment);
+
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
@@ -1092,6 +1263,8 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            Assert.IsNull(settings.Environment);
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);

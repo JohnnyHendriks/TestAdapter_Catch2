@@ -11,6 +11,8 @@ Notes: None
 
 ** Basic Info **/
 
+using System.Collections;
+using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -128,6 +130,7 @@ Class :
         public bool                  Disabled { get; set; }                       = Constants.S_DefaultDisabled;
         public string                DiscoverCommandLine { get; set; }            = Constants.S_DefaultDiscoverCommandline;
         public int                   DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
+        public StringDictionary      Environment { get; set; }
         public ExecutionModes        ExecutionMode { get; set; }                  = Constants.S_DefaultExecutionMode;
         public Regex                 ExecutionModeForceSingleTagRgx { get; set; } = new Regex(Constants.S_DefaultExecutionModeForceSingleTagRgx, RegexOptions.Singleline);
         public string                FilenameFilter { get; set; }                 = Constants.S_DefaultFilenameFilter;
@@ -202,6 +205,32 @@ Class :
                     if (int.TryParse(discovertimeout.Value, out int timeout))
                     {
                         settings.DiscoverTimeout = timeout;
+                    }
+                }
+
+                // Environment
+                var envmnt = node.SelectSingleNode(Constants.NodeName_Environment);
+                if (envmnt != null && envmnt.HasChildNodes )
+                {
+                    settings.Environment = new StringDictionary();
+                    foreach(XmlNode child in envmnt.ChildNodes)
+                    {
+                        if( child.NodeType == XmlNodeType.Element)
+                        {
+                            string name = child.Name;
+                            if( child.Attributes["value"] != null)
+                            {
+                                settings.Environment.Add(name, child.Attributes["value"].Value);
+                            }
+                            else if (child.HasChildNodes && child.FirstChild.NodeType == XmlNodeType.Text)
+                            {
+                                settings.Environment.Add(name, child.FirstChild.Value);
+                            }
+                            else
+                            {
+                                settings.Environment.Add(name, "");
+                            }
+                        }
                     }
                 }
 
@@ -337,6 +366,25 @@ Class :
             mod_description = _rgx_replace_point.Replace(mod_description, StacktracePointReplacement);
 
             return mod_description;
+        }
+
+        public void AddEnviromentVariables(StringDictionary dictionary)
+        {
+            if (Environment != null && dictionary != null)
+            {
+                foreach (DictionaryEntry element in Environment)
+                {
+                    var key = element.Key as string;
+                    if(dictionary.ContainsKey(key))
+                    {
+                        dictionary[key] = element.Value as string;
+                    }
+                    else
+                    {
+                        dictionary.Add(key, element.Value as string);
+                    }
+                }
+            }
         }
 
         #endregion // Public Methods

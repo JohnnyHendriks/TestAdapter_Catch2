@@ -19,7 +19,7 @@ namespace UT_Catch2Interface.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class TestStrings {
@@ -303,6 +303,20 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;Environment&gt;
+        ///    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+        ///    &lt;MyCustomEnvSetting value=&quot;debug&amp;lt;0&amp;gt;&quot;/&gt;
+        ///  &lt;/Environment&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_Environment {
+            get {
+                return ResourceManager.GetString("XmlSettings_Environment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
         ///  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
@@ -395,13 +409,14 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+        ///  &lt;Environment&gt;
+        ///    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+        ///    &lt;MyCustomEnvSetting value=&quot;debug&amp;lt;0&amp;gt;&quot;/&gt;
+        ///  &lt;/Environment&gt;
         ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
         ///  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
         ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
-        ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
-        ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
-        ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
-        ///  &lt;StackTraceForm [rest of string was truncated]&quot;;.
+        ///  &lt;Incl [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom {
             get {
@@ -415,13 +430,13 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+        ///  &lt;Environment&gt;
+        ///    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+        ///    &lt;MyCustomEnvSetting value=&quot;debug&amp;lt;0&amp;gt;&quot;/&gt;
+        ///  &lt;/Environment&gt;
         ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
         ///  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
-        ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
-        ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
-        ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
-        ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
-        ///  [rest of string was truncated]&quot;;.
+        ///  &lt;FilenameFilter&gt;^Catch&lt;/Filename [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_Disabled {
             get {
@@ -435,13 +450,13 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+        ///  &lt;Environment&gt;
+        ///    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+        ///    &lt;MyCustomEnvSetting value=&quot;debug&amp;lt;0&amp;gt;&quot;/&gt;
+        ///  &lt;/Environment&gt;
         ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
         ///  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
-        ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
-        ///  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
-        ///  &lt;Logging&gt;Verbose&lt;/Logging&gt;
-        ///  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
-        /// [rest of string was truncated]&quot;;.
+        ///  &lt;FilenameFilter&gt;^Catch&lt;/Filenam [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_NotDisabled {
             get {

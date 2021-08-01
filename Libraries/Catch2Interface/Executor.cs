@@ -17,7 +17,6 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
-using System.Timers;
 
 namespace Catch2Interface
 {
@@ -147,6 +146,8 @@ Class :
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.WorkingDirectory = WorkingDirectory(source);
 
+            _settings.AddEnviromentVariables(process.StartInfo.EnvironmentVariables);
+
             LogDebug($"Source for test case: {source}{Environment.NewLine}");
             LogDebug($"Commandline arguments used to run tests case: {process.StartInfo.Arguments}{Environment.NewLine}");
             LogDebug($"Run test case: {testname}{Environment.NewLine}");
@@ -162,21 +163,24 @@ Class :
                 process.WaitForExit();
             }
 
+            _process = null;
+
             if (!process.HasExited)
             {
                 process.Kill();
-                _process = null;
+                process.WaitForExit();
+                process.Close();
 
                 string report = ReadReport(reportfilename);
                 LogVerbose($"Killed process. Threw away following output:{Environment.NewLine}{report}{Environment.NewLine}");
 
-                Log = _logbuilder.ToString();
-
                 // Cleanup temporary files (don't delete files when loglevel is debug)
                 if (_settings.LoggingLevel != LoggingLevels.Debug)
                 {
-                    File.Delete(reportfilename);
+                    TryDeleteFile(reportfilename);
                 }
+
+                Log = _logbuilder.ToString();
 
                 return new TestResult( new TimeSpan(0, 0, 0, 0, _settings.TestCaseTimeout)
                                      , "Testcase timed out."
@@ -184,17 +188,18 @@ Class :
             }
             else
             {
-                _process = null;
+                process.Close();
 
                 string report = ReadReport(reportfilename);
                 LogDebug(report);
-                Log = _logbuilder.ToString();
 
                 // Cleanup temporary files (don't delete files when loglevel is debug)
                 if (_settings.LoggingLevel != LoggingLevels.Debug)
                 {
-                    File.Delete(reportfilename);
+                    TryDeleteFile(reportfilename);
                 }
+
+                Log = _logbuilder.ToString();
 
                 // Process testrun output
                 return new TestResult(report, testname, _settings, false);
@@ -222,6 +227,8 @@ Class :
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.WorkingDirectory = WorkingDirectory(group.Source);
 
+            _settings.AddEnviromentVariables(process.StartInfo.EnvironmentVariables);
+
             LogDebug($"Source for test case: {group.Source}{Environment.NewLine}");
             LogDebug($"Commandline arguments used to run tests case: {process.StartInfo.Arguments}{Environment.NewLine}");
 
@@ -238,15 +245,18 @@ Class :
                 process.WaitForExit();
             }
 
+            _process = null;
+
             if (!process.HasExited)
             {
                 process.Kill();
+                process.WaitForExit();
                 LogVerbose($"Killed process.{Environment.NewLine}");
                 Log = _logbuilder.ToString();
                 timeout = true;
             }
 
-            _process = null;
+            process.Close();
 
             // Read and process generated report
             string report = ReadReport(reportfilename); // Also does cleanup of reportfile
@@ -256,8 +266,8 @@ Class :
             // Cleanup temporary files (don't delete files when loglevel is debug)
             if (_settings.LoggingLevel != LoggingLevels.Debug)
             {
-                File.Delete(caselistfilename);
-                File.Delete(reportfilename);
+                TryDeleteFile(caselistfilename);
+                TryDeleteFile(reportfilename);
             }
 
             return new XmlOutput(report, timeout, _settings);
@@ -355,6 +365,18 @@ Class :
             catch
             {
                 return string.Empty;
+            }
+        }
+
+        private void TryDeleteFile(string filename)
+        {
+            try
+            {
+                File.Delete(filename);
+            }
+            catch
+            {
+                LogNormal($"Unable to delete file: {filename}");
             }
         }
 

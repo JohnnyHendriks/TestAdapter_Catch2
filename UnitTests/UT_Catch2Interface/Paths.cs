@@ -59,6 +59,18 @@ namespace UT_Catch2Interface
             , new string[]{ "Rel_11_1" }
             , new string[]{ "Rel_11_2" }
             , new string[]{ "Rel_11_3" }
+            , new string[]{ "Rel_12_0" }
+            , new string[]{ "Rel_12_1" }
+            , new string[]{ "Rel_12_2" }
+            , new string[]{ "Rel_12_3" }
+            , new string[]{ "Rel_12_4" }
+            , new string[]{ "Rel_13_0" }
+            , new string[]{ "Rel_13_1" }
+            , new string[]{ "Rel_13_2" }
+            , new string[]{ "Rel_13_3" }
+            , new string[]{ "Rel_13_4" }
+            , new string[]{ "Rel_13_5" }
+            , new string[]{ "Rel_13_6" }
             };
         }
 
@@ -91,6 +103,17 @@ namespace UT_Catch2Interface
         static public string TestExecutable_Duplicates(TestContext ctx, string versionpath)
         {
             var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"Catch_Duplicates.exe"));
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            return null;
+        }
+
+        static public string TestExecutable_Environment(TestContext ctx, string versionpath)
+        {
+            var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"Catch_Environment.exe"));
             if (File.Exists(path))
             {
                 return path;

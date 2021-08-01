@@ -40,4 +40,16 @@ target_compile_definitions(
     $<$<CONFIG:Rel_11_1>:TA_CATCH2_V2_11_1>
     $<$<CONFIG:Rel_11_2>:TA_CATCH2_V2_11_2>
     $<$<CONFIG:Rel_11_3>:TA_CATCH2_V2_11_3>
+    $<$<CONFIG:Rel_12_0>:TA_CATCH2_V2_12_0>
+    $<$<CONFIG:Rel_12_1>:TA_CATCH2_V2_12_1>
+    $<$<CONFIG:Rel_12_2>:TA_CATCH2_V2_12_2>
+    $<$<CONFIG:Rel_12_3>:TA_CATCH2_V2_12_3>
+    $<$<CONFIG:Rel_12_4>:TA_CATCH2_V2_12_4>
+    $<$<CONFIG:Rel_13_0>:TA_CATCH2_V2_13_0>
+    $<$<CONFIG:Rel_13_1>:TA_CATCH2_V2_13_1>
+    $<$<CONFIG:Rel_13_2>:TA_CATCH2_V2_13_2>
+    $<$<CONFIG:Rel_13_3>:TA_CATCH2_V2_13_3>
+    $<$<CONFIG:Rel_13_4>:TA_CATCH2_V2_13_4>
+    $<$<CONFIG:Rel_13_5>:TA_CATCH2_V2_13_5>
+    $<$<CONFIG:Rel_13_6>:TA_CATCH2_V2_13_6>
   )

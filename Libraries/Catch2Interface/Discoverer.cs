@@ -152,58 +152,65 @@ Class :
         private string GetTestCaseInfo(string source)
         {
             // Retrieve test cases
-            var process = new Process();
-            process.StartInfo.FileName = source;
-            process.StartInfo.Arguments = _settings.DiscoverCommandLine;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.UseShellExecute = false;
-            process.Start();
-
-            var output = process.StandardOutput.ReadToEndAsync();
-            var erroroutput = process.StandardError.ReadToEndAsync();
-
-            if(_settings.DiscoverTimeout > 0)
+            using (var process = new Process())
             {
-                process.WaitForExit(_settings.DiscoverTimeout);
-            }
-            else
-            {
-                process.WaitForExit();
-            }
+                process.StartInfo.FileName = source;
+                process.StartInfo.Arguments = _settings.DiscoverCommandLine;
+                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.UseShellExecute = false;
 
-            if( !process.HasExited )
-            {
-                process.Kill();
-                LogNormal($"  Warning: Discovery timeout for {source}{Environment.NewLine}");
-                if(output.Result.Length == 0)
+                _settings.AddEnviromentVariables(process.StartInfo.EnvironmentVariables);
+
+                process.Start();
+
+                var output = process.StandardOutput.ReadToEndAsync();
+                var erroroutput = process.StandardError.ReadToEndAsync();
+
+                if(_settings.DiscoverTimeout > 0)
                 {
-                    LogVerbose($"  Killed process. There was no output.{Environment.NewLine}");
+                    process.WaitForExit(_settings.DiscoverTimeout);
                 }
                 else
                 {
-                    LogVerbose($"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
-                }
-                return string.Empty;
-            }
-            else
-            {
-                if(!string.IsNullOrEmpty(erroroutput.Result))
-                {
-                    LogNormal($"  Error Occurred (exit code {process.ExitCode}):{Environment.NewLine}{erroroutput.Result}");
-                    LogDebug($"  output:{Environment.NewLine}{output.Result}");
-                    return string.Empty;
+                    process.WaitForExit();
                 }
 
-                if (!string.IsNullOrEmpty(output.Result))
+                if( !process.HasExited )
                 {
-                    return output.Result;
+                    process.Kill();
+                    process.WaitForExit();
+
+                    LogNormal($"  Warning: Discovery timeout for {source}{Environment.NewLine}");
+                    if(output.Result.Length == 0)
+                    {
+                        LogVerbose($"  Killed process. There was no output.{Environment.NewLine}");
+                    }
+                    else
+                    {
+                        LogVerbose($"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
+                    }
+                    return string.Empty;
                 }
                 else
                 {
-                    LogDebug($"  No output{Environment.NewLine}");
-                    return string.Empty;
+                    if (!string.IsNullOrEmpty(erroroutput.Result))
+                    {
+                        LogNormal($"  Error Occurred (exit code {process.ExitCode}):{Environment.NewLine}{erroroutput.Result}");
+                        LogDebug($"  output:{Environment.NewLine}{output.Result}");
+                        return string.Empty;
+                    }
+
+                    if (!string.IsNullOrEmpty(output.Result))
+                    {
+                        return output.Result;
+                    }
+                    else
+                    {
+                        LogDebug($"  No output{Environment.NewLine}");
+                        return string.Empty;
+                    }
                 }
             }
         }

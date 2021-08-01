@@ -238,6 +238,14 @@ cerr 02
   <data name="XmlSettings_EmptyElement" xml:space="preserve">
     <value>&lt;Catch2Adapter/&gt;</value>
   </data>
+  <data name="XmlSettings_Environment" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
   <data name="XmlSettings_ExecutionModeForceSingleTagRgx" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
   &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
@@ -284,6 +292,10 @@ cerr 02
   &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
   &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
   &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
@@ -302,6 +314,10 @@ cerr 02
   &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
   &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
   &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
@@ -320,6 +336,10 @@ cerr 02
   &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
   &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
   &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
   &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;

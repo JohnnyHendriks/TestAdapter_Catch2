@@ -44,6 +44,7 @@ Class :
         public const string NodeName_DebugBreak = "DebugBreak";
         public const string NodeName_DiscoverCommanline = "DiscoverCommandLine";
         public const string NodeName_DiscoverTimeout = "DiscoverTimeout";
+        public const string NodeName_Environment = "Environment";
         public const string NodeName_ExecutionMode = "ExecutionMode";
         public const string NodeName_ExecutionModeForceSingleTagRgx = "ExecutionModeForceSingleTagRgx";
         public const string NodeName_FilenameFilter = "FilenameFilter";

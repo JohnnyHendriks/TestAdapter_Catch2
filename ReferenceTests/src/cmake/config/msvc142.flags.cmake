@@ -69,6 +69,18 @@ set( CMAKE_CONFIGURATION_TYPES
   Rel_11_1
   Rel_11_2
   Rel_11_3
+  Rel_12_0
+  Rel_12_1
+  Rel_12_2
+  Rel_12_3
+  Rel_12_4
+  Rel_13_0
+  Rel_13_1
+  Rel_13_2
+  Rel_13_3
+  Rel_13_4
+  Rel_13_5
+  Rel_13_6
   CACHE STRING "Configuration types." FORCE)
 
 set( CMAKE_CXX_FLAGS "${TAfC2_CXX_FLAGS}" CACHE STRING "Flags used by the CXX compiler during all build types." FORCE)
@@ -103,6 +115,18 @@ set( CMAKE_CXX_FLAGS_REL_11_0 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags u
 set( CMAKE_CXX_FLAGS_REL_11_1 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_11_1 builds." FORCE)
 set( CMAKE_CXX_FLAGS_REL_11_2 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_11_2 builds." FORCE)
 set( CMAKE_CXX_FLAGS_REL_11_3 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_11_3 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_12_0 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_12_0 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_12_1 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_12_1 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_12_2 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_12_2 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_12_3 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_12_3 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_12_4 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_12_4 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_13_0 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_13_0 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_13_1 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_13_1 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_13_2 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_13_2 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_13_3 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_13_3 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_13_4 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_13_4 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_13_5 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_13_5 builds." FORCE)
+set( CMAKE_CXX_FLAGS_REL_13_6 "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "Flags used by the CXX compiler during REL_13_6 builds." FORCE)
 
 set( CMAKE_EXE_LINKER_FLAGS_DEBUG "${TAfC2_LINKER_FLAGS_DEBUG}" CACHE STRING "Flags used by the linker during DEBUG builds." FORCE)
 set( CMAKE_EXE_LINKER_FLAGS_RELEASE "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during RELEASE builds." FORCE)
@@ -135,6 +159,18 @@ set( CMAKE_EXE_LINKER_FLAGS_REL_11_0 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRIN
 set( CMAKE_EXE_LINKER_FLAGS_REL_11_1 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_11_1 builds." FORCE)
 set( CMAKE_EXE_LINKER_FLAGS_REL_11_2 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_11_2 builds." FORCE)
 set( CMAKE_EXE_LINKER_FLAGS_REL_11_3 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_11_3 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_12_0 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_12_0 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_12_1 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_12_1 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_12_2 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_12_2 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_12_3 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_12_3 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_12_4 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_12_4 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_13_0 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_0 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_13_1 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_1 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_13_2 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_2 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_13_3 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_3 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_13_4 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_4 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_13_5 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_5 builds." FORCE)
+set( CMAKE_EXE_LINKER_FLAGS_REL_13_6 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_6 builds." FORCE)
 
 set( CMAKE_SHARED_LINKER_FLAGS_DEBUG "${TAfC2_LINKER_FLAGS_DEBUG}" CACHE STRING "Flags used by the linker during DEBUG builds." FORCE)
 set( CMAKE_SHARED_LINKER_FLAGS_RELEASE "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during RELEASE builds." FORCE)
@@ -167,3 +203,15 @@ set( CMAKE_SHARED_LINKER_FLAGS_REL_11_0 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE ST
 set( CMAKE_SHARED_LINKER_FLAGS_REL_11_1 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_11_1 builds." FORCE)
 set( CMAKE_SHARED_LINKER_FLAGS_REL_11_2 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_11_2 builds." FORCE)
 set( CMAKE_SHARED_LINKER_FLAGS_REL_11_3 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_11_3 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_12_0 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_12_0 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_12_1 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_12_1 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_12_2 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_12_2 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_12_3 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_12_3 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_12_4 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_12_4 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_13_0 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_0 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_13_1 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_1 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_13_2 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_2 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_13_3 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_3 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_13_4 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_4 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_13_5 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_5 builds." FORCE)
+set( CMAKE_SHARED_LINKER_FLAGS_REL_13_6 "${TAfC2_LINKER_FLAGS_RELEASE}" CACHE STRING "Flags used by the linker during REL_13_6 builds." FORCE)

@@ -2,9 +2,16 @@
 
 Changes are relative to v1.0.0
 
-## Changes for upcoming release
+## Changes for v1.7.0
 
-Adds support for Visual Studio 2022.
+### New Features
+
+- Add support for Visual Studio 2022.
+- Add support for environmental variables (inspired by issue #37). Environmental variables to be set for the Catch2 executable process can now be configured with the `<Environment>` option (see [Settings documentation](Settings.md#environment) for details).
+
+### Bug fixes
+
+- Issue #46: A problem deleting temporary files, caused the test adapter to fail.
 
 ## Changes for v1.6.0
 

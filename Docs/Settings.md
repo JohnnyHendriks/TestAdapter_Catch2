@@ -1,6 +1,6 @@
 # Settings for Test Adapter for Catch2
 
-> The information on this page is based on **Test Adapter for Catch2** v1.6.0.
+> The information on this page is based on **Test Adapter for Catch2** v1.7.0.
 
 In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitly by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
 
@@ -9,6 +9,7 @@ In order for the **Test Adapter for Catch2** to do its job, it requires certain 
 - [`<DebugBreak>`](#debugbreak)
 - [`<DiscoverCommandLine>`](#discovercommandline)
 - [`<DiscoverTimeout>`](#discovertimeout)
+- [`<Environment>`](#environment)
 - [`<ExecutionMode>`](#executionmode)
 - [`<ExecutionModeForceSingleTagRgx>`](#executionmodeforcesingletagrgx)
 - [`<FilenameFilter>`](#filenamefilter)*
@@ -125,6 +126,21 @@ Default: 1000 ms
 With the `<DiscoverTimeout>` option you can apply a timeout in milliseconds when calling an executable for discovery. This is mostly needed in case an executable is passed to the adapter as source for discovery that is not a Catch2 executable. Depending on the executable this could potentially lead to an endless wait. Setting the timeout to zero or a negative number turns of the timeout. When the timeout expires when the executable has not exited yet, the process of the executable is killed and discovery for that file is cancelled.
 
 When the timeout value is too small it is possible that test discovery fails. If that happens a warning is displayed in the Test Explorer output to make this clear. There have been situations where discovery intermittently failed (especially when the computer was very busy with other stuff).
+
+## Environment
+
+With the `<Environment>` option you can configure environmental variables to be set for the Catch2 executable process. Set the key-value pairs as children of the `<Environment>` parameter, where name of the xml-element is the `key`-part and the content of that element is the `value`-part of the key-value pair. Alternatively the `value`-attribute can be used to set the value. See below for an example that will result in the environmental variables "`MyCustomEnvSetting=Welcome`" and "`MyOtherCustomEnvSetting=debug<0>`" to be set for the Catch2 executable process.
+
+```xml
+<Environment>
+  <MyCustomEnvSetting>Welcome</MyCustomEnvSetting>
+  <MyOtherCustomEnvSetting value="debug&lt;0&gt;"/>
+</Environment>
+```
+
+Note, in case a duplicate environmental variable key exists, the value will be overwritten with the one that is configured via the `<Environment>` parameter for the Catch2 executable process.
+
+> Introduced in v1.7.0
 
 ## ExecutionMode
 

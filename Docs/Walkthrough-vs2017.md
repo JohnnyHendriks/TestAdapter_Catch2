@@ -41,6 +41,8 @@ You can load multiple _.runsettings_ files and switch between them. The one with
 
 ![Select Run Settings File](Images/walkthrough-vs2017/Walkthrough-04.png)
 
+For an overview of the **Test Adapter for Catch2** specific settings that can be used in a `.runsettings`-file, see the [Settings documentation](Settings.md).
+
 ## Trigger test discovery
 
 ### First build

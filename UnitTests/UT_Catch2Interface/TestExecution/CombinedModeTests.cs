@@ -1,6 +1,7 @@
 ﻿using Catch2Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace UT_Catch2Interface.TestExecution
 {
@@ -282,6 +283,144 @@ namespace UT_Catch2Interface.TestExecution
             Assert.IsNull(testresults.FindTestResult("Pass. Test04 slow tagged"));
             Assert.IsNull(testresults.FindTestResult("Pass. Test05 fast"));
             Assert.IsNull(testresults.FindTestResult("Pass. Test06 fast"));
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void TestRun_Multi_Environment(string versionpath)
+        {
+            var source = Paths.TestExecutable_Environment(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
+            var settings = new Settings();
+            settings.ExecutionMode = ExecutionModes.CombineTestCases;
+            settings.Environment = new StringDictionary();
+            settings.Environment.Add("MyCustomEnvSetting", "Welcome");
+            settings.Environment.Add("MyOtherCustomEnvSetting", "debug<0>");
+
+            var executor = new Executor(settings, _pathSolution, _pathTestRun);
+
+            var group = new TestCaseGroup();
+            group.Source = source;
+            group.Names.Add("getenv. Check MyCustomEnvSetting");
+            group.Names.Add("getenv. Check MyOtherCustomEnvSetting");
+
+            var testresults = executor.Run(group);
+            Assert.IsFalse(testresults.IsPartialOutput);
+            Assert.IsFalse(testresults.TimedOut);
+            Assert.AreEqual(2, testresults.TestResults.Count);
+            Assert.AreEqual(0, testresults.OverallResults.Failures);
+            Assert.AreEqual(4, testresults.OverallResults.Successes);
+            Assert.AreEqual(4, testresults.OverallResults.TotalAssertions);
+
+            var testresult = testresults.FindTestResult("getenv. Check MyCustomEnvSetting");
+            Assert.IsNotNull(testresult);
+            Assert.AreEqual(TestOutcomes.Passed, testresult.Outcome);
+            Assert.AreEqual(0, testresult.OverallResults.Failures);
+            Assert.AreEqual(0, testresult.OverallResults.Successes);
+            Assert.AreEqual(0, testresult.OverallResults.TotalAssertions);
+
+            testresult = testresults.FindTestResult("getenv. Check MyOtherCustomEnvSetting");
+            Assert.IsNotNull(testresult);
+            Assert.AreEqual(TestOutcomes.Passed, testresult.Outcome);
+            Assert.AreEqual(0, testresult.OverallResults.Failures);
+            Assert.AreEqual(0, testresult.OverallResults.Successes);
+            Assert.AreEqual(0, testresult.OverallResults.TotalAssertions);
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void TestRun_Multi_Environment_Absent(string versionpath)
+        {
+            var source = Paths.TestExecutable_Environment(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
+            var settings = new Settings();
+            settings.ExecutionMode = ExecutionModes.CombineTestCases;
+
+            var executor = new Executor(settings, _pathSolution, _pathTestRun);
+
+            var group = new TestCaseGroup();
+            group.Source = source;
+            group.Names.Add("getenv. Check MyCustomEnvSetting");
+            group.Names.Add("getenv. Check MyOtherCustomEnvSetting");
+
+            var testresults = executor.Run(group);
+            Assert.IsFalse(testresults.IsPartialOutput);
+            Assert.IsFalse(testresults.TimedOut);
+            Assert.AreEqual(2, testresults.TestResults.Count);
+            Assert.AreEqual(2, testresults.OverallResults.Failures);
+            Assert.AreEqual(0, testresults.OverallResults.Successes);
+            Assert.AreEqual(2, testresults.OverallResults.TotalAssertions);
+
+            var testresult = testresults.FindTestResult("getenv. Check MyCustomEnvSetting");
+            Assert.IsNotNull(testresult);
+            Assert.AreEqual(TestOutcomes.Failed, testresult.Outcome);
+            Assert.AreEqual(0, testresult.OverallResults.Failures);
+            Assert.AreEqual(0, testresult.OverallResults.Successes);
+            Assert.AreEqual(0, testresult.OverallResults.TotalAssertions);
+
+            testresult = testresults.FindTestResult("getenv. Check MyOtherCustomEnvSetting");
+            Assert.IsNotNull(testresult);
+            Assert.AreEqual(TestOutcomes.Failed, testresult.Outcome);
+            Assert.AreEqual(0, testresult.OverallResults.Failures);
+            Assert.AreEqual(0, testresult.OverallResults.Successes);
+            Assert.AreEqual(0, testresult.OverallResults.TotalAssertions);
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void TestRun_Multi_Environment_BadValue(string versionpath)
+        {
+            var source = Paths.TestExecutable_Environment(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
+            var settings = new Settings();
+            settings.ExecutionMode = ExecutionModes.CombineTestCases;
+            settings.Environment = new StringDictionary();
+            settings.Environment.Add("MyCustomEnvSetting", "Goodbye");
+            settings.Environment.Add("MyOtherCustomEnvSetting", "debug<1>");
+
+            var executor = new Executor(settings, _pathSolution, _pathTestRun);
+
+            var group = new TestCaseGroup();
+            group.Source = source;
+            group.Names.Add("getenv. Check MyCustomEnvSetting");
+            group.Names.Add("getenv. Check MyOtherCustomEnvSetting");
+
+            var testresults = executor.Run(group);
+            Assert.IsFalse(testresults.IsPartialOutput);
+            Assert.IsFalse(testresults.TimedOut);
+            Assert.AreEqual(2, testresults.TestResults.Count);
+            Assert.AreEqual(2, testresults.OverallResults.Failures);
+            Assert.AreEqual(2, testresults.OverallResults.Successes);
+            Assert.AreEqual(4, testresults.OverallResults.TotalAssertions);
+
+            var testresult = testresults.FindTestResult("getenv. Check MyCustomEnvSetting");
+            Assert.IsNotNull(testresult);
+            Assert.AreEqual(TestOutcomes.Failed, testresult.Outcome);
+            Assert.AreEqual(0, testresult.OverallResults.Failures);
+            Assert.AreEqual(0, testresult.OverallResults.Successes);
+            Assert.AreEqual(0, testresult.OverallResults.TotalAssertions);
+
+            testresult = testresults.FindTestResult("getenv. Check MyOtherCustomEnvSetting");
+            Assert.IsNotNull(testresult);
+            Assert.AreEqual(TestOutcomes.Failed, testresult.Outcome);
+            Assert.AreEqual(0, testresult.OverallResults.Failures);
+            Assert.AreEqual(0, testresult.OverallResults.Successes);
+            Assert.AreEqual(0, testresult.OverallResults.TotalAssertions);
         }
 
         #endregion // Test Methods
