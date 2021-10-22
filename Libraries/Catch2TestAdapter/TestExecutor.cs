@@ -278,11 +278,13 @@ namespace Catch2TestAdapter
                 _executor.CreateTestcaseListFile(testcasegroup, caselistfilename);
 
                 LogVerbose(TestMessageLevel.Informational, "Start debug run.");
+                Dictionary<string, string> EnvironmentVariables = new Dictionary<string, string>();
+                _settings.AddEnviromentVariables(EnvironmentVariables);
                 _frameworkHandle
                     .LaunchProcessWithDebuggerAttached( testcasegroup.Source
                                                       , _executor.WorkingDirectory(testcasegroup.Source)
                                                       , _executor.GenerateCommandlineArguments_Combined_Dbg(caselistfilename)
-                                                      , null);
+                                                      , EnvironmentVariables);
 
                 // Do not process output in Debug mode
                 foreach(var test in groupedtests)
@@ -388,11 +390,13 @@ namespace Catch2TestAdapter
             if (_runContext.IsBeingDebugged)
             {
                 LogVerbose(TestMessageLevel.Informational, "Start debug run.");
+                Dictionary<string,string> EnvironmentVariables = new Dictionary<string, string>();
+                _settings.AddEnviromentVariables(EnvironmentVariables);
                 _frameworkHandle
                     .LaunchProcessWithDebuggerAttached( test.Source
                                                       , _executor.WorkingDirectory(test.Source)
                                                       , _executor.GenerateCommandlineArguments_Single_Dbg(test.DisplayName)
-                                                      , null );
+                                                      , EnvironmentVariables);
 
                 // Do not process output in Debug mode
                 result.Outcome = TestOutcome.None;

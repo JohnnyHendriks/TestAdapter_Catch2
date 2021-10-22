@@ -12,6 +12,7 @@ Notes: None
 ** Basic Info **/
 
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -369,6 +370,25 @@ Class :
         }
 
         public void AddEnviromentVariables(StringDictionary dictionary)
+        {
+            if (Environment != null && dictionary != null)
+            {
+                foreach (DictionaryEntry element in Environment)
+                {
+                    var key = element.Key as string;
+                    if(dictionary.ContainsKey(key))
+                    {
+                        dictionary[key] = element.Value as string;
+                    }
+                    else
+                    {
+                        dictionary.Add(key, element.Value as string);
+                    }
+                }
+            }
+        }
+
+        public void AddEnviromentVariables(IDictionary<string, string> dictionary)
         {
             if (Environment != null && dictionary != null)
             {
