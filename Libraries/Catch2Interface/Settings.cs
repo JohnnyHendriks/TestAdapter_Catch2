@@ -12,6 +12,7 @@ Notes: None
 ** Basic Info **/
 
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -125,24 +126,24 @@ Class :
 
         #region Properties
 
-        public int                   CombinedTimeout { get; set; }                = Constants.S_DefaultCombinedTimeout;
-        public bool                  DebugBreak { get; set; }                     = Constants.S_DefaultDebugBreak;
-        public bool                  Disabled { get; set; }                       = Constants.S_DefaultDisabled;
-        public string                DiscoverCommandLine { get; set; }            = Constants.S_DefaultDiscoverCommandline;
-        public int                   DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
-        public StringDictionary      Environment { get; set; }
-        public ExecutionModes        ExecutionMode { get; set; }                  = Constants.S_DefaultExecutionMode;
-        public Regex                 ExecutionModeForceSingleTagRgx { get; set; } = new Regex(Constants.S_DefaultExecutionModeForceSingleTagRgx, RegexOptions.Singleline);
-        public string                FilenameFilter { get; set; }                 = Constants.S_DefaultFilenameFilter;
-        public bool                  IncludeHidden { get; set; }                  = Constants.S_DefaultIncludeHidden;
-        public LoggingLevels         LoggingLevel { get; set; }                   = Constants.S_DefaultLoggingLevel;
-        public MessageFormats        MessageFormat { get; set; }                  = Constants.S_DefaultMessageFormat;
-        public StacktraceFormats     StacktraceFormat { get; set; }               = Constants.S_DefaultStackTraceFormat;
-        public int                   StacktraceMaxLength { get; set; }            = Constants.S_DefaultStackTraceMaxLength;
-        public string                StacktracePointReplacement { get; set; }     = Constants.S_DefaultStackTracePointReplacement;
-        public int                   TestCaseTimeout { get; set; }                = Constants.S_DefaultTestCaseTimeout;
-        public string                WorkingDirectory {  get; set; }              = Constants.S_DefaultWorkingDirectory;
-        public WorkingDirectoryRoots WorkingDirectoryRoot {  get; set; }          = Constants.S_DefaultWorkingDirectoryRoot;
+        public int                        CombinedTimeout { get; set; }                = Constants.S_DefaultCombinedTimeout;
+        public bool                       DebugBreak { get; set; }                     = Constants.S_DefaultDebugBreak;
+        public bool                       Disabled { get; set; }                       = Constants.S_DefaultDisabled;
+        public string                     DiscoverCommandLine { get; set; }            = Constants.S_DefaultDiscoverCommandline;
+        public int                        DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
+        public IDictionary<string,string> Environment { get; set; }
+        public ExecutionModes             ExecutionMode { get; set; }                  = Constants.S_DefaultExecutionMode;
+        public Regex                      ExecutionModeForceSingleTagRgx { get; set; } = new Regex(Constants.S_DefaultExecutionModeForceSingleTagRgx, RegexOptions.Singleline);
+        public string                     FilenameFilter { get; set; }                 = Constants.S_DefaultFilenameFilter;
+        public bool                       IncludeHidden { get; set; }                  = Constants.S_DefaultIncludeHidden;
+        public LoggingLevels              LoggingLevel { get; set; }                   = Constants.S_DefaultLoggingLevel;
+        public MessageFormats             MessageFormat { get; set; }                  = Constants.S_DefaultMessageFormat;
+        public StacktraceFormats          StacktraceFormat { get; set; }               = Constants.S_DefaultStackTraceFormat;
+        public int                        StacktraceMaxLength { get; set; }            = Constants.S_DefaultStackTraceMaxLength;
+        public string                     StacktracePointReplacement { get; set; }     = Constants.S_DefaultStackTracePointReplacement;
+        public int                        TestCaseTimeout { get; set; }                = Constants.S_DefaultTestCaseTimeout;
+        public string                     WorkingDirectory {  get; set; }              = Constants.S_DefaultWorkingDirectory;
+        public WorkingDirectoryRoots      WorkingDirectoryRoot {  get; set; }          = Constants.S_DefaultWorkingDirectoryRoot;
 
         public bool HasValidDiscoveryCommandline => _rgxValidDiscover.IsMatch(DiscoverCommandLine);
         public bool IsVerbosityHigh => _rgxVerbosityHigh.IsMatch(DiscoverCommandLine);
@@ -212,7 +213,7 @@ Class :
                 var envmnt = node.SelectSingleNode(Constants.NodeName_Environment);
                 if (envmnt != null && envmnt.HasChildNodes )
                 {
-                    settings.Environment = new StringDictionary();
+                    settings.Environment = new Dictionary<string,string>();
                     foreach(XmlNode child in envmnt.ChildNodes)
                     {
                         if( child.NodeType == XmlNodeType.Element)
@@ -372,19 +373,52 @@ Class :
         {
             if (Environment != null && dictionary != null)
             {
-                foreach (DictionaryEntry element in Environment)
+                foreach (var element in Environment)
                 {
-                    var key = element.Key as string;
+                    var key = element.Key;
                     if(dictionary.ContainsKey(key))
                     {
-                        dictionary[key] = element.Value as string;
+                        dictionary[key] = element.Value;
                     }
                     else
                     {
-                        dictionary.Add(key, element.Value as string);
+                        dictionary.Add(key, element.Value);
                     }
                 }
             }
+        }
+
+        public IDictionary<string, string> GetEnviromentVariablesForDebug()
+        {
+            var envvars = new Dictionary<string, string>();
+
+            // Add environment variables for a process
+            {
+                var procenvvars = System.Environment.GetEnvironmentVariables(System.EnvironmentVariableTarget.Process);
+                foreach (DictionaryEntry entry in procenvvars)
+                {
+                    envvars.Add(entry.Key as string, procenvvars[entry.Key] as string);
+                }
+            }
+
+            // Add/override test specific environment variables
+            if (Environment != null)
+            {
+                if(envvars == null) envvars = new Dictionary<string, string>();
+                foreach (var element in Environment)
+                {
+                    var key = element.Key;
+                    if (envvars.ContainsKey(key))
+                    {
+                        envvars[key] = element.Value;
+                    }
+                    else
+                    {
+                        envvars.Add(key, element.Value);
+                    }
+                }
+            }
+            return envvars;
         }
 
         #endregion // Public Methods

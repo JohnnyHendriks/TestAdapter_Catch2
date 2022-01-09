@@ -13,6 +13,7 @@ Notes: None
 
 using Catch2Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Xml;
@@ -69,7 +70,7 @@ namespace UT_Catch2Interface
             Assert.AreEqual(0, src.Count);
 
             // Add Environment variable to empty src
-            settings.Environment = new StringDictionary();
+            settings.Environment = new Dictionary<string,string>();
             settings.Environment.Add("Key1", "Value1");
             settings.AddEnviromentVariables(src);
             Assert.AreEqual(1, src.Count);
@@ -107,6 +108,37 @@ namespace UT_Catch2Interface
             Assert.AreEqual("Value1", src["Key1"]);
             Assert.AreEqual("Value2", src["Key2"]);
             Assert.AreEqual("Overwritten3", src["Key3"]);
+            Assert.AreEqual("Value4", src["Key4"]);
+            Assert.AreEqual("Value5", src["Key5"]);
+        }
+
+        [TestMethod]
+        public void TestGetEnviromentVariablesForDebug()
+        {
+            var settings = new Settings();
+            var src = settings.GetEnviromentVariablesForDebug();
+            Assert.IsNotNull(src);
+            int basecount = src.Count;
+
+            // Add Environment variable
+            settings.Environment = new Dictionary<string, string>();
+            settings.Environment.Add("Key1", "Value1");
+            Assert.AreEqual(1, settings.Environment.Count);
+            src = settings.GetEnviromentVariablesForDebug();
+            Assert.AreEqual(basecount + 1, src.Count);
+            Assert.AreEqual("Value1", src["Key1"]);
+
+            // Add more Environment variables
+            settings.Environment.Add("Key2", "Value2");
+            settings.Environment.Add("Key3", "Value3");
+            settings.Environment.Add("Key4", "Value4");
+            settings.Environment.Add("Key5", "Value5");
+            Assert.AreEqual(5, settings.Environment.Count);
+            src = settings.GetEnviromentVariablesForDebug();
+            Assert.AreEqual(basecount + 5, src.Count);
+            Assert.AreEqual("Value1", src["Key1"]);
+            Assert.AreEqual("Value2", src["Key2"]);
+            Assert.AreEqual("Value3", src["Key3"]);
             Assert.AreEqual("Value4", src["Key4"]);
             Assert.AreEqual("Value5", src["Key5"]);
         }

@@ -282,7 +282,7 @@ namespace Catch2TestAdapter
                     .LaunchProcessWithDebuggerAttached( testcasegroup.Source
                                                       , _executor.WorkingDirectory(testcasegroup.Source)
                                                       , _executor.GenerateCommandlineArguments_Combined_Dbg(caselistfilename)
-                                                      , null);
+                                                      , _settings.GetEnviromentVariablesForDebug());
 
                 // Do not process output in Debug mode
                 foreach(var test in groupedtests)
@@ -392,7 +392,7 @@ namespace Catch2TestAdapter
                     .LaunchProcessWithDebuggerAttached( test.Source
                                                       , _executor.WorkingDirectory(test.Source)
                                                       , _executor.GenerateCommandlineArguments_Single_Dbg(test.DisplayName)
-                                                      , null );
+                                                      , _settings.GetEnviromentVariablesForDebug() );
 
                 // Do not process output in Debug mode
                 result.Outcome = TestOutcome.None;

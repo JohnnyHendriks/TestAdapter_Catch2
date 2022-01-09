@@ -298,7 +298,7 @@ namespace UT_Catch2Interface.TestExecution
 
             var settings = new Settings();
             settings.ExecutionMode = ExecutionModes.CombineTestCases;
-            settings.Environment = new StringDictionary();
+            settings.Environment = new Dictionary<string, string>();
             settings.Environment.Add("MyCustomEnvSetting", "Welcome");
             settings.Environment.Add("MyOtherCustomEnvSetting", "debug<0>");
 
@@ -389,7 +389,7 @@ namespace UT_Catch2Interface.TestExecution
 
             var settings = new Settings();
             settings.ExecutionMode = ExecutionModes.CombineTestCases;
-            settings.Environment = new StringDictionary();
+            settings.Environment = new Dictionary<string, string>();
             settings.Environment.Add("MyCustomEnvSetting", "Goodbye");
             settings.Environment.Add("MyOtherCustomEnvSetting", "debug<1>");
 
