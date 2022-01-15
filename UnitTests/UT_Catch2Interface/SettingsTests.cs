@@ -152,7 +152,7 @@ namespace UT_Catch2Interface
 
             Assert.AreEqual(-1, settings.CombinedTimeout);
             Assert.IsFalse(settings.DebugBreak);
-            Assert.AreEqual("--verbosity high --list-tests *", settings.DiscoverCommandLine);
+            Assert.AreEqual("--verbosity high --list-tests --reporter xml *", settings.DiscoverCommandLine);
             Assert.AreEqual(1000, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.SingleTestCase, settings.ExecutionMode);
             Assert.AreEqual(@"(?i:tafc_Single)", settings.ExecutionModeForceSingleTagRgx.ToString());

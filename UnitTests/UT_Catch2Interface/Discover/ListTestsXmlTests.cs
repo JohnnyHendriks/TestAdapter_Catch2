@@ -18,7 +18,7 @@ using System.Collections.Generic;
 namespace UT_Catch2Interface.Discover
 {
     [TestClass]
-    public class Catch2XmlTests
+    public class ListTestsXmlTests
     {
         #region Properties
 
@@ -32,7 +32,7 @@ namespace UT_Catch2Interface.Discover
 
         [DataTestMethod]
         [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
-        public void XmlReporter(string versionpath)
+        public void DefaultSettings(string versionpath)
         {
             var source = Paths.TestExecutable_Hidden(TestContext, versionpath);
             if (string.IsNullOrEmpty(source))
@@ -41,12 +41,7 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "-r xml *";
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = true;
-
-            var discoverer = new Discoverer(settings);
+            var discoverer = new Discoverer(null);
             string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
@@ -72,7 +67,7 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover *";
+            settings.DiscoverCommandLine = "--list-tests --reporter xml *";
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = true;
 
@@ -101,7 +96,7 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover *";
+            settings.DiscoverCommandLine = "--list-tests -r xml *";
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = false;
 
@@ -124,7 +119,7 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover [Tag1]";
+            settings.DiscoverCommandLine = "--list-tests -r xml [Tag1]";
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = true;
 
@@ -147,7 +142,7 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover [Tag1]";
+            settings.DiscoverCommandLine = "--list-tests -r xml [Tag1]";
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = false;
 
@@ -174,7 +169,7 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover \"Tags. Manytags\"";
+            settings.DiscoverCommandLine = "--list-tests -r xml \"Tags. Manytags\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
@@ -212,7 +207,7 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover \"Tags. Longtag1\"";
+            settings.DiscoverCommandLine = "--list-tests -r xml \"Tags. Longtag1\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
@@ -237,7 +232,7 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover \"Tags. Longtag2\"";
+            settings.DiscoverCommandLine = "--list-tests -r xml \"Tags. Longtag2\"";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
@@ -266,7 +261,7 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover *TestCases*";
+            settings.DiscoverCommandLine = "--list-tests --reporter xml *TestCases*";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
@@ -289,7 +284,45 @@ namespace UT_Catch2Interface.Discover
                            , tests[10].Name );
             Assert.AreEqual("TestCases. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
                            , tests[11].Name );
-            Assert.AreEqual("TestCases. with <xml/> in name"            , tests[12].Name );
+            Assert.AreEqual("TestCases. with <xml/> in name"            , tests[12].Name);
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void NamesVerbose(string versionpath)
+        {
+            var source = Paths.TestExecutable_Discover(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "-v high --list-tests -r xml *TestCases*";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { source };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            Assert.AreEqual(13, tests.Count);
+            Assert.AreEqual("TestCases. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
+            Assert.AreEqual("TestCases. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
+            Assert.AreEqual("TestCases. 0123456789"                     , tests[2].Name );
+            Assert.AreEqual("TestCases. []{}!@#$%^&*()_-+=|\\?/><,~`';:", tests[3].Name );
+            Assert.AreEqual("TestCases. \"name\""                       , tests[4].Name );
+            Assert.AreEqual("TestCases. \\"                             , tests[5].Name );
+            Assert.AreEqual("\\TestCases. name"                         , tests[6].Name );
+            Assert.AreEqual("TestCases. End with space "                , tests[7].Name );
+            Assert.AreEqual("TestCases. End with spaces   "             , tests[8].Name );
+            Assert.AreEqual("TestCasesLongName01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+                           , tests[9].Name );
+            Assert.AreEqual("TestCases. LongName 0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+                           , tests[10].Name );
+            Assert.AreEqual("TestCases. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
+                           , tests[11].Name );
+            Assert.AreEqual("TestCases. with <xml/> in name"            , tests[12].Name);
 
             Assert.IsTrue( tests[0].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
             Assert.IsTrue( tests[1].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
@@ -326,46 +359,6 @@ namespace UT_Catch2Interface.Discover
 
         [DataTestMethod]
         [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
-        public void TestGetLongTestsCaseNames(string versionpath)
-        {
-            var source = Paths.TestExecutable_Discover(TestContext, versionpath);
-            if (string.IsNullOrEmpty(source))
-            {
-                Assert.Fail($"Missing test executable for {versionpath}.");
-                return;
-            }
-
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests LongTestCaseNames*";
-            settings.FilenameFilter = ".*";
-
-            var discoverer = new Discoverer(settings);
-            string[] sources = { source };
-            var tests = discoverer.GetTests(sources) as List<TestCase>;
-
-            // Note, due to the lack of linenumber check here,
-            // the order is different as that found in TestGetTestsCaseNamesVerbose
-            Assert.AreEqual(8, tests.Count);
-            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
-                           , tests[0].Name );
-            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
-                           , tests[1].Name );
-            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
-                           , tests[2].Name );
-            Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
-                           , tests[3].Name );
-            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
-                           , tests[4].Name );
-            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
-                           , tests[5].Name );
-            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
-                           , tests[6].Name );
-            Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
-                           , tests[7].Name );
-        }
-
-        [DataTestMethod]
-        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
         public void LongNames(string versionpath)
         {
             var source = Paths.TestExecutable_Discover(TestContext, versionpath);
@@ -376,7 +369,89 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover LongTestCaseNames*";
+            settings.DiscoverCommandLine = "--list-tests --reporter xml LongTestCaseNames*";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { source };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            if (versionpath.StartsWith("Rel3"))
+            {
+                // starting in Catch2 v3 we get linenumber info with this setting
+                Assert.AreEqual(8, tests.Count);
+                Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                               , tests[0].Name );
+                Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                               , tests[1].Name );
+                Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                               , tests[2].Name );
+                Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                               , tests[3].Name );
+                Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                               , tests[4].Name );
+                Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                               , tests[5].Name );
+                Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                               , tests[6].Name );
+                Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                               , tests[7].Name );
+
+                Assert.IsTrue( tests[0].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+                Assert.IsTrue( tests[1].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+                Assert.IsTrue( tests[2].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+                Assert.IsTrue( tests[3].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+                Assert.IsTrue( tests[4].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+                Assert.IsTrue( tests[5].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+                Assert.IsTrue( tests[6].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+                Assert.IsTrue( tests[7].Filename.EndsWith(@"Catch_Discover\UT_LongTestCaseNames.cpp") );
+
+                Assert.AreEqual( 29, tests[0].Line );
+                Assert.AreEqual( 34, tests[1].Line );
+                Assert.AreEqual( 39, tests[2].Line );
+                Assert.AreEqual( 44, tests[3].Line );
+                Assert.AreEqual( 49, tests[4].Line );
+                Assert.AreEqual( 54, tests[5].Line );
+                Assert.AreEqual( 59, tests[6].Line );
+                Assert.AreEqual( 64, tests[7].Line );
+            }
+            else
+            {
+                // Note, due to the lack of linenumber check here,
+                // the order is different as that found in TestGetTestsCaseNamesVerbose
+                Assert.AreEqual(8, tests.Count);
+                Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                               , tests[0].Name );
+                Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                               , tests[1].Name );
+                Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                               , tests[2].Name );
+                Assert.AreEqual( "LongTestCaseNames. a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                               , tests[3].Name );
+                Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                               , tests[4].Name );
+                Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
+                               , tests[5].Name );
+                Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                               , tests[6].Name );
+                Assert.AreEqual( "LongTestCaseNames.a123456789b123456789c123456789d123456789e123456789&f123456789b123456789g123456789d123456789h123456789&i123456789b123456789j123456789k123456789l123456789"
+                               , tests[7].Name );
+            }
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void LongNamesVerbose(string versionpath)
+        {
+            var source = Paths.TestExecutable_Discover(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "-v high --list-tests -r xml LongTestCaseNames*";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
@@ -432,28 +507,103 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover NotDefaultDiscoverable*";
+            settings.DiscoverCommandLine = "--list-tests -r xml NotDefaultDiscoverable*";
             settings.FilenameFilter = ".*";
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
-            Assert.AreEqual(3, tests.Count);
-            Assert.AreEqual( "NotDefaultDiscoverable. a123456789b123456789c123456789d123456789e123456789&  f123456789b123456789g123456789d123456789h123456789& i123456789b123456789j123456789k123456789l123456789"
-                           , tests[0].Name );
-            Assert.AreEqual( "NotDefaultDiscoverable. a123456789b123456789c123456789d123456789e123456789& f123456789b123456789g123456789d123456789h123456789&  i123456789b123456789j123456789k123456789l123456789"
-                           , tests[1].Name );
-            Assert.AreEqual( "NotDefaultDiscoverable. a123456789b123456789c123456789d123456789e123456789f123"
-                           , tests[2].Name );
+            if (versionpath.StartsWith("Rel3"))
+            {
+                // This is no longer a problem starting Catch2 v3
+                Assert.AreEqual(3, tests.Count);
+                Assert.IsFalse(discoverer.Log.Contains("Error"));
+                Assert.IsFalse(discoverer.Log.Contains("{???}"));
+            }
+            else
+            {
+                Assert.IsTrue( discoverer.Log.Contains("Error"));
+                Assert.IsTrue( discoverer.Log.Contains("{???}"));
 
-            Assert.IsTrue( tests[0].Filename.EndsWith(@"Catch_Discover\UT_NotDefaultDiscoverable.cpp") );
-            Assert.IsTrue( tests[1].Filename.EndsWith(@"Catch_Discover\UT_NotDefaultDiscoverable.cpp") );
-            Assert.IsTrue( tests[2].Filename.EndsWith(@"Catch_Discover\UT_NotDefaultDiscoverable.cpp") );
+                switch(versionpath)
+                {
+                    case "Rel_0_1":
+                    case "Rel_1_0":
+                    case "Rel_1_1":
+                    case "Rel_1_2":
+                    case "Rel_2_0":
+                    case "Rel_2_1":
+                    case "Rel_2_2":
+                    case "Rel_2_3":
+                    case "Rel_3_0":
+                    case "Rel_4_0":
+                    case "Rel_4_1":
+                        Assert.AreEqual(0, tests.Count);
+                        break;
+                    default:
+                        Assert.AreEqual(1, tests.Count);
+                        break;
+                }
+            }
+        }
 
-            Assert.AreEqual( 29, tests[0].Line );
-            Assert.AreEqual( 34, tests[1].Line );
-            Assert.AreEqual( 39, tests[2].Line );
+        [DataTestMethod]
+        [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
+        public void LongNamesNotDiscoverableVerbose(string versionpath)
+        {
+            var source = Paths.TestExecutable_Discover(TestContext, versionpath);
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail($"Missing test executable for {versionpath}.");
+                return;
+            }
+
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "-v high --list-tests -r xml NotDefaultDiscoverable*";
+            settings.FilenameFilter = ".*";
+
+            var discoverer = new Discoverer(settings);
+            string[] sources = { source };
+            var tests = discoverer.GetTests(sources) as List<TestCase>;
+
+            if (versionpath.StartsWith("Rel3"))
+            {
+                // This is no longer a problem starting Catch2 v3
+                Assert.AreEqual(3, tests.Count);
+                Assert.IsFalse(discoverer.Log.Contains("Error"));
+                Assert.IsFalse(discoverer.Log.Contains("{???}"));
+            }
+            else
+            {
+                Assert.IsTrue( discoverer.Log.Contains("Error"));
+                Assert.IsTrue( discoverer.Log.Contains("{???}"));
+
+                switch (versionpath)
+                {
+                    case "Rel_0_1":
+                    case "Rel_1_0":
+                    case "Rel_1_1":
+                    case "Rel_1_2":
+                    case "Rel_2_0":
+                    case "Rel_2_1":
+                    case "Rel_2_2":
+                    case "Rel_2_3":
+                    case "Rel_3_0":
+                    case "Rel_4_0":
+                    case "Rel_4_1":
+                        Assert.AreEqual(0, tests.Count);
+                        Assert.IsTrue(discoverer.Log.Contains("Line: 29"));
+                        Assert.IsTrue(discoverer.Log.Contains("Line: 34"));
+                        Assert.IsTrue(discoverer.Log.Contains("Line: 39"));
+                        break;
+                    default:
+                        Assert.AreEqual(1, tests.Count);
+                        Assert.IsTrue(discoverer.Log.Contains("Line: 29"));
+                        Assert.IsTrue(discoverer.Log.Contains("Line: 34"));
+                        break;
+                }
+            }
         }
 
         #endregion // LongTestCaseNames
@@ -470,7 +620,7 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--discover";
+            settings.DiscoverCommandLine = "--list-tests -r xml";
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = false;
 
@@ -513,7 +663,7 @@ namespace UT_Catch2Interface.Discover
             }
 
             var settings = new Settings();
-            settings.DiscoverCommandLine = "--sleep 500 --discover *";
+            settings.DiscoverCommandLine = "--sleep 500 --list-tests -r xml *";
             settings.DiscoverTimeout = 200;
             settings.FilenameFilter = ".*";
             settings.IncludeHidden = false;
@@ -526,7 +676,7 @@ namespace UT_Catch2Interface.Discover
             Assert.AreEqual(0, tests.Count);
 
             // Sanity check to see tests could be discovered with less sleep
-            settings.DiscoverCommandLine = "--sleep 50 --discover *";
+            settings.DiscoverCommandLine = "--sleep 50 --list-tests -r xml *";
 
             tests = discoverer.GetTests(sources) as List<TestCase>;
 

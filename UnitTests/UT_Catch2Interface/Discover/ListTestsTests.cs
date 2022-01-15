@@ -268,7 +268,7 @@ namespace UT_Catch2Interface.Discover
             string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
-            Assert.AreEqual(12, tests.Count);
+            Assert.AreEqual(13, tests.Count);
             Assert.AreEqual("TestCases. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
             Assert.AreEqual("TestCases. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
             Assert.AreEqual("TestCases. 0123456789"                     , tests[2].Name );
@@ -284,6 +284,7 @@ namespace UT_Catch2Interface.Discover
                            , tests[10].Name );
             Assert.AreEqual("TestCases. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
                            , tests[11].Name );
+            Assert.AreEqual("TestCases. with <xml/> in name"            , tests[12].Name);
         }
 
         [DataTestMethod]
@@ -305,7 +306,7 @@ namespace UT_Catch2Interface.Discover
             string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
-            Assert.AreEqual(12, tests.Count);
+            Assert.AreEqual(13, tests.Count);
             Assert.AreEqual("TestCases. abcdefghijklmnopqrstuvwxyz"     , tests[0].Name );
             Assert.AreEqual("TestCases. ZXYWVUTSRQPONMLKJIHGFEDCBA"     , tests[1].Name );
             Assert.AreEqual("TestCases. 0123456789"                     , tests[2].Name );
@@ -321,6 +322,7 @@ namespace UT_Catch2Interface.Discover
                            , tests[10].Name );
             Assert.AreEqual("TestCases. LongName 0123456789-01234567890123456789-01234567890123456789-01234567890123456789-01234567890123456789-0123456789"
                            , tests[11].Name );
+            Assert.AreEqual("TestCases. with <xml/> in name"            , tests[12].Name);
 
             Assert.IsTrue( tests[0].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
             Assert.IsTrue( tests[1].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
@@ -334,6 +336,7 @@ namespace UT_Catch2Interface.Discover
             Assert.IsTrue( tests[9].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
             Assert.IsTrue( tests[10].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
             Assert.IsTrue( tests[11].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
+            Assert.IsTrue( tests[12].Filename.EndsWith(@"Catch_Discover\UT_TestCases.cpp") );
 
             Assert.AreEqual( 29, tests[0].Line );
             Assert.AreEqual( 34, tests[1].Line );
@@ -347,6 +350,7 @@ namespace UT_Catch2Interface.Discover
             Assert.AreEqual( 74, tests[9].Line );
             Assert.AreEqual( 79, tests[10].Line );
             Assert.AreEqual( 84, tests[11].Line );
+            Assert.AreEqual( 89, tests[12].Line );
         }
 
         #endregion // TestCases
@@ -563,9 +567,21 @@ namespace UT_Catch2Interface.Discover
             string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
-            Assert.AreEqual(0, tests.Count);
-            Assert.IsFalse(string.IsNullOrEmpty(discoverer.Log));
-            Assert.IsTrue(discoverer.Log.Contains("Error Occurred"));
+            if (versionpath.StartsWith("Rel3"))
+            {
+                // This is no longer a problem starting Catch2 v3
+                Assert.AreEqual(2, tests.Count);
+                Assert.IsTrue(string.IsNullOrEmpty(discoverer.Log));
+
+                Assert.AreEqual("SameTestNames. Duplicate", tests[0].Name);
+                Assert.AreEqual("SameTestNames. Duplicate", tests[1].Name);
+            }
+            else
+            {
+                Assert.AreEqual(0, tests.Count);
+                Assert.IsFalse(string.IsNullOrEmpty(discoverer.Log));
+                Assert.IsTrue(discoverer.Log.Contains("Error Occurred"));
+            }
         }
 
         [DataTestMethod]

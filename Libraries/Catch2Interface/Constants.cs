@@ -27,11 +27,13 @@ Class :
     {
 
         // Reporter Xml Node Names
+        public const string NodeName_Catch2TestRun = "Catch2TestRun";
         public const string NodeName_Exception = "Exception";
         public const string NodeName_Expression = "Expression";
         public const string NodeName_Failure = "Failure";
         public const string NodeName_FatalErrorCondition = "FatalErrorCondition";
         public const string NodeName_Info = "Info";
+        public const string NodeName_MatchingTests = "MatchingTests";
         public const string NodeName_OverallResult = "OverallResult";
         public const string NodeName_OverallResults = "OverallResults";
         public const string NodeName_Section = "Section";
@@ -62,7 +64,7 @@ Class :
         public const int    S_DefaultCombinedTimeout = -1;   // No timeout
         public const bool   S_DefaultDebugBreak = false;
         public const bool   S_DefaultDisabled = false;
-        public const string S_DefaultDiscoverCommandline = "--verbosity high --list-tests *";
+        public const string S_DefaultDiscoverCommandline = "--verbosity high --list-tests --reporter xml *";
         public const int    S_DefaultDiscoverTimeout = 1000; // Time in milliseconds
         public const string S_DefaultExecutionModeForceSingleTagRgx = @"(?i:tafc_Single)";
         public const string S_DefaultFilenameFilter = "";    // By default give invalid value

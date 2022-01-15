@@ -555,20 +555,30 @@ Class :
         {
             try
             {
-                var xml = new XmlDocument();
                 // Determine the part of the xmloutput string to parse
                 // In some cases Catch2 output contains additional lines of output after the
                 // xml-output. The XmlDocument parser doesn't like this so let's make sure those
                 // extra lines are ignored.
-                var idx = _xmloutput.IndexOf(@"</Catch>"); // Find first occurance of </Catch>
-                if(idx == -1)                              // Make sure closing tag was found
+                var cleanedoutput = XmlOutput.CleanXml(_xmloutput);
+
+                if(string.IsNullOrEmpty(cleanedoutput))
                 {
                     SetInvalidTestRunnerOutput();
+                    return;
                 }
-                else
+
+                // Parse the Xml document
+                var xml = new XmlDocument();
+                xml.LoadXml(cleanedoutput);
+
+                if (XmlOutput.IsVersion2Xml(cleanedoutput))
                 {
-                    xml.LoadXml(_xmloutput.Substring(0,idx+8));
                     var nodeGroup = xml.SelectSingleNode("Catch/Group");
+                    ExtractTestResult(nodeGroup);
+                }
+                else if(XmlOutput.IsVersion3Xml(cleanedoutput))
+                {
+                    var nodeGroup = xml.SelectSingleNode("Catch2TestRun");
                     ExtractTestResult(nodeGroup);
                 }
             }

@@ -75,15 +75,27 @@ Class :
                 var xml = new XmlDocument();
                 xml.LoadXml(output);
 
-                // Get TestCases
-                var nodeGroup = xml.SelectSingleNode("//Group");
+                bool isVersion3 = true;
+                XmlNode nodeGroup = xml.SelectSingleNode(Constants.NodeName_MatchingTests);
+                if(nodeGroup == null)
+                {
+                    nodeGroup = xml.SelectSingleNode("//Group");
+                    isVersion3 = false;
+                }
 
+                if (nodeGroup == null)
+                {
+                    // Let's try Root-node of Catch2 version3 TestRun XML-report
+                    nodeGroup = xml.SelectSingleNode(Constants.NodeName_Catch2TestRun);
+                }
+
+                // Get TestCases
                 var reportedTestCases = new List<Reporter.TestCase>();
                 foreach(XmlNode child in nodeGroup)
                 {
                     if(child.Name == Constants.NodeName_TestCase)
                     {
-                        reportedTestCases.Add(new Reporter.TestCase(child));
+                        reportedTestCases.Add(new Reporter.TestCase(child, isVersion3));
                     }
                 }
 

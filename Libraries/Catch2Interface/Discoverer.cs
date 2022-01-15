@@ -30,6 +30,9 @@ Class :
     {
         #region Fields
 
+        // Regex
+        static readonly Regex _rgxXmlCheck = new Regex(@"^<\?xml");
+
         private StringBuilder  _logbuilder = new StringBuilder();
         private Settings       _settings;
         private Regex          _rgx_filter;
@@ -120,7 +123,7 @@ Class :
         {
             var output = GetTestCaseInfo(source);
 
-            if(_settings.UseXmlDiscovery)
+            if(_rgxXmlCheck.IsMatch(output))
             {
                 var processor = new Discover.Catch2Xml(_settings);
                 _testcases = processor.ExtractTests(output, source);

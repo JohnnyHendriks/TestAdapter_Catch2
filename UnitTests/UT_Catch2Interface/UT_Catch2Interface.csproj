@@ -176,6 +176,7 @@
   <ItemGroup>
     <Compile Include="Discover\Catch2XmlTests.cs" />
     <Compile Include="Discover\ListTestNamesOnlyTests.cs" />
+    <Compile Include="Discover\ListTestsXmlTests.cs" />
     <Compile Include="Discover\ListTestsTests.cs" />
     <Compile Include="TestExecution\CombinedModeTests.cs" />
     <Compile Include="TestExecution\PathTests.cs" />

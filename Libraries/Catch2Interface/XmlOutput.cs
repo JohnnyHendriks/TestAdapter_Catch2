@@ -54,6 +54,39 @@ namespace Catch2Interface
 
         #endregion Properties
 
+        #region Public Static Metods
+
+        public static bool IsVersion2Xml(string output)
+        {
+            return output.Contains(@"<Catch name=");
+        }
+
+        public static bool IsVersion3Xml(string output)
+        {
+            return output.Contains(@"<Catch2TestRun name=");
+        }
+
+        public static string CleanXml(string output)
+        {
+            if (IsVersion2Xml(output))
+            {
+                var idx = output.IndexOf(@"</Catch>"); // Find first occurance of </Catch>
+                return idx == -1 ? string.Empty        // Make sure closing tag was found
+                                 : output.Substring(0, idx+8);
+                
+            }
+            else if(IsVersion3Xml(output))
+            {
+                var idx = output.IndexOf(@"</Catch2TestRun>"); // Find first occurance of </Catch2TestRun>
+                return idx == -1 ? string.Empty                // Make sure closing tag was found
+                                 : output.Substring(0, idx + 16);
+            }
+
+            return string.Empty;
+        }
+
+        #endregion Public Static Metods
+
         #region Public Methods
 
         public TestResult FindTestResult(string testcasename)
@@ -119,26 +152,43 @@ namespace Catch2Interface
             // In some cases Catch2 output contains additional lines of output after the
             // xml-output. The XmlDocument parser doesn't like this so let's make sure those
             // extra lines are ignored.
-            var idx = Xml.IndexOf(@"</Catch>"); // Find first occurance of </Catch>
-            if (idx != -1)                      // Make sure closing tag was found
+            var cleanedoutput = XmlOutput.CleanXml(Xml);
+
+            if (string.IsNullOrEmpty(cleanedoutput))
             {
-                try
+                // Looks like we have a partial result.
+                // Let's try to process as much as possible
+                ProcessXmlPartial();
+                return;
+            }
+
+            try
+            {
+                // Parse the Xml document
+                var xml = new XmlDocument();
+                xml.LoadXml(cleanedoutput);
+
+                if (XmlOutput.IsVersion2Xml(cleanedoutput))
                 {
-                    var xml = new XmlDocument();
-                    xml.LoadXml(Xml.Substring(0, idx + 8));
                     var nodeGroup = xml.SelectSingleNode("Catch/Group");
                     ExtractTestResults(nodeGroup);
                     return;
                 }
-                catch
+                else if (XmlOutput.IsVersion3Xml(cleanedoutput))
                 {
-                    // Someting went wrong parsing the XML
-                    // Treat as partial result and try to parse as much as possible
-                    TestResults.Clear(); // Cleanup any TestResults that may already have been processed
+                    var nodeGroup = xml.SelectSingleNode("Catch2TestRun");
+                    ExtractTestResults(nodeGroup);
+                    return;
                 }
             }
+            catch
+            {
+                // Someting went wrong parsing the XML
+                // Treat as partial result and try to parse as much as possible
+                TestResults.Clear(); // Cleanup any TestResults that may already have been processed
+            }
 
-            // Looks like we have a partial result.
+            // Looks like we have a corrupted/partial result.
             // Let's try to process as much as possible
             ProcessXmlPartial();
         }

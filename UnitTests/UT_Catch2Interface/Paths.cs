@@ -71,6 +71,9 @@ namespace UT_Catch2Interface
             , new string[]{ "Rel_13_4" }
             , new string[]{ "Rel_13_5" }
             , new string[]{ "Rel_13_6" }
+            , new string[]{ "Rel_13_7" }
+            , new string[]{ "Rel_13_8" }
+            , new string[]{ "Rel3_0_0" }
             };
         }
 
