@@ -52,4 +52,6 @@ target_compile_definitions(
     $<$<CONFIG:Rel_13_4>:TA_CATCH2_V2_13_4>
     $<$<CONFIG:Rel_13_5>:TA_CATCH2_V2_13_5>
     $<$<CONFIG:Rel_13_6>:TA_CATCH2_V2_13_6>
+    $<$<CONFIG:Rel_13_7>:TA_CATCH2_V2_13_7>
+    $<$<CONFIG:Rel_13_8>:TA_CATCH2_V2_13_8>
   )

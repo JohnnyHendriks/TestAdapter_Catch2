@@ -86,6 +86,11 @@ namespace CatchDiscover
         CHECK( true );
     }
 
+    TEST_CASE("TestCases. with <xml/> in name", "[Discover]")
+    {
+        CHECK(true);
+    }
+
 } // End namespace: CatchDiscover
 
 /************
