@@ -374,6 +374,15 @@ Class :
                     // Add testcase
                     if(CanAddTestCase(testcase))
                     {
+                        var tcname = testcase.Name;
+                        int duplicatecount = 0;
+                        while (_testcases.Exists(tc => tc.Name == tcname))
+                        {
+                            ++duplicatecount;
+                            LogNormal($"  WARNING ListTests Discovery:{Environment.NewLine}Duplicate testname: {testcase.Name}");
+                            tcname = $"[[DUPLICATE {duplicatecount}>>." + testcase.Name;
+                        }
+                        if (duplicatecount > 0) testcase.Name = tcname;
                         _testcases.Add(testcase);
                     }
                 }
@@ -475,6 +484,15 @@ Class :
                     // Add testcase
                     if(CanAddTestCase(testcase))
                     {
+                        var tcname = testcase.Name;
+                        int duplicatecount = 0;
+                        while (_testcases.Exists(tc => tc.Name == tcname))
+                        {
+                            ++duplicatecount;
+                            LogNormal($"  WARNING ListTests Discovery:{Environment.NewLine}Duplicate testname: {testcase.Name}{Environment.NewLine}  {testcase.Filename} (line {testcase.Line})");
+                            tcname = $"[[DUPLICATE {duplicatecount}>>." + testcase.Name;
+                        }
+                        if (duplicatecount > 0) testcase.Name = tcname;
                         _testcases.Add(testcase);
                     }
                 }

@@ -95,7 +95,17 @@ Class :
                 {
                     if(child.Name == Constants.NodeName_TestCase)
                     {
-                        reportedTestCases.Add(new Reporter.TestCase(child, isVersion3));
+                        var testcase = new Reporter.TestCase(child, isVersion3);
+                        var tcname = testcase.Name;
+                        int duplicatecount = 0;
+                        while (reportedTestCases.Exists(tc => tc.Name == tcname))
+                        {
+                            ++duplicatecount;
+                            LogNormal($"  WARNING XML Discovery:{Environment.NewLine}Duplicate testname: {testcase.Name}{Environment.NewLine}  {testcase.Filename} (line {testcase.Line})");
+                            tcname = $"[[DUPLICATE {duplicatecount}>>." + testcase.Name;
+                        }
+                        if(duplicatecount > 0) testcase.Name = tcname;
+                        reportedTestCases.Add(testcase);
                     }
                 }
 

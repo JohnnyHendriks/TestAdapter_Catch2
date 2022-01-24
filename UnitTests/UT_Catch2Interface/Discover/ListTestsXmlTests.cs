@@ -631,17 +631,22 @@ namespace UT_Catch2Interface.Discover
             if (versionpath.StartsWith("Rel3"))
             {
                 // This is no longer a problem starting Catch2 v3
-                Assert.AreEqual(2, tests.Count);
-                Assert.IsTrue(string.IsNullOrEmpty(discoverer.Log));
+                Assert.AreEqual(3, tests.Count);
+                Assert.IsFalse(string.IsNullOrEmpty(discoverer.Log));
+                Assert.IsTrue(discoverer.Log.Contains("WARNING"));
+                Assert.IsTrue(discoverer.Log.Contains("SameTestNames. Duplicate"));
 
                 Assert.AreEqual("SameTestNames. Duplicate", tests[0].Name);
-                Assert.AreEqual("SameTestNames. Duplicate", tests[1].Name);
+                Assert.AreEqual("[[DUPLICATE 1>>.SameTestNames. Duplicate", tests[1].Name);
+                Assert.AreEqual("[[DUPLICATE 2>>.SameTestNames. Duplicate", tests[2].Name);
 
                 Assert.IsTrue(tests[0].Filename.EndsWith(@"Catch_Duplicates\UT_SameTestNames.cpp"));
                 Assert.IsTrue(tests[1].Filename.EndsWith(@"Catch_Duplicates\UT_SameTestNames.cpp"));
+                Assert.IsTrue(tests[2].Filename.EndsWith(@"Catch_Duplicates\UT_SameTestNames.cpp"));
 
                 Assert.AreEqual(28, tests[0].Line);
                 Assert.AreEqual(42, tests[1].Line);
+                Assert.AreEqual(56, tests[2].Line);
             }
             else
             {

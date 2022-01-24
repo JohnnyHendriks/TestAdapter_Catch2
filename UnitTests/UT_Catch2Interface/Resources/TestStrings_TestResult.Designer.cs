@@ -19,7 +19,7 @@ namespace UT_Catch2Interface.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class TestStrings_TestResult {
@@ -132,6 +132,26 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;Catch2TestRun name=&quot;QDummy.exe&quot; rng-seed=&quot;2020660162&quot;&gt;
+        ///  &lt;TestCase name=&quot;dummy&quot; tags=&quot;[Fast]&quot; filename=&quot;d:\dummy.cpp&quot; line=&quot;64&quot;&gt;
+        ///    &lt;OverallResult success=&quot;true&quot; durationInSeconds=&quot;0.000981&quot;/&gt;
+        ///  &lt;/TestCase&gt;
+        ///  &lt;TestCase name=&quot;Dummy&quot; tags=&quot;[Fast]&quot; filename=&quot;d:\dummy.cpp&quot; line=&quot;64&quot;&gt;
+        ///    &lt;Expression success=&quot;false&quot; filename=&quot;d:\dummy.cpp&quot; line=&quot;64&quot;&gt;
+        ///      &lt;Original&gt;
+        ///        {Unknown expression after the reported line}
+        ///      &lt;/Original&gt;
+        ///      &lt;Expanded&gt;
+        ///        [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MultipleTestCasesV3 {
+            get {
+                return ResourceManager.GetString("MultipleTestCasesV3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         ///&lt;Catch name=&quot;Catch_Discover.exe&quot;&gt;
         ///  &lt;Group name=&quot;Catch_Discover.exe&quot;&gt;
         ///    &lt;TestCase name=&quot;Test1&quot; tags=&quot;[ut]&quot; filename=&quot;D:\Dummy\UT_Test.cpp&quot; line=&quot;29&quot;&gt;
@@ -145,6 +165,24 @@ namespace UT_Catch2Interface.Resources {
         internal static string PartialMultipleTestCases {
             get {
                 return ResourceManager.GetString("PartialMultipleTestCases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;Catch2TestRun name=&quot;Catch_Discover.exe&quot; rng-seed=&quot;2020660162&quot;&gt;
+        ///  &lt;TestCase name=&quot;Test1&quot; tags=&quot;[ut]&quot; filename=&quot;D:\Dummy\UT_Test.cpp&quot; line=&quot;29&quot;&gt;
+        ///    &lt;OverallResult success=&quot;true&quot; durationInSeconds=&quot;5.6e-05&quot;/&gt;
+        ///  &lt;/TestCase&gt;
+        ///  &lt;TestCase name=&quot;Test2&quot; tags=&quot;[ut]&quot; filename=&quot;C:\Dummy\UT_Test.cpp&quot; line=&quot;34&quot;&gt;
+        ///    &lt;OverallResult success=&quot;true&quot; durationInSeconds=&quot;2.7e-05&quot;/&gt;
+        ///  &lt;/TestCase&gt;
+        ///  &lt;TestCase name=&quot;Test3&quot; tags=&quot;[ut]&quot; filename=&quot;C:\Dummy\UT_Test.cpp&quot; line=&quot;42&quot;&gt;
+        ///     [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PartialMultipleTestCasesV3 {
+            get {
+                return ResourceManager.GetString("PartialMultipleTestCasesV3", resourceCulture);
             }
         }
         

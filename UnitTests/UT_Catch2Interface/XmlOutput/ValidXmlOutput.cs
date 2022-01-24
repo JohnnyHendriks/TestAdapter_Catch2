@@ -40,6 +40,19 @@ namespace UT_Catch2Interface.XmlOutput
 
         }
 
+        [TestMethod]
+        public void MultiTestcaseV3()
+        {
+            var settings = new Settings();
+            var output = new Catch2Interface.XmlOutput(Resources.TestStrings_TestResult.MultipleTestCasesV3, false, settings);
+
+            Assert.IsFalse(output.IsPartialOutput);
+            Assert.IsFalse(output.TimedOut);
+
+            Assert.AreEqual(2, output.TestResults.Count);
+
+        }
+
         #endregion Mutliple testcases
     }
 }

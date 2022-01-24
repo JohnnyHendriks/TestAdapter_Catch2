@@ -221,6 +221,7 @@
     <EmbeddedResource Include="Resources\TestStrings_TestResult.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TestStrings_TestResult.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
