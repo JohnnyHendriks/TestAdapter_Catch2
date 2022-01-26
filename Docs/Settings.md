@@ -37,7 +37,7 @@ The following _.runsettings_ file examples only contains settings specific to th
         <DebugBreak>on</DebugBreak>
         <DiscoverCommandLine>--verbosity high --list-tests *</DiscoverCommandLine>
         <DiscoverTimeout>500</DiscoverTimeout><!-- Milliseconds -->
-        <ExecutionMode>Combined</ExecutionMode><!-- Introduced in v1.6.0 -->
+        <ExecutionMode>Combine</ExecutionMode><!-- Introduced in v1.6.0 -->
         <ExecutionModeForceSingleTagRgx>Slow</ExecutionModeForceSingleTagRgx><!-- Introduced in v1.6.0 -->
         <FilenameFilter>^Catch_</FilenameFilter><!-- Regex filter -->
         <IncludeHidden>true</IncludeHidden>
@@ -160,7 +160,7 @@ With the `<ExecutionMode>` option you can choose the way tests are executed.
 
 Default: (?i:tafc_Single)
 
-With the `<ExecutionModeForceSingleTagRgx>` option you can set a regex value to match test case Tags that would force a test case to be run in `Single` execution mode, when the `Combined` execution mode is set.
+With the `<ExecutionModeForceSingleTagRgx>` option you can set a regex value to match test case Tags that would force a test case to be run in `Single` execution mode, when the `Combine` execution mode is set.
 
 > Introduced in v1.6.0
 
