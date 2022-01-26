@@ -151,7 +151,7 @@ With the `<ExecutionMode>` option you can choose the way tests are executed.
 | ExecutionMode | Description |
 |:--------------|:------------|
 | Single | For each test case a separate instance of the test executable is started. |
-| Combined | A single test executable is started to run multiple test cases. |
+| Combine | A single test executable is started to run multiple test cases. |
 |||
 
 > Introduced in v1.6.0
