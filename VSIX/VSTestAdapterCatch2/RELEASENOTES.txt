@@ -1,3 +1,10 @@
+Release Notes for v1.8.0 of the Test Adapter for Catch2
+This version introduces support for Catch2 v3, which has a small change in xml-reporting format and has improved support for test discovery.
+# New Features
+- Add support for Catch2 v3
+# Extended Features
+- Enable support for environmental variables when running in debug mode.
+
 Release Notes for v1.7.0 of the Test Adapter for Catch2
 # New Features
 - Add support for Visual Studio 2022.

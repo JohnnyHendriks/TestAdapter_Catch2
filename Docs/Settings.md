@@ -1,6 +1,6 @@
 # Settings for Test Adapter for Catch2
 
-> The information on this page is based on **Test Adapter for Catch2** v1.7.0.
+> The information on this page is based on **Test Adapter for Catch2** v1.8.0.
 
 In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitly by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
 
@@ -35,9 +35,13 @@ The following _.runsettings_ file examples only contains settings specific to th
     <Catch2Adapter>
         <CombinedTimeout>60000</CombinedTimeout><!-- Milliseconds; Introduced in v1.6.0 -->
         <DebugBreak>on</DebugBreak>
-        <DiscoverCommandLine>--verbosity high --list-tests *</DiscoverCommandLine>
+        <DiscoverCommandLine>--verbosity high --list-tests --reporter xml *</DiscoverCommandLine>
         <DiscoverTimeout>500</DiscoverTimeout><!-- Milliseconds -->
-        <ExecutionMode>Combined</ExecutionMode><!-- Introduced in v1.6.0 -->
+        <Environment><!-- Introduced in v1.7.0 -->
+          <MyCustomEnvSetting>Welcome</MyCustomEnvSetting>
+          <MyOtherCustomEnvSetting value="debug&lt;0&gt;"/>
+        </Environment>
+        <ExecutionMode>Combine</ExecutionMode><!-- Introduced in v1.6.0 -->
         <ExecutionModeForceSingleTagRgx>Slow</ExecutionModeForceSingleTagRgx><!-- Introduced in v1.6.0 -->
         <FilenameFilter>^Catch_</FilenameFilter><!-- Regex filter -->
         <IncludeHidden>true</IncludeHidden>
@@ -113,11 +117,13 @@ With the `<DebugBreak>` option you can turn on or off the break on test failure 
 
 ## DiscoverCommandLine
 
-Default: "--verbosity high --list-tests *"
+Default: "--verbosity high --list-tests --reporter xml *"
 
 With the `<DiscoverCommandLine>` option you set the commandline arguments to call a Catch2 executable with in order to discover the tests that are contained within the executable. You have the choice of the test discovery options that come out of the Catch2 box (`-l`, `--list-tests`, `--list-test-names-only`) or you can provide a custom one. The only requirement for the custom discoverer is that it generates Xml output according to the Catch2 xml reporter scheme. For the build in discovery options you can add filters to select only a subset of tests. For a custom discovery option, it is up to you if you want to support test filtering on this level. For a detailed description about the discovery process see the [discovery documentation page](Discovery.md) where you can also find a custom discovery example.
 
-> Default value changed in v1.5.0
+When you use Catch2 v3, you can set the reporter to xml for improved discovery. For previous version of Catch2 the setting had no effect on the discovery output.
+
+> Default value changed in v1.5.0, and v1.8.0
 
 ## DiscoverTimeout
 
@@ -151,7 +157,7 @@ With the `<ExecutionMode>` option you can choose the way tests are executed.
 | ExecutionMode | Description |
 |:--------------|:------------|
 | Single | For each test case a separate instance of the test executable is started. |
-| Combined | A single test executable is started to run multiple test cases. |
+| Combine | A single test executable is started to run multiple test cases. |
 |||
 
 > Introduced in v1.6.0

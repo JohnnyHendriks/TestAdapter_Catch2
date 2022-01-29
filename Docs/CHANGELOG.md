@@ -2,6 +2,18 @@
 
 Changes are relative to v1.0.0
 
+## Changes for v1.8.0
+
+This version introduces support for Catch2 v3, which has a small change in xml-reporting format and has improved support for test discovery.
+
+### New Features
+
+- Add support for Catch2 v3 (issue #52)
+
+### Extended Features
+
+- Enable support for environmental variables when running in debug mode.
+
 ## Changes for v1.7.0
 
 ### New Features

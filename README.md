@@ -12,7 +12,7 @@ The **Test Adapter for Catch2** is available via the [Visual Studio Marketplace]
 
 ## Documentation
 
-For documentation on the **Test Adapter for Catch2** see the followng links.
+For documentation on the **Test Adapter for Catch2** see the following links.
 
 - [Overview](Docs/Readme.md)
 - [Capabilities](Docs/Capabilities.md)
