@@ -20,9 +20,13 @@ The following is an example _.runsettings_ file that contains options specific f
     <Catch2Adapter>
         <CombinedTimeout>60000</CombinedTimeout><!-- Milliseconds; Introduced in v1.6.0 -->
         <DebugBreak>on</DebugBreak><!-- Introduced in v1.1.0 -->
-        <DiscoverCommandLine>--verbosity high --list-tests *</DiscoverCommandLine>
+        <DiscoverCommandLine>--verbosity high --list-tests --reporter xml *</DiscoverCommandLine>
         <DiscoverTimeout>500</DiscoverTimeout><!-- Milliseconds -->
-        <ExecutionMode>Combined</ExecutionMode><!-- Introduced in v1.6.0 -->
+        <Environment><!-- Introduced in v1.7.0 -->
+          <MyCustomEnvSetting>Welcome</MyCustomEnvSetting>
+          <MyOtherCustomEnvSetting value="debug&lt;0&gt;"/>
+        </Environment>
+        <ExecutionMode>Combine</ExecutionMode><!-- Introduced in v1.6.0 -->
         <ExecutionModeForceSingleTagRgx>Slow</ExecutionModeForceSingleTagRgx><!-- Introduced in v1.6.0 -->
         <FilenameFilter>^Catch_</FilenameFilter><!-- Regex filter -->
         <IncludeHidden>true</IncludeHidden>

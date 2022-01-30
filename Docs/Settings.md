@@ -105,7 +105,7 @@ Minimalistic example to disable the **Test Adapter for Catch2** via the _.runset
 
 Default: -1
 
-The `<CombinedTimeout>` option is only relevant when `<ExecutionMode>` is set to `Combined`. It sets the maximum amount of time a combined test run may take. Any tests that were not yet run at the time of a timeout are marked as being skipped. Setting the timeout to zero or a negative number turns of the timeout.
+The `<CombinedTimeout>` option is only relevant when `<ExecutionMode>` is set to `Combine`. It sets the maximum amount of time a combined test run may take. Any tests that were not yet run at the time of a timeout are marked as being skipped. Setting the timeout to zero or a negative number turns of the timeout.
 
 > Introduced in v1.6.0
 
@@ -166,7 +166,7 @@ With the `<ExecutionMode>` option you can choose the way tests are executed.
 
 Default: (?i:tafc_Single)
 
-With the `<ExecutionModeForceSingleTagRgx>` option you can set a regex value to match test case Tags that would force a test case to be run in `Single` execution mode, when the `Combined` execution mode is set.
+With the `<ExecutionModeForceSingleTagRgx>` option you can set a regex value to match test case Tags that would force a test case to be run in `Single` execution mode, when the `Combine` execution mode is set.
 
 > Introduced in v1.6.0
 

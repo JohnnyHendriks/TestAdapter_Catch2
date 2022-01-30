@@ -205,7 +205,7 @@ Note, the Test Explorer also has the option to set a timeout, however that one i
 
 ## Execution Mode
 
-By default each test case is run in a separate instantiation of the test executable, _i.e._ the default execution mode is `Single`. Starting in version 1.6.0 of the **Test Adapter for Catch2** it is also possible to execute multiple test cases in a single instantiation of the test executable, _i.e._, the `Combined` execution mode was added. The advantage of this is that the test results can be obtained faster as the overhead of instantiating the test executable is minimized. The execution mode can be set via the [`<ExecutionMode>`](Settings.md#executionmode) setting in the _.runsettings_ file.
+By default each test case is run in a separate instantiation of the test executable, _i.e._ the default execution mode is `Single`. Starting in version 1.6.0 of the **Test Adapter for Catch2** it is also possible to execute multiple test cases in a single instantiation of the test executable, _i.e._, the `Combine` execution mode was added. The advantage of this is that the test results can be obtained faster as the overhead of instantiating the test executable is minimized. The execution mode can be set via the [`<ExecutionMode>`](Settings.md#executionmode) setting in the _.runsettings_ file.
 
 If you run the tests using the `ReferenceTestsCombined.runsettings` test settings you should be able to notice the difference compared to running the tests with the `ReferenceTests.runsettings` test settings.
 
@@ -215,7 +215,7 @@ The nature of some tests may require them to be preferably executed in the `Sing
 
 ### Timeouts
 
-The different execution modes require different timeout logic. _E.g._, you may want tests that are run together in the `Combined`execution mode to timeout after 10s (_i.e._, all tests should be finished within 10s). However, tests that are run in `Single` execution mode may only timeout after 30s, because they are tests that are known to take a long time for example. You can set the different timeout settings using the [`<CombinedTimeout>`](Settings.md#combinedtimeout) and [`<TestCaseTimeout>`](Settings.md#testcasetimeout) setting in the _.runsettings_ file.
+The different execution modes require different timeout logic. _E.g._, you may want tests that are run together in the `Combine` execution mode to timeout after 10s (_i.e._, all tests should be finished within 10s). However, tests that are run in `Single` execution mode may only timeout after 30s, because they are tests that are known to take a long time for example. You can set the different timeout settings using the [`<CombinedTimeout>`](Settings.md#combinedtimeout) and [`<TestCaseTimeout>`](Settings.md#testcasetimeout) setting in the _.runsettings_ file.
 
 ## Examples of test case detail views
 
