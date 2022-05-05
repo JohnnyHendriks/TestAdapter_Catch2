@@ -58,7 +58,7 @@ namespace Catch2Interface
 
         public static bool IsVersion2Xml(string output)
         {
-            return output.Contains(@"<Catch name=");
+            return output.Contains(@"<Catch") && !output.Contains(@"<Catch2TestRun");
         }
 
         public static bool IsVersion3Xml(string output)
