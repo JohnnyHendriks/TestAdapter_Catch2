@@ -65,7 +65,8 @@ Class :
         public const bool   S_DefaultDebugBreak = false;
         public const bool   S_DefaultDisabled = false;
         public const string S_DefaultDiscoverCommandline = "--verbosity high --list-tests --reporter xml *";
-        public const int    S_DefaultDiscoverTimeout = 1000; // Time in milliseconds
+        public const string S_DefaultTestExecutableOverride = "{source}";
+		public const int    S_DefaultDiscoverTimeout = 1000; // Time in milliseconds
         public const string S_DefaultExecutionModeForceSingleTagRgx = @"(?i:tafc_Single)";
         public const string S_DefaultFilenameFilter = "";    // By default give invalid value
         public const bool   S_DefaultIncludeHidden = true;
@@ -73,6 +74,9 @@ Class :
         public const string S_DefaultWorkingDirectory = "";
         public const int    S_DefaultStackTraceMaxLength = 80;
         public const string S_DefaultStackTracePointReplacement = ",";
+
+        // The string to replace with the source executable in ExtraParameters.
+        public const string Tag_Source = "{source}";
 
         public const ExecutionModes        S_DefaultExecutionMode = ExecutionModes.SingleTestCase;
         public const LoggingLevels         S_DefaultLoggingLevel = LoggingLevels.Normal;
@@ -87,6 +91,5 @@ Class :
         public static readonly Regex Rgx_True = new Regex(@"^(?i:true)$", RegexOptions.Singleline);
         public static readonly Regex Rgx_OnOff = new Regex(@"^(?i:on)$|^(?i:off)$", RegexOptions.Singleline);
         public static readonly Regex Rgx_On = new Regex(@"^(?i:on)$", RegexOptions.Singleline);
-
     }
 }

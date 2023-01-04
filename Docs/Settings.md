@@ -8,6 +8,8 @@ In order for the **Test Adapter for Catch2** to do its job, it requires certain 
 - [`<CombinedTimeout>`](#combinedtimeout)
 - [`<DebugBreak>`](#debugbreak)
 - [`<DiscoverCommandLine>`](#discovercommandline)
+- [`<TestExecutableOverride>`](#testexecutableoverride)
+- [`<ExtraParameters>`](#extraparameters)
 - [`<DiscoverTimeout>`](#discovertimeout)
 - [`<Environment>`](#environment)
 - [`<ExecutionMode>`](#executionmode)
@@ -124,6 +126,32 @@ With the `<DiscoverCommandLine>` option you set the commandline arguments to cal
 When you use Catch2 v3, you can set the reporter to xml for improved discovery. For previous version of Catch2 the setting had no effect on the discovery output.
 
 > Default value changed in v1.5.0, and v1.8.0
+
+## TestExecutableOverride
+
+Default: "{source}"
+
+Override the name of the executable used to run the tests. The string `{source}` will be replaced by the original source executable.
+Meant for using Catch2 in non-standard ways. For example, you can wrap the execution in a custom tool. Most useful in conjuction with
+`ExtraParameters`.
+
+## ExtraParameters
+
+Default: ""
+
+This string will be concatenated to the parameter string to every execution of the test program, whether for discovery or for execution.
+Meant for using Catch2 in non-stard ways. For example, if your tests are embedded in a program that has other run modes, this parameter
+can be used to activate the catch testing mode.
+
+The string `{source}` will be replaced by the original source executable. In conjuction with `TestExecutableOverride`, this allows you
+to wrap your catch execution in custom logic.
+
+```xml
+<Catch2Adapter>
+    <TestExecutableOverride>my-catch2-wrapper</TestExecutableOverride>
+    <ExtraParameters>--source {source}</ExtraParameters>
+</Catch2Adapter>
+```
 
 ## DiscoverTimeout
 

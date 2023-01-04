@@ -130,7 +130,9 @@ Class :
         public bool                       DebugBreak { get; set; }                     = Constants.S_DefaultDebugBreak;
         public bool                       Disabled { get; set; }                       = Constants.S_DefaultDisabled;
         public string                     DiscoverCommandLine { get; set; }            = Constants.S_DefaultDiscoverCommandline;
-        public int                        DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
+        public string                     TestExecutableOverride { get; set; }         = Constants.S_DefaultTestExecutableOverride;
+		public string                     ExtraParameters { get; set; }                = string.Empty;
+		public int                        DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
         public IDictionary<string,string> Environment { get; set; }
         public ExecutionModes             ExecutionMode { get; set; }                  = Constants.S_DefaultExecutionMode;
         public Regex                      ExecutionModeForceSingleTagRgx { get; set; } = new Regex(Constants.S_DefaultExecutionModeForceSingleTagRgx, RegexOptions.Singleline);
