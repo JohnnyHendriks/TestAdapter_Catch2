@@ -389,7 +389,7 @@ namespace Catch2TestAdapter
             {
                 LogVerbose(TestMessageLevel.Informational, "Start debug run.");
                 _frameworkHandle
-                    .LaunchProcessWithDebuggerAttached( test.Source
+                    .LaunchProcessWithDebuggerAttached( _executor.GetExecutableName(test.Source)
                                                       , _executor.WorkingDirectory(test.Source)
                                                       , _executor.GenerateCommandlineArguments_Single_Dbg(test.DisplayName)
                                                       , _settings.GetEnviromentVariablesForDebug() );

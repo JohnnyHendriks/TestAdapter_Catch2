@@ -96,6 +96,11 @@ Class :
             }
         }
 
+        public string GetExecutableName(string source)
+        {
+            return source;
+        }
+
         public string GenerateCommandlineArguments_Single(string testname, string reportfilename)
         {
             return $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes --out {"\""}{reportfilename}{"\""}";
@@ -139,7 +144,7 @@ Class :
             string reportfilename = MakeReportFilename(source);
 
             var process = new Process();
-            process.StartInfo.FileName = source;
+            process.StartInfo.FileName = GetExecutableName( source );
             process.StartInfo.Arguments = GenerateCommandlineArguments_Single(testname, reportfilename);
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
@@ -220,7 +225,7 @@ Class :
 
             // Run tests
             var process = new Process();
-            process.StartInfo.FileName = group.Source;
+            process.StartInfo.FileName = GetExecutableName( group.Source );
             process.StartInfo.Arguments = GenerateCommandlineArguments_Combined(caselistfilename, reportfilename);
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
