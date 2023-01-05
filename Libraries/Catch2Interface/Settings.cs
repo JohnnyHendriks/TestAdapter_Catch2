@@ -11,6 +11,7 @@ Notes: None
 
 ** Basic Info **/
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -131,8 +132,8 @@ Class :
         public bool                       Disabled { get; set; }                       = Constants.S_DefaultDisabled;
         public string                     DiscoverCommandLine { get; set; }            = Constants.S_DefaultDiscoverCommandline;
         public string                     TestExecutableOverride { get; set; }         = Constants.S_DefaultTestExecutableOverride;
-		public string                     ExtraParameters { get; set; }                = string.Empty;
-		public int                        DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
+        public string                     ExtraParameters { get; set; }                = string.Empty;
+        public int                        DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
         public IDictionary<string,string> Environment { get; set; }
         public ExecutionModes             ExecutionMode { get; set; }                  = Constants.S_DefaultExecutionMode;
         public Regex                      ExecutionModeForceSingleTagRgx { get; set; } = new Regex(Constants.S_DefaultExecutionModeForceSingleTagRgx, RegexOptions.Singleline);
@@ -421,6 +422,33 @@ Class :
                 }
             }
             return envvars;
+        }
+        
+        /// <summary>
+        /// Returns the executable that should be run for tests in source.
+        /// Defaults to the source, but may be overridden.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public string GetExecutable(string source)
+        {
+            if (String.IsNullOrEmpty(TestExecutableOverride))
+                return source;
+            else
+                return TestExecutableOverride;
+        }
+
+        /// <summary>
+        /// Returns extra parameters formatted ready for inclusion in the command line.
+        /// (Empty string if there are no parameters, followed by a space if there are.)
+        /// </summary>
+        /// <returns></returns>
+        public string FormatExtraParameters(string source)
+        {
+            if (String.IsNullOrEmpty(ExtraParameters))
+                return "";
+            else
+                return ExtraParameters.Replace(Constants.Tag_Source, source) + " ";
         }
 
         #endregion // Public Methods
