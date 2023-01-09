@@ -45,6 +45,8 @@ Class :
         public const string NodeName_CombinedTimeout = "CombinedTimeout";
         public const string NodeName_DebugBreak = "DebugBreak";
         public const string NodeName_DiscoverCommanline = "DiscoverCommandLine";
+        public const string NodeName_TestExecutableOverride = "TestExecutableOverride";
+        public const string NodeName_ExtraParameters = "ExtraParameters";
         public const string NodeName_DiscoverTimeout = "DiscoverTimeout";
         public const string NodeName_Environment = "Environment";
         public const string NodeName_ExecutionMode = "ExecutionMode";
@@ -65,8 +67,7 @@ Class :
         public const bool   S_DefaultDebugBreak = false;
         public const bool   S_DefaultDisabled = false;
         public const string S_DefaultDiscoverCommandline = "--verbosity high --list-tests --reporter xml *";
-        public const string S_DefaultTestExecutableOverride = "{source}";
-		public const int    S_DefaultDiscoverTimeout = 1000; // Time in milliseconds
+        public const int    S_DefaultDiscoverTimeout = 1000; // Time in milliseconds
         public const string S_DefaultExecutionModeForceSingleTagRgx = @"(?i:tafc_Single)";
         public const string S_DefaultFilenameFilter = "";    // By default give invalid value
         public const bool   S_DefaultIncludeHidden = true;

@@ -131,7 +131,7 @@ Class :
         public bool                       DebugBreak { get; set; }                     = Constants.S_DefaultDebugBreak;
         public bool                       Disabled { get; set; }                       = Constants.S_DefaultDisabled;
         public string                     DiscoverCommandLine { get; set; }            = Constants.S_DefaultDiscoverCommandline;
-        public string                     TestExecutableOverride { get; set; }         = Constants.S_DefaultTestExecutableOverride;
+        public string                     TestExecutableOverride { get; set; }         = string.Empty;
         public string                     ExtraParameters { get; set; }                = string.Empty;
         public int                        DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
         public IDictionary<string,string> Environment { get; set; }
@@ -325,6 +325,16 @@ Class :
                     }
                 }
 
+                // TestExecutableOverride
+                var testexecutableoverride = node.SelectSingleNode( Constants.NodeName_TestExecutableOverride )?.FirstChild;
+                if( testexecutableoverride != null && testexecutableoverride.NodeType == XmlNodeType.Text )
+                    settings.TestExecutableOverride = testexecutableoverride.Value;
+
+                // ExtraParameters
+                var extraparameters = node.SelectSingleNode( Constants.NodeName_ExtraParameters )?.FirstChild;
+                if ( extraparameters != null && extraparameters.NodeType == XmlNodeType.Text )
+                    settings.ExtraParameters = extraparameters.Value;
+
                 // WorkingDirectory
                 var workingdir = node.SelectSingleNode(Constants.NodeName_WorkingDirectory)?.FirstChild;
                 if( workingdir != null && workingdir.NodeType == XmlNodeType.Text )
@@ -435,7 +445,7 @@ Class :
             if (String.IsNullOrEmpty(TestExecutableOverride))
                 return source;
             else
-                return TestExecutableOverride;
+                return System.Environment.ExpandEnvironmentVariables( TestExecutableOverride );
         }
 
         /// <summary>
@@ -448,7 +458,8 @@ Class :
             if (String.IsNullOrEmpty(ExtraParameters))
                 return "";
             else
-                return ExtraParameters.Replace(Constants.Tag_Source, source) + " ";
+                return System.Environment.ExpandEnvironmentVariables(
+                    ExtraParameters.Replace(Constants.Tag_Source, source) + " " );
         }
 
         #endregion // Public Methods
