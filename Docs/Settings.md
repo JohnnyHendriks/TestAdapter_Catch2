@@ -133,7 +133,8 @@ Default: ""
 
 Override the name of the executable used to run the tests. Meant for using Catch2 in non-standard ways.
 For example, you can wrap the execution in a custom tool. Most useful in conjuction with `ExtraParameters`.
-Supports `%ENVIRONMENT VARIABLES%`.
+Supports `%ENVIRONMENT VARIABLES%`. Path can be absolute, or relative to the `source` or any of its
+parent directories.
 
 ## ExtraParameters
 

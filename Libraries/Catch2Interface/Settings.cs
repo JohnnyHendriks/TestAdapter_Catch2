@@ -15,6 +15,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -442,10 +443,33 @@ Class :
         /// <returns></returns>
         public string GetExecutable(string source)
         {
+            // If there is no override, return the source binary.
             if (String.IsNullOrEmpty(TestExecutableOverride))
                 return source;
-            else
-                return System.Environment.ExpandEnvironmentVariables( TestExecutableOverride );
+
+            // Expand environment variables.
+            string expandedOverride = System.Environment.ExpandEnvironmentVariables(TestExecutableOverride);
+
+            // If the path is absolute, return it as-is.
+            if (Path.IsPathRooted(expandedOverride))
+                return expandedOverride;
+
+            // If the file exists relative to the CWD, return from there.
+            string relativeToCWD = Path.GetFullPath( expandedOverride );
+            if (File.Exists(relativeToCWD))
+                return relativeToCWD;
+
+            // Otherwise try to find it relative to the source and its parent directories.
+            for (DirectoryInfo parent = Directory.GetParent(expandedOverride); parent != null; parent = parent.Parent)
+            {
+                // Formulate the path relative to this folder.
+                string relativeToParent = Path.Combine(parent.FullName, expandedOverride);
+                if (File.Exists(relativeToParent))
+                    return relativeToParent;
+            }
+
+            // Report failure.
+            throw new ArgumentException( $"Could not find file specified by TestExecutableOverride='{TestExecutableOverride}'." );
         }
 
         /// <summary>
