@@ -483,7 +483,9 @@ Class :
                 return "";
             else
                 return System.Environment.ExpandEnvironmentVariables(
-                    ExtraParameters.Replace(Constants.Tag_Source, source) + " " );
+                    ExtraParameters
+                        .Replace(Constants.Tag_Source, source)
+                        .Replace(Constants.Tag_Source.ToLower(), source)+ " ");
         }
 
         #endregion // Public Methods

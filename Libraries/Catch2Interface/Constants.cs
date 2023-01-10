@@ -77,7 +77,7 @@ Class :
         public const string S_DefaultStackTracePointReplacement = ",";
 
         // The string to replace with the source executable in ExtraParameters.
-        public const string Tag_Source = "{source}";
+        public const string Tag_Source = "$(Source)";
 
         public const ExecutionModes        S_DefaultExecutionMode = ExecutionModes.SingleTestCase;
         public const LoggingLevels         S_DefaultLoggingLevel = LoggingLevels.Normal;

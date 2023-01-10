@@ -131,7 +131,7 @@ When you use Catch2 v3, you can set the reporter to xml for improved discovery. 
 
 Default: ""
 
-Override the name of the executable used to run the tests. Meant for using Catch2 in non-standard ways.
+Override the executable used to run the tests. Meant for using Catch2 in non-standard ways.
 For example, you can wrap the execution in a custom tool. Most useful in conjuction with `ExtraParameters`.
 Supports `%ENVIRONMENT VARIABLES%`. Path can be absolute, or relative to the `source` or any of its
 parent directories.
@@ -141,16 +141,16 @@ parent directories.
 Default: ""
 
 This string will be concatenated to the parameter string to every execution of the test program, whether for discovery or for execution.
-Meant for using Catch2 in non-stard ways. For example, if your tests are embedded in a program that has other run modes, this parameter
+Meant for using Catch2 in non-standard ways. For example, if your tests are embedded in a program that has other run modes, this parameter
 can be used to activate the catch testing mode.
 
-The string `{source}` will be replaced by the original source executable. In conjuction with `TestExecutableOverride`, this allows you
+The string `$(Source)` will be replaced by the original source executable. In conjuction with `TestExecutableOverride`, this allows you
 to wrap your catch execution in custom logic. Supports also `%ENVIRONMENT VARIABLES%`.
 
 ```xml
 <Catch2Adapter>
     <TestExecutableOverride>my-catch2-wrapper</TestExecutableOverride>
-    <ExtraParameters>--source {source}</ExtraParameters>
+    <ExtraParameters>--source $(Source)</ExtraParameters>
 </Catch2Adapter>
 ```
 
