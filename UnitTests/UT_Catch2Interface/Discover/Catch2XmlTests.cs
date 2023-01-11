@@ -320,6 +320,77 @@ namespace UT_Catch2Interface.Discover
             Assert.AreEqual( 89, tests[12].Line );
         }
 
+        // Tests that the option "TestExecutableOverride" overrides the executable
+        // that is used to run the tests.
+        [DataTestMethod]
+        [DynamicData( nameof( VersionPaths ), DynamicDataSourceType.Property )]
+        public void TestExecutableOverride(string versionpath)
+        {
+            // Find the real source.
+            var source = Paths.TestExecutable_Hidden( TestContext, versionpath );
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail( $"Missing test executable for {versionpath}." );
+                return;
+            }
+
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--discover [Tag1]";
+            settings.FilenameFilter = ".*";
+            settings.IncludeHidden = false;
+
+            // The point of the TestExecutableOverride is to wrap the catch
+            // execution with a different executable, but we don't want to
+            // create a dummy executable just for this test.
+            // So instead, we override the test executable with the
+            // real source exe, and use a dummy source.
+            settings.TestExecutableOverride = source;
+
+            var discoverer = new Discoverer( settings );
+
+            // Pass nonsense as the source. The discoverer checks that this is a
+            // file that exists, so pass in a path to the currently executing file.
+            string[] sources = { System.Reflection.Assembly.GetExecutingAssembly().Location };
+
+            // This should work despite the source being invalid, because we told the discoverer to
+            // use a specific executable, not the source.
+            var tests = discoverer.GetTests( sources ) as List<TestCase>;
+            Assert.AreEqual( 2, tests.Count );
+        }
+
+        // Tests that the parameter "ExtraParameters" is added to all command line
+        // invocations.
+        [DataTestMethod]
+        [DynamicData( nameof( VersionPaths ), DynamicDataSourceType.Property )]
+        public void ExtraParameters(string versionpath)
+        {
+            // Find the source.
+            var source = Paths.TestExecutable_Hidden( TestContext, versionpath );
+            if (string.IsNullOrEmpty( source ))
+            {
+                Assert.Fail( $"Missing test executable for {versionpath}." );
+                return;
+            }
+
+            // Sabotage the DiscoverCommandLine, and give sane discovery options in
+            // ExtraParameters instead.
+            // DiscoverCommandLine must be a valid command line option for the validation
+            // to accept it, but a sleep does not affect the behaviour.
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--sleep 1";
+            settings.ExtraParameters = "--discover [Tag1]";
+            settings.FilenameFilter = ".*";
+            settings.IncludeHidden = false;
+
+            var discoverer = new Discoverer( settings );
+            string[] sources = { source };
+
+            // This should work despite the discovery command line being invalid,
+            // because the ExtraParameters should be included in the command line and work.
+            var tests = discoverer.GetTests( sources ) as List<TestCase>;
+            Assert.AreEqual( 2, tests.Count );
+        }
+
         #endregion // TestCases
 
         #region LongTestCaseNames
