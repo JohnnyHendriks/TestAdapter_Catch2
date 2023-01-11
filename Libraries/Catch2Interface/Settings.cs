@@ -460,7 +460,7 @@ Class :
                 return relativeToCWD;
 
             // Otherwise try to find it relative to the source and its parent directories.
-            for (DirectoryInfo parent = Directory.GetParent(expandedOverride); parent != null; parent = parent.Parent)
+            for (DirectoryInfo parent = Directory.GetParent(source); parent != null; parent = parent.Parent)
             {
                 // Formulate the path relative to this folder.
                 string relativeToParent = Path.Combine(parent.FullName, expandedOverride);
