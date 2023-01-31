@@ -320,6 +320,46 @@ namespace UT_Catch2Interface.Discover
             Assert.AreEqual( 89, tests[12].Line );
         }
 
+        // Tests that the option "TestExecutableOverride" overrides the executable
+        // that is used to run the tests.
+        [DataTestMethod]
+        [DynamicData( nameof( VersionPaths ), DynamicDataSourceType.Property )]
+        public void TestDllExecutor(string versionpath)
+        {
+            // Find the real source.
+            var source = Paths.TestExecutable_Hidden( TestContext, versionpath );
+            if (string.IsNullOrEmpty(source))
+            {
+                Assert.Fail( $"Missing test executable for {versionpath}." );
+                return;
+            }
+
+            var settings = new Settings();
+            settings.DiscoverCommandLine = "--discover [Tag1]";
+            settings.FilenameFilter = ".*";
+            settings.IncludeHidden = false;
+
+            // The point of the TestExecutableOverride is to wrap the catch
+            // execution with a different executable, but we don't want to
+            // create a dummy executable just for this test.
+            // So instead, we override the test executable with the
+            // real source exe, and use a dummy source.
+            settings.DllExecutor = source;
+            settings.DllExecutorCommandLine = Constants.Tag_CatchParameters;
+
+            var discoverer = new Discoverer( settings );
+
+            // Pass nonsense as the source. The discoverer checks that this is a
+            // file that exists, so pass in a path to the currently executing file.
+            // It will also have the -dll suffix required to trigger the DllExecutor.
+            string[] sources = { System.Reflection.Assembly.GetExecutingAssembly().Location };
+
+            // This should work despite the source being invalid, because we told the discoverer to
+            // use a specific executable, not the source.
+            var tests = discoverer.GetTests( sources ) as List<TestCase>;
+            Assert.AreEqual( 2, tests.Count );
+        }
+
         #endregion // TestCases
 
         #region LongTestCaseNames

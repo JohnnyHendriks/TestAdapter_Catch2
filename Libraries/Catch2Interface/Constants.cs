@@ -45,6 +45,8 @@ Class :
         public const string NodeName_CombinedTimeout = "CombinedTimeout";
         public const string NodeName_DebugBreak = "DebugBreak";
         public const string NodeName_DiscoverCommanline = "DiscoverCommandLine";
+        public const string NodeName_DllExecutor = "DllExecutor";
+        public const string NodeName_DllExecutorCommandLine = "DllExecutorCommandLine";
         public const string NodeName_DiscoverTimeout = "DiscoverTimeout";
         public const string NodeName_Environment = "Environment";
         public const string NodeName_ExecutionMode = "ExecutionMode";
@@ -65,6 +67,7 @@ Class :
         public const bool   S_DefaultDebugBreak = false;
         public const bool   S_DefaultDisabled = false;
         public const string S_DefaultDiscoverCommandline = "--verbosity high --list-tests --reporter xml *";
+        public const string S_DefaultDllExecutorCommandLine = "$(Source) $(CatchParameters)";
         public const int    S_DefaultDiscoverTimeout = 1000; // Time in milliseconds
         public const string S_DefaultExecutionModeForceSingleTagRgx = @"(?i:tafc_Single)";
         public const string S_DefaultFilenameFilter = "";    // By default give invalid value
@@ -73,6 +76,11 @@ Class :
         public const string S_DefaultWorkingDirectory = "";
         public const int    S_DefaultStackTraceMaxLength = 80;
         public const string S_DefaultStackTracePointReplacement = ",";
+
+        // The string to replace with the source executable in DllExecutorCommandLine.
+        public const string Tag_Source = "$(Source)";
+        // The string to replace with the normal catch parameters in DllExecutorCommandLine.
+        public const string Tag_CatchParameters = "$(CatchParameters)";
 
         public const ExecutionModes        S_DefaultExecutionMode = ExecutionModes.SingleTestCase;
         public const LoggingLevels         S_DefaultLoggingLevel = LoggingLevels.Normal;

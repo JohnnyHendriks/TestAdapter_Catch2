@@ -279,9 +279,9 @@ namespace Catch2TestAdapter
 
                 LogVerbose(TestMessageLevel.Informational, "Start debug run.");
                 _frameworkHandle
-                    .LaunchProcessWithDebuggerAttached( testcasegroup.Source
+                    .LaunchProcessWithDebuggerAttached( _settings.GetExecutable(testcasegroup.Source)
                                                       , _executor.WorkingDirectory(testcasegroup.Source)
-                                                      , _executor.GenerateCommandlineArguments_Combined_Dbg(caselistfilename)
+                                                      , _executor.GenerateCommandlineArguments_Combined_Dbg(testcasegroup.Source, caselistfilename)
                                                       , _settings.GetEnviromentVariablesForDebug());
 
                 // Do not process output in Debug mode
@@ -389,9 +389,9 @@ namespace Catch2TestAdapter
             {
                 LogVerbose(TestMessageLevel.Informational, "Start debug run.");
                 _frameworkHandle
-                    .LaunchProcessWithDebuggerAttached( test.Source
+                    .LaunchProcessWithDebuggerAttached( _settings.GetExecutable(test.Source)
                                                       , _executor.WorkingDirectory(test.Source)
-                                                      , _executor.GenerateCommandlineArguments_Single_Dbg(test.DisplayName)
+                                                      , _executor.GenerateCommandlineArguments_Single_Dbg(test.Source, test.DisplayName)
                                                       , _settings.GetEnviromentVariablesForDebug() );
 
                 // Do not process output in Debug mode

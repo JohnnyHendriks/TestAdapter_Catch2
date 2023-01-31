@@ -11,9 +11,11 @@ Notes: None
 
 ** Basic Info **/
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -130,6 +132,8 @@ Class :
         public bool                       DebugBreak { get; set; }                     = Constants.S_DefaultDebugBreak;
         public bool                       Disabled { get; set; }                       = Constants.S_DefaultDisabled;
         public string                     DiscoverCommandLine { get; set; }            = Constants.S_DefaultDiscoverCommandline;
+        public string                     DllExecutor { get; set; }                    = string.Empty;
+        public string                     DllExecutorCommandLine { get; set; }         = Constants.S_DefaultDllExecutorCommandLine;
         public int                        DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
         public IDictionary<string,string> Environment { get; set; }
         public ExecutionModes             ExecutionMode { get; set; }                  = Constants.S_DefaultExecutionMode;
@@ -322,6 +326,16 @@ Class :
                     }
                 }
 
+                // TestExecutableOverride
+                var dllExecutor = node.SelectSingleNode(Constants.NodeName_DllExecutor)?.FirstChild;
+                if( dllExecutor != null && dllExecutor.NodeType == XmlNodeType.Text )
+                    settings.DllExecutor = dllExecutor.Value;
+
+                // ExtraParameters
+                var dllExecutorCommandLine = node.SelectSingleNode(Constants.NodeName_DllExecutorCommandLine)?.FirstChild;
+                if (dllExecutorCommandLine != null && dllExecutorCommandLine.NodeType == XmlNodeType.Text)
+                    settings.DllExecutorCommandLine = dllExecutorCommandLine.Value;
+
                 // WorkingDirectory
                 var workingdir = node.SelectSingleNode(Constants.NodeName_WorkingDirectory)?.FirstChild;
                 if( workingdir != null && workingdir.NodeType == XmlNodeType.Text )
@@ -419,6 +433,63 @@ Class :
                 }
             }
             return envvars;
+        }
+
+        /// <summary>
+        /// Returns the executable that should be run for tests in source.
+        /// Defaults to the source, but may be overridden.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public string GetExecutable(string source)
+        {
+            // If there is no DLL executor, or the source is not a DLL, always return the source binary.
+            if (!source.ToLower().EndsWith(".dll") || String.IsNullOrEmpty(DllExecutor))
+                return source;
+
+            // Expand environment variables.
+            string expandedExecutor = System.Environment.ExpandEnvironmentVariables(DllExecutor);
+
+            // If the path is absolute, return it as-is.
+            if (Path.IsPathRooted(expandedExecutor))
+                return expandedExecutor;
+
+            // If the file exists relative to the CWD, return from there.
+            string relativeToCWD = Path.GetFullPath( expandedExecutor );
+            if (File.Exists(relativeToCWD))
+                return relativeToCWD;
+
+            // Otherwise try to find it relative to the source and its parent directories.
+            for (DirectoryInfo parent = Directory.GetParent(source); parent != null; parent = parent.Parent)
+            {
+                // Formulate the path relative to this folder.
+                string relativeToParent = Path.Combine(parent.FullName, expandedExecutor);
+                if (File.Exists(relativeToParent))
+                    return relativeToParent;
+            }
+
+            // Report failure.
+            throw new ArgumentException( $"Could not find file specified by {nameof(DllExecutor)}='{expandedExecutor}'." );
+        }
+
+        /// <summary>
+        /// Returns extra parameters formatted ready for inclusion in the command line.
+        /// (Empty string if there are no parameters, followed by a space if there are.)
+        /// </summary>
+        /// <returns></returns>
+        public string FormatParameters(string source, string catchParameters)
+        {
+            // If the source is a dll, it is executed using the DLL executor.
+            // Format the parameters with the DLL executor command line.
+            if (source.ToLower().EndsWith(".dll"))
+                return System.Environment.ExpandEnvironmentVariables(
+                    DllExecutorCommandLine
+                        .Replace(Constants.Tag_Source, source)
+                        .Replace(Constants.Tag_Source.ToLower(), source)
+                        .Replace(Constants.Tag_CatchParameters, catchParameters)
+                        .Replace(Constants.Tag_CatchParameters.ToLower(), catchParameters) );
+            else
+                return catchParameters;
         }
 
         #endregion // Public Methods

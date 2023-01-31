@@ -8,6 +8,8 @@ In order for the **Test Adapter for Catch2** to do its job, it requires certain 
 - [`<CombinedTimeout>`](#combinedtimeout)
 - [`<DebugBreak>`](#debugbreak)
 - [`<DiscoverCommandLine>`](#discovercommandline)
+- [`<DllExecutor>`](#dllexecutor)
+- [`<DllExecutorCommandLine>`](#dllexecutorcommandline)
 - [`<DiscoverTimeout>`](#discovertimeout)
 - [`<Environment>`](#environment)
 - [`<ExecutionMode>`](#executionmode)
@@ -124,6 +126,33 @@ With the `<DiscoverCommandLine>` option you set the commandline arguments to cal
 When you use Catch2 v3, you can set the reporter to xml for improved discovery. For previous version of Catch2 the setting had no effect on the discovery output.
 
 > Default value changed in v1.5.0, and v1.8.0
+
+## DllExecutor
+
+Default: ""
+
+Used to support running tests embedded in DLL:s.
+When a test source is a DLL, this program is used to run it. The program will need to
+know how to invoke Catch2 tests inside your DLL:s, there is no standard for this.
+Supports `%ENVIRONMENT VARIABLES%`. Path can be absolute, or relative to the `source` or any of its
+parent directories.
+
+## DllExecutorCommandLine
+
+Default: "$(Source) $(CatchParameters)"
+
+The command line parameters passed to the `DllExecutor` when running tests from a DLL.
+
+The string `$(Source)` will be replaced by the original source executable.
+The string `$(CatchParameters)` will be replaced by the regular catch parameters.
+Supports `%ENVIRONMENT VARIABLES%`.
+
+```xml
+<Catch2Adapter>
+    <DllExecutor>my-catch2-wrapper</DllExecutor>
+    <DllExecutorCommandLine>--source $(Source) $(CatchParameters)</DllExecutorCommandLine>
+</Catch2Adapter>
+```
 
 ## DiscoverTimeout
 
