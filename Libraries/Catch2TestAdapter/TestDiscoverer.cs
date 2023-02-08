@@ -21,6 +21,7 @@ namespace Catch2TestAdapter
 {
     [DefaultExecutorUri("executor://Catch2TestExecutor")]
     [FileExtension(".exe")]
+    [FileExtension(".dll")]
     public class TestDiscoverer : ITestDiscoverer
     {
         #region Fields

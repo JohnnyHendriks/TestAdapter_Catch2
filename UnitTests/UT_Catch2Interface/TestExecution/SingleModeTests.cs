@@ -57,6 +57,42 @@ namespace UT_Catch2Interface.TestExecution
         }
 
         [DataTestMethod]
+        [DynamicData( nameof( VersionPaths ), DynamicDataSourceType.Property )]
+        public void TestRun_TestDllExecutor(string versionpath)
+        {
+            var source = Paths.TestExecutable_Execution(TestContext, versionpath);
+            if (string.IsNullOrEmpty( source ))
+            {
+                Assert.Fail( $"Missing test executable for {versionpath}." );
+                return;
+            }
+
+            // TestExecutableOverride is meant for wrapping the test execution
+            // with a different executable. We don't have a suitable wrapper
+            // executable, so we test the behaviour with a trick:
+            // we put the real source as the override, and pass a dummy
+            // value as the source.
+            var settings = new Settings();
+            settings.ExecutionMode = ExecutionModes.SingleTestCase;
+            settings.DllExecutor = source;
+			settings.DllExecutorCommandLine = Constants.Tag_CatchParameters;
+
+			// Use the executing assembly as the dummy value ensure that it
+			// is an existing file, because the executor checks that.
+			// The test assembly is also a dll, triggering the DllExecutor.
+			string dummySource = System.Reflection.Assembly.GetExecutingAssembly().Location;
+
+            var executor = new Executor( settings, _pathSolution, _pathTestRun );
+
+            // The run should work with the dummy source, because we overrode the
+            // test executable.
+            var result = executor.Run( "Names. abcdefghijklmnopqrstuvwxyz", dummySource );
+            Assert.AreEqual( TestOutcomes.Passed, result.Outcome );
+            Assert.AreEqual( 0, result.OverallResults.Failures );
+            Assert.AreEqual( 1, result.OverallResults.Successes );
+        }
+
+        [DataTestMethod]
         [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
         public void TestRun_TestNames_Pass(string versionpath)
         {

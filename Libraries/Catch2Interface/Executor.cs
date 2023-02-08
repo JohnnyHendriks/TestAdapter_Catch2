@@ -96,37 +96,37 @@ Class :
             }
         }
 
-        public string GenerateCommandlineArguments_Single(string testname, string reportfilename)
+        public string GenerateCommandlineArguments_Single(string source, string testname, string reportfilename)
         {
-            return $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes --out {"\""}{reportfilename}{"\""}";
+            return _settings.FormatParameters(source, $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes --out {"\""}{reportfilename}{"\""}");
         }
 
-        public string GenerateCommandlineArguments_Single_Dbg(string testname)
+        public string GenerateCommandlineArguments_Single_Dbg(string source, string testname)
         {
             if (_settings.DebugBreak)
             {
-                return $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes --break";
+                return _settings.FormatParameters(source, $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes --break");
             }
             else
             {
-                return $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes";
+                return _settings.FormatParameters(source, $"{GenerateTestnameForCommandline(testname)} --reporter xml --durations yes");
             }
         }
 
-        public string GenerateCommandlineArguments_Combined(string caselistfilename, string reportfilename)
+        public string GenerateCommandlineArguments_Combined(string source, string caselistfilename, string reportfilename)
         {
-            return $"--reporter xml --durations yes --input-file {"\""}{caselistfilename}{"\""} --out {"\""}{reportfilename}{"\""}";
+            return _settings.FormatParameters(source, $"--reporter xml --durations yes --input-file {"\""}{caselistfilename}{"\""} --out {"\""}{reportfilename}{"\""}");
         }
 
-        public string GenerateCommandlineArguments_Combined_Dbg(string caselistfilename)
+        public string GenerateCommandlineArguments_Combined_Dbg(string source, string caselistfilename)
         {
             if (_settings.DebugBreak)
             {
-                return $"--reporter xml --durations yes --break --input-file {"\""}{caselistfilename}{"\""}";
+                return _settings.FormatParameters(source, $"--reporter xml --durations yes --break --input-file {"\""}{caselistfilename}{"\""}");
             }
             else
             {
-                return $"--reporter xml --durations yes --input-file {"\""}{caselistfilename}{"\""}";
+                return _settings.FormatParameters(source, $"--reporter xml --durations yes --input-file {"\""}{caselistfilename}{"\""}");
             }
         }
 
@@ -139,8 +139,8 @@ Class :
             string reportfilename = MakeReportFilename(source);
 
             var process = new Process();
-            process.StartInfo.FileName = source;
-            process.StartInfo.Arguments = GenerateCommandlineArguments_Single(testname, reportfilename);
+            process.StartInfo.FileName = _settings.GetExecutable(source);
+            process.StartInfo.Arguments = GenerateCommandlineArguments_Single(source, testname, reportfilename);
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;
@@ -220,8 +220,8 @@ Class :
 
             // Run tests
             var process = new Process();
-            process.StartInfo.FileName = group.Source;
-            process.StartInfo.Arguments = GenerateCommandlineArguments_Combined(caselistfilename, reportfilename);
+            process.StartInfo.FileName = _settings.GetExecutable( group.Source );
+            process.StartInfo.Arguments = GenerateCommandlineArguments_Combined(group.Source, caselistfilename, reportfilename);
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;

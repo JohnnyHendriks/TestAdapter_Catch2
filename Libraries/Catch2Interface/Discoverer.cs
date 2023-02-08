@@ -157,8 +157,8 @@ Class :
             // Retrieve test cases
             using (var process = new Process())
             {
-                process.StartInfo.FileName = source;
-                process.StartInfo.Arguments = _settings.DiscoverCommandLine;
+                process.StartInfo.FileName = _settings.GetExecutable(source);
+                process.StartInfo.Arguments = _settings.FormatParameters(source, _settings.DiscoverCommandLine);
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;

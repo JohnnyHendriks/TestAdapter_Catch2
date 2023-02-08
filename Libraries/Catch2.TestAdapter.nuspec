@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Catch2.TestAdapter</id>
+    <version>$version$</version>
+    <title>Visual Studio Test Adapter for Catch2</title>
+    <authors>JohnnyHendriks</authors>
+    <owners>JohnnyHendriks</owners>
+    <projectUrl>https://github.com/JohnnyHendriks/TestAdapter_Catch2</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <description>
+        Class library containing the Visual Studio Test Adapter for Catch2
+    </description>
+    <releaseNotes></releaseNotes>
+    <copyright></copyright>
+    <tags>native catch2 test adapter</tags>
+    <dependencies>
+      <group targetFramework="native" />
+    </dependencies>
+  </metadata>
+  <files>
+    <!-- Must copy the files to the folder "native" to make the package installable in native projects.
+         The Visual Studio test window recognizes any file named *.TestAdapter.dll in a nuget package
+         as a potential adapter, not caring about the platform. See
+         https://github.com/microsoft/vstest/blob/main/docs/RFCs/0004-Adapter-Extensibility.md -->
+    <file src="Catch2TestAdapter\bin\$configuration$\Catch2.TestAdapter.dll" target="lib\native\" />
+    <file src="Catch2Interface\bin\$configuration$\Catch2Interface.dll" target="lib\native\" />
+  </files>
+</package>
