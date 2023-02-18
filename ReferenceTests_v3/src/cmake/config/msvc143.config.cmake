@@ -37,7 +37,13 @@ string(APPEND TAfC2_LINKER_FLAGS_RELEASE " /INCREMENTAL:NO") # Turn of increment
 string(STRIP ${TAfC2_LINKER_FLAGS_RELEASE} TAfC2_LINKER_FLAGS_RELEASE)
 
 set( tafc2_CATCH2_VERSION_CONFIGURATION_TYPES
-  Rel3_0_0
+  Rel3_0_1
+  Rel3_1_0
+  Rel3_1_1
+  Rel3_2_0
+  Rel3_2_1
+  Rel3_3_0
+  Rel3_3_1
 )
 
 # Set flags in CMakeCache

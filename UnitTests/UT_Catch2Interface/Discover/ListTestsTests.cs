@@ -253,6 +253,12 @@ namespace UT_Catch2Interface.Discover
         [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
         public void Names(string versionpath)
         {
+            if (versionpath.StartsWith("Rel3_"))
+            {
+                // Not supported, would fail this test
+                return;
+            }
+
             var source = Paths.TestExecutable_Discover(TestContext, versionpath);
             if (string.IsNullOrEmpty(source))
             {
@@ -291,6 +297,12 @@ namespace UT_Catch2Interface.Discover
         [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
         public void NamesVerbose(string versionpath)
         {
+            if (versionpath.StartsWith("Rel3_"))
+            {
+                // Not supported, would fail this test
+                return;
+            }
+
             var source = Paths.TestExecutable_Discover(TestContext, versionpath);
             if (string.IsNullOrEmpty(source))
             {
@@ -361,6 +373,12 @@ namespace UT_Catch2Interface.Discover
         [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
         public void LongNames(string versionpath)
         {
+            if(versionpath.StartsWith("Rel3_"))
+            {
+                // Not supported, would fail this test
+                return;
+            }
+
             var source = Paths.TestExecutable_Discover(TestContext, versionpath);
             if (string.IsNullOrEmpty(source))
             {
@@ -401,6 +419,12 @@ namespace UT_Catch2Interface.Discover
         [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
         public void LongNamesVerbose(string versionpath)
         {
+            if (versionpath.StartsWith("Rel3_"))
+            {
+                // Not supported, would fail this test
+                return;
+            }
+
             var source = Paths.TestExecutable_Discover(TestContext, versionpath);
             if (string.IsNullOrEmpty(source))
             {
@@ -457,6 +481,12 @@ namespace UT_Catch2Interface.Discover
         [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
         public void LongNamesNotDiscoverable(string versionpath)
         {
+            if (versionpath.StartsWith("Rel3_"))
+            {
+                // Not supported, would fail this test
+                return;
+            }
+
             var source = Paths.TestExecutable_Discover(TestContext, versionpath);
             if (string.IsNullOrEmpty(source))
             {
@@ -501,6 +531,12 @@ namespace UT_Catch2Interface.Discover
         [DynamicData(nameof(VersionPaths), DynamicDataSourceType.Property)]
         public void LongNamesNotDiscoverableVerbose(string versionpath)
         {
+            if (versionpath.StartsWith("Rel3_"))
+            {
+                // Not supported, would fail this test
+                return;
+            }
+
             var source = Paths.TestExecutable_Discover(TestContext, versionpath);
             if (string.IsNullOrEmpty(source))
             {

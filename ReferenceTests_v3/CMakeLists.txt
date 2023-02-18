@@ -13,6 +13,12 @@ list( APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src/cmake" )
 include( tafc2-helpers )
 
 tafc2_config_output_paths()
-tafc2_config_catch2_packages( "v3.0.0" )
+tafc2_config_catch2_packages( "v3.0.1" )
+tafc2_config_catch2_packages( "v3.1.0" )
+tafc2_config_catch2_packages( "v3.1.1" )
+tafc2_config_catch2_packages( "v3.2.0" )
+tafc2_config_catch2_packages( "v3.2.1" )
+tafc2_config_catch2_packages( "v3.3.0" )
+tafc2_config_catch2_packages( "v3.3.1" )
 
 add_subdirectory( src/tests )

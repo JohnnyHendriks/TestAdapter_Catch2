@@ -3,10 +3,16 @@
 echo Start setup of VS2022 solution...
 echo.
 
-cmake --preset=msvc143 -S ..
+cmake --preset=msvc143 -S .. --log-level=DEBUG
 
 ::call :BuildTests Release
-call :BuildTests Rel3_0_0
+::call :BuildTests Rel3_0_1
+::call :BuildTests Rel3_1_0
+::call :BuildTests Rel3_1_1
+::call :BuildTests Rel3_2_0
+::call :BuildTests Rel3_2_1
+call :BuildTests Rel3_3_0
+::call :BuildTests Rel3_3_1
 
 cd tools
 

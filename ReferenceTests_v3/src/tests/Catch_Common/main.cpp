@@ -18,18 +18,14 @@ Notes: None
 
 // Catch2
 #include <catch2/catch_session.hpp>
-#include "catch_discover.hpp"
 
 int main(int argc, char* argv[])
 {
     Catch::Session session;
 
-    bool doDiscover = false;
     int  wait = -1;
 
-    Catch::addDiscoverOption(session, doDiscover);
-
-    // Add sleep option to commandline
+    // Add sleep option to command-line
     {
         using namespace Catch::Clara;
 
@@ -49,5 +45,5 @@ int main(int argc, char* argv[])
         std::this_thread::sleep_for(std::chrono::milliseconds(wait));
     }
 
-    return Catch::runDiscoverSession(session, doDiscover);
+    return session.run();
 }

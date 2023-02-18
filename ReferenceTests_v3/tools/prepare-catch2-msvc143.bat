@@ -8,8 +8,14 @@ cmake --preset=msvc143 -S ../catch2 --log-level=DEBUG
 
 ::cd ../tools
 
-::Prepare files for version 3.0.0
-call :BuildCatch2 Rel3_0_0 Catch2-3.0.0-preview4
+::Prepare files for version 3.0.1
+::call :BuildCatch2 Rel3_0_1 Catch2-3.0.1
+::call :BuildCatch2 Rel3_1_0 Catch2-3.1.0
+::call :BuildCatch2 Rel3_1_1 Catch2-3.1.1
+::call :BuildCatch2 Rel3_2_0 Catch2-3.2.0
+::call :BuildCatch2 Rel3_2_1 Catch2-3.2.1
+call :BuildCatch2 Rel3_3_0 Catch2-3.3.0
+::call :BuildCatch2 Rel3_3_1 Catch2-3.3.1
 
 echo.
 echo Done.
@@ -31,6 +37,12 @@ cmake --build --preset=msvc143-build --config Debug
 :: Copy include files
 pushd src
 xcopy "*.hpp" "..\..\..\..\..\..\build\catch2\%1\include" /i /q /s
+popd
+
+pushd build
+pushd generated-includes
+xcopy "*.hpp" "..\..\..\..\..\..\..\build\catch2\%1\include" /i /q /s
+popd
 popd
 
 : Copy lib and pdb files

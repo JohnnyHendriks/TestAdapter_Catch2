@@ -77,9 +77,15 @@ function( tafc2_add_test targetname idefolder )
     ${targetname}
     PRIVATE
       TAFC2_Common
-      $<$<CONFIG:Debug>:Tafc2::Catch2_v3_0_0>
-      $<$<CONFIG:Release>:Tafc2::Catch2_v3_0_0>
-      $<$<CONFIG:Rel3_0_0>:Tafc2::Catch2_v3_0_0>
+      $<$<CONFIG:Debug>:Tafc2::Catch2_v3_3_1>
+      $<$<CONFIG:Release>:Tafc2::Catch2_v3_3_1>
+      $<$<CONFIG:Rel3_0_1>:Tafc2::Catch2_v3_0_1>
+      $<$<CONFIG:Rel3_1_0>:Tafc2::Catch2_v3_1_0>
+      $<$<CONFIG:Rel3_1_1>:Tafc2::Catch2_v3_1_1>
+      $<$<CONFIG:Rel3_2_0>:Tafc2::Catch2_v3_2_0>
+      $<$<CONFIG:Rel3_2_1>:Tafc2::Catch2_v3_2_1>
+      $<$<CONFIG:Rel3_3_0>:Tafc2::Catch2_v3_3_0>
+      $<$<CONFIG:Rel3_3_1>:Tafc2::Catch2_v3_3_1>
   )
 
   # Group files for IDE environments
