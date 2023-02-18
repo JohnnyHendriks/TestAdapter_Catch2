@@ -80,6 +80,8 @@ set( tafc2_CATCH2_VERSION_CONFIGURATION_TYPES
   Rel_13_6
   Rel_13_7
   Rel_13_8
+  Rel_13_9
+  Rel_13_10
 )
 
 # Set flags in CMakeCache

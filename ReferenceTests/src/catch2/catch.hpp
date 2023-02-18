@@ -187,9 +187,17 @@ Notes: None
 
 #include "v2.13.8/catch.hpp"
 
+#elif defined TA_CATCH2_V2_13_9
+
+#include "v2.13.9/catch.hpp"
+
+#elif defined TA_CATCH2_V2_13_10
+
+#include "v2.13.10/catch.hpp"
+
 #else
 
-#include "v2.13.8/catch.hpp"
+#include "v2.13.10/catch.hpp"
 
 #endif
 
