@@ -5,7 +5,7 @@ echo.
 
 cmake --preset=msvc142 -S ..
 
-call :BuildTests Release
+::call :BuildTests Release
 call :BuildTests Rel_0_1
 call :BuildTests Rel_1_0
 call :BuildTests Rel_1_1
@@ -49,6 +49,8 @@ call :BuildTests Rel_13_5
 call :BuildTests Rel_13_6
 call :BuildTests Rel_13_7
 call :BuildTests Rel_13_8
+call :BuildTests Rel_13_9
+call :BuildTests Rel_13_10
 
 cd tools
 

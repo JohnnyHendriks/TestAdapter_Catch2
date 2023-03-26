@@ -44,6 +44,7 @@ set( tafc2_CATCH2_VERSION_CONFIGURATION_TYPES
   Rel3_2_1
   Rel3_3_0
   Rel3_3_1
+  Rel3_3_2
 )
 
 # Set flags in CMakeCache

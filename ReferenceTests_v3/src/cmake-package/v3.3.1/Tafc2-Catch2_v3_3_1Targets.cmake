@@ -1,5 +1,14 @@
 get_property( isMultiConfig GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG )
 
+# create absolute path prefix for package
+set(TAFC2_CATCH2_V3_3_1_PREFIX_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../build/catch2/Rel3_3_1/")
+cmake_path(
+  ABSOLUTE_PATH TAFC2_CATCH2_V3_3_1_PREFIX_DIR
+  NORMALIZE
+  OUTPUT_VARIABLE TAFC2_CATCH2_V3_3_1_PREFIX_DIR
+)
+message( DEBUG "TAFC2targets: TAFC2_CATCH2_V3_3_1_PREFIX_DIR was set to: ${TAFC2_CATCH2_V3_3_1_PREFIX_DIR}")
+
 ####################
 # Static Libraries #
 ####################
@@ -7,6 +16,7 @@ get_property( isMultiConfig GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG )
 add_library( Tafc2::Catch2_v3_3_1 STATIC IMPORTED )
 add_library( Tafc2::Catch2_v3_3_1_Main STATIC IMPORTED )
 
+message( DEBUG "Tafc2_Catch2_v3_3_1Targets: include: ${TAFC2_CATCH2_V3_3_1_PREFIX_DIR}include" )
 target_include_directories( Tafc2::Catch2_v3_3_1
   INTERFACE "${TAFC2_CATCH2_V3_3_1_PREFIX_DIR}include"
 )

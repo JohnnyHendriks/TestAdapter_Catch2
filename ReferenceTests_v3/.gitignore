@@ -7,3 +7,5 @@ CMakeSettings.json
 /*/
 !/src/
 !/tools/
+!/catch2/
+/catch2/build/

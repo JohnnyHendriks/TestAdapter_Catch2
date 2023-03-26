@@ -6,7 +6,6 @@ add_library( ${targetname} INTERFACE )
 
 # Add default source files
 set( src_Catch2
-  "${CMAKE_CURRENT_LIST_DIR}/catch_discover.hpp"
   "${CMAKE_CURRENT_LIST_DIR}/main.cpp"
 )
 

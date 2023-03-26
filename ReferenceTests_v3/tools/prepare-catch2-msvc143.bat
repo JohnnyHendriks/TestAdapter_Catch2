@@ -6,16 +6,15 @@ echo.
 ::cmake --preset=msvc143 -S ..
 cmake --preset=msvc143 -S ../catch2 --log-level=DEBUG
 
-::cd ../tools
-
 ::Prepare files for version 3.0.1
-::call :BuildCatch2 Rel3_0_1 Catch2-3.0.1
-::call :BuildCatch2 Rel3_1_0 Catch2-3.1.0
-::call :BuildCatch2 Rel3_1_1 Catch2-3.1.1
-::call :BuildCatch2 Rel3_2_0 Catch2-3.2.0
-::call :BuildCatch2 Rel3_2_1 Catch2-3.2.1
+call :BuildCatch2 Rel3_0_1 Catch2-3.0.1
+call :BuildCatch2 Rel3_1_0 Catch2-3.1.0
+call :BuildCatch2 Rel3_1_1 Catch2-3.1.1
+call :BuildCatch2 Rel3_2_0 Catch2-3.2.0
+call :BuildCatch2 Rel3_2_1 Catch2-3.2.1
 call :BuildCatch2 Rel3_3_0 Catch2-3.3.0
-::call :BuildCatch2 Rel3_3_1 Catch2-3.3.1
+call :BuildCatch2 Rel3_3_1 Catch2-3.3.1
+call :BuildCatch2 Rel3_3_2 Catch2-3.3.2
 
 echo.
 echo Done.
@@ -26,7 +25,7 @@ exit /b
 
 :BuildCatch2
 
-pushd "..\catch2\build\msvc143\referencetestsv3\%2"
+pushd "..\catch2\build\msvc143\catch2\%2"
 
 cmake --preset=msvc143 -S . --log-level=DEBUG
 

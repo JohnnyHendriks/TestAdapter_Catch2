@@ -1,0 +1,98 @@
+{
+  "version": 2,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "msvc142-base",
+      "description": "Sets generator related basic settings",
+      "hidden": true,
+      "generator": "Visual Studio 16 2019",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/../src/cmake/config/msvc142.config.cmake"
+        }
+      },
+      "architecture":
+      {
+        "value": "x64",
+        "strategy": "set" 
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [ "Windows" ]
+        }
+      }
+    },
+    {
+      "name": "msvc143-base",
+      "description": "Sets generator related basic settings",
+      "hidden": true,
+      "generator": "Visual Studio 17 2022",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/../src/cmake/config/msvc143.config.cmake"
+        }
+      },
+      "architecture":
+      {
+        "value": "x64",
+        "strategy": "set" 
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [ "Windows" ]
+        }
+      }
+    },
+    {
+      "name": "msvc142",
+      "displayName": "MSVC 14.2",
+      "description": "VS2019",
+      "inherits": ["msvc142-base"],
+      "binaryDir": "${sourceDir}/build/msvc142/catch2"
+    },
+    {
+      "name": "msvc143",
+      "displayName": "MSVC 14.3",
+      "description": "VS2022",
+      "inherits": ["msvc143-base"],
+      "binaryDir": "${sourceDir}/build/msvc143/catch2"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "msvc142-core-build",
+      "description": "Inherits environment from base configurePreset",
+      "configurePreset": "msvc142-base",
+      "hidden": true,
+      "inheritConfigureEnvironment": true
+    },
+    {
+      "name": "msvc143-core-build",
+      "description": "Inherits environment from base configurePreset",
+      "configurePreset": "msvc143-base",
+      "hidden": true,
+      "inheritConfigureEnvironment": true
+    },
+    {
+      "name": "msvc142-build",
+      "description": "Build with normal log output",
+      "configurePreset": "msvc142",
+      "inherits": "msvc142-core-build",
+      "nativeToolOptions": [ "-verbosity:normal" ]
+    },
+    {
+      "name": "msvc143-build",
+      "description": "Build with normal log output",
+      "configurePreset": "msvc143",
+      "inherits": "msvc143-core-build",
+      "nativeToolOptions": [ "-verbosity:normal" ]
+    }
+  ]
+}

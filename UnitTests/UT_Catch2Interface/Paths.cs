@@ -5,7 +5,7 @@ Copyright: 2019 Johnny Hendriks
 Author : Johnny Hendriks
 Year   : 2019
 Project: VSTestAdapter for Catch2
-Licence: MIT
+License: MIT
 
 Notes: None
 
@@ -82,6 +82,7 @@ namespace UT_Catch2Interface
             , new string[]{ "Rel3_2_1" }
             , new string[]{ "Rel3_3_0" }
             , new string[]{ "Rel3_3_1" }
+            , new string[]{ "Rel3_3_2" }
             };
         }
 
