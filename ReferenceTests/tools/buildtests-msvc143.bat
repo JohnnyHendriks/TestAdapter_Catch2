@@ -5,7 +5,7 @@ echo.
 
 cmake --preset=msvc143 -S ..
 
-call :BuildTests Release
+::call :BuildTests Release
 call :BuildTests Rel_0_1
 call :BuildTests Rel_1_0
 call :BuildTests Rel_1_1
@@ -65,5 +65,6 @@ exit
 
 cmake --build ../build/msvc143 --config %~1
 xcopy "..\build\msvc143\bin\%~1\*.exe" "..\..\_reftests\%~1" /I /Q
+xcopy "..\build\msvc143\bin\%~1\*.dll" "..\..\_reftests\%~1" /I /Q
 
 exit /B 0

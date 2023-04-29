@@ -15,8 +15,6 @@ call :BuildTests Rel3_3_0
 call :BuildTests Rel3_3_1
 call :BuildTests Rel3_3_2
 
-cd tools
-
 echo.
 echo Done.
 
@@ -30,6 +28,7 @@ pushd ..
 
 cmake --build --preset=msvc143-normal-build --config %~1
 xcopy "build\msvc143\referencetestsv3\bin\%~1\*.exe" "..\_reftests\%~1" /I /Q
+xcopy "build\msvc143\referencetestsv3\bin\%~1\*.dll" "..\_reftests\%~1" /I /Q
 
 popd
 

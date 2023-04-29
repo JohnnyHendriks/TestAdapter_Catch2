@@ -17,6 +17,7 @@ foreach( tafc2_catchversion IN ITEMS v3_0_1 v3_1_0 v3_1_1 v3_2_0 v3_2_1 v3_3_0 v
 endforeach()
 
 add_subdirectory(Catch_Common)
+add_subdirectory(CatchDll_Common)
 
 add_subdirectory(Catch_Discover)
 add_subdirectory(Catch_Dummy)
@@ -29,3 +30,5 @@ add_subdirectory(Catch_NoSEH)
 add_subdirectory(Catch_Testset01)
 add_subdirectory(Catch_Testset02)
 add_subdirectory(Catch_Testset03)
+
+add_subdirectory(CatchDllRunner)

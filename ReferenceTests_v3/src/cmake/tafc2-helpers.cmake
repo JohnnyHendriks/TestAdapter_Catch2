@@ -91,7 +91,7 @@ function( tafc2_add_test targetname idefolder )
 
   # Group files for IDE environments
   source_group( Files REGULAR_EXPRESSION "(\\.[ch]pp)$" )
-  source_group( Files\\Main REGULAR_EXPRESSION "((main\\.cpp)|(catch_discover\\.hpp))$" )
+  source_group( Files\\Main REGULAR_EXPRESSION "(main\\.cpp)$" )
 
   set_target_properties( ${targetname} PROPERTIES FOLDER "${idefolder}" )
 
@@ -101,5 +101,54 @@ function( tafc2_add_test targetname idefolder )
     COMMAND $<TARGET_FILE_NAME:${targetname}>
     WORKING_DIRECTORY $<TARGET_FILE_DIR:${targetname}>
   )
+
+endfunction()
+
+function( tafc2_add_dlltest targetname idefolder )
+
+  # Add test executable
+  add_library( ${targetname} SHARED )
+
+  # Add dependencies
+  target_link_libraries(
+    ${targetname}
+    PRIVATE
+      TAFC2_Dll_Common
+      $<$<CONFIG:Debug>:Tafc2::Catch2_v3_3_1>
+      $<$<CONFIG:Release>:Tafc2::Catch2_v3_3_1>
+      $<$<CONFIG:Rel3_0_1>:Tafc2::Catch2_v3_0_1>
+      $<$<CONFIG:Rel3_1_0>:Tafc2::Catch2_v3_1_0>
+      $<$<CONFIG:Rel3_1_1>:Tafc2::Catch2_v3_1_1>
+      $<$<CONFIG:Rel3_2_0>:Tafc2::Catch2_v3_2_0>
+      $<$<CONFIG:Rel3_2_1>:Tafc2::Catch2_v3_2_1>
+      $<$<CONFIG:Rel3_3_0>:Tafc2::Catch2_v3_3_0>
+      $<$<CONFIG:Rel3_3_1>:Tafc2::Catch2_v3_3_1>
+      $<$<CONFIG:Rel3_3_2>:Tafc2::Catch2_v3_3_2>
+  )
+
+  # Group files for IDE environments
+  source_group( Files REGULAR_EXPRESSION "(\\.[ch]pp)$" )
+  source_group( Files\\Main REGULAR_EXPRESSION "(main\\.cpp)$" )
+
+  set_target_properties( ${targetname} PROPERTIES FOLDER "${idefolder}" )
+
+  # Add test
+#  add_test(
+#    NAME ${targetname}
+#    COMMAND $<TARGET_FILE_NAME:${targetname}>
+#    WORKING_DIRECTORY $<TARGET_FILE_DIR:${targetname}>
+#  )
+
+endfunction()
+
+function( tafc2_add_runner targetname idefolder )
+
+  # Add test executable
+  add_executable( ${targetname} )
+
+  # Group files for IDE environments
+  source_group( Files REGULAR_EXPRESSION "(\\.[ch]pp)$" )
+
+  set_target_properties( ${targetname} PROPERTIES FOLDER "${idefolder}" )
 
 endfunction()

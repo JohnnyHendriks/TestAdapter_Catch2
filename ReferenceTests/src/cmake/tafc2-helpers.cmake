@@ -74,3 +74,38 @@ function( tafc2_add_test targetname idefolder )
   )
 
 endfunction()
+
+function( tafc2_add_dlltest targetname idefolder )
+
+  # Add test executable
+  add_library( ${targetname} SHARED )
+
+  # Add dependencies
+  target_link_libraries( ${targetname} PRIVATE TAFC2_Catch2 TAFC2_Dll_Common )
+
+  # Group files for IDE environments
+  source_group( Files REGULAR_EXPRESSION "(\\.[ch]pp)$" )
+  source_group( Files\\Main REGULAR_EXPRESSION "((main\\.cpp)|(catch_discover\\.hpp))$" )
+
+  set_target_properties( ${targetname} PROPERTIES FOLDER "${idefolder}" )
+
+  # Add test
+  add_test(
+    NAME ${targetname}
+    COMMAND $<TARGET_FILE_NAME:${targetname}>
+    WORKING_DIRECTORY $<TARGET_FILE_DIR:${targetname}>
+  )
+
+endfunction()
+
+function( tafc2_add_runner targetname idefolder )
+
+  # Add test executable
+  add_executable( ${targetname} )
+
+  # Group files for IDE environments
+  source_group( Files REGULAR_EXPRESSION "(\\.[ch]pp)$" )
+
+  set_target_properties( ${targetname} PROPERTIES FOLDER "${idefolder}" )
+
+endfunction()
