@@ -5,7 +5,7 @@ Copyright: 2018 Johnny Hendriks
 Author : Johnny Hendriks
 Year   : 2018
 Project: VSTestAdapter for Catch2
-Licence: MIT
+License: MIT
 
 Notes: None
 
@@ -222,6 +222,149 @@ Class :
             var process = new Process();
             process.StartInfo.FileName = group.Source;
             process.StartInfo.Arguments = GenerateCommandlineArguments_Combined(caselistfilename, reportfilename);
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.WorkingDirectory = WorkingDirectory(group.Source);
+
+            _settings.AddEnviromentVariables(process.StartInfo.EnvironmentVariables);
+
+            LogDebug($"Source for test case: {group.Source}{Environment.NewLine}");
+            LogDebug($"Commandline arguments used to run tests case: {process.StartInfo.Arguments}{Environment.NewLine}");
+
+            process.Start();
+            _process = process;
+            bool timeout = false;
+
+            if (_settings.CombinedTimeout > 0)
+            {
+                process.WaitForExit(_settings.CombinedTimeout);
+            }
+            else
+            {
+                process.WaitForExit();
+            }
+
+            _process = null;
+
+            if (!process.HasExited)
+            {
+                process.Kill();
+                process.WaitForExit();
+                LogVerbose($"Killed process.{Environment.NewLine}");
+                Log = _logbuilder.ToString();
+                timeout = true;
+            }
+
+            process.Close();
+
+            // Read and process generated report
+            string report = ReadReport(reportfilename); // Also does cleanup of reportfile
+            LogDebug(report);
+            Log = _logbuilder.ToString();
+
+            // Cleanup temporary files (don't delete files when loglevel is debug)
+            if (_settings.LoggingLevel != LoggingLevels.Debug)
+            {
+                TryDeleteFile(caselistfilename);
+                TryDeleteFile(reportfilename);
+            }
+
+            return new XmlOutput(report, timeout, _settings);
+        }
+
+        public TestResult RunDll(string runner, string testname, string source)
+        {
+            if (_cancelled) return new TestResult();
+
+            _logbuilder.Clear();
+
+            string reportfilename = MakeReportFilename(source);
+
+            var process = new Process();
+            process.StartInfo.FileName = runner;
+            process.StartInfo.Arguments = _settings.GetDllExecutorCommandline(GenerateCommandlineArguments_Single(testname, reportfilename), source);
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.WorkingDirectory = WorkingDirectory(source);
+
+            _settings.AddEnviromentVariables(process.StartInfo.EnvironmentVariables);
+
+            LogDebug($"Source for test case: {source}{Environment.NewLine}");
+            LogDebug($"Commandline arguments used to run tests case: {process.StartInfo.Arguments}{Environment.NewLine}");
+            LogDebug($"Run test case: {testname}{Environment.NewLine}");
+            process.Start();
+            _process = process;
+
+            if (_settings.TestCaseTimeout > 0)
+            {
+                process.WaitForExit(_settings.TestCaseTimeout);
+            }
+            else
+            {
+                process.WaitForExit();
+            }
+
+            _process = null;
+
+            if (!process.HasExited)
+            {
+                process.Kill();
+                process.WaitForExit();
+                process.Close();
+
+                string report = ReadReport(reportfilename);
+                LogVerbose($"Killed process. Threw away following output:{Environment.NewLine}{report}{Environment.NewLine}");
+
+                // Cleanup temporary files (don't delete files when loglevel is debug)
+                if (_settings.LoggingLevel != LoggingLevels.Debug)
+                {
+                    TryDeleteFile(reportfilename);
+                }
+
+                Log = _logbuilder.ToString();
+
+                return new TestResult(new TimeSpan(0, 0, 0, 0, _settings.TestCaseTimeout)
+                                     , "Testcase timed out."
+                                     , report);
+            }
+            else
+            {
+                process.Close();
+
+                string report = ReadReport(reportfilename);
+                LogDebug(report);
+
+                // Cleanup temporary files (don't delete files when loglevel is debug)
+                if (_settings.LoggingLevel != LoggingLevels.Debug)
+                {
+                    TryDeleteFile(reportfilename);
+                }
+
+                Log = _logbuilder.ToString();
+
+                // Process testrun output
+                return new TestResult(report, testname, _settings, false);
+            }
+        }
+
+        public XmlOutput RunDll(string runner, TestCaseGroup group)
+        {
+            if (_cancelled) return null;
+
+            _logbuilder.Clear();
+
+            string caselistfilename = MakeCaselistFilename(group.Source);
+            string reportfilename = MakeReportFilename(group.Source);
+
+            // Prepare testcase list file
+            CreateTestcaseListFile(group, caselistfilename);
+
+            // Run tests
+            var process = new Process();
+            process.StartInfo.FileName = runner;
+            process.StartInfo.Arguments = _settings.GetDllExecutorCommandline(GenerateCommandlineArguments_Combined(caselistfilename, reportfilename), group.Source);
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;

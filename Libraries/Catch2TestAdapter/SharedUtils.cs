@@ -5,7 +5,7 @@ Copyright: 2018 Johnny Hendriks
 Author : Johnny Hendriks
 Year   : 2018
 Project: VSTestAdapter for Catch2
-Licence: MIT
+License: MIT
 
 Notes: None
 
@@ -23,9 +23,9 @@ Class :
 */
     public static class SharedUtils
     {
-        public static TestCase ConvertTestcase(Catch2Interface.TestCase testcase)
+        public static TestCase ConvertTestcase(Catch2Interface.TestCase testcase, System.Uri executorUri)
         {
-            var vstestcase = new TestCase(testcase.Name, TestExecutor.ExecutorUri, testcase.Source);
+            var vstestcase = new TestCase(testcase.Name, executorUri, testcase.Source);
             vstestcase.CodeFilePath = testcase.Filename;
             vstestcase.LineNumber = testcase.Line;
             foreach( var tag in testcase.Tags)

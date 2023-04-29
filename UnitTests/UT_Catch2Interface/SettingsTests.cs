@@ -5,7 +5,7 @@ Copyright: 2018 Johnny Hendriks
 Author : Johnny Hendriks
 Year   : 2018
 Project: VSTestAdapter for Catch2
-Licence: MIT
+License: MIT
 
 Notes: None
 
@@ -154,6 +154,10 @@ namespace UT_Catch2Interface
             Assert.IsFalse(settings.DebugBreak);
             Assert.AreEqual("--verbosity high --list-tests --reporter xml *", settings.DiscoverCommandLine);
             Assert.AreEqual(1000, settings.DiscoverTimeout);
+            Assert.AreEqual(string.Empty, settings.DllFilenameFilter);
+            Assert.AreEqual(string.Empty, settings.DllPostfix);
+            Assert.AreEqual(string.Empty, settings.DllRunner);
+            Assert.AreEqual("${catch2}", settings.DllRunnerCommandLine);
             Assert.AreEqual(ExecutionModes.SingleTestCase, settings.ExecutionMode);
             Assert.AreEqual(@"(?i:tafc_Single)", settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(string.Empty, settings.FilenameFilter);
@@ -170,6 +174,8 @@ namespace UT_Catch2Interface
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.IsDllDiscoveryDisabled);
+            Assert.IsTrue(settings.IsExeDiscoveryDisabled);
         }
 
         [TestMethod]
@@ -186,6 +192,10 @@ namespace UT_Catch2Interface
             Assert.IsTrue(settings.DebugBreak);
             Assert.AreEqual("--discover", settings.DiscoverCommandLine);
             Assert.AreEqual(2000, settings.DiscoverTimeout);
+            Assert.AreEqual("^CatchDll", settings.DllFilenameFilter);
+            Assert.AreEqual("_D", settings.DllPostfix);
+            Assert.AreEqual("${dllpath}/CatchDllRunner.exe", settings.DllRunner);
+            Assert.AreEqual("${catch2} ${dll}", settings.DllRunnerCommandLine);
             Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
             Assert.AreEqual(@"(?i:Slow)", settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual("^Catch", settings.FilenameFilter);
@@ -205,6 +215,8 @@ namespace UT_Catch2Interface
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.IsDllDiscoveryDisabled);
+            Assert.IsFalse(settings.IsExeDiscoveryDisabled);
         }
 
         [TestMethod]
@@ -221,6 +233,10 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
+            Assert.AreEqual(Constants.S_DefaultDllFilenameFilter, settings.DllFilenameFilter);
+            Assert.AreEqual(Constants.S_DefaultDllPostfix, settings.DllPostfix);
+            Assert.AreEqual(Constants.S_DefaultDllRunner, settings.DllRunner);
+            Assert.AreEqual(Constants.S_DefaultDllRunnerCommandline, settings.DllRunnerCommandLine);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
             Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
@@ -237,6 +253,8 @@ namespace UT_Catch2Interface
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.IsDllDiscoveryDisabled);
+            Assert.IsTrue(settings.IsExeDiscoveryDisabled);
         }
 
 
@@ -254,6 +272,10 @@ namespace UT_Catch2Interface
             Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
+            Assert.AreEqual(Constants.S_DefaultDllFilenameFilter, settings.DllFilenameFilter);
+            Assert.AreEqual(Constants.S_DefaultDllPostfix, settings.DllPostfix);
+            Assert.AreEqual(Constants.S_DefaultDllRunner, settings.DllRunner);
+            Assert.AreEqual(Constants.S_DefaultDllRunnerCommandline, settings.DllRunnerCommandLine);
             Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
             Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
@@ -270,6 +292,8 @@ namespace UT_Catch2Interface
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsTrue(settings.IsDllDiscoveryDisabled);
+            Assert.IsTrue(settings.IsExeDiscoveryDisabled);
         }
 
 
@@ -287,6 +311,10 @@ namespace UT_Catch2Interface
             Assert.IsTrue(settings.DebugBreak);
             Assert.AreEqual("--discover", settings.DiscoverCommandLine);
             Assert.AreEqual(2000, settings.DiscoverTimeout);
+            Assert.AreEqual("^CatchDll", settings.DllFilenameFilter);
+            Assert.AreEqual("_D", settings.DllPostfix);
+            Assert.AreEqual("${dllpath}/CatchDllRunner.exe", settings.DllRunner);
+            Assert.AreEqual("${catch2} ${dll}", settings.DllRunnerCommandLine);
             Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
             Assert.AreEqual(@"(?i:Slow)", settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual("^Catch", settings.FilenameFilter);
@@ -306,6 +334,8 @@ namespace UT_Catch2Interface
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
             Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.IsDllDiscoveryDisabled);
+            Assert.IsFalse(settings.IsExeDiscoveryDisabled);
         }
 
         [TestMethod]
@@ -316,28 +346,7 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
-
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            ValidateDefaultSettings(settings, "");
         }
 
         [TestMethod]
@@ -348,28 +357,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_CombinedTimeout);
 
             Assert.AreEqual(30000, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -380,28 +370,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_DebugBreak);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.IsTrue(settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -412,28 +383,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_DebugBreak);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             Assert.IsFalse(settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -444,24 +396,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_DiscoverCommanline);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
             Assert.AreEqual("--discover", settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
 
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
@@ -476,28 +413,50 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_DiscoverTimeout);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             Assert.AreEqual(2000, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+        }
 
-            Assert.IsNull(settings.Environment);
+        [TestMethod]
+        public void TestExtractDllFilenameFilterOnly()
+        {
+            var xml = new XmlDocument();
+            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_DllFilenameFilter));
+            reader.Read();
+            var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            ValidateDefaultSettings(settings, Constants.NodeName_DllFilenameFilter);
+
+            Assert.AreEqual("^CatchDll", settings.DllFilenameFilter);
+
+            Assert.IsFalse(settings.IsDllDiscoveryDisabled);
+        }
+
+        [TestMethod]
+        public void TestExtractDllPostfixOnly()
+        {
+            var xml = new XmlDocument();
+            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_DllPostfix));
+            reader.Read();
+            var settings = Settings.Extract(xml.ReadNode(reader));
+
+            ValidateDefaultSettings(settings, Constants.NodeName_DllPostfix);
+
+            Assert.AreEqual("_D", settings.DllPostfix);
+        }
+
+        [TestMethod]
+        public void TestExtractDllRunnerOnly()
+        {
+            var xml = new XmlDocument();
+            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_DllRunner));
+            reader.Read();
+            var settings = Settings.Extract(xml.ReadNode(reader));
+
+            ValidateDefaultSettings(settings, Constants.NodeName_DllRunner);
+
+            Assert.AreEqual("${dllpath}/${dllname}Runner.exe", settings.DllRunner);
         }
 
         [TestMethod]
@@ -508,31 +467,13 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_Environment);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
             Assert.IsNotNull(settings.Environment);
             Assert.AreEqual(2, settings.Environment.Count);
             Assert.AreEqual(@"D:\MyPath; D:\MyOtherPath", settings.Environment["PATH"]);
             Assert.AreEqual("debug<0>", settings.Environment["MyCustomEnvSetting"]);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -543,28 +484,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_ExecutionMode);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -575,28 +497,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_ExecutionMode);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -607,28 +510,7 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
-
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            ValidateDefaultSettings(settings, Constants.NodeName_ExecutionMode);
         }
 
         [TestMethod]
@@ -639,28 +521,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_ExecutionMode);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.SingleTestCase, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -671,28 +534,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_ExecutionMode);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.SingleTestCase, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -703,28 +547,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_ExecutionMode);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             Assert.AreEqual(ExecutionModes.SingleTestCase, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -735,28 +560,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_ExecutionModeForceSingleTagRgx);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
             Assert.AreEqual(@"(?i:Slow)", settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -767,28 +573,11 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_FilenameFilter);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
             Assert.AreEqual("^Catch", settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
 
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            Assert.IsFalse(settings.IsExeDiscoveryDisabled);
         }
 
         [TestMethod]
@@ -799,28 +588,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_IncludeHidden);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.IsFalse(settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -831,28 +601,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_IncludeHidden);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
             Assert.IsTrue(settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -863,28 +614,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_Logging);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Quiet, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -895,28 +627,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_Logging);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Normal, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -927,28 +640,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_Logging);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -959,28 +653,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_Logging);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Debug, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -991,28 +666,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_MessageFormat);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.AdditionalInfo, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -1023,28 +679,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_MessageFormat);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.None, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -1055,28 +692,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_MessageFormat);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.StatsOnly, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -1087,28 +705,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_StackTraceFormat);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(StacktraceFormats.None, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -1119,28 +718,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_StackTraceFormat);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
             Assert.AreEqual(StacktraceFormats.ShortInfo, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -1151,28 +731,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_StackTraceMaxLength);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
             Assert.AreEqual(120, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -1183,28 +744,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_StackTracePointReplacement);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
             Assert.AreEqual("_", settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -1215,28 +757,9 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+            ValidateDefaultSettings(settings, Constants.NodeName_TestCaseTimeout);
 
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
             Assert.AreEqual(20000, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -1247,28 +770,7 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
-
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            ValidateDefaultSettings(settings, "");
         }
 
         [TestMethod]
@@ -1279,28 +781,7 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
-
-            Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
-            Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
-            Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
-            Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
-            Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
-            Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
-            Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
-            Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
-            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
-            Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
-            Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
-
-            Assert.IsNull(settings.Environment);
-
-            Assert.IsTrue(settings.IsVerbosityHigh);
-            Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            ValidateDefaultSettings(settings, "");
         }
 
         [TestMethod]
@@ -1810,6 +1291,66 @@ namespace UT_Catch2Interface
             result = settings.ProcessStacktraceDescription("[99] This 1234567890123456789012345678901234567890123456789012345678901234567890 too much\r\n to deal with");
             Assert.AreEqual("[99] This 1234567890123456789012345678901234567890123456789012345678901234567890", result);
 
+        }
+
+        [TestMethod]
+        public void TestGetDllRunner()
+        {
+            var settings = new Settings();
+
+            // Invalid
+            settings.DllRunner = @"${dllpath}\${dllname}Runner${postfix}.exe";
+            var runner = settings.GetDllRunner(@"D:\Test\Path\Catch2Dll_test.dll");
+            Assert.AreEqual(@"D:\Test\Path\Catch2Dll_testRunner.exe", runner);
+
+            settings.DllPostfix = @"_D";
+            runner = settings.GetDllRunner(@"D:\Test\Path\Catch2Dll_test.dll");
+            Assert.AreEqual(@"D:\Test\Path\Catch2Dll_testRunner.exe", runner);
+
+            settings.DllPostfix = @"_test";
+            runner = settings.GetDllRunner(@"D:\Test\Path\Catch2Dll_test.dll");
+            Assert.AreEqual(@"D:\Test\Path\Catch2DllRunner_test.exe", runner);
+        }
+
+        private void ValidateDefaultSettings(Settings settings, string exclude)
+        {
+            Assert.AreEqual(Constants.S_DefaultDisabled, settings.Disabled);
+
+            if (exclude != Constants.NodeName_CombinedTimeout)                Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
+            if (exclude != Constants.NodeName_DebugBreak)                     Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
+            if (exclude != Constants.NodeName_DiscoverCommanline)             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
+            if (exclude != Constants.NodeName_DiscoverTimeout)                Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
+            if (exclude != Constants.NodeName_DllFilenameFilter)              Assert.AreEqual(Constants.S_DefaultDllFilenameFilter, settings.DllFilenameFilter);
+            if (exclude != Constants.NodeName_DllPostfix)                     Assert.AreEqual(Constants.S_DefaultDllPostfix, settings.DllPostfix);
+            if (exclude != Constants.NodeName_DllRunner)                      Assert.AreEqual(Constants.S_DefaultDllRunner, settings.DllRunner);
+            if (exclude != Constants.NodeName_DllRunnerCommandline)           Assert.AreEqual(Constants.S_DefaultDllRunnerCommandline, settings.DllRunnerCommandLine);
+            if (exclude != Constants.NodeName_ExecutionMode)                  Assert.AreEqual(Constants.S_DefaultExecutionMode, settings.ExecutionMode);
+            if (exclude != Constants.NodeName_ExecutionModeForceSingleTagRgx) Assert.AreEqual(Constants.S_DefaultExecutionModeForceSingleTagRgx, settings.ExecutionModeForceSingleTagRgx.ToString());
+            if (exclude != Constants.NodeName_FilenameFilter)                 Assert.AreEqual(Constants.S_DefaultFilenameFilter, settings.FilenameFilter);
+            if (exclude != Constants.NodeName_IncludeHidden)                  Assert.AreEqual(Constants.S_DefaultIncludeHidden, settings.IncludeHidden);
+            if (exclude != Constants.NodeName_Logging)                        Assert.AreEqual(Constants.S_DefaultLoggingLevel, settings.LoggingLevel);
+            if (exclude != Constants.NodeName_MessageFormat)                  Assert.AreEqual(Constants.S_DefaultMessageFormat, settings.MessageFormat);
+            if (exclude != Constants.NodeName_StackTraceFormat)               Assert.AreEqual(Constants.S_DefaultStackTraceFormat, settings.StacktraceFormat);
+            if (exclude != Constants.NodeName_StackTraceMaxLength)            Assert.AreEqual(Constants.S_DefaultStackTraceMaxLength, settings.StacktraceMaxLength);
+            if (exclude != Constants.NodeName_StackTracePointReplacement)     Assert.AreEqual(Constants.S_DefaultStackTracePointReplacement, settings.StacktracePointReplacement);
+            if (exclude != Constants.NodeName_TestCaseTimeout)                Assert.AreEqual(Constants.S_DefaultTestCaseTimeout, settings.TestCaseTimeout);
+
+            if (exclude != Constants.NodeName_Environment) Assert.IsNull(settings.Environment);
+
+            if (exclude != Constants.NodeName_DiscoverCommanline)
+            {
+                Assert.IsTrue(settings.IsVerbosityHigh);
+                Assert.IsFalse(settings.UseXmlDiscovery);
+                Assert.IsTrue(settings.HasValidDiscoveryCommandline);
+            }
+            if (exclude != Constants.NodeName_DllFilenameFilter)
+            {
+                Assert.IsTrue(settings.IsDllDiscoveryDisabled);
+            }
+            if (exclude != Constants.NodeName_FilenameFilter)
+            {
+                Assert.IsTrue(settings.IsExeDiscoveryDisabled);
+            }
         }
 
     }

@@ -5,7 +5,7 @@ Copyright: 2018 Johnny Hendriks
 Author : Johnny Hendriks
 Year   : 2018
 Project: VSTestAdapter for Catch2
-Licence: MIT
+License: MIT
 
 Notes: None
 
@@ -46,6 +46,10 @@ Class :
         public const string NodeName_DebugBreak = "DebugBreak";
         public const string NodeName_DiscoverCommanline = "DiscoverCommandLine";
         public const string NodeName_DiscoverTimeout = "DiscoverTimeout";
+        public const string NodeName_DllFilenameFilter = "DllFilenameFilter";
+        public const string NodeName_DllPostfix = "DllPostfix";
+        public const string NodeName_DllRunner = "DllRunner";
+        public const string NodeName_DllRunnerCommandline = "DllRunnerCommandline";
         public const string NodeName_Environment = "Environment";
         public const string NodeName_ExecutionMode = "ExecutionMode";
         public const string NodeName_ExecutionModeForceSingleTagRgx = "ExecutionModeForceSingleTagRgx";
@@ -66,6 +70,10 @@ Class :
         public const bool   S_DefaultDisabled = false;
         public const string S_DefaultDiscoverCommandline = "--verbosity high --list-tests --reporter xml *";
         public const int    S_DefaultDiscoverTimeout = 1000; // Time in milliseconds
+        public const string S_DefaultDllFilenameFilter = ""; // By default give invalid value
+        public const string S_DefaultDllPostfix = "";
+        public const string S_DefaultDllRunner = "";         // By default give invalid value
+        public const string S_DefaultDllRunnerCommandline = "${catch2}";
         public const string S_DefaultExecutionModeForceSingleTagRgx = @"(?i:tafc_Single)";
         public const string S_DefaultFilenameFilter = "";    // By default give invalid value
         public const bool   S_DefaultIncludeHidden = true;

@@ -1,9 +1,9 @@
 ﻿/** Basic Info **
 
-Copyright: 2018 Johnny Hendriks
+Copyright: 2023 Johnny Hendriks
 
 Author : Johnny Hendriks
-Year   : 2018
+Year   : 2023
 Project: VSTestAdapter for Catch2
 License: MIT
 
@@ -19,9 +19,9 @@ using System.Collections.Generic;
 
 namespace Catch2TestAdapter
 {
-    [DefaultExecutorUri("executor://Catch2TestExecutor")]
-    [FileExtension(".exe")]
-    public class TestDiscoverer : ITestDiscoverer
+    [DefaultExecutorUri("executor://Catch2TestExecutorDll")]
+    [FileExtension(".dll")]
+    public class TestDiscovererDll : ITestDiscoverer
     {
         #region Fields
 
@@ -55,14 +55,14 @@ namespace Catch2TestAdapter
                 return;
             }
 
-            if (_settings.IsExeDiscoveryDisabled)
+            if(_settings.IsDllDiscoveryDisabled)
             {
-                LogNormal(TestMessageLevel.Error, Resources.ErrorStrings.SettingsEmptyFilenameFilter);
+                LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.DllDiscoveryDisabled);
                 return;
             }
 
             // Check Catch2Adapter Settings
-            if(!_settings.HasValidDiscoveryCommandline)
+            if (!_settings.HasValidDiscoveryCommandline)
             {
                 LogDebug(TestMessageLevel.Error, "Discover Commandline: " + _settings.DiscoverCommandLine);
                 LogNormal(TestMessageLevel.Error, Resources.ErrorStrings.SettingsInvalidDiscoveryCommandline);
@@ -85,7 +85,7 @@ namespace Catch2TestAdapter
         {
             var discoverer = new Catch2Interface.Discoverer(_settings);
 
-            var testcases = discoverer.GetTests(sources);
+            var testcases = discoverer.GetTestsDll(sources);
             if(!string.IsNullOrEmpty(discoverer.Log))
             {
                 LogNormal(TestMessageLevel.Informational, $"Discover log:{Environment.NewLine}{discoverer.Log}");
@@ -95,7 +95,7 @@ namespace Catch2TestAdapter
             LogDebug(TestMessageLevel.Informational, "Start adding test cases to discovery sink");
             foreach(var testcase in testcases)
             {
-                _discoverySink.SendTestCase(SharedUtils.ConvertTestcase(testcase, TestExecutor.ExecutorUri));
+                _discoverySink.SendTestCase(SharedUtils.ConvertTestcase(testcase, TestExecutorDll.ExecutorUri));
                 LogDebug(TestMessageLevel.Informational, $"  {testcase.Name}");
             }
             LogDebug(TestMessageLevel.Informational, "Finished adding test cases to discovery sink");

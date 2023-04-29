@@ -193,11 +193,18 @@ cerr 02
   <data name="XmlSettings_AllEmptyElements" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
   &lt;DebugBreak&gt;&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;&lt;/DllFilenameFilter&gt;
+  &lt;DllRunner&gt;&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;&lt;/DllRunnerCommandline&gt;
   &lt;DiscoverCommandLine&gt;&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;&lt;/Environment&gt;
+  &lt;ExecutionMode&gt;&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;&lt;/ExecutionModeForceSingleTagRgx&gt;
   &lt;FilenameFilter&gt;&lt;/FilenameFilter&gt;
   &lt;IncludeHidden&gt;&lt;/IncludeHidden&gt;
   &lt;Logging&gt;&lt;/Logging&gt;
+  &lt;MessageFormat&gt;&lt;/MessageFormat&gt;
   &lt;StackTraceFormat&gt;&lt;/StackTraceFormat&gt;
   &lt;StackTracePointReplacement&gt;&lt;/StackTracePointReplacement&gt;
   &lt;TestCaseTimeout&gt;&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
@@ -229,6 +236,21 @@ cerr 02
   <data name="XmlSettings_DiscoverTimeout" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettings_DllFilenameFilter" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettings_DllPostfix" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettings_DllRunner" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;DllRunner&gt;${dllpath}/${dllname}Runner.exe&lt;/DllRunner&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_Empty" xml:space="preserve">
@@ -290,6 +312,10 @@ cerr 02
     <value>&lt;Catch2Adapter&gt;
   &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
   &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;"
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
   &lt;Environment&gt;
@@ -314,6 +340,10 @@ cerr 02
   &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
   &lt;Environment&gt;
     &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
     &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
@@ -336,6 +366,10 @@ cerr 02
   &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
   &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
   &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
   &lt;Environment&gt;
     &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
     &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;

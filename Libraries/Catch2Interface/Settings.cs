@@ -5,7 +5,7 @@ Copyright: 2018 Johnny Hendriks
 Author : Johnny Hendriks
 Year   : 2018
 Project: VSTestAdapter for Catch2
-Licence: MIT
+License: MIT
 
 Notes: None
 
@@ -14,6 +14,7 @@ Notes: None
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -131,6 +132,10 @@ Class :
         public bool                       Disabled { get; set; }                       = Constants.S_DefaultDisabled;
         public string                     DiscoverCommandLine { get; set; }            = Constants.S_DefaultDiscoverCommandline;
         public int                        DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
+        public string                     DllFilenameFilter { get; set; }              = Constants.S_DefaultDllFilenameFilter;
+        public string                     DllPostfix { get; set; }                     = Constants.S_DefaultDllPostfix;
+        public string                     DllRunner { get; set; }                      = Constants.S_DefaultDllRunner;
+        public string                     DllRunnerCommandLine { get; set; }           = Constants.S_DefaultDllRunnerCommandline;
         public IDictionary<string,string> Environment { get; set; }
         public ExecutionModes             ExecutionMode { get; set; }                  = Constants.S_DefaultExecutionMode;
         public Regex                      ExecutionModeForceSingleTagRgx { get; set; } = new Regex(Constants.S_DefaultExecutionModeForceSingleTagRgx, RegexOptions.Singleline);
@@ -146,6 +151,8 @@ Class :
         public WorkingDirectoryRoots      WorkingDirectoryRoot {  get; set; }          = Constants.S_DefaultWorkingDirectoryRoot;
 
         public bool HasValidDiscoveryCommandline => _rgxValidDiscover.IsMatch(DiscoverCommandLine);
+        public bool IsDllDiscoveryDisabled => string.IsNullOrEmpty(DllFilenameFilter) || !DllRunnerCommandLine.Contains("${catch2}");
+        public bool IsExeDiscoveryDisabled => string.IsNullOrEmpty(FilenameFilter);
         public bool IsVerbosityHigh => _rgxVerbosityHigh.IsMatch(DiscoverCommandLine);
         public bool UseXmlDiscovery => !_rgxDefaultDiscover.IsMatch(DiscoverCommandLine);
         public bool UsesTestNameOnlyDiscovery => _rgxTestNamesOnly.IsMatch(DiscoverCommandLine);
@@ -161,7 +168,7 @@ Class :
             // Make sure we have the correct node, and extract settings
             if( node.Name == Constants.SettingsName)
             {
-                // Check if test adapter is disbaled
+                // Check if test adapter is disabled
                 var disabled = node.Attributes["disabled"]?.Value;
                 if (disabled != null && Constants.Rgx_TrueFalse.IsMatch(disabled))
                 {
@@ -207,6 +214,36 @@ Class :
                     {
                         settings.DiscoverTimeout = timeout;
                     }
+                }
+
+                // DllFilenameFilter
+                var dllfilenamefilter = node.SelectSingleNode(Constants.NodeName_DllFilenameFilter)?.FirstChild;
+                if (dllfilenamefilter != null
+                 && dllfilenamefilter.NodeType == XmlNodeType.Text
+                 && dllfilenamefilter.Value != string.Empty)
+                {
+                    settings.DllFilenameFilter = dllfilenamefilter.Value;
+                }
+
+                // DllPostfix
+                var dllpostfix = node.SelectSingleNode(Constants.NodeName_DllPostfix)?.FirstChild;
+                if (dllpostfix != null && dllpostfix.NodeType == XmlNodeType.Text)
+                {
+                    settings.DllPostfix = dllpostfix.Value;
+                }
+
+                // DllRunner
+                var dllrunner = node.SelectSingleNode(Constants.NodeName_DllRunner)?.FirstChild;
+                if (dllrunner != null && dllrunner.NodeType == XmlNodeType.Text)
+                {
+                    settings.DllRunner = dllrunner.Value;
+                }
+
+                // DllRunnerCommanline
+                var dllrunnercli = node.SelectSingleNode(Constants.NodeName_DllRunnerCommandline)?.FirstChild;
+                if (dllrunnercli != null && dllrunnercli.NodeType == XmlNodeType.Text)
+                {
+                    settings.DllRunnerCommandLine = dllrunnercli.Value;
                 }
 
                 // Environment
@@ -343,6 +380,44 @@ Class :
         #endregion // Static Public
 
         #region Public Methods
+
+        public string GetDllRunner(string source)
+        {
+            var dllname = Path.GetFileNameWithoutExtension(source);
+            var dllpath = Path.GetDirectoryName(source);
+            var dllpostfix = DllPostfix;
+            if(!string.IsNullOrEmpty(DllPostfix) && dllname.EndsWith(DllPostfix))
+            {
+                dllname = dllname.Remove(dllname.Length - DllPostfix.Length);
+            }
+            else
+            {
+                dllpostfix = "";
+            }
+            var runner = DllRunner;
+            runner = runner.Replace("${dllpath}", dllpath);
+            runner = runner.Replace("${dllname}", dllname);
+            runner = runner.Replace("${postfix}", dllpostfix);
+
+            return runner;
+        }
+
+        public string GetDllRunnerDiscoverCommandline(string source)
+        {
+            string cliargs = DllRunnerCommandLine;
+            cliargs = cliargs.Replace(@"${catch2}", DiscoverCommandLine);
+            cliargs = cliargs.Replace(@"${dll}", source);
+            return cliargs;
+        }
+
+        public string GetDllExecutorCommandline(string clicatch2, string source)
+        {
+            string cliargs = DllRunnerCommandLine;
+            cliargs = cliargs.Replace(@"${catch2}", clicatch2);
+            cliargs = cliargs.Replace(@"${dll}", source);
+            return cliargs;
+        }
+
 
         public string ProcessStacktraceDescription(string description)
         {

@@ -174,10 +174,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Discover\Catch2XmlDllTests.cs" />
     <Compile Include="Discover\Catch2XmlTests.cs" />
     <Compile Include="Discover\ListTestNamesOnlyTests.cs" />
     <Compile Include="Discover\ListTestsXmlTests.cs" />
     <Compile Include="Discover\ListTestsTests.cs" />
+    <Compile Include="TestExecution\CombinedModeDllTests.cs" />
     <Compile Include="TestExecution\CombinedModeTests.cs" />
     <Compile Include="TestExecution\PathTests.cs" />
     <Compile Include="Paths.cs" />
@@ -204,6 +206,7 @@
       <DependentUpon>TestStrings_TestResult.resx</DependentUpon>
     </Compile>
     <Compile Include="SettingsTests.cs" />
+    <Compile Include="TestExecution\SingleModeDllTests.cs" />
     <Compile Include="TestExecution\SingleModeTests.cs" />
     <Compile Include="TestResultTests.cs" />
     <Compile Include="XmlOutput\PartialXmlOutput.cs" />

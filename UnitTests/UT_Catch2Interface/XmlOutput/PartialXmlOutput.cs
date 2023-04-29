@@ -8,7 +8,7 @@ Copyright: 2019 Johnny Hendriks
 Author : Johnny Hendriks
 Year   : 2019
 Project: VSTestAdapter for Catch2
-Licence: MIT
+License: MIT
 
 Notes: None
 

@@ -65,7 +65,9 @@
     </Compile>
     <Compile Include="SettingsProvider.cs" />
     <Compile Include="SharedUtils.cs" />
+    <Compile Include="TestDiscovererDll.cs" />
     <Compile Include="TestDiscoverer.cs" />
+    <Compile Include="TestExecutorDll.cs" />
     <Compile Include="TestExecutor.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +83,7 @@
     <EmbeddedResource Include="Resources\InfoStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>InfoStrings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

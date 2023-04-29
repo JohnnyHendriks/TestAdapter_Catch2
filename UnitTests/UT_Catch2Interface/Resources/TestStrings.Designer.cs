@@ -202,15 +202,18 @@ namespace UT_Catch2Interface.Resources {
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
         ///  &lt;DebugBreak&gt;&lt;/DebugBreak&gt;
+        ///  &lt;DllFilenameFilter&gt;&lt;/DllFilenameFilter&gt;
+        ///  &lt;DllRunner&gt;&lt;/DllRunner&gt;
+        ///  &lt;DllRunnerCommandline&gt;&lt;/DllRunnerCommandline&gt;
         ///  &lt;DiscoverCommandLine&gt;&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;&lt;/DiscoverTimeout&gt;
+        ///  &lt;Environment&gt;&lt;/Environment&gt;
+        ///  &lt;ExecutionMode&gt;&lt;/ExecutionMode&gt;
+        ///  &lt;ExecutionModeForceSingleTagRgx&gt;&lt;/ExecutionModeForceSingleTagRgx&gt;
         ///  &lt;FilenameFilter&gt;&lt;/FilenameFilter&gt;
         ///  &lt;IncludeHidden&gt;&lt;/IncludeHidden&gt;
         ///  &lt;Logging&gt;&lt;/Logging&gt;
-        ///  &lt;StackTraceFormat&gt;&lt;/StackTraceFormat&gt;
-        ///  &lt;StackTracePointReplacement&gt;&lt;/StackTracePointReplacement&gt;
-        ///  &lt;TestCaseTimeout&gt;&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
-        ///&lt;/Catch2Adapter&gt;.
+        ///  &lt;MessageFormat&gt;&lt;/MessageForma [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_AllEmptyElements {
             get {
@@ -279,6 +282,39 @@ namespace UT_Catch2Interface.Resources {
         internal static string XmlSettings_DiscoverTimeout {
             get {
                 return ResourceManager.GetString("XmlSettings_DiscoverTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_DllFilenameFilter {
+            get {
+                return ResourceManager.GetString("XmlSettings_DllFilenameFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_DllPostfix {
+            get {
+                return ResourceManager.GetString("XmlSettings_DllPostfix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;DllRunner&gt;${dllpath}/${dllname}Runner.exe&lt;/DllRunner&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_DllRunner {
+            get {
+                return ResourceManager.GetString("XmlSettings_DllRunner", resourceCulture);
             }
         }
         
@@ -407,16 +443,15 @@ namespace UT_Catch2Interface.Resources {
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
         ///  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+        ///  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;&quot;
+        ///  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+        ///  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+        ///  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
         ///  &lt;Environment&gt;
         ///    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
-        ///    &lt;MyCustomEnvSetting value=&quot;debug&amp;lt;0&amp;gt;&quot;/&gt;
-        ///  &lt;/Environment&gt;
-        ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
-        ///  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
-        ///  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
-        ///  &lt;Incl [rest of string was truncated]&quot;;.
+        ///    &lt;MyCustomEnvSetting value=&quot;de [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom {
             get {
@@ -430,13 +465,13 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+        ///  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+        ///  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+        ///  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+        ///  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
         ///  &lt;Environment&gt;
         ///    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
-        ///    &lt;MyCustomEnvSetting value=&quot;debug&amp;lt;0&amp;gt;&quot;/&gt;
-        ///  &lt;/Environment&gt;
-        ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
-        ///  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
-        ///  &lt;FilenameFilter&gt;^Catch&lt;/Filename [rest of string was truncated]&quot;;.
+        ///    &lt;MyCustomEnvSe [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_Disabled {
             get {
@@ -450,13 +485,13 @@ namespace UT_Catch2Interface.Resources {
         ///  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
         ///  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
         ///  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+        ///  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+        ///  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+        ///  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+        ///  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
         ///  &lt;Environment&gt;
         ///    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
-        ///    &lt;MyCustomEnvSetting value=&quot;debug&amp;lt;0&amp;gt;&quot;/&gt;
-        ///  &lt;/Environment&gt;
-        ///  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
-        ///  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
-        ///  &lt;FilenameFilter&gt;^Catch&lt;/Filenam [rest of string was truncated]&quot;;.
+        ///    &lt;MyCustomEnvS [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string XmlSettings_FullyCustom_NotDisabled {
             get {

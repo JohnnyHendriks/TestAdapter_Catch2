@@ -5,7 +5,7 @@ Copyright: 2019 Johnny Hendriks
 Author : Johnny Hendriks
 Year   : 2019
 Project: VSTestAdapter for Catch2
-Licence: MIT
+License: MIT
 
 Notes: None
 
@@ -45,7 +45,7 @@ namespace UT_Catch2Interface.Discover
             string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
 
-            Assert.AreEqual(6, tests.Count);
+            Assert.AreEqual(0, tests.Count);
         }
 
         [DataTestMethod]

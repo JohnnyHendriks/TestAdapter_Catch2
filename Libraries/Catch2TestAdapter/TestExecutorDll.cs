@@ -22,12 +22,12 @@ using System.Text.RegularExpressions;
 
 namespace Catch2TestAdapter
 {
-    [ExtensionUri("executor://Catch2TestExecutor")]
-    public class TestExecutor : ITestExecutor
+    [ExtensionUri("executor://Catch2TestExecutorDll")]
+    public class TestExecutorDll : ITestExecutor
     {
     #region Fields
 
-        public static readonly Uri ExecutorUri = new Uri("executor://Catch2TestExecutor");
+        public static readonly Uri ExecutorUri = new Uri("executor://Catch2TestExecutorDll");
 
         // Input from VSTest
         private bool             _cancelled = false;
@@ -101,6 +101,12 @@ namespace Catch2TestAdapter
                 return;
             }
 
+            if (_settings.IsDllDiscoveryDisabled)
+            {
+                LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.DllDiscoveryDisabled);
+                return;
+            }
+
             // Check Catch2Adapter Settings
             if (!_settings.HasValidDiscoveryCommandline)
             {
@@ -134,7 +140,7 @@ namespace Catch2TestAdapter
 
             var discoverer = new Catch2Interface.Discoverer(_settings);
 
-            var testcases = discoverer.GetTests(sources);
+            var testcases = discoverer.GetTestsDll(sources);
 
             if (!string.IsNullOrEmpty(discoverer.Log))
             {
@@ -269,6 +275,14 @@ namespace Catch2TestAdapter
                 SkipTests(groupedtests);
             }
 
+            var runner = _settings.GetDllRunner(testcasegroup.Source);
+            LogVerbose(TestMessageLevel.Informational, $"DllRunner: {runner}{Environment.NewLine}");
+            if (!File.Exists(runner))
+            {
+                LogVerbose(TestMessageLevel.Informational, $"  File not found.{Environment.NewLine}");
+                SkipTests(groupedtests);
+            }
+
             // Run tests
             if (_runContext.IsBeingDebugged)
             {
@@ -279,9 +293,9 @@ namespace Catch2TestAdapter
 
                 LogVerbose(TestMessageLevel.Informational, "Start debug run.");
                 _frameworkHandle
-                    .LaunchProcessWithDebuggerAttached( testcasegroup.Source
-                                                      , _executor.WorkingDirectory(testcasegroup.Source)
-                                                      , _executor.GenerateCommandlineArguments_Combined_Dbg(caselistfilename)
+                    .LaunchProcessWithDebuggerAttached( runner
+                                                      , _executor.WorkingDirectory(runner)
+                                                      , _settings.GetDllExecutorCommandline(_executor.GenerateCommandlineArguments_Combined_Dbg(caselistfilename), testcasegroup.Source)
                                                       , _settings.GetEnviromentVariablesForDebug());
 
                 // Do not process output in Debug mode
@@ -295,7 +309,7 @@ namespace Catch2TestAdapter
             }
 
             LogVerbose(TestMessageLevel.Informational, $"Run {testcasegroup.Names.Count} grouped testcases.");
-            var testresults = _executor.Run(testcasegroup);
+            var testresults = _executor.RunDll(runner, testcasegroup);
 
             if (!string.IsNullOrEmpty(_executor.Log))
             {
@@ -384,14 +398,23 @@ namespace Catch2TestAdapter
                 return;
             }
 
+            var runner = _settings.GetDllRunner(test.Source);
+            LogVerbose(TestMessageLevel.Informational, $"DllRunner: {runner}{Environment.NewLine}");
+            if (!File.Exists(runner))
+            {
+                result.Outcome = TestOutcome.NotFound;
+                _frameworkHandle.RecordResult(result);
+                return;
+            }
+
             // Run test
             if (_runContext.IsBeingDebugged)
             {
                 LogVerbose(TestMessageLevel.Informational, "Start debug run.");
                 _frameworkHandle
-                    .LaunchProcessWithDebuggerAttached( test.Source
+                    .LaunchProcessWithDebuggerAttached( runner
                                                       , _executor.WorkingDirectory(test.Source)
-                                                      , _executor.GenerateCommandlineArguments_Single_Dbg(test.DisplayName)
+                                                      , _settings.GetDllExecutorCommandline(_executor.GenerateCommandlineArguments_Single_Dbg(test.DisplayName), test.Source)
                                                       , _settings.GetEnviromentVariablesForDebug() );
 
                 // Do not process output in Debug mode
@@ -401,7 +424,7 @@ namespace Catch2TestAdapter
             }
             else
             {
-                var testresult = _executor.Run(test.DisplayName, test.Source);
+                var testresult = _executor.RunDll(runner, test.DisplayName, test.Source);
                 
                 if(!string.IsNullOrEmpty(_executor.Log))
                 {
