@@ -123,6 +123,9 @@
   <data name="DllDiscoveryDisabled" xml:space="preserve">
     <value>Catch2Adapter Dll discovery is disabled.</value>
   </data>
+  <data name="ExeDiscoveryDisabled" xml:space="preserve">
+    <value>Catch2Adapter Exe discovery is disabled.</value>
+  </data>
   <data name="FinishedDiscovery" xml:space="preserve">
     <value>Finished Catch2Adapter test discovery.</value>
   </data>

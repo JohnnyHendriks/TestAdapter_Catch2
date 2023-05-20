@@ -44,7 +44,7 @@ Class :
         public const string SettingsName = "Catch2Adapter";
         public const string NodeName_CombinedTimeout = "CombinedTimeout";
         public const string NodeName_DebugBreak = "DebugBreak";
-        public const string NodeName_DiscoverCommanline = "DiscoverCommandLine";
+        public const string NodeName_DiscoverCommandline = "DiscoverCommandLine";
         public const string NodeName_DiscoverTimeout = "DiscoverTimeout";
         public const string NodeName_DllFilenameFilter = "DllFilenameFilter";
         public const string NodeName_DllPostfix = "DllPostfix";
@@ -57,6 +57,8 @@ Class :
         public const string NodeName_IncludeHidden = "IncludeHidden";
         public const string NodeName_Logging = "Logging";
         public const string NodeName_MessageFormat = "MessageFormat";
+        public const string NodeName_Overrides = "Overrides";
+        public const string NodeName_Source = "Source";
         public const string NodeName_StackTraceFormat = "StackTraceFormat";
         public const string NodeName_StackTraceMaxLength = "StackTraceMaxLength";
         public const string NodeName_StackTracePointReplacement = "StackTracePointReplacement";
@@ -70,19 +72,19 @@ Class :
         public const bool   S_DefaultDisabled = false;
         public const string S_DefaultDiscoverCommandline = "--verbosity high --list-tests --reporter xml *";
         public const int    S_DefaultDiscoverTimeout = 1000; // Time in milliseconds
-        public const string S_DefaultDllFilenameFilter = ""; // By default give invalid value
+        public const Regex  S_DefaultDllFilenameFilter = null; // By default give invalid value
         public const string S_DefaultDllPostfix = "";
         public const string S_DefaultDllRunner = "";         // By default give invalid value
         public const string S_DefaultDllRunnerCommandline = "${catch2}";
         public const string S_DefaultExecutionModeForceSingleTagRgx = @"(?i:tafc_Single)";
-        public const string S_DefaultFilenameFilter = "";    // By default give invalid value
+        public const Regex  S_DefaultFilenameFilter = null;    // By default give invalid value
         public const bool   S_DefaultIncludeHidden = true;
         public const int    S_DefaultTestCaseTimeout = -1;   // No timeout
         public const string S_DefaultWorkingDirectory = "";
         public const int    S_DefaultStackTraceMaxLength = 80;
         public const string S_DefaultStackTracePointReplacement = ",";
 
-        public const ExecutionModes        S_DefaultExecutionMode = ExecutionModes.SingleTestCase;
+        public const ExecutionModes        S_DefaultExecutionMode = ExecutionModes.CombineTestCases;
         public const LoggingLevels         S_DefaultLoggingLevel = LoggingLevels.Normal;
         public const MessageFormats        S_DefaultMessageFormat = MessageFormats.StatsOnly;
         public const StacktraceFormats     S_DefaultStackTraceFormat = StacktraceFormats.ShortInfo;

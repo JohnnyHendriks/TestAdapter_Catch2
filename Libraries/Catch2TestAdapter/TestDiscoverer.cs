@@ -29,7 +29,7 @@ namespace Catch2TestAdapter
         private ITestCaseDiscoverySink _discoverySink = null;
         private IMessageLogger         _logger = null;
 
-        private Catch2Interface.Settings _settings = null;
+        private Catch2Interface.SettingsManager _settings = null;
 
         #endregion // Fields
 
@@ -49,23 +49,15 @@ namespace Catch2TestAdapter
             }
 
             // Check if adapter is disabled
-            if(_settings.Disabled)
+            if(_settings.General.Disabled)
             {
                 LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.DiscoveryDisabled);
                 return;
             }
 
-            if (_settings.IsExeDiscoveryDisabled)
+            if (_settings.General.IsExeDiscoveryDisabled)
             {
-                LogNormal(TestMessageLevel.Error, Resources.ErrorStrings.SettingsEmptyFilenameFilter);
-                return;
-            }
-
-            // Check Catch2Adapter Settings
-            if(!_settings.HasValidDiscoveryCommandline)
-            {
-                LogDebug(TestMessageLevel.Error, "Discover Commandline: " + _settings.DiscoverCommandLine);
-                LogNormal(TestMessageLevel.Error, Resources.ErrorStrings.SettingsInvalidDiscoveryCommandline);
+                LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.ExeDiscoveryDisabled);
                 return;
             }
 
@@ -116,10 +108,11 @@ namespace Catch2TestAdapter
 
         private void LogDebug(TestMessageLevel level, string msg)
         {
-            if (_logger == null) return;
+            if(_logger == null) return;
 
-            if (_settings == null
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug)
+            if( _settings == null
+             || _settings.General == null
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug)
             {
                 _logger.SendMessage(level, msg);
             }
@@ -130,9 +123,10 @@ namespace Catch2TestAdapter
             if(_logger == null) return;
 
             if( _settings == null
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Normal 
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug)
+             || _settings.General == null
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Normal 
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug)
             {
                 _logger.SendMessage(level, msg);
             }
@@ -143,8 +137,9 @@ namespace Catch2TestAdapter
             if(_logger == null) return;
 
             if( _settings == null
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
+             || _settings.General == null
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
             {
                 _logger.SendMessage(level, msg);
             }

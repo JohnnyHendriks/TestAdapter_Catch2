@@ -99,11 +99,10 @@ Class :
         // Regex
         static readonly Regex _rgxDefaultDiscover = new Regex(@"(--list-tests|-l|--list-test-names-only)( .*)?$", RegexOptions.Singleline);
         static readonly Regex _rgxTestNamesOnly = new Regex(@"(--list-test-names-only)( .*)?$", RegexOptions.Singleline);
-        static readonly Regex _rgxValidDiscover = new Regex(@"^(--[a-zA-Z]|-[a-zA-Z])", RegexOptions.Singleline);
         static readonly Regex _rgxVerbosityHigh = new Regex(@"(--verbosity|-v)( *high)( .*)?$", RegexOptions.Singleline);
 
-        static readonly Regex _rgxExMode_Combine = new Regex(@"^(?i:combine)(?i: ?testcases)?$", RegexOptions.Singleline);
-        static readonly Regex _rgxExMode_Single = new Regex(@"^(?i:single)(?i: ?testcases)?$", RegexOptions.Singleline);
+        static readonly Regex _rgxExMode_Combine = new Regex(@"^(?i:combine)$", RegexOptions.Singleline);
+        static readonly Regex _rgxExMode_Single = new Regex(@"^(?i:single)$", RegexOptions.Singleline);
 
         static readonly Regex _rgxLogLevel_Debug = new Regex(@"^(?i:debug)$", RegexOptions.Singleline);
         static readonly Regex _rgxLogLevel_Normal = new Regex(@"^(?i:normal)$", RegexOptions.Singleline);
@@ -132,14 +131,14 @@ Class :
         public bool                       Disabled { get; set; }                       = Constants.S_DefaultDisabled;
         public string                     DiscoverCommandLine { get; set; }            = Constants.S_DefaultDiscoverCommandline;
         public int                        DiscoverTimeout { get; set; }                = Constants.S_DefaultDiscoverTimeout;
-        public string                     DllFilenameFilter { get; set; }              = Constants.S_DefaultDllFilenameFilter;
+        public Regex                      DllFilenameFilter { get; set; }              = Constants.S_DefaultDllFilenameFilter;
         public string                     DllPostfix { get; set; }                     = Constants.S_DefaultDllPostfix;
         public string                     DllRunner { get; set; }                      = Constants.S_DefaultDllRunner;
         public string                     DllRunnerCommandLine { get; set; }           = Constants.S_DefaultDllRunnerCommandline;
         public IDictionary<string,string> Environment { get; set; }
         public ExecutionModes             ExecutionMode { get; set; }                  = Constants.S_DefaultExecutionMode;
         public Regex                      ExecutionModeForceSingleTagRgx { get; set; } = new Regex(Constants.S_DefaultExecutionModeForceSingleTagRgx, RegexOptions.Singleline);
-        public string                     FilenameFilter { get; set; }                 = Constants.S_DefaultFilenameFilter;
+        public Regex                      FilenameFilter { get; set; }                 = Constants.S_DefaultFilenameFilter;
         public bool                       IncludeHidden { get; set; }                  = Constants.S_DefaultIncludeHidden;
         public LoggingLevels              LoggingLevel { get; set; }                   = Constants.S_DefaultLoggingLevel;
         public MessageFormats             MessageFormat { get; set; }                  = Constants.S_DefaultMessageFormat;
@@ -150,9 +149,8 @@ Class :
         public string                     WorkingDirectory {  get; set; }              = Constants.S_DefaultWorkingDirectory;
         public WorkingDirectoryRoots      WorkingDirectoryRoot {  get; set; }          = Constants.S_DefaultWorkingDirectoryRoot;
 
-        public bool HasValidDiscoveryCommandline => _rgxValidDiscover.IsMatch(DiscoverCommandLine);
-        public bool IsDllDiscoveryDisabled => string.IsNullOrEmpty(DllFilenameFilter) || !DllRunnerCommandLine.Contains("${catch2}");
-        public bool IsExeDiscoveryDisabled => string.IsNullOrEmpty(FilenameFilter);
+        public bool IsDllDiscoveryDisabled => DllFilenameFilter == null || !DllRunnerCommandLine.Contains("${catch2}");
+        public bool IsExeDiscoveryDisabled => FilenameFilter == null;
         public bool IsVerbosityHigh => _rgxVerbosityHigh.IsMatch(DiscoverCommandLine);
         public bool UseXmlDiscovery => !_rgxDefaultDiscover.IsMatch(DiscoverCommandLine);
         public bool UsesTestNameOnlyDiscovery => _rgxTestNamesOnly.IsMatch(DiscoverCommandLine);
@@ -164,6 +162,12 @@ Class :
         public static Settings Extract(XmlNode node)
         {
             Settings settings = new Settings();
+            return Extract(settings, node);
+        }
+
+        public static Settings Extract(Settings settings, XmlNode node)
+        {
+            if( settings == null) settings = new Settings();
 
             // Make sure we have the correct node, and extract settings
             if( node.Name == Constants.SettingsName)
@@ -180,6 +184,64 @@ Class :
                     return settings;
                 }
 
+                // FilenameFilter
+                var filenamefilter = node.SelectSingleNode(Constants.NodeName_FilenameFilter)?.FirstChild;
+                if (filenamefilter != null
+                 && filenamefilter.NodeType == XmlNodeType.Text
+                 && !string.IsNullOrEmpty(filenamefilter.Value))
+                {
+                    try
+                    {
+                        settings.FilenameFilter = new Regex(filenamefilter.Value);
+                    }
+                    catch { }
+                }
+
+                // DllFilenameFilter
+                var dllfilenamefilter = node.SelectSingleNode(Constants.NodeName_DllFilenameFilter)?.FirstChild;
+                if (dllfilenamefilter != null
+                 && dllfilenamefilter.NodeType == XmlNodeType.Text
+                 && dllfilenamefilter.Value != string.Empty)
+                {
+                    try
+                    {
+                        settings.DllFilenameFilter = new Regex(dllfilenamefilter.Value);
+                    }
+                    catch { }
+                }
+            }
+
+            if (node.Name == Constants.NodeName_Source)
+            {
+                settings.DllFilenameFilter = null;
+                settings.FilenameFilter = null;
+
+                // DllFilenameFilter
+                var dllfilterattr = node.Attributes["dllfilter"]?.Value;
+                if (!string.IsNullOrEmpty(dllfilterattr))
+                {
+                    try
+                    {
+                        settings.DllFilenameFilter = new Regex(dllfilterattr);
+                    }
+                    catch { }
+                }
+
+                // FilenameFilter
+                var filterattr = node.Attributes["filter"]?.Value;
+                if (!string.IsNullOrEmpty(filterattr))
+                {
+                    try
+                    {
+                        settings.FilenameFilter = new Regex(filterattr);
+                    }
+                    catch { }
+                }
+
+            }
+
+            if (node.Name == Constants.SettingsName || node.Name == Constants.NodeName_Source)
+            {
                 // CombinedTimeout
                 var combinedtimeout = node.SelectSingleNode(Constants.NodeName_CombinedTimeout)?.FirstChild;
                 if (combinedtimeout != null && combinedtimeout.NodeType == XmlNodeType.Text)
@@ -200,7 +262,7 @@ Class :
                 }
 
                 // DiscoverCommanline
-                var discover = node.SelectSingleNode(Constants.NodeName_DiscoverCommanline)?.FirstChild;
+                var discover = node.SelectSingleNode(Constants.NodeName_DiscoverCommandline)?.FirstChild;
                 if( discover != null && discover.NodeType == XmlNodeType.Text )
                 {
                     settings.DiscoverCommandLine = discover.Value;
@@ -214,15 +276,6 @@ Class :
                     {
                         settings.DiscoverTimeout = timeout;
                     }
-                }
-
-                // DllFilenameFilter
-                var dllfilenamefilter = node.SelectSingleNode(Constants.NodeName_DllFilenameFilter)?.FirstChild;
-                if (dllfilenamefilter != null
-                 && dllfilenamefilter.NodeType == XmlNodeType.Text
-                 && dllfilenamefilter.Value != string.Empty)
-                {
-                    settings.DllFilenameFilter = dllfilenamefilter.Value;
                 }
 
                 // DllPostfix
@@ -287,15 +340,6 @@ Class :
                  && exmodesingletagrgx.Value != string.Empty)
                 {
                     settings.ExecutionModeForceSingleTagRgx = new Regex(exmodesingletagrgx.Value, RegexOptions.Singleline);
-                }
-
-                // FilenameFilter
-                var filenamefilter = node.SelectSingleNode(Constants.NodeName_FilenameFilter)?.FirstChild;
-                if( filenamefilter != null
-                 && filenamefilter.NodeType == XmlNodeType.Text
-                 && filenamefilter.Value != string.Empty )
-                {
-                    settings.FilenameFilter = filenamefilter.Value;
                 }
 
                 // IncludeHidden
@@ -380,6 +424,11 @@ Class :
         #endregion // Static Public
 
         #region Public Methods
+
+        public Settings Copy()
+        {
+            return (Settings) MemberwiseClone();
+        }
 
         public string GetDllRunner(string source)
         {

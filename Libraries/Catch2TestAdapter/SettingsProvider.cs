@@ -22,7 +22,7 @@ namespace Catch2TestAdapter
     {
         #region Properties
 
-        public Catch2Interface.Settings Catch2Settings { get; private set; }
+        public Catch2Interface.SettingsManager Catch2Settings { get; private set; }
 
         #endregion // Properties
 
@@ -32,7 +32,7 @@ namespace Catch2TestAdapter
         {
             var xml = new XmlDocument();
             reader.Read();
-            Catch2Settings = Catch2Interface.Settings.Extract(xml.ReadNode(reader));
+            Catch2Settings = Catch2Interface.SettingsManager.Extract(xml.ReadNode(reader));
         }
 
         #endregion // ISettingsProvider

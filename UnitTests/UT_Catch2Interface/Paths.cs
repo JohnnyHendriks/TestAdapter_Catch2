@@ -158,6 +158,17 @@ namespace UT_Catch2Interface
             return null;
         }
 
+        static public string TestDll_Discover_60(TestContext ctx, string versionpath)
+        {
+            var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"CatchDll_Discover_60.dll"));
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            return null;
+        }
+
         static public string TestDll_Dummy(TestContext ctx, string versionpath)
         {
             var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"CatchDll_Dummy.dll"));
@@ -238,6 +249,18 @@ namespace UT_Catch2Interface
         static public string TestExecutable_Discover(TestContext ctx, string versionpath)
         {
             var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"Catch_Discover.exe"));
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            return null;
+        }
+
+
+        static public string TestExecutable_Discover_60(TestContext ctx, string versionpath)
+        {
+            var path = Path.GetFullPath(Path.Combine(ctx.TestRunDirectory, @"..\..\_reftests", versionpath, @"Catch_Discover_60.exe"));
             if (File.Exists(path))
             {
                 return path;

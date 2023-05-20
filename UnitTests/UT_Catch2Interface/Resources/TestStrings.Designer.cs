@@ -375,7 +375,7 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
-        ///  &lt;ExecutionMode&gt;CombineTestcases&lt;/ExecutionMode&gt;
+        ///  &lt;ExecutionMode&gt;combine&lt;/ExecutionMode&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
         internal static string XmlSettings_ExMode_Combine2 {
@@ -386,12 +386,23 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
-        ///  &lt;ExecutionMode&gt;Combine Testcases&lt;/ExecutionMode&gt;
+        ///  &lt;ExecutionMode&gt;COMBINE&lt;/ExecutionMode&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
         internal static string XmlSettings_ExMode_Combine3 {
             get {
                 return ResourceManager.GetString("XmlSettings_ExMode_Combine3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
+        ///  &lt;ExecutionMode&gt;Invalid&lt;/ExecutionMode&gt;
+        ///&lt;/Catch2Adapter&gt;.
+        /// </summary>
+        internal static string XmlSettings_ExMode_Invalid {
+            get {
+                return ResourceManager.GetString("XmlSettings_ExMode_Invalid", resourceCulture);
             }
         }
         
@@ -408,7 +419,7 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
-        ///  &lt;ExecutionMode&gt;SingleTestcase&lt;/ExecutionMode&gt;
+        ///  &lt;ExecutionMode&gt;single&lt;/ExecutionMode&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
         internal static string XmlSettings_ExMode_Single2 {
@@ -419,7 +430,7 @@ namespace UT_Catch2Interface.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Catch2Adapter&gt;
-        ///  &lt;ExecutionMode&gt;Single Testcase&lt;/ExecutionMode&gt;
+        ///  &lt;ExecutionMode&gt;SINGLE&lt;/ExecutionMode&gt;
         ///&lt;/Catch2Adapter&gt;.
         /// </summary>
         internal static string XmlSettings_ExMode_Single3 {

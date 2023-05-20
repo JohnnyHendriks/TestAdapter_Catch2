@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 
 namespace UT_Catch2Interface.TestExecution
 {
@@ -37,8 +36,8 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.SingleTestCase;
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.SingleTestCase;
 
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
@@ -67,8 +66,8 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.SingleTestCase;
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.SingleTestCase;
 
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
@@ -157,9 +156,9 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.SingleTestCase;
-            settings.TestCaseTimeout = 200;
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.SingleTestCase;
+            settings.General.TestCaseTimeout = 200;
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
             var result = executor.Run("Wait forever", source);
@@ -178,11 +177,11 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.SingleTestCase;
-            settings.Environment = new Dictionary<string,string>();
-            settings.Environment.Add("MyCustomEnvSetting", "Welcome");
-            settings.Environment.Add("MyOtherCustomEnvSetting", "debug<0>");
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.SingleTestCase;
+            settings.General.Environment = new Dictionary<string,string>();
+            settings.General.Environment.Add("MyCustomEnvSetting", "Welcome");
+            settings.General.Environment.Add("MyOtherCustomEnvSetting", "debug<0>");
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
             var result = executor.Run("getenv. Check MyCustomEnvSetting", source);
@@ -207,8 +206,8 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.SingleTestCase;
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.SingleTestCase;
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
             var result = executor.Run("getenv. Check MyCustomEnvSetting", source);
@@ -233,11 +232,11 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.SingleTestCase;
-            settings.Environment = new Dictionary<string, string>();
-            settings.Environment.Add("MyCustomEnvSetting", "Goodbye");
-            settings.Environment.Add("MyOtherCustomEnvSetting", "debug<1>");
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.SingleTestCase;
+            settings.General.Environment = new Dictionary<string, string>();
+            settings.General.Environment.Add("MyCustomEnvSetting", "Goodbye");
+            settings.General.Environment.Add("MyOtherCustomEnvSetting", "debug<1>");
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
             var result = executor.Run("getenv. Check MyCustomEnvSetting", source);

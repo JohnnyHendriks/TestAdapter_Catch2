@@ -1,0 +1,652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="XmlSettingsOverride_CombinedTimeout" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;"
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source filter="_Special"&gt;
+      &lt;CombinedTimeout&gt;60000&lt;/CombinedTimeout&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_DebugBreak" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;"
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;DebugBreak&gt;off&lt;/DebugBreak&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_DiscoverCommandLine" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;DiscoverCommandLine&gt;--list-tests --reporter xml *&lt;/DiscoverCommandLine&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_DllPostfix" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;DllFilenameFilter&gt;blabla&lt;/DllFilenameFilter&gt;
+      &lt;DllPostfix&gt;_test&lt;/DllPostfix&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_DllRunner" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;FilenameFilter&gt;blabla&lt;/FilenameFilter&gt;
+      &lt;DllRunner&gt;${dllpath}${dllname}Runner${postfix}.exe&lt;/DllRunner&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_Environment" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;Environment&gt;
+        &lt;MyEnvVarName value="MyValue"/&gt;
+      &lt;/Environment&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_ExecutionMode" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;ExecutionMode&gt;Single&lt;/ExecutionMode&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_ExecutionModeForceSingleTagRgx" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Single)&lt;/ExecutionModeForceSingleTagRgx&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_IncludeHidden" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;IncludeHidden&gt;true&lt;/IncludeHidden&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_LoggingLevel" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;Logging&gt;Debug&lt;/Logging&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_MessageFormat" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;MessageFormat&gt;None&lt;/MessageFormat&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_MultipleOverrides" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special" filter="_Slow"&gt;
+      &lt;TestCaseTimeout&gt;40000&lt;/TestCaseTimeout&gt;
+    &lt;/Source&gt;
+    &lt;Source dllfilter="_Extra"&gt;
+      &lt;TestCaseTimeout&gt;60000&lt;/TestCaseTimeout&gt;
+    &lt;/Source&gt;
+    &lt;Source filter="_VerySlow"&gt;
+      &lt;TestCaseTimeout&gt;360000&lt;/TestCaseTimeout&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_StacktraceFormat" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;StackTraceFormat&gt;ShortInfo&lt;/StackTraceFormat&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_StacktraceMaxLength" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;StackTraceMaxLength&gt;240&lt;/StackTraceMaxLength&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_StacktracePointReplacement" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;StackTracePointReplacement&gt;~&lt;/StackTracePointReplacement&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettingsOverride_TestCaseTimeout" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;Overrides&gt;
+    &lt;Source dllfilter="_Special"&gt;
+      &lt;TestCaseTimeout&gt;40000&lt;/TestCaseTimeout&gt;
+    &lt;/Source&gt;
+  &lt;/Overrides&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettings_NoOverrides" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;CombinedTimeout&gt;30000&lt;/CombinedTimeout&gt;&lt;!-- Milliseconds --&gt;
+  &lt;DebugBreak&gt;on&lt;/DebugBreak&gt;
+  &lt;DllFilenameFilter&gt;^CatchDll&lt;/DllFilenameFilter&gt;"
+  &lt;DllPostfix&gt;_D&lt;/DllPostfix&gt;
+  &lt;DllRunner&gt;${dllpath}/CatchDllRunner.exe&lt;/DllRunner&gt;
+  &lt;DllRunnerCommandline&gt;${catch2} ${dll}&lt;/DllRunnerCommandline&gt;
+  &lt;DiscoverCommandLine&gt;--discover&lt;/DiscoverCommandLine&gt;
+  &lt;DiscoverTimeout&gt;2000&lt;/DiscoverTimeout&gt;
+  &lt;Environment&gt;
+    &lt;PATH&gt;D:\MyPath; D:\MyOtherPath&lt;/PATH&gt;
+    &lt;MyCustomEnvSetting value="debug&amp;lt;0&amp;gt;"/&gt;
+  &lt;/Environment&gt;
+  &lt;ExecutionMode&gt;Combine&lt;/ExecutionMode&gt;
+  &lt;ExecutionModeForceSingleTagRgx&gt;(?i:Slow)&lt;/ExecutionModeForceSingleTagRgx&gt;
+  &lt;FilenameFilter&gt;^Catch&lt;/FilenameFilter&gt;
+  &lt;IncludeHidden&gt;false&lt;/IncludeHidden&gt;
+  &lt;Logging&gt;Verbose&lt;/Logging&gt;
+  &lt;MessageFormat&gt;AdditionalInfo&lt;/MessageFormat&gt;
+  &lt;StackTraceFormat&gt;None&lt;/StackTraceFormat&gt;
+  &lt;StackTraceMaxLength&gt;120&lt;/StackTraceMaxLength&gt;
+  &lt;StackTracePointReplacement&gt;_&lt;/StackTracePointReplacement&gt;
+  &lt;TestCaseTimeout&gt;20000&lt;/TestCaseTimeout&gt;&lt;!-- Milliseconds --&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+</root>

@@ -14,6 +14,7 @@ Notes: None
 using Catch2Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace UT_Catch2Interface.Discover
 {
@@ -53,10 +54,10 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-test-names-only *";
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = false; // With use of "--list-test-names-only" this parameter is effectively ignored
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-test-names-only *";
+            settings.General.FilenameFilter = new Regex(".*");
+            settings.General.IncludeHidden = false; // With use of "--list-test-names-only" this parameter is effectively ignored
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
@@ -100,10 +101,10 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--verbosity high --list-test-names-only *";
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = false; // With use of "--list-test-names-only" this parameter is effectively ignored
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--verbosity high --list-test-names-only *";
+            settings.General.FilenameFilter = new Regex(".*");
+            settings.General.IncludeHidden = false; // With use of "--list-test-names-only" this parameter is effectively ignored
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
@@ -140,10 +141,10 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-test-names-only";
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = true; // With use of "--list-test-names-only" this parameter is effectively ignored
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-test-names-only";
+            settings.General.FilenameFilter = new Regex(".*");
+            settings.General.IncludeHidden = true; // With use of "--list-test-names-only" this parameter is effectively ignored
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
             var tests = discoverer.GetTests(sources) as List<TestCase>;
@@ -182,9 +183,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-test-names-only *TestCases*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-test-names-only *TestCases*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -225,9 +226,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "-v high --list-test-names-only *TestCases*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "-v high --list-test-names-only *TestCases*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -300,9 +301,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-test-names-only LongTestCaseNames*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-test-names-only LongTestCaseNames*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -343,9 +344,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "-v high --list-test-names-only LongTestCaseNames*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "-v high --list-test-names-only LongTestCaseNames*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -404,9 +405,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-test-names-only NotDefaultDiscoverable*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-test-names-only NotDefaultDiscoverable*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -439,9 +440,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "-v high --list-test-names-only NotDefaultDiscoverable*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "-v high --list-test-names-only NotDefaultDiscoverable*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -482,10 +483,10 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-test-names-only";
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = false;
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-test-names-only";
+            settings.General.FilenameFilter = new Regex(".*");
+            settings.General.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -512,11 +513,11 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--sleep 500 --list-test-names-only *";
-            settings.DiscoverTimeout = 200;
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = false;
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--sleep 500 --list-test-names-only *";
+            settings.General.DiscoverTimeout = 200;
+            settings.General.FilenameFilter = new Regex(".*");
+            settings.General.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
 
@@ -526,7 +527,7 @@ namespace UT_Catch2Interface.Discover
             Assert.AreEqual(0, tests.Count);
 
             // Sanity check to see tests could be discovered with less sleep
-            settings.DiscoverCommandLine = "--sleep 50 --list-test-names-only *";
+            settings.General.DiscoverCommandLine = "--sleep 50 --list-test-names-only *";
 
             tests = discoverer.GetTests(sources) as List<TestCase>;
 

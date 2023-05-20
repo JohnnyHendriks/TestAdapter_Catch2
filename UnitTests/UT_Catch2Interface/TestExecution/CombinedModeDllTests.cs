@@ -1,7 +1,6 @@
 ﻿using Catch2Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 
 namespace UT_Catch2Interface.TestExecution
 {
@@ -39,9 +38,9 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.CombineTestCases;
-            settings.DllRunnerCommandLine = @"${catch2} ${dll}";
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.CombineTestCases;
+            settings.General.DllRunnerCommandLine = @"${catch2} ${dll}";
 
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             var runner = Paths.TestDll_DllRunner(TestContext, versionpath);
@@ -79,9 +78,9 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.CombineTestCases;
-            settings.DllRunnerCommandLine = @"${catch2} ${dll}";
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.CombineTestCases;
+            settings.General.DllRunnerCommandLine = @"${catch2} ${dll}";
 
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             var runner = Paths.TestDll_DllRunner(TestContext, versionpath);
@@ -119,9 +118,9 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.CombineTestCases;
-            settings.DllRunnerCommandLine = @"${catch2} ${dll}";
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.CombineTestCases;
+            settings.General.DllRunnerCommandLine = @"${catch2} ${dll}";
 
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             var runner = Paths.TestDll_DllRunner(TestContext, versionpath);
@@ -183,9 +182,9 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.CombineTestCases;
-            settings.DllRunnerCommandLine = @"${catch2} ${dll}";
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.CombineTestCases;
+            settings.General.DllRunnerCommandLine = @"${catch2} ${dll}";
 
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             var runner = Paths.TestDll_DllRunner(TestContext, versionpath);
@@ -247,10 +246,10 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.CombineTestCases;
-            settings.DllRunnerCommandLine = @"${catch2} ${dll}";
-            settings.CombinedTimeout = 1500; // 1500 ms
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.CombineTestCases;
+            settings.General.DllRunnerCommandLine = @"${catch2} ${dll}";
+            settings.General.CombinedTimeout = 1500; // 1500 ms
 
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             var runner = Paths.TestDll_DllRunner(TestContext, versionpath);
@@ -306,12 +305,12 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.CombineTestCases;
-            settings.DllRunnerCommandLine = @"${catch2} ${dll}";
-            settings.Environment = new Dictionary<string, string>();
-            settings.Environment.Add("MyCustomEnvSetting", "Welcome");
-            settings.Environment.Add("MyOtherCustomEnvSetting", "debug<0>");
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.CombineTestCases;
+            settings.General.DllRunnerCommandLine = @"${catch2} ${dll}";
+            settings.General.Environment = new Dictionary<string, string>();
+            settings.General.Environment.Add("MyCustomEnvSetting", "Welcome");
+            settings.General.Environment.Add("MyOtherCustomEnvSetting", "debug<0>");
 
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             var runner = Paths.TestDll_DllRunner(TestContext, versionpath);
@@ -355,9 +354,9 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.CombineTestCases;
-            settings.DllRunnerCommandLine = @"${catch2} ${dll}";
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.CombineTestCases;
+            settings.General.DllRunnerCommandLine = @"${catch2} ${dll}";
 
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             var runner = Paths.TestDll_DllRunner(TestContext, versionpath);
@@ -401,12 +400,12 @@ namespace UT_Catch2Interface.TestExecution
                 return;
             }
 
-            var settings = new Settings();
-            settings.ExecutionMode = ExecutionModes.CombineTestCases;
-            settings.DllRunnerCommandLine = @"${catch2} ${dll}";
-            settings.Environment = new Dictionary<string, string>();
-            settings.Environment.Add("MyCustomEnvSetting", "Goodbye");
-            settings.Environment.Add("MyOtherCustomEnvSetting", "debug<1>");
+            var settings = new SettingsManager();
+            settings.General.ExecutionMode = ExecutionModes.CombineTestCases;
+            settings.General.DllRunnerCommandLine = @"${catch2} ${dll}";
+            settings.General.Environment = new Dictionary<string, string>();
+            settings.General.Environment.Add("MyCustomEnvSetting", "Goodbye");
+            settings.General.Environment.Add("MyOtherCustomEnvSetting", "debug<1>");
 
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
             var runner = Paths.TestDll_DllRunner(TestContext, versionpath);

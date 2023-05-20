@@ -1,6 +1,5 @@
 ﻿using Catch2Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace UT_Catch2Interface.TestExecution
 {
@@ -33,9 +32,9 @@ namespace UT_Catch2Interface.TestExecution
         [TestMethod]
         public void TestWorkDirRoot_Exe()
         {
-            var settings = new Settings();
-            settings.WorkingDirectoryRoot = WorkingDirectoryRoots.Executable;
-            settings.WorkingDirectory = "TestData";
+            var settings = new SettingsManager();
+            settings.General.WorkingDirectoryRoot = WorkingDirectoryRoots.Executable;
+            settings.General.WorkingDirectory = "TestData";
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
             var workdir = executor.WorkingDirectory(@"C:\Dummy\Level0\Level1\Catch_Test.exe");
@@ -45,9 +44,9 @@ namespace UT_Catch2Interface.TestExecution
         [TestMethod]
         public void TestWorkDirRoot_Sln()
         {
-            var settings = new Settings();
-            settings.WorkingDirectoryRoot = WorkingDirectoryRoots.Solution;
-            settings.WorkingDirectory = "TestData";
+            var settings = new SettingsManager();
+            settings.General.WorkingDirectoryRoot = WorkingDirectoryRoots.Solution;
+            settings.General.WorkingDirectory = "TestData";
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
             var workdir = executor.WorkingDirectory(@"C:\Dummy\Level0\Level1\Catch_Test.exe");
@@ -57,9 +56,9 @@ namespace UT_Catch2Interface.TestExecution
         [TestMethod]
         public void TestWorkDirRoot_TR()
         {
-            var settings = new Settings();
-            settings.WorkingDirectoryRoot = WorkingDirectoryRoots.TestRun;
-            settings.WorkingDirectory = "TestData";
+            var settings = new SettingsManager();
+            settings.General.WorkingDirectoryRoot = WorkingDirectoryRoots.TestRun;
+            settings.General.WorkingDirectory = "TestData";
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
             var workdir = executor.WorkingDirectory(@"C:\Dummy\Level0\Level1\Catch_Test.exe");
@@ -69,9 +68,9 @@ namespace UT_Catch2Interface.TestExecution
         [TestMethod]
         public void TestWorkDir_Rel()
         {
-            var settings = new Settings();
-            settings.WorkingDirectoryRoot = WorkingDirectoryRoots.Executable;
-            settings.WorkingDirectory = @"..\..\TestData";
+            var settings = new SettingsManager();
+            settings.General.WorkingDirectoryRoot = WorkingDirectoryRoots.Executable;
+            settings.General.WorkingDirectory = @"..\..\TestData";
             var executor = new Executor(settings, _pathSolution, _pathTestRun);
 
             var workdir = executor.WorkingDirectory(@"C:\Dummy\Level0\Level1\Catch_Test.exe");

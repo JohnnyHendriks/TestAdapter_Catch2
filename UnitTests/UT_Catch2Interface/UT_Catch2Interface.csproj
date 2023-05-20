@@ -174,11 +174,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\SettingsManagerTests.cs" />
     <Compile Include="Discover\Catch2XmlDllTests.cs" />
     <Compile Include="Discover\Catch2XmlTests.cs" />
     <Compile Include="Discover\ListTestNamesOnlyTests.cs" />
     <Compile Include="Discover\ListTestsXmlTests.cs" />
     <Compile Include="Discover\ListTestsTests.cs" />
+    <Compile Include="Resources\TestStrings_SettingsManager.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestStrings_SettingsManager.resx</DependentUpon>
+    </Compile>
     <Compile Include="TestExecution\CombinedModeDllTests.cs" />
     <Compile Include="TestExecution\CombinedModeTests.cs" />
     <Compile Include="TestExecution\PathTests.cs" />
@@ -205,7 +211,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestStrings_TestResult.resx</DependentUpon>
     </Compile>
-    <Compile Include="SettingsTests.cs" />
+    <Compile Include="Configuration\SettingsTests.cs" />
     <Compile Include="TestExecution\SingleModeDllTests.cs" />
     <Compile Include="TestExecution\SingleModeTests.cs" />
     <Compile Include="TestResultTests.cs" />
@@ -220,6 +226,10 @@
     <EmbeddedResource Include="Resources\TestStrings_Executor.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TestStrings_Executor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\TestStrings_SettingsManager.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestStrings_SettingsManager.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\TestStrings_TestResult.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -35,8 +35,8 @@ namespace Catch2TestAdapter
         private IRunContext      _runContext = null;
 
         // Catch2
-        private Catch2Interface.Settings _settings = null;
-        private Catch2Interface.Executor _executor = null;
+        private Catch2Interface.SettingsManager _settings = null;
+        private Catch2Interface.Executor        _executor = null;
 
         // Regex
         private Regex _rgx_comma = new Regex(",");
@@ -66,7 +66,7 @@ namespace Catch2TestAdapter
             }
 
             // Check if adapter is disabled
-            if (_settings.Disabled)
+            if (_settings.IsDisabled)
             {
                 LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.DiscoveryDisabled);
                 return;
@@ -95,17 +95,9 @@ namespace Catch2TestAdapter
             }
 
             // Check if adapter is disabled
-            if (_settings.Disabled)
+            if (_settings.IsDisabled)
             {
                 LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.DiscoveryDisabled);
-                return;
-            }
-
-            // Check Catch2Adapter Settings
-            if (!_settings.HasValidDiscoveryCommandline)
-            {
-                LogVerbose(TestMessageLevel.Error, "Discover Commandline: " + _settings.DiscoverCommandLine);
-                LogNormal(TestMessageLevel.Error, Resources.ErrorStrings.SettingsInvalidDiscoveryCommandline);
                 return;
             }
 
@@ -148,6 +140,20 @@ namespace Catch2TestAdapter
             }
 
             return tests;
+        }
+
+        private Dictionary<string, List<TestCase>> GroupTestCasesBySource(IEnumerable<TestCase> tests)
+        {
+            var grouped = new Dictionary<string, List<TestCase>>();
+
+            foreach (var test in tests)
+            {
+                if (!grouped.ContainsKey(test.Source)) grouped[test.Source] = new List<TestCase>();
+
+                grouped[test.Source].Add(test);
+            }
+
+            return grouped;
         }
 
         private void RecordTestResult(TestResult result, Catch2Interface.TestResult interfaceresult)
@@ -210,16 +216,22 @@ namespace Catch2TestAdapter
 
             LogDebug(TestMessageLevel.Informational, $"RunTests count: {System.Linq.Enumerable.Count(tests)}");
 
-            switch (_settings.ExecutionMode)
-            {
-                case Catch2Interface.ExecutionModes.SingleTestCase:
-                    RunTests_Single(tests);
-                    break;
+            var grouped = GroupTestCasesBySource(tests);
 
-                default:
-                case Catch2Interface.ExecutionModes.CombineTestCases:
-                    RunTests_Combine(tests);
-                    break;
+            foreach( KeyValuePair<string, List<TestCase>> group in grouped)
+            {
+                var settings_src = _settings.GetSourceSettings(group.Key);
+                switch (settings_src.ExecutionMode)
+                {
+                    case Catch2Interface.ExecutionModes.SingleTestCase:
+                        RunTests_Single(group.Value);
+                        break;
+
+                    default:
+                    case Catch2Interface.ExecutionModes.CombineTestCases:
+                        RunTests_Combine(group.Value);
+                        break;
+                }
             }
         }
 
@@ -235,6 +247,8 @@ namespace Catch2TestAdapter
             Catch2Interface.TestCaseGroup testcasegroup = new Catch2Interface.TestCaseGroup();
             testcasegroup.Source = tests.First().Source;
 
+            var settings_src = _settings.GetSourceSettings(testcasegroup.Source);
+
             LogDebug(TestMessageLevel.Informational, $"Start Grouping tests for {testcasegroup.Source}");
 
             // Select tests with the same source
@@ -246,7 +260,7 @@ namespace Catch2TestAdapter
                     continue;
                 }
 
-                if (_executor.CanExecuteCombined(test.DisplayName, SharedUtils.GetTags(test)))
+                if (_executor.CanExecuteCombined(settings_src, test.DisplayName, SharedUtils.GetTags(test)))
                 {
                     LogDebug(TestMessageLevel.Informational, $"Add to group: {test.DisplayName}");
                     testcasegroup.Names.Add(test.DisplayName);
@@ -265,7 +279,7 @@ namespace Catch2TestAdapter
             // Check if source actually exists
             if (!File.Exists(testcasegroup.Source))
             {
-                LogVerbose(TestMessageLevel.Informational, $"Test executable not found: {testcasegroup.Source}");
+                LogVerbose(TestMessageLevel.Informational, $"Test source not found: {testcasegroup.Source}");
                 SkipTests(groupedtests);
             }
 
@@ -281,8 +295,8 @@ namespace Catch2TestAdapter
                 _frameworkHandle
                     .LaunchProcessWithDebuggerAttached( testcasegroup.Source
                                                       , _executor.WorkingDirectory(testcasegroup.Source)
-                                                      , _executor.GenerateCommandlineArguments_Combined_Dbg(caselistfilename)
-                                                      , _settings.GetEnviromentVariablesForDebug());
+                                                      , _executor.GenerateCommandlineArguments_Combined_Dbg(settings_src, caselistfilename)
+                                                      , settings_src.GetEnviromentVariablesForDebug());
 
                 // Do not process output in Debug mode
                 foreach(var test in groupedtests)
@@ -315,7 +329,7 @@ namespace Catch2TestAdapter
                     if(testresults.TimedOut)
                     {
                         LogDebug(TestMessageLevel.Informational, $"Combined testcase result not found for: {test.DisplayName}");
-                        result.Outcome = TestOutcome.Skipped; // When test result not found, probably a timeout occured and the test was skipped as a result.
+                        result.Outcome = TestOutcome.Skipped; // When test result not found, probably a timeout occurred and the test was skipped as a result.
                         result.ErrorMessage = "Timeout of combined testcase execution.";
                         _frameworkHandle.RecordResult(result);
                     }
@@ -384,6 +398,8 @@ namespace Catch2TestAdapter
                 return;
             }
 
+            var settings_src = _settings.GetSourceSettings(test.Source);
+
             // Run test
             if (_runContext.IsBeingDebugged)
             {
@@ -391,8 +407,8 @@ namespace Catch2TestAdapter
                 _frameworkHandle
                     .LaunchProcessWithDebuggerAttached( test.Source
                                                       , _executor.WorkingDirectory(test.Source)
-                                                      , _executor.GenerateCommandlineArguments_Single_Dbg(test.DisplayName)
-                                                      , _settings.GetEnviromentVariablesForDebug() );
+                                                      , _executor.GenerateCommandlineArguments_Single_Dbg(settings_src, test.DisplayName)
+                                                      , settings_src.GetEnviromentVariablesForDebug() );
 
                 // Do not process output in Debug mode
                 result.Outcome = TestOutcome.None;
@@ -443,10 +459,11 @@ namespace Catch2TestAdapter
 
         private void LogDebug(TestMessageLevel level, string msg)
         {
-            if (_frameworkHandle == null) return;
+            if(_frameworkHandle == null) return;
 
-            if (_settings == null
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
+            if( _settings == null
+             || _settings.General == null
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
             {
                 _frameworkHandle.SendMessage(level, msg);
             }
@@ -457,9 +474,10 @@ namespace Catch2TestAdapter
             if(_frameworkHandle == null) return;
 
             if( _settings == null
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Normal
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
+             || _settings.General == null
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Normal
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
             {
                 _frameworkHandle.SendMessage(level, msg);
             }
@@ -470,8 +488,9 @@ namespace Catch2TestAdapter
             if(_frameworkHandle == null) return;
 
             if( _settings == null
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
-             || _settings.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
+             || _settings.General == null
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
+             || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
             {
                 _frameworkHandle.SendMessage(level, msg);
             }

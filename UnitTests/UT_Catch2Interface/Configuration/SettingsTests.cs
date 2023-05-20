@@ -16,9 +16,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Runtime;
+using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace UT_Catch2Interface
+namespace UT_Catch2Interface.Configuration
 {
     /// <summary>
     /// Summary description for SettingsTests
@@ -154,13 +156,13 @@ namespace UT_Catch2Interface
             Assert.IsFalse(settings.DebugBreak);
             Assert.AreEqual("--verbosity high --list-tests --reporter xml *", settings.DiscoverCommandLine);
             Assert.AreEqual(1000, settings.DiscoverTimeout);
-            Assert.AreEqual(string.Empty, settings.DllFilenameFilter);
+            Assert.IsNull(settings.DllFilenameFilter);
             Assert.AreEqual(string.Empty, settings.DllPostfix);
             Assert.AreEqual(string.Empty, settings.DllRunner);
             Assert.AreEqual("${catch2}", settings.DllRunnerCommandLine);
-            Assert.AreEqual(ExecutionModes.SingleTestCase, settings.ExecutionMode);
+            Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
             Assert.AreEqual(@"(?i:tafc_Single)", settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual(string.Empty, settings.FilenameFilter);
+            Assert.IsNull(settings.FilenameFilter);
             Assert.IsTrue(settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Normal, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.StatsOnly, settings.MessageFormat);
@@ -173,7 +175,6 @@ namespace UT_Catch2Interface
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.IsDllDiscoveryDisabled);
             Assert.IsTrue(settings.IsExeDiscoveryDisabled);
         }
@@ -192,13 +193,13 @@ namespace UT_Catch2Interface
             Assert.IsTrue(settings.DebugBreak);
             Assert.AreEqual("--discover", settings.DiscoverCommandLine);
             Assert.AreEqual(2000, settings.DiscoverTimeout);
-            Assert.AreEqual("^CatchDll", settings.DllFilenameFilter);
+            Assert.AreEqual("^CatchDll", settings.DllFilenameFilter.ToString());
             Assert.AreEqual("_D", settings.DllPostfix);
             Assert.AreEqual("${dllpath}/CatchDllRunner.exe", settings.DllRunner);
             Assert.AreEqual("${catch2} ${dll}", settings.DllRunnerCommandLine);
             Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
             Assert.AreEqual(@"(?i:Slow)", settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual("^Catch", settings.FilenameFilter);
+            Assert.AreEqual("^Catch", settings.FilenameFilter.ToString());
             Assert.IsFalse(settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.AdditionalInfo, settings.MessageFormat);
@@ -214,7 +215,6 @@ namespace UT_Catch2Interface
 
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.IsDllDiscoveryDisabled);
             Assert.IsFalse(settings.IsExeDiscoveryDisabled);
         }
@@ -252,7 +252,6 @@ namespace UT_Catch2Interface
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.IsDllDiscoveryDisabled);
             Assert.IsTrue(settings.IsExeDiscoveryDisabled);
         }
@@ -291,7 +290,6 @@ namespace UT_Catch2Interface
 
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.IsDllDiscoveryDisabled);
             Assert.IsTrue(settings.IsExeDiscoveryDisabled);
         }
@@ -311,13 +309,13 @@ namespace UT_Catch2Interface
             Assert.IsTrue(settings.DebugBreak);
             Assert.AreEqual("--discover", settings.DiscoverCommandLine);
             Assert.AreEqual(2000, settings.DiscoverTimeout);
-            Assert.AreEqual("^CatchDll", settings.DllFilenameFilter);
+            Assert.AreEqual("^CatchDll", settings.DllFilenameFilter.ToString());
             Assert.AreEqual("_D", settings.DllPostfix);
             Assert.AreEqual("${dllpath}/CatchDllRunner.exe", settings.DllRunner);
             Assert.AreEqual("${catch2} ${dll}", settings.DllRunnerCommandLine);
             Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
             Assert.AreEqual(@"(?i:Slow)", settings.ExecutionModeForceSingleTagRgx.ToString());
-            Assert.AreEqual("^Catch", settings.FilenameFilter);
+            Assert.AreEqual("^Catch", settings.FilenameFilter.ToString());
             Assert.IsFalse(settings.IncludeHidden);
             Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
             Assert.AreEqual(MessageFormats.AdditionalInfo, settings.MessageFormat);
@@ -333,7 +331,6 @@ namespace UT_Catch2Interface
 
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.IsDllDiscoveryDisabled);
             Assert.IsFalse(settings.IsExeDiscoveryDisabled);
         }
@@ -396,13 +393,12 @@ namespace UT_Catch2Interface
             reader.Read();
             var settings = Settings.Extract(xml.ReadNode(reader));
 
-            ValidateDefaultSettings(settings, Constants.NodeName_DiscoverCommanline);
+            ValidateDefaultSettings(settings, Constants.NodeName_DiscoverCommandline);
 
             Assert.AreEqual("--discover", settings.DiscoverCommandLine);
 
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
         }
 
         [TestMethod]
@@ -428,7 +424,7 @@ namespace UT_Catch2Interface
 
             ValidateDefaultSettings(settings, Constants.NodeName_DllFilenameFilter);
 
-            Assert.AreEqual("^CatchDll", settings.DllFilenameFilter);
+            Assert.AreEqual("^CatchDll", settings.DllFilenameFilter.ToString());
 
             Assert.IsFalse(settings.IsDllDiscoveryDisabled);
         }
@@ -511,6 +507,21 @@ namespace UT_Catch2Interface
             var settings = Settings.Extract(xml.ReadNode(reader));
 
             ValidateDefaultSettings(settings, Constants.NodeName_ExecutionMode);
+
+            Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
+        }
+
+        [TestMethod]
+        public void TestExtractExecutionModeOnly_Invalid()
+        {
+            var xml = new XmlDocument();
+            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_ExMode_Invalid));
+            reader.Read();
+            var settings = Settings.Extract(xml.ReadNode(reader));
+
+            ValidateDefaultSettings(settings, Constants.NodeName_ExecutionMode);
+
+            Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
         }
 
         [TestMethod]
@@ -575,7 +586,7 @@ namespace UT_Catch2Interface
 
             ValidateDefaultSettings(settings, Constants.NodeName_FilenameFilter);
 
-            Assert.AreEqual("^Catch", settings.FilenameFilter);
+            Assert.AreEqual("^Catch", settings.FilenameFilter.ToString());
 
             Assert.IsFalse(settings.IsExeDiscoveryDisabled);
         }
@@ -792,7 +803,6 @@ namespace UT_Catch2Interface
             // Empty
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
         }
@@ -807,73 +817,61 @@ namespace UT_Catch2Interface
             settings.DiscoverCommandLine = "--list-tests";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests [Tag]";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests *";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests bla bla bla";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l [Tag]";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l *";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l bla bla bla";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only [Tag]";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only *";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only bla bla bla";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
         }
@@ -888,73 +886,61 @@ namespace UT_Catch2Interface
             settings.DiscoverCommandLine = "--verbosity high --list-tests";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--verbosity high -l";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--verbosity high --list-test-names-only";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--verbosity high --list-tests [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--verbosity high --list-tests *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--verbosity high --list-tests bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--verbosity high -l [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--verbosity high -l *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--verbosity high -l bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--verbosity high --list-test-names-only [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--verbosity high --list-test-names-only *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--verbosity high --list-test-names-only bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
         }
@@ -969,73 +955,61 @@ namespace UT_Catch2Interface
             settings.DiscoverCommandLine = "-v high --list-tests";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-v high -l";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-v high --list-test-names-only";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-v high --list-tests [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-v high --list-tests *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-v high --list-tests bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-v high -l [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-v high -l *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-v high -l bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-v high --list-test-names-only [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-v high --list-test-names-only *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-v high --list-test-names-only bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
         }
@@ -1050,73 +1024,61 @@ namespace UT_Catch2Interface
             settings.DiscoverCommandLine = "--list-tests --verbosity high";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l --verbosity high";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only --verbosity high";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests --verbosity high [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests --verbosity high *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests --verbosity high bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l --verbosity high [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l --verbosity high *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l --verbosity high bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only --verbosity high [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only --verbosity high *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only --verbosity high bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
         }
@@ -1131,73 +1093,61 @@ namespace UT_Catch2Interface
             settings.DiscoverCommandLine = "--list-tests -v high";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l -v high";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only -v high";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests -v high [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests -v high *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-tests -v high bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l -v high [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l -v high *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "-l -v high bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only -v high [Tag]";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only -v high *";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "--list-test-names-only -v high bla bla bla";
             Assert.IsTrue(settings.IsVerbosityHigh);
             Assert.IsFalse(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             Assert.IsTrue(settings.UsesTestNameOnlyDiscovery);
 
         }
@@ -1211,49 +1161,33 @@ namespace UT_Catch2Interface
             settings.DiscoverCommandLine = "--discover";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
 
             settings.DiscoverCommandLine = "-z";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
 
             settings.DiscoverCommandLine = "-d yes";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
 
             settings.DiscoverCommandLine = "--duration no";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsTrue(settings.HasValidDiscoveryCommandline);
 
-        }
-
-        [TestMethod]
-        public void TestDiscoverCommandLineInvalid()
-        {
-            var settings = new Settings();
-
-            // Invalid
             settings.DiscoverCommandLine = "duration no";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "[Tag]";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
 
             settings.DiscoverCommandLine = "bla bla bla";
             Assert.IsFalse(settings.IsVerbosityHigh);
             Assert.IsTrue(settings.UseXmlDiscovery);
-            Assert.IsFalse(settings.HasValidDiscoveryCommandline);
             Assert.IsFalse(settings.UsesTestNameOnlyDiscovery);
-
         }
 
         [TestMethod]
@@ -1294,6 +1228,23 @@ namespace UT_Catch2Interface
         }
 
         [TestMethod]
+        public void TestGetDllExecutorCommandline()
+        {
+            var settings = new Settings();
+
+            var runnercli = settings.GetDllExecutorCommandline("-r xml *", @"D:\Test\Path\Catch2Dll_test.dll");
+            Assert.AreEqual(@"-r xml *", runnercli);
+
+            settings.DllRunnerCommandLine = @"--dll ${dll} ${catch2}";
+            runnercli = settings.GetDllExecutorCommandline("-r xml *", @"D:\Test\Path\Catch2Dll_test.dll");
+            Assert.AreEqual(@"--dll D:\Test\Path\Catch2Dll_test.dll -r xml *", runnercli);
+
+            settings.DllRunnerCommandLine = @"--dll ""${dll}"" ${catch2}";
+            runnercli = settings.GetDllExecutorCommandline("-r xml *", @"D:\Test\Path\Catch2Dll_test.dll");
+            Assert.AreEqual(@"--dll ""D:\Test\Path\Catch2Dll_test.dll"" -r xml *", runnercli);
+        }
+
+        [TestMethod]
         public void TestGetDllRunner()
         {
             var settings = new Settings();
@@ -1310,6 +1261,167 @@ namespace UT_Catch2Interface
             settings.DllPostfix = @"_test";
             runner = settings.GetDllRunner(@"D:\Test\Path\Catch2Dll_test.dll");
             Assert.AreEqual(@"D:\Test\Path\Catch2DllRunner_test.exe", runner);
+
+            runner = settings.GetDllRunner(@"D:\Test\Path\Catch2Dll_test_test.dll");
+            Assert.AreEqual(@"D:\Test\Path\Catch2Dll_testRunner_test.exe", runner);
+        }
+
+        [TestMethod]
+        public void TestCopy()
+        {
+            var xml = new XmlDocument();
+            var reader = XmlReader.Create(new StringReader(Resources.TestStrings.XmlSettings_FullyCustom));
+            reader.Read();
+            var settings = Settings.Extract(xml.ReadNode(reader));
+
+            Assert.IsFalse(settings.Disabled);
+
+            Assert.AreEqual(30000, settings.CombinedTimeout);
+            Assert.IsTrue(settings.DebugBreak);
+            Assert.AreEqual("--discover", settings.DiscoverCommandLine);
+            Assert.AreEqual(2000, settings.DiscoverTimeout);
+            Assert.AreEqual("^CatchDll", settings.DllFilenameFilter.ToString());
+            Assert.AreEqual("_D", settings.DllPostfix);
+            Assert.AreEqual("${dllpath}/CatchDllRunner.exe", settings.DllRunner);
+            Assert.AreEqual("${catch2} ${dll}", settings.DllRunnerCommandLine);
+            Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
+            Assert.AreEqual(@"(?i:Slow)", settings.ExecutionModeForceSingleTagRgx.ToString());
+            Assert.AreEqual("^Catch", settings.FilenameFilter.ToString());
+            Assert.IsFalse(settings.IncludeHidden);
+            Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
+            Assert.AreEqual(MessageFormats.AdditionalInfo, settings.MessageFormat);
+            Assert.AreEqual(StacktraceFormats.None, settings.StacktraceFormat);
+            Assert.AreEqual(120, settings.StacktraceMaxLength);
+            Assert.AreEqual("_", settings.StacktracePointReplacement);
+            Assert.AreEqual(20000, settings.TestCaseTimeout);
+
+            Assert.IsNotNull(settings.Environment);
+            Assert.AreEqual(2, settings.Environment.Count);
+            Assert.AreEqual(@"D:\MyPath; D:\MyOtherPath", settings.Environment["PATH"]);
+            Assert.AreEqual("debug<0>", settings.Environment["MyCustomEnvSetting"]);
+
+            Assert.IsFalse(settings.IsVerbosityHigh);
+            Assert.IsTrue(settings.UseXmlDiscovery);
+            Assert.IsFalse(settings.IsDllDiscoveryDisabled);
+            Assert.IsFalse(settings.IsExeDiscoveryDisabled);
+
+            // Create copy
+            var copy = settings.Copy();
+
+            Assert.IsFalse(copy.Disabled);
+
+            Assert.AreEqual(30000, copy.CombinedTimeout);
+            Assert.IsTrue(copy.DebugBreak);
+            Assert.AreEqual("--discover", copy.DiscoverCommandLine);
+            Assert.AreEqual(2000, copy.DiscoverTimeout);
+            Assert.AreEqual("^CatchDll", copy.DllFilenameFilter.ToString());
+            Assert.AreEqual("_D", copy.DllPostfix);
+            Assert.AreEqual("${dllpath}/CatchDllRunner.exe", copy.DllRunner);
+            Assert.AreEqual("${catch2} ${dll}", copy.DllRunnerCommandLine);
+            Assert.AreEqual(ExecutionModes.CombineTestCases, copy.ExecutionMode);
+            Assert.AreEqual(@"(?i:Slow)", copy.ExecutionModeForceSingleTagRgx.ToString());
+            Assert.AreEqual("^Catch", copy.FilenameFilter.ToString());
+            Assert.IsFalse(copy.IncludeHidden);
+            Assert.AreEqual(LoggingLevels.Verbose, copy.LoggingLevel);
+            Assert.AreEqual(MessageFormats.AdditionalInfo, copy.MessageFormat);
+            Assert.AreEqual(StacktraceFormats.None, copy.StacktraceFormat);
+            Assert.AreEqual(120, copy.StacktraceMaxLength);
+            Assert.AreEqual("_", copy.StacktracePointReplacement);
+            Assert.AreEqual(20000, copy.TestCaseTimeout);
+
+            Assert.IsNotNull(copy.Environment);
+            Assert.AreEqual(2, copy.Environment.Count);
+            Assert.AreEqual(@"D:\MyPath; D:\MyOtherPath", copy.Environment["PATH"]);
+            Assert.AreEqual("debug<0>", copy.Environment["MyCustomEnvSetting"]);
+
+            Assert.IsFalse(copy.IsVerbosityHigh);
+            Assert.IsTrue(copy.UseXmlDiscovery);
+            Assert.IsFalse(copy.IsDllDiscoveryDisabled);
+            Assert.IsFalse(copy.IsExeDiscoveryDisabled);
+
+            // Modify Copy
+            copy.CombinedTimeout = 60000;
+            copy.DebugBreak = false;
+            copy.DiscoverCommandLine = "--list-tests --reporter xml *";
+            copy.DllFilenameFilter = new Regex("DllSpecial");
+            copy.DllPostfix = "_test";
+            copy.DllRunner = "${dllpath}/${dllname}Runner${postfix}.exe";
+            copy.DllRunnerCommandLine = "--dll ${dll} ${catch2}";
+            copy.ExecutionMode = ExecutionModes.SingleTestCase;
+            copy.ExecutionModeForceSingleTagRgx = new Regex(@"(?i:Single)");
+            copy.FilenameFilter = new Regex("Special");
+            copy.IncludeHidden = true;
+            copy.LoggingLevel = LoggingLevels.Debug;
+            copy.MessageFormat = MessageFormats.None;
+            copy.StacktraceFormat = StacktraceFormats.ShortInfo;
+            copy.StacktraceMaxLength = 240;
+            copy.StacktracePointReplacement = "~";
+            copy.TestCaseTimeout = 40000;
+
+            copy.Environment = new Dictionary<string, string>();
+            copy.Environment.Add("CustomEnv", "MyValue");
+
+            Assert.IsFalse(copy.Disabled);
+
+            Assert.AreEqual(60000, copy.CombinedTimeout);
+            Assert.IsFalse(copy.DebugBreak);
+            Assert.AreEqual("--list-tests --reporter xml *", copy.DiscoverCommandLine);
+            Assert.AreEqual(2000, copy.DiscoverTimeout);
+            Assert.AreEqual("DllSpecial", copy.DllFilenameFilter.ToString());
+            Assert.AreEqual("_test", copy.DllPostfix);
+            Assert.AreEqual("${dllpath}/${dllname}Runner${postfix}.exe", copy.DllRunner);
+            Assert.AreEqual("--dll ${dll} ${catch2}", copy.DllRunnerCommandLine);
+            Assert.AreEqual(ExecutionModes.SingleTestCase, copy.ExecutionMode);
+            Assert.AreEqual(@"(?i:Single)", copy.ExecutionModeForceSingleTagRgx.ToString());
+            Assert.AreEqual("Special", copy.FilenameFilter.ToString());
+            Assert.IsTrue(copy.IncludeHidden);
+            Assert.AreEqual(LoggingLevels.Debug, copy.LoggingLevel);
+            Assert.AreEqual(MessageFormats.None, copy.MessageFormat);
+            Assert.AreEqual(StacktraceFormats.ShortInfo, copy.StacktraceFormat);
+            Assert.AreEqual(240, copy.StacktraceMaxLength);
+            Assert.AreEqual("~", copy.StacktracePointReplacement);
+            Assert.AreEqual(40000, copy.TestCaseTimeout);
+
+            Assert.IsNotNull(copy.Environment);
+            Assert.AreEqual(1, copy.Environment.Count);
+            Assert.AreEqual("MyValue", copy.Environment["CustomEnv"]);
+
+            Assert.IsFalse(copy.IsVerbosityHigh);
+            Assert.IsFalse(copy.UseXmlDiscovery);
+            Assert.IsFalse(copy.IsDllDiscoveryDisabled);
+            Assert.IsFalse(copy.IsExeDiscoveryDisabled);
+
+
+            Assert.IsFalse(settings.Disabled);
+
+            Assert.AreEqual(30000, settings.CombinedTimeout);
+            Assert.IsTrue(settings.DebugBreak);
+            Assert.AreEqual("--discover", settings.DiscoverCommandLine);
+            Assert.AreEqual(2000, settings.DiscoverTimeout);
+            Assert.AreEqual("^CatchDll", settings.DllFilenameFilter.ToString());
+            Assert.AreEqual("_D", settings.DllPostfix);
+            Assert.AreEqual("${dllpath}/CatchDllRunner.exe", settings.DllRunner);
+            Assert.AreEqual("${catch2} ${dll}", settings.DllRunnerCommandLine);
+            Assert.AreEqual(ExecutionModes.CombineTestCases, settings.ExecutionMode);
+            Assert.AreEqual(@"(?i:Slow)", settings.ExecutionModeForceSingleTagRgx.ToString());
+            Assert.AreEqual("^Catch", settings.FilenameFilter.ToString());
+            Assert.IsFalse(settings.IncludeHidden);
+            Assert.AreEqual(LoggingLevels.Verbose, settings.LoggingLevel);
+            Assert.AreEqual(MessageFormats.AdditionalInfo, settings.MessageFormat);
+            Assert.AreEqual(StacktraceFormats.None, settings.StacktraceFormat);
+            Assert.AreEqual(120, settings.StacktraceMaxLength);
+            Assert.AreEqual("_", settings.StacktracePointReplacement);
+            Assert.AreEqual(20000, settings.TestCaseTimeout);
+
+            Assert.IsNotNull(settings.Environment);
+            Assert.AreEqual(2, settings.Environment.Count);
+            Assert.AreEqual(@"D:\MyPath; D:\MyOtherPath", settings.Environment["PATH"]);
+            Assert.AreEqual("debug<0>", settings.Environment["MyCustomEnvSetting"]);
+
+            Assert.IsFalse(settings.IsVerbosityHigh);
+            Assert.IsTrue(settings.UseXmlDiscovery);
+            Assert.IsFalse(settings.IsDllDiscoveryDisabled);
+            Assert.IsFalse(settings.IsExeDiscoveryDisabled);
         }
 
         private void ValidateDefaultSettings(Settings settings, string exclude)
@@ -1318,7 +1430,7 @@ namespace UT_Catch2Interface
 
             if (exclude != Constants.NodeName_CombinedTimeout)                Assert.AreEqual(Constants.S_DefaultCombinedTimeout, settings.CombinedTimeout);
             if (exclude != Constants.NodeName_DebugBreak)                     Assert.AreEqual(Constants.S_DefaultDebugBreak, settings.DebugBreak);
-            if (exclude != Constants.NodeName_DiscoverCommanline)             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
+            if (exclude != Constants.NodeName_DiscoverCommandline)             Assert.AreEqual(Constants.S_DefaultDiscoverCommandline, settings.DiscoverCommandLine);
             if (exclude != Constants.NodeName_DiscoverTimeout)                Assert.AreEqual(Constants.S_DefaultDiscoverTimeout, settings.DiscoverTimeout);
             if (exclude != Constants.NodeName_DllFilenameFilter)              Assert.AreEqual(Constants.S_DefaultDllFilenameFilter, settings.DllFilenameFilter);
             if (exclude != Constants.NodeName_DllPostfix)                     Assert.AreEqual(Constants.S_DefaultDllPostfix, settings.DllPostfix);
@@ -1337,11 +1449,10 @@ namespace UT_Catch2Interface
 
             if (exclude != Constants.NodeName_Environment) Assert.IsNull(settings.Environment);
 
-            if (exclude != Constants.NodeName_DiscoverCommanline)
+            if (exclude != Constants.NodeName_DiscoverCommandline)
             {
                 Assert.IsTrue(settings.IsVerbosityHigh);
                 Assert.IsFalse(settings.UseXmlDiscovery);
-                Assert.IsTrue(settings.HasValidDiscoveryCommandline);
             }
             if (exclude != Constants.NodeName_DllFilenameFilter)
             {

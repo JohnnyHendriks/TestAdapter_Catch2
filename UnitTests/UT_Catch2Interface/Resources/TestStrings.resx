@@ -280,12 +280,17 @@ cerr 02
   </data>
   <data name="XmlSettings_ExMode_Combine2" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
-  &lt;ExecutionMode&gt;CombineTestcases&lt;/ExecutionMode&gt;
+  &lt;ExecutionMode&gt;combine&lt;/ExecutionMode&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_ExMode_Combine3" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
-  &lt;ExecutionMode&gt;Combine Testcases&lt;/ExecutionMode&gt;
+  &lt;ExecutionMode&gt;COMBINE&lt;/ExecutionMode&gt;
+&lt;/Catch2Adapter&gt;</value>
+  </data>
+  <data name="XmlSettings_ExMode_Invalid" xml:space="preserve">
+    <value>&lt;Catch2Adapter&gt;
+  &lt;ExecutionMode&gt;Invalid&lt;/ExecutionMode&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_ExMode_Single1" xml:space="preserve">
@@ -295,12 +300,12 @@ cerr 02
   </data>
   <data name="XmlSettings_ExMode_Single2" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
-  &lt;ExecutionMode&gt;SingleTestcase&lt;/ExecutionMode&gt;
+  &lt;ExecutionMode&gt;single&lt;/ExecutionMode&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_ExMode_Single3" xml:space="preserve">
     <value>&lt;Catch2Adapter&gt;
-  &lt;ExecutionMode&gt;Single Testcase&lt;/ExecutionMode&gt;
+  &lt;ExecutionMode&gt;SINGLE&lt;/ExecutionMode&gt;
 &lt;/Catch2Adapter&gt;</value>
   </data>
   <data name="XmlSettings_FilenameFilter" xml:space="preserve">

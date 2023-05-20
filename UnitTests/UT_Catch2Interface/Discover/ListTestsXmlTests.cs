@@ -14,6 +14,7 @@ Notes: None
 using Catch2Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace UT_Catch2Interface.Discover
 {
@@ -66,10 +67,10 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests --reporter xml *";
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = true;
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-tests --reporter xml *";
+            settings.General.FilenameFilter = new Regex(".*");
+            settings.General.IncludeHidden = true;
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -95,10 +96,10 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests -r xml *";
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = false;
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-tests -r xml *";
+            settings.General.FilenameFilter = new Regex(".*");
+            settings.General.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -118,10 +119,10 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests -r xml [Tag1]";
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = true;
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-tests -r xml [Tag1]";
+            settings.General.FilenameFilter = new Regex(".*");
+            settings.General.IncludeHidden = true;
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -141,10 +142,10 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests -r xml [Tag1]";
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = false;
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-tests -r xml [Tag1]";
+            settings.General.FilenameFilter = new Regex(".*");
+            settings.General.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -168,9 +169,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests -r xml \"Tags. Manytags\"";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-tests -r xml \"Tags. Manytags\"";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -206,9 +207,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests -r xml \"Tags. Longtag1\"";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-tests -r xml \"Tags. Longtag1\"";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -231,9 +232,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests -r xml \"Tags. Longtag2\"";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-tests -r xml \"Tags. Longtag2\"";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -260,9 +261,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests --reporter xml *TestCases*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-tests --reporter xml *TestCases*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -298,9 +299,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "-v high --list-tests -r xml *TestCases*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "-v high --list-tests -r xml *TestCases*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -368,9 +369,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests --reporter xml LongTestCaseNames*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-tests --reporter xml LongTestCaseNames*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -450,9 +451,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "-v high --list-tests -r xml LongTestCaseNames*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "-v high --list-tests -r xml LongTestCaseNames*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -506,9 +507,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests -r xml NotDefaultDiscoverable*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-tests -r xml NotDefaultDiscoverable*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -559,9 +560,9 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "-v high --list-tests -r xml NotDefaultDiscoverable*";
-            settings.FilenameFilter = ".*";
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "-v high --list-tests -r xml NotDefaultDiscoverable*";
+            settings.General.FilenameFilter = new Regex(".*");
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -619,10 +620,10 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--list-tests -r xml";
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = false;
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--list-tests -r xml";
+            settings.General.FilenameFilter = new Regex(".*");
+            settings.General.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
             string[] sources = { source };
@@ -667,11 +668,11 @@ namespace UT_Catch2Interface.Discover
                 return;
             }
 
-            var settings = new Settings();
-            settings.DiscoverCommandLine = "--sleep 500 --list-tests -r xml *";
-            settings.DiscoverTimeout = 200;
-            settings.FilenameFilter = ".*";
-            settings.IncludeHidden = false;
+            var settings = new SettingsManager();
+            settings.General.DiscoverCommandLine = "--sleep 500 --list-tests -r xml *";
+            settings.General.DiscoverTimeout = 200;
+            settings.General.FilenameFilter = new Regex(".*");
+            settings.General.IncludeHidden = false;
 
             var discoverer = new Discoverer(settings);
 
@@ -681,7 +682,7 @@ namespace UT_Catch2Interface.Discover
             Assert.AreEqual(0, tests.Count);
 
             // Sanity check to see tests could be discovered with less sleep
-            settings.DiscoverCommandLine = "--sleep 50 --list-tests -r xml *";
+            settings.General.DiscoverCommandLine = "--sleep 50 --list-tests -r xml *";
 
             tests = discoverer.GetTests(sources) as List<TestCase>;
 

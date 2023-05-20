@@ -33,10 +33,8 @@ Class :
         // Regex
         static readonly Regex _rgxXmlCheck = new Regex(@"^<\?xml");
 
-        private StringBuilder  _logbuilder = new StringBuilder();
-        private Settings       _settings;
-        private Regex          _rgx_filter;
-        private Regex          _rgx_dllfilter;
+        private StringBuilder   _logbuilder = new StringBuilder();
+        private SettingsManager _settings;
         private List<TestCase> _testcases;
 
         #endregion // Fields
@@ -49,26 +47,9 @@ Class :
 
         #region Constructor
 
-        public Discoverer(Settings settings)
+        public Discoverer(SettingsManager settings)
         {
-            _settings = settings ?? new Settings();
-            if(_settings.IsExeDiscoveryDisabled)
-            {
-              _rgx_filter = null;
-            }
-            else
-            {
-              _rgx_filter = new Regex(_settings.FilenameFilter);
-            }
-
-            if (_settings.IsDllDiscoveryDisabled)
-            {
-                _rgx_dllfilter = null;
-            }
-            else
-            {
-                _rgx_dllfilter = new Regex(_settings.DllFilenameFilter);
-            }
+            _settings = settings ?? new SettingsManager();
         }
 
         #endregion // Constructor
@@ -81,32 +62,42 @@ Class :
 
             var tests = new List<TestCase>();
 
-            // Make sure the discovery commandline to be used is valid
-            if( _settings.Disabled || _settings.IsExeDiscoveryDisabled || !_settings.HasValidDiscoveryCommandline )
+            // Make sure discovery is enabled
+            if( _settings.General.Disabled )
             {
-                LogDebug("Test adapter disabled or invalid discovery commandline, should not be able to get here via Test Explorer");
+                LogDebug(_settings.General, "Test adapter disabled, should not be able to get here via Test Explorer");
                 return tests;
             }
 
             // Retrieve test cases for each provided source
             foreach (var source in sources)
             {
-                LogVerbose($"Source: {source}{Environment.NewLine}");
+                // Make sure there is something to discover with
+                if (_settings.General.IsExeDiscoveryDisabled)
+                {
+                    LogDebug(_settings.General, "Exe discovery disabled, should not be able to get here via Test Explorer");
+                    return tests;
+                }
+
+                if (!IsValidSourceName(source))
+                {
+                    continue;
+                }
+
+                // Try to discover tests
+                var settings_src = _settings.GetSourceSettings(source);
+
+                LogVerbose(settings_src, $"Source: {source}{Environment.NewLine}");
                 if (!File.Exists(source))
                 {
-                    LogVerbose($"  File not found.{Environment.NewLine}");
+                    LogVerbose(settings_src, $"  File not found.{Environment.NewLine}");
+                    continue;
                 }
-                else if (CheckSource(source))
-                {
-                    ExtractTestCases(GetTestCaseInfo(source), source);
-                    LogVerbose($"  Testcase count: {_testcases.Count}{Environment.NewLine}");
-                    tests.AddRange(_testcases);
-                }
-                else
-                {
-                    LogVerbose($"  Invalid source.{Environment.NewLine}");
-                }
-                LogDebug($"  Accumulated Testcase count: {tests.Count}{Environment.NewLine}");
+
+                ExtractTestCases(GetTestCaseInfo(source), source);
+                LogVerbose(settings_src, $"  Testcase count: {_testcases.Count}{Environment.NewLine}");
+                tests.AddRange(_testcases);
+                LogDebug(settings_src, $"  Accumulated Testcase count: {tests.Count}{Environment.NewLine}");
             }
 
             Log = _logbuilder.ToString();
@@ -121,41 +112,49 @@ Class :
             var tests = new List<TestCase>();
 
             // Make sure the discovery commandline to be used is valid
-            if (_settings.Disabled || _settings.IsDllDiscoveryDisabled || !_settings.HasValidDiscoveryCommandline)
+            if (_settings.General.Disabled)
             {
-                LogDebug("Test adapter disabled or invalid discovery commandline, should not be able to get here via Test Explorer");
+                LogDebug(_settings.General, "Test adapter disabled, should not be able to get here via Test Explorer");
                 return tests;
             }
 
             // Retrieve test cases for each provided source
             foreach (var source in sources)
             {
-                LogVerbose($"Source: {source}{Environment.NewLine}");
+                // Make sure there is something to discover with
+                if (_settings.General.IsDllDiscoveryDisabled)
+                {
+                    LogDebug(_settings.General, "Dll discovery disabled, should not be able to get here via Test Explorer");
+                    return tests;
+                }
+
+                if(!IsValidSourceNameDll(source))
+                {
+                    continue;
+                }
+
+                // Try to discover tests
+                var settings_src = _settings.GetSourceSettings(source);
+
+                LogVerbose(settings_src, $"Source: {source}{Environment.NewLine}");
                 if (!File.Exists(source))
                 {
-                    LogVerbose($"  File not found.{Environment.NewLine}");
+                    LogVerbose(settings_src, $"  File not found.{Environment.NewLine}");
                     continue;
                 }
 
-                var runner = _settings.GetDllRunner(source);
-                LogVerbose($"DllRunner: {runner}{Environment.NewLine}");
+                var runner = settings_src.GetDllRunner(source);
+                LogVerbose(settings_src, $"DllRunner: {runner}{Environment.NewLine}");
                 if (!File.Exists(runner))
                 {
-                    LogVerbose($"  File not found.{Environment.NewLine}");
+                    LogVerbose(settings_src, $"  File not found.{Environment.NewLine}");
                     continue;
                 }
 
-                if (CheckSourceDll(source))
-                {
-                    ExtractTestCases(GetTestCaseInfoDll(runner, source), source);
-                    LogVerbose($"  Testcase count: {_testcases.Count}{Environment.NewLine}");
-                    tests.AddRange(_testcases);
-                }
-                else
-                {
-                    LogVerbose($"  Invalid source.{Environment.NewLine}");
-                }
-                LogDebug($"  Accumulated Testcase count: {tests.Count}{Environment.NewLine}");
+                ExtractTestCases(GetTestCaseInfoDll(runner, source), source);
+                LogVerbose(settings_src, $"  Testcase count: {_testcases.Count}{Environment.NewLine}");
+                tests.AddRange(_testcases);
+                LogDebug(settings_src, $"  Accumulated Testcase count: {tests.Count}{Environment.NewLine}");
             }
 
             Log = _logbuilder.ToString();
@@ -169,17 +168,19 @@ Class :
 
         private bool CheckSource(string source)
         {
+            var settings_src = _settings.GetSourceSettings(source);
+
             try
             {
                 var name = Path.GetFileNameWithoutExtension(source);
 
-                LogDebug($"CheckSource name: {name}{Environment.NewLine}");
+                LogDebug(settings_src, $"CheckSource name: {name}{Environment.NewLine}");
 
-                return _rgx_filter.IsMatch(name) && File.Exists(source);
+                return settings_src.FilenameFilter.IsMatch(name) && File.Exists(source);
             }
             catch(Exception e)
             {
-                LogDebug($"CheckSource Exception: {e.Message}{Environment.NewLine}");
+                LogDebug(settings_src, $"CheckSource Exception: {e.Message}{Environment.NewLine}");
             }
 
             return false;
@@ -187,25 +188,27 @@ Class :
 
         private bool CheckSourceDll(string source)
         {
+            var settings_src = _settings.GetSourceSettings(source);
+
             try
             {
                 var name = Path.GetFileNameWithoutExtension(source);
 
-                LogDebug($"CheckSource name: {name}{Environment.NewLine}");
+                LogDebug(settings_src, $"CheckSource name: {name}{Environment.NewLine}");
 
-                if (!String.IsNullOrEmpty(_settings.DllPostfix) && name.EndsWith(_settings.DllPostfix))
+                if (!String.IsNullOrEmpty(settings_src.DllPostfix) && name.EndsWith(settings_src.DllPostfix))
                 {
-                    name = name.Remove(name.Length - _settings.DllPostfix.Length);
-                    return _rgx_dllfilter.IsMatch(name) && File.Exists(source);
+                    name = name.Remove(name.Length - settings_src.DllPostfix.Length);
+                    return settings_src.DllFilenameFilter.IsMatch(name) && File.Exists(source);
                 }
                 else
                 {
-                    return _rgx_dllfilter.IsMatch(name) && File.Exists(source);
+                    return settings_src.DllFilenameFilter.IsMatch(name) && File.Exists(source);
                 }
             }
             catch (Exception e)
             {
-                LogDebug($"CheckSource Exception: {e.Message}{Environment.NewLine}");
+                LogDebug(settings_src, $"CheckSource Exception: {e.Message}{Environment.NewLine}");
             }
 
             return false;
@@ -213,18 +216,20 @@ Class :
 
         private void ExtractTestCases(string output, string source)
         {
-            if(_rgxXmlCheck.IsMatch(output))
+            var settings_src = _settings.GetSourceSettings(source);
+
+            if (_rgxXmlCheck.IsMatch(output))
             {
-                var processor = new Discover.Catch2Xml(_settings);
+                var processor = new Discover.Catch2Xml(settings_src);
                 _testcases = processor.ExtractTests(output, source);
                 if(!string.IsNullOrEmpty(processor.Log))
                 {
                     _logbuilder.Append(processor.Log);
                 }
             }
-            else if(_settings.UsesTestNameOnlyDiscovery)
+            else if(settings_src.UsesTestNameOnlyDiscovery)
             {
-                var processor = new Discover.ListTestNamesOnly(_settings);
+                var processor = new Discover.ListTestNamesOnly(settings_src);
                 _testcases = processor.ExtractTests(output, source);
                 if(!string.IsNullOrEmpty(processor.Log))
                 {
@@ -233,7 +238,7 @@ Class :
             }
             else
             {
-                var processor = new Discover.ListTests(_settings);
+                var processor = new Discover.ListTests(settings_src);
                 _testcases = processor.ExtractTests(output, source);
                 if(!string.IsNullOrEmpty(processor.Log))
                 {
@@ -244,26 +249,28 @@ Class :
 
         private string GetTestCaseInfo(string source)
         {
+            var settings_src = _settings.GetSourceSettings(source);
+
             // Retrieve test cases
             using (var process = new Process())
             {
                 process.StartInfo.FileName = source;
-                process.StartInfo.Arguments = _settings.DiscoverCommandLine;
+                process.StartInfo.Arguments = settings_src.DiscoverCommandLine;
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.UseShellExecute = false;
 
-                _settings.AddEnviromentVariables(process.StartInfo.EnvironmentVariables);
+                settings_src.AddEnviromentVariables(process.StartInfo.EnvironmentVariables);
 
                 process.Start();
 
                 var output = process.StandardOutput.ReadToEndAsync();
                 var erroroutput = process.StandardError.ReadToEndAsync();
 
-                if(_settings.DiscoverTimeout > 0)
+                if(settings_src.DiscoverTimeout > 0)
                 {
-                    process.WaitForExit(_settings.DiscoverTimeout);
+                    process.WaitForExit(settings_src.DiscoverTimeout);
                 }
                 else
                 {
@@ -275,14 +282,14 @@ Class :
                     process.Kill();
                     process.WaitForExit();
 
-                    LogNormal($"  Warning: Discovery timeout for {source}{Environment.NewLine}");
+                    LogNormal(settings_src, $"  Warning: Discovery timeout for {source}{Environment.NewLine}");
                     if(output.Result.Length == 0)
                     {
-                        LogVerbose($"  Killed process. There was no output.{Environment.NewLine}");
+                        LogVerbose(settings_src, $"  Killed process. There was no output.{Environment.NewLine}");
                     }
                     else
                     {
-                        LogVerbose($"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
+                        LogVerbose(settings_src, $"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
                     }
                     return string.Empty;
                 }
@@ -290,8 +297,8 @@ Class :
                 {
                     if (!string.IsNullOrEmpty(erroroutput.Result))
                     {
-                        LogNormal($"  Error Occurred (exit code {process.ExitCode}):{Environment.NewLine}{erroroutput.Result}");
-                        LogDebug($"  output:{Environment.NewLine}{output.Result}");
+                        LogNormal(settings_src, $"  Error Occurred (exit code {process.ExitCode}):{Environment.NewLine}{erroroutput.Result}");
+                        LogDebug(settings_src, $"  output:{Environment.NewLine}{output.Result}");
                         return string.Empty;
                     }
 
@@ -301,7 +308,7 @@ Class :
                     }
                     else
                     {
-                        LogDebug($"  No output{Environment.NewLine}");
+                        LogDebug(settings_src, $"  No output{Environment.NewLine}");
                         return string.Empty;
                     }
                 }
@@ -310,26 +317,28 @@ Class :
 
         private string GetTestCaseInfoDll(string runner, string source)
         {
+            var settings_src = _settings.GetSourceSettings(source);
+
             // Retrieve test cases
             using (var process = new Process())
             {
                 process.StartInfo.FileName = runner;
-                process.StartInfo.Arguments = _settings.GetDllRunnerDiscoverCommandline(source);
+                process.StartInfo.Arguments = settings_src.GetDllRunnerDiscoverCommandline(source);
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.UseShellExecute = false;
 
-                _settings.AddEnviromentVariables(process.StartInfo.EnvironmentVariables);
+                settings_src.AddEnviromentVariables(process.StartInfo.EnvironmentVariables);
 
                 process.Start();
 
                 var output = process.StandardOutput.ReadToEndAsync();
                 var erroroutput = process.StandardError.ReadToEndAsync();
 
-                if (_settings.DiscoverTimeout > 0)
+                if (settings_src.DiscoverTimeout > 0)
                 {
-                    process.WaitForExit(_settings.DiscoverTimeout);
+                    process.WaitForExit(settings_src.DiscoverTimeout);
                 }
                 else
                 {
@@ -341,14 +350,14 @@ Class :
                     process.Kill();
                     process.WaitForExit();
 
-                    LogNormal($"  Warning: Discovery timeout for {source}{Environment.NewLine}");
+                    LogNormal(settings_src, $"  Warning: Discovery timeout for {source}{Environment.NewLine}");
                     if (output.Result.Length == 0)
                     {
-                        LogVerbose($"  Killed process. There was no output.{Environment.NewLine}");
+                        LogVerbose(settings_src, $"  Killed process. There was no output.{Environment.NewLine}");
                     }
                     else
                     {
-                        LogVerbose($"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
+                        LogVerbose(settings_src, $"  Killed process. Threw away following output:{Environment.NewLine}{output.Result}");
                     }
                     return string.Empty;
                 }
@@ -356,8 +365,8 @@ Class :
                 {
                     if (!string.IsNullOrEmpty(erroroutput.Result))
                     {
-                        LogNormal($"  Error Occurred (exit code {process.ExitCode}):{Environment.NewLine}{erroroutput.Result}");
-                        LogDebug($"  output:{Environment.NewLine}{output.Result}");
+                        LogNormal(settings_src, $"  Error Occurred (exit code {process.ExitCode}):{Environment.NewLine}{erroroutput.Result}");
+                        LogDebug(settings_src, $"  output:{Environment.NewLine}{output.Result}");
                         return string.Empty;
                     }
 
@@ -367,42 +376,98 @@ Class :
                     }
                     else
                     {
-                        LogDebug($"  No output{Environment.NewLine}");
+                        LogDebug(settings_src, $"  No output{Environment.NewLine}");
                         return string.Empty;
                     }
                 }
             }
         }
 
+        private bool IsValidSourceName(string source)
+        {
+            bool isvalid = false;
+            try
+            {
+                var name = Path.GetFileNameWithoutExtension(source);
+
+                LogDebug(_settings.General, $"ValidateSourceName name: {name}{Environment.NewLine}");
+
+                isvalid = _settings.General.FilenameFilter.IsMatch(name);
+            }
+            catch (Exception e)
+            {
+                LogDebug(_settings.General, $"CheckSource Exception: {e.Message}{Environment.NewLine}");
+            }
+
+            if (!isvalid)
+            {
+                LogDebug(_settings.General, $"ValidateSourceName: Invalid source");
+            }
+
+            return isvalid;
+        }
+
+        private bool IsValidSourceNameDll(string source)
+        {
+            bool isvalid = false;
+            try
+            {
+                var name = Path.GetFileNameWithoutExtension(source);
+
+                LogDebug(_settings.General, $"ValidateSourceName name: {name}{Environment.NewLine}");
+
+                if (!String.IsNullOrEmpty(_settings.General.DllPostfix) && name.EndsWith(_settings.General.DllPostfix))
+                {
+                    name = name.Remove(name.Length - _settings.General.DllPostfix.Length);
+                    isvalid = _settings.General.DllFilenameFilter.IsMatch(name);
+                }
+                else
+                {
+                    isvalid = _settings.General.DllFilenameFilter.IsMatch(name);
+                }
+            }
+            catch (Exception e)
+            {
+                LogDebug(_settings.General, $"ValidateSourceName Exception: {e.Message}{Environment.NewLine}");
+            }
+
+            if(!isvalid)
+            {
+                LogDebug(_settings.General, $"ValidateSourceName: Invalid source");
+            }
+
+            return isvalid;
+        }
+
         #endregion // Private Methods
 
         #region Private Logging Methods
 
-        private void LogDebug(string msg)
+        private void LogDebug(Settings settings_src, string msg)
         {
-            if (_settings == null
-             || _settings.LoggingLevel == LoggingLevels.Debug)
+            if (settings_src == null
+             || settings_src.LoggingLevel == LoggingLevels.Debug)
             {
                 _logbuilder.Append(msg);
             }
         }
 
-        private void LogNormal(string msg)
+        private void LogNormal(Settings settings_src, string msg)
         {
-            if (_settings == null
-             || _settings.LoggingLevel == LoggingLevels.Normal
-             || _settings.LoggingLevel == LoggingLevels.Verbose
-             || _settings.LoggingLevel == LoggingLevels.Debug)
+            if (settings_src == null
+             || settings_src.LoggingLevel == LoggingLevels.Normal
+             || settings_src.LoggingLevel == LoggingLevels.Verbose
+             || settings_src.LoggingLevel == LoggingLevels.Debug)
             {
                 _logbuilder.Append(msg);
             }
         }
 
-        private void LogVerbose(string msg)
+        private void LogVerbose(Settings settings_src, string msg)
         {
-            if (_settings == null
-             || _settings.LoggingLevel == LoggingLevels.Verbose
-             || _settings.LoggingLevel == LoggingLevels.Debug)
+            if (settings_src == null
+             || settings_src.LoggingLevel == LoggingLevels.Verbose
+             || settings_src.LoggingLevel == LoggingLevels.Debug)
             {
                 _logbuilder.Append(msg);
             }
