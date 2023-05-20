@@ -65,7 +65,7 @@ Class :
 
         #region Public Methods
 
-        public List<TestCase> ExtractTests(string output, string source)
+        public List<TestCase> ExtractTests(string output, string source, string runner = null)
         {
             _logbuilder.Clear();
             _testcases = new List<TestCase>();
@@ -74,12 +74,12 @@ Class :
             if(_settings.IsVerbosityHigh)
             {
                 LogDebug($"  Default Verbose Test Discovery:{Environment.NewLine}{output}");
-                ProcessVerbose(output, source);
+                ProcessVerbose(output, source, runner);
             }
             else
             {
                 LogDebug($"  Default Test Discovery:{Environment.NewLine}{output}");
-                Process(output, source);
+                Process(output, source, runner);
             }
 
             Log = _logbuilder.ToString();
@@ -91,7 +91,7 @@ Class :
 
         #region Private Methods
 
-        private bool CheckTestCaseName(string source, string name, int linenumber)
+        private bool CheckTestCaseName(string source, string runner, string name, int linenumber)
         {
             // Check if testcase name is already in the testcase list
             if(HasTestCaseName(name))
@@ -101,14 +101,29 @@ Class :
 
             // Retrieve test cases
             var process = new Process();
-            process.StartInfo.FileName = source;
-            if(linenumber < 0)
+            if(string.IsNullOrEmpty(runner))
             {
-                process.StartInfo.Arguments = $"--list-tests {'"'}{name}{'"'}";
+                process.StartInfo.FileName = source;
+                if(linenumber < 0)
+                {
+                    process.StartInfo.Arguments = $"--list-tests {'"'}{name}{'"'}";
+                }
+                else
+                {
+                    process.StartInfo.Arguments = $"--verbosity high --list-tests {'"'}{name}{'"'}";
+                }
             }
             else
             {
-                process.StartInfo.Arguments = $"--verbosity high --list-tests {'"'}{name}{'"'}";
+                process.StartInfo.FileName = runner;
+                if (linenumber < 0)
+                {
+                    process.StartInfo.Arguments = _settings.GetDllExecutorCommandline($"--list-tests {'"'}{name}{'"'}", source);
+                }
+                else
+                {
+                    process.StartInfo.Arguments = _settings.GetDllExecutorCommandline($"--verbosity high --list-tests {'"'}{name}{'"'}", source);
+                }
             }
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.RedirectStandardOutput = true;
@@ -273,7 +288,7 @@ Class :
             return ExtractLineNumber(filenamelines[filenamelines.Count - 1]);
         }
 
-        private string MakeTestCaseName(List<string> namelines, string source, string filename = null, int linenumber = -1)
+        private string MakeTestCaseName(List<string> namelines, string source, string runner, string filename = null, int linenumber = -1)
         {
             if(namelines.Count == 1)
             {
@@ -286,7 +301,7 @@ Class :
             for(int i = 0; i < numoptions; ++i)
             {
                 name = MergeLines(namelines, i, false, 2);
-                if(CheckTestCaseName(source, name, linenumber))
+                if(CheckTestCaseName(source, runner, name, linenumber))
                 {
                     return name;
                 }
@@ -295,7 +310,7 @@ Class :
             for (int i = 0; i < numoptions; ++i)
             {
                 name = MergeLines(namelines, i, true, 2);
-                if (CheckTestCaseName(source, name, linenumber))
+                if (CheckTestCaseName(source, runner, name, linenumber))
                 {
                     return name;
                 }
@@ -320,7 +335,7 @@ Class :
             return string.Empty;
         }
 
-        private void Process(string output, string source)
+        private void Process(string output, string source, string runner)
         {
             var reader = new StringReader(output);
             var line = reader.ReadLine();
@@ -355,7 +370,7 @@ Class :
 
                     // Create testcase
                     var testcase = new TestCase();
-                    testcase.Name = MakeTestCaseName(testcasenamelines, source);
+                    testcase.Name = MakeTestCaseName(testcasenamelines, source, runner);
                     testcase.Source = source;
 
                     // Add Tags
@@ -393,7 +408,7 @@ Class :
             }
         }
 
-        private void ProcessVerbose(string output, string source)
+        private void ProcessVerbose(string output, string source, string runner)
         {
             _testcases = new List<TestCase>();
 
@@ -465,7 +480,7 @@ Class :
                     var testcase = new TestCase();
                     testcase.Filename = MakeTestCaseFilename(testcasefilenamelines);
                     testcase.Line = MakeTestCaseLine(testcasefilenamelines);
-                    testcase.Name = MakeTestCaseName(testcasenamelines, source, testcase.Filename, testcase.Line);
+                    testcase.Name = MakeTestCaseName(testcasenamelines, source, runner, testcase.Filename, testcase.Line);
                     testcase.Source = source;
 
                     // Add Tags

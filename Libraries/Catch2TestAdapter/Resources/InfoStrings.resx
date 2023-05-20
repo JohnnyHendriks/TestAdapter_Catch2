@@ -127,15 +127,27 @@
     <value>Catch2Adapter Exe discovery is disabled.</value>
   </data>
   <data name="FinishedDiscovery" xml:space="preserve">
-    <value>Finished Catch2Adapter test discovery.</value>
+    <value>Finished Catch2Adapter exe test discovery.</value>
+  </data>
+  <data name="FinishedDiscoveryDll" xml:space="preserve">
+    <value>Finished Catch2Adapter dll test discovery.</value>
   </data>
   <data name="FinishedExecutor" xml:space="preserve">
-    <value>Finished Catch2Adapter test execution.</value>
+    <value>Finished Catch2Adapter exe test execution.</value>
+  </data>
+  <data name="FinishedExecutorDll" xml:space="preserve">
+    <value>Finished Catch2Adapter dll test execution.</value>
   </data>
   <data name="StartDiscovery" xml:space="preserve">
-    <value>Started Catch2Adapter test discovery...</value>
+    <value>Started Catch2Adapter exe test discovery...</value>
+  </data>
+  <data name="StartDiscoveryDll" xml:space="preserve">
+    <value>Started Catch2Adapter dll test discovery...</value>
   </data>
   <data name="StartExecutor" xml:space="preserve">
-    <value>Started Catch2Adapter test execution...</value>
+    <value>Started Catch2Adapter exe test execution...</value>
+  </data>
+  <data name="StartExecutorDll" xml:space="preserve">
+    <value>Started Catch2Adapter dll test execution...</value>
   </data>
 </root>

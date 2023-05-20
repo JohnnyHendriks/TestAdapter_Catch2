@@ -73,11 +73,11 @@ namespace Catch2TestAdapter
             }
 
             // Run Tests
-            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.StartExecutor);
+            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.StartExecutorDll);
 
             RunTests(tests);
 
-            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.FinishedExecutor);
+            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.FinishedExecutorDll);
         }
 
         public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
@@ -108,18 +108,18 @@ namespace Catch2TestAdapter
             }
 
             // Discover Tests
-            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.StartDiscovery);
+            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.StartDiscoveryDll);
 
             var tests = GetTests(sources);
 
-            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.FinishedDiscovery);
+            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.FinishedDiscoveryDll);
 
             // Run Tests
-            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.StartExecutor);
+            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.StartExecutorDll);
 
             RunTests(tests);
 
-            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.FinishedExecutor);
+            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.FinishedExecutorDll);
         }
 
     #endregion // ITestExecutor

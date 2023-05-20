@@ -88,7 +88,7 @@ namespace Catch2TestAdapter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finished Catch2Adapter test discovery..
+        ///   Looks up a localized string similar to Finished Catch2Adapter exe test discovery..
         /// </summary>
         internal static string FinishedDiscovery {
             get {
@@ -97,7 +97,16 @@ namespace Catch2TestAdapter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finished Catch2Adapter test execution..
+        ///   Looks up a localized string similar to Finished Catch2Adapter dll test discovery..
+        /// </summary>
+        internal static string FinishedDiscoveryDll {
+            get {
+                return ResourceManager.GetString("FinishedDiscoveryDll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finished Catch2Adapter exe test execution..
         /// </summary>
         internal static string FinishedExecutor {
             get {
@@ -106,7 +115,16 @@ namespace Catch2TestAdapter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Started Catch2Adapter test discovery....
+        ///   Looks up a localized string similar to Finished Catch2Adapter dll test execution..
+        /// </summary>
+        internal static string FinishedExecutorDll {
+            get {
+                return ResourceManager.GetString("FinishedExecutorDll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Started Catch2Adapter exe test discovery....
         /// </summary>
         internal static string StartDiscovery {
             get {
@@ -115,11 +133,29 @@ namespace Catch2TestAdapter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Started Catch2Adapter test execution....
+        ///   Looks up a localized string similar to Started Catch2Adapter dll test discovery....
+        /// </summary>
+        internal static string StartDiscoveryDll {
+            get {
+                return ResourceManager.GetString("StartDiscoveryDll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Started Catch2Adapter exe test execution....
         /// </summary>
         internal static string StartExecutor {
             get {
                 return ResourceManager.GetString("StartExecutor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Started Catch2Adapter dll test execution....
+        /// </summary>
+        internal static string StartExecutorDll {
+            get {
+                return ResourceManager.GetString("StartExecutorDll", resourceCulture);
             }
         }
     }

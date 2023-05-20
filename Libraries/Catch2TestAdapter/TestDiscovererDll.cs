@@ -62,11 +62,11 @@ namespace Catch2TestAdapter
             }
 
             // Discover Tests
-            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.StartDiscovery);
+            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.StartDiscoveryDll);
 
             DiscoverTests(sources);
 
-            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.FinishedDiscovery);
+            LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.FinishedDiscoveryDll);
         }
 
         #endregion // ITestDiscoverer

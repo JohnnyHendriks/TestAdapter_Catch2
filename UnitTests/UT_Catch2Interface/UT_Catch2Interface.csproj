@@ -177,7 +177,10 @@
     <Compile Include="Configuration\SettingsManagerTests.cs" />
     <Compile Include="Discover\Catch2XmlDllTests.cs" />
     <Compile Include="Discover\Catch2XmlTests.cs" />
+    <Compile Include="Discover\ListTestNamesOnlyTestsDll.cs" />
     <Compile Include="Discover\ListTestNamesOnlyTests.cs" />
+    <Compile Include="Discover\ListTestsTestsDll.cs" />
+    <Compile Include="Discover\ListTestsXmlTestsDll.cs" />
     <Compile Include="Discover\ListTestsXmlTests.cs" />
     <Compile Include="Discover\ListTestsTests.cs" />
     <Compile Include="Resources\TestStrings_SettingsManager.Designer.cs">

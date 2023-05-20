@@ -151,7 +151,7 @@ Class :
                     continue;
                 }
 
-                ExtractTestCases(GetTestCaseInfoDll(runner, source), source);
+                ExtractTestCases(GetTestCaseInfoDll(runner, source), source, runner);
                 LogVerbose(settings_src, $"  Testcase count: {_testcases.Count}{Environment.NewLine}");
                 tests.AddRange(_testcases);
                 LogDebug(settings_src, $"  Accumulated Testcase count: {tests.Count}{Environment.NewLine}");
@@ -166,55 +166,7 @@ Class :
 
         #region Private Methods
 
-        private bool CheckSource(string source)
-        {
-            var settings_src = _settings.GetSourceSettings(source);
-
-            try
-            {
-                var name = Path.GetFileNameWithoutExtension(source);
-
-                LogDebug(settings_src, $"CheckSource name: {name}{Environment.NewLine}");
-
-                return settings_src.FilenameFilter.IsMatch(name) && File.Exists(source);
-            }
-            catch(Exception e)
-            {
-                LogDebug(settings_src, $"CheckSource Exception: {e.Message}{Environment.NewLine}");
-            }
-
-            return false;
-        }
-
-        private bool CheckSourceDll(string source)
-        {
-            var settings_src = _settings.GetSourceSettings(source);
-
-            try
-            {
-                var name = Path.GetFileNameWithoutExtension(source);
-
-                LogDebug(settings_src, $"CheckSource name: {name}{Environment.NewLine}");
-
-                if (!String.IsNullOrEmpty(settings_src.DllPostfix) && name.EndsWith(settings_src.DllPostfix))
-                {
-                    name = name.Remove(name.Length - settings_src.DllPostfix.Length);
-                    return settings_src.DllFilenameFilter.IsMatch(name) && File.Exists(source);
-                }
-                else
-                {
-                    return settings_src.DllFilenameFilter.IsMatch(name) && File.Exists(source);
-                }
-            }
-            catch (Exception e)
-            {
-                LogDebug(settings_src, $"CheckSource Exception: {e.Message}{Environment.NewLine}");
-            }
-
-            return false;
-        }
-
-        private void ExtractTestCases(string output, string source)
+        private void ExtractTestCases(string output, string source, string runner = null)
         {
             var settings_src = _settings.GetSourceSettings(source);
 
@@ -239,7 +191,7 @@ Class :
             else
             {
                 var processor = new Discover.ListTests(settings_src);
-                _testcases = processor.ExtractTests(output, source);
+                _testcases = processor.ExtractTests(output, source, runner);
                 if(!string.IsNullOrEmpty(processor.Log))
                 {
                     _logbuilder.Append(processor.Log);
