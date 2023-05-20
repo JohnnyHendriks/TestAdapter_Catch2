@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+
+  <Catch2Adapter>
+    <FilenameFilter>^Catch_</FilenameFilter>
+    <DllFilenameFilter>^CatchDll_</DllFilenameFilter>
+    <DllRunner>${dllpath}/CatchDllRunner.exe</DllRunner>
+    <DllRunnerCommandline>${catch2} ${dll}</DllRunnerCommandline>
+  </Catch2Adapter>
+
+</RunSettings>

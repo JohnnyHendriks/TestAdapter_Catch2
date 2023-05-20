@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\Catch2DllUnittest.targets" />
+  <PropertyGroup Label="Globals">
+    <RootNamespace>CatchDll_NoSEH</RootNamespace>
+    <ProjectTypeGuids>{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}</ProjectTypeGuids>
+    <ProjectGuid>{81CB02DF-6B1E-3987-89E3-8673B93AEDC6}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>CATCH_CONFIG_NO_WINDOWS_SEH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="$(RefTest_SourceDir)Catch_NoSEH\UT_Tests01.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)CatchDll_Common\main.cpp" />
+  </ItemGroup>
+</Project>

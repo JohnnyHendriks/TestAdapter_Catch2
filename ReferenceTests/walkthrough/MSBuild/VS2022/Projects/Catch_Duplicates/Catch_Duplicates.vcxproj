@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\Catch2Unittest.targets" />
+  <PropertyGroup Label="Globals">
+    <RootNamespace>Catch_Duplicates</RootNamespace>
+    <ProjectTypeGuids>{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}</ProjectTypeGuids>
+    <ProjectGuid>{1D4A2A48-0698-45D3-A343-9194DF301BA6}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Duplicates\UT_SameTestNames.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Common\main.cpp" />
+  </ItemGroup>
+</Project>
