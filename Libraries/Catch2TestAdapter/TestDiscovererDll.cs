@@ -16,6 +16,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Catch2TestAdapter
 {
@@ -28,6 +29,7 @@ namespace Catch2TestAdapter
         private IDiscoveryContext      _discoveryContext = null;
         private ITestCaseDiscoverySink _discoverySink = null;
         private IMessageLogger         _logger = null;
+        private int                    _pid = 0;
 
         private Catch2Interface.SettingsManager _settings = null;
 
@@ -40,6 +42,7 @@ namespace Catch2TestAdapter
             _discoveryContext = discoveryContext;
             _discoverySink = discoverySink;
             _logger = logger;
+            _pid = Process.GetCurrentProcess().Id;
 
             // Retrieve Catch2Adapter settings
             if( !UpdateSettings() )
@@ -108,19 +111,19 @@ namespace Catch2TestAdapter
 
         private void LogDebug(TestMessageLevel level, string msg)
         {
-            if(_logger == null) return;
+            if(_logger == null || string.IsNullOrEmpty(msg)) return;
 
             if(_settings == null
              || _settings.General == null
              || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug)
             {
-                _logger.SendMessage(level, msg);
+                _logger.SendMessage(level, $"C2A-{_pid}: {msg}");
             }
         }
 
         void LogNormal(TestMessageLevel level, string msg)
         {
-            if(_logger == null) return;
+            if(_logger == null || string.IsNullOrEmpty(msg)) return;
 
             if( _settings == null
              || _settings.General == null
@@ -128,20 +131,20 @@ namespace Catch2TestAdapter
              || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
              || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug)
             {
-                _logger.SendMessage(level, msg);
+                _logger.SendMessage(level, $"C2A-{_pid}: {msg}");
             }
         }
 
         void LogVerbose(TestMessageLevel level, string msg)
         {
-            if(_logger == null) return;
+            if(_logger == null || string.IsNullOrEmpty(msg)) return;
 
             if( _settings == null
              || _settings.General == null
              || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
              || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
             {
-                _logger.SendMessage(level, msg);
+                _logger.SendMessage(level, $"C2A-{_pid}: {msg}");
             }
         }
 

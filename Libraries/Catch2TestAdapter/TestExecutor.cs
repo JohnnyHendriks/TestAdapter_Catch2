@@ -16,9 +16,9 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Catch2TestAdapter
 {
@@ -33,13 +33,11 @@ namespace Catch2TestAdapter
         private bool             _cancelled = false;
         private IFrameworkHandle _frameworkHandle = null;
         private IRunContext      _runContext = null;
+        private int              _pid = 0;
 
         // Catch2
         private Catch2Interface.SettingsManager _settings = null;
         private Catch2Interface.Executor        _executor = null;
-
-        // Regex
-        private Regex _rgx_comma = new Regex(",");
 
     #endregion // Fields
 
@@ -56,6 +54,7 @@ namespace Catch2TestAdapter
             _cancelled = false;
             _frameworkHandle = frameworkHandle;
             _runContext = runContext;
+            _pid = Process.GetCurrentProcess().Id;
 
             // Retrieve Catch2Adapter settings
             if( !UpdateSettings() )
@@ -66,7 +65,7 @@ namespace Catch2TestAdapter
             }
 
             // Check if adapter is disabled
-            if (_settings.IsDisabled)
+            if(_settings.IsDisabled)
             {
                 LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.DiscoveryDisabled);
                 return;
@@ -85,7 +84,7 @@ namespace Catch2TestAdapter
             _cancelled = false;
             _frameworkHandle = frameworkHandle;
             _runContext = runContext;
-
+            _pid = Process.GetCurrentProcess().Id;
 
             // Retrieve Catch2Adapter settings
             if( !UpdateSettings() )
@@ -95,7 +94,7 @@ namespace Catch2TestAdapter
             }
 
             // Check if adapter is disabled
-            if (_settings.IsDisabled)
+            if(_settings.IsDisabled)
             {
                 LogNormal(TestMessageLevel.Informational, Resources.InfoStrings.DiscoveryDisabled);
                 return;
@@ -459,19 +458,19 @@ namespace Catch2TestAdapter
 
         private void LogDebug(TestMessageLevel level, string msg)
         {
-            if(_frameworkHandle == null) return;
+            if(_frameworkHandle == null || string.IsNullOrEmpty(msg)) return;
 
             if( _settings == null
              || _settings.General == null
              || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
             {
-                _frameworkHandle.SendMessage(level, msg);
+                _frameworkHandle.SendMessage(level, $"C2A-{_pid}: {msg}");
             }
         }
 
         private void LogNormal(TestMessageLevel level, string msg)
         {
-            if(_frameworkHandle == null) return;
+            if(_frameworkHandle == null || string.IsNullOrEmpty(msg)) return;
 
             if( _settings == null
              || _settings.General == null
@@ -479,20 +478,20 @@ namespace Catch2TestAdapter
              || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
              || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
             {
-                _frameworkHandle.SendMessage(level, msg);
+                _frameworkHandle.SendMessage(level, $"C2A-{_pid}: {msg}");
             }
         }
 
         private void LogVerbose(TestMessageLevel level, string msg)
         {
-            if(_frameworkHandle == null) return;
+            if(_frameworkHandle == null || string.IsNullOrEmpty(msg)) return;
 
             if( _settings == null
              || _settings.General == null
              || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Verbose
              || _settings.General.LoggingLevel == Catch2Interface.LoggingLevels.Debug )
             {
-                _frameworkHandle.SendMessage(level, msg);
+                _frameworkHandle.SendMessage(level, $"C2A-{_pid}: {msg}");
             }
         }
 
