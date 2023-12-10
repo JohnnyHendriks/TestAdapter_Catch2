@@ -351,8 +351,15 @@ namespace Catch2TestAdapter
 
             if (retrytests.Count > 0)
             {
-                LogDebug(TestMessageLevel.Informational, $"Process retry tests (count: {retrytests.Count})");
-                RunTests_Combine(retrytests);
+                if(groupedtests.Count == retrytests.Count)
+                {
+                    LogNormal(TestMessageLevel.Warning, $"There appears to be a fundamental problem. No test results found for combined test run, where {groupedtests.Count} results were expected.");
+                }
+                else
+                {
+                    LogDebug(TestMessageLevel.Informational, $"Process retry tests (count: {retrytests.Count})");
+                    RunTests_Combine(retrytests);
+                }
             }
 
             if (singledtests.Count > 0)

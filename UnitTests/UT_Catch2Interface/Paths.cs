@@ -84,6 +84,7 @@ namespace UT_Catch2Interface
             , new string[]{ "Rel3_3_0" }
             , new string[]{ "Rel3_3_1" }
             , new string[]{ "Rel3_3_2" }
+            , new string[]{ "Rel3_4_0" }
             };
 
             VersionsDll = new List<string[]>
@@ -140,6 +141,7 @@ namespace UT_Catch2Interface
             , new string[]{ "Rel3_3_0" }
             , new string[]{ "Rel3_3_1" }
             , new string[]{ "Rel3_3_2" }
+            , new string[]{ "Rel3_4_0" }
             };
         }
 
