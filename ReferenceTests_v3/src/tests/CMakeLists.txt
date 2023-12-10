@@ -2,14 +2,14 @@ cmake_minimum_required(VERSION 3.16)
 
 set( CXX_EXTENSIONS OFF )
 
-foreach( tafc2_catchversion IN ITEMS v3.0.1 v3.1.0 v3.1.1 v3.2.0 v3.2.1 v3.3.0 v3.3.1 v3.3.2 )
+foreach( tafc2_catchversion IN ITEMS v3.0.1 v3.1.0 v3.1.1 v3.2.0 v3.2.1 v3.3.0 v3.3.1 v3.3.2 v3.4.0 )
 
   message( DEBUG "TAFC2: tafc2_catchversion: ${tafc2_catchversion}")
   list( APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/cmake-package/${tafc2_catchversion}" )
 
 endforeach()
 
-foreach( tafc2_catchversion IN ITEMS v3_0_1 v3_1_0 v3_1_1 v3_2_0 v3_2_1 v3_3_0 v3_3_1 v3_3_2 )
+foreach( tafc2_catchversion IN ITEMS v3_0_1 v3_1_0 v3_1_1 v3_2_0 v3_2_1 v3_3_0 v3_3_1 v3_3_2 v3_4_0 )
 
   message( DEBUG "TAFC2: tafc2_catchversion: ${tafc2_catchversion}")
   find_package( "Tafc2-Catch2_${tafc2_catchversion}" )

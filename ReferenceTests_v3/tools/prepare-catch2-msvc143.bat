@@ -15,6 +15,7 @@ call :BuildCatch2 Rel3_2_1 Catch2-3.2.1
 call :BuildCatch2 Rel3_3_0 Catch2-3.3.0
 call :BuildCatch2 Rel3_3_1 Catch2-3.3.1
 call :BuildCatch2 Rel3_3_2 Catch2-3.3.2
+call :BuildCatch2 Rel3_4_0 Catch2-3.4.0
 
 echo.
 echo Done.

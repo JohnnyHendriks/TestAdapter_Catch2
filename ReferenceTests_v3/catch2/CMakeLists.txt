@@ -65,3 +65,9 @@ tafc2_prepare_catch2(
   "https://github.com/catchorg/Catch2/archive/refs/tags/v3.3.2.zip"
   "8361907F4D9BFF3AE7C1EDB027F813659F793053C99B67837A0C0375F065BAE2"
 )
+
+tafc2_prepare_catch2(
+  "Catch2-3.4.0"
+  "https://github.com/catchorg/Catch2/archive/refs/tags/v3.4.0.zip"
+  "CD175F5B7E62C29558D4C17D2B94325EE0AB6D0BF1A4B3D61BC8DBCC688EA3C2"
+)

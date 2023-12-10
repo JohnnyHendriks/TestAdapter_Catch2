@@ -21,5 +21,6 @@ tafc2_config_catch2_packages( "v3.2.1" )
 tafc2_config_catch2_packages( "v3.3.0" )
 tafc2_config_catch2_packages( "v3.3.1" )
 tafc2_config_catch2_packages( "v3.3.2" )
+tafc2_config_catch2_packages( "v3.4.0" )
 
 add_subdirectory( src/tests )
