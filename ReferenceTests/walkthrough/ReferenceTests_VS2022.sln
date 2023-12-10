@@ -62,9 +62,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8DF0F5AE-3AB4-4995-9E50-119B7C2B1C11}"
 	ProjectSection(SolutionItems) = preProject
 		.runsettings = .runsettings
-		Minimal.runsettings = Minimal.runsettings
+		MinimalDll.runsettings = MinimalDll.runsettings
+		MinimalExe.runsettings = MinimalExe.runsettings
 		ReferenceTests.runsettings = ReferenceTests.runsettings
-		ReferenceTestsCombined.runsettings = ReferenceTestsCombined.runsettings
+		ReferenceTestsExMode.runsettings = ReferenceTestsExMode.runsettings
 	EndProjectSection
 EndProject
 Global

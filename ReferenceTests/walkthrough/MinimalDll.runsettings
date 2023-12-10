@@ -2,8 +2,6 @@
 <RunSettings>
 
   <Catch2Adapter>
-    <CombinedTimeout>30000</CombinedTimeout><!-- 30s in Milliseconds -->
-    <FilenameFilter>^Catch_</FilenameFilter>
     <DllFilenameFilter>^CatchDll_</DllFilenameFilter>
     <DllRunner>${dllpath}/CatchDllRunner.exe</DllRunner>
     <DllRunnerCommandline>${catch2} ${dll}</DllRunnerCommandline>

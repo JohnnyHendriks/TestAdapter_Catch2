@@ -1,6 +1,6 @@
 # Settings for Test Adapter for Catch2
 
-> The information on this page is based on **Test Adapter for Catch2** v1.8.0.
+> The information on this page is based on **Test Adapter for Catch2** v2.0.0.
 
 In order for the **Test Adapter for Catch2** to do its job, it requires certain settings to be set explicitly by the user. This is done via a _.runsettings_ file. The settings for the **Test Adapter for Catch2** are collected inside the `<Catch2Adapter>` node that can be added to the `<RunSettings>` node of the _.runsettings_ file. Below is the list of settings that are available for the **Test Adapter for Catch2**. The ones with an asterisk are required to be set by the user and have defaults that will cause the **Test Adapter for Catch2** to not discovery tests.
 
@@ -9,13 +9,19 @@ In order for the **Test Adapter for Catch2** to do its job, it requires certain 
 - [`<DebugBreak>`](#debugbreak)
 - [`<DiscoverCommandLine>`](#discovercommandline)
 - [`<DiscoverTimeout>`](#discovertimeout)
+- [`<DllFilenameFilter>`](#dllfilenamefilter)* (_required for dll test source_)
+- [`<DllPostfix>`](#dllpostfix)
+- [`<DllRunner>`](#dllrunner)* (_required for dll test source_)
+- [`<DllRunnerCommandline>`](#dllrunnercommandline)
 - [`<Environment>`](#environment)
 - [`<ExecutionMode>`](#executionmode)
 - [`<ExecutionModeForceSingleTagRgx>`](#executionmodeforcesingletagrgx)
-- [`<FilenameFilter>`](#filenamefilter)*
+- [`<FilenameFilter>`](#filenamefilter)* (_required for exe test source_)
 - [`<IncludeHidden>`](#includehidden)
 - [`<Logging>`](#logging)
 - [`<MessageFormat>`](#messageformat)
+- [`<Overrides>`](#overrides)
+- [`<Source>`](#source)
 - [`<StackTraceFormat>`](#stacktraceformat)
 - [`<StackTraceMaxLength>`](#stacktracemaxlength)
 - [`<StackTracePointReplacement>`](#stacktracepointreplacement)
@@ -37,6 +43,10 @@ The following _.runsettings_ file examples only contains settings specific to th
         <DebugBreak>on</DebugBreak>
         <DiscoverCommandLine>--verbosity high --list-tests --reporter xml *</DiscoverCommandLine>
         <DiscoverTimeout>500</DiscoverTimeout><!-- Milliseconds -->
+        <DllFilenameFilter>^CatchDll_</DllFilenameFilter><!-- Introduced in v2.0.0 -->
+        <DllPostfix>_D</DllPostfix><!-- Introduced in v2.0.0 -->
+        <DllRunner>${dllpath}/CatchDllRunner.exe</DllRunner><!-- Introduced in v2.0.0 -->
+        <DllRunnerCommandline>${catch2} ${dll}</DllRunnerCommandline><!-- Introduced in v2.0.0 -->
         <Environment><!-- Introduced in v1.7.0 -->
           <MyCustomEnvSetting>Welcome</MyCustomEnvSetting>
           <MyOtherCustomEnvSetting value="debug&lt;0&gt;"/>
@@ -53,6 +63,14 @@ The following _.runsettings_ file examples only contains settings specific to th
         <TestCaseTimeout>20000</TestCaseTimeout><!-- Milliseconds -->
         <WorkingDirectory>..\TestData</WorkingDirectory>
         <WorkingDirectoryRoot>Executable</WorkingDirectoryRoot>
+        <Overrides><!-- Introduced in v2.0.0 -->
+          <Source filter="_ExeSpecial">
+            <CombinedTimeout>60000</CombinedTimeout>
+          </Source>
+          <Source dllfilter="_DllSpecial_D$">
+            <CombinedTimeout>60000</CombinedTimeout>
+          </Source>
+        </Overrides>
     </Catch2Adapter>
 
 </RunSettings>
@@ -133,6 +151,63 @@ With the `<DiscoverTimeout>` option you can apply a timeout in milliseconds when
 
 When the timeout value is too small it is possible that test discovery fails. If that happens a warning is displayed in the Test Explorer output to make this clear. There have been situations where discovery intermittently failed (especially when the computer was very busy with other stuff).
 
+## DllFilenameFilter
+
+Default: ""
+
+Use the `<DllFilenameFilter>` option to filter the supplied dll files used for discovery. This should enable you to selectively select the Catch2 dlls in your project. By default, this parameter has an invalid value, causing test case discovery from dlls to be disabled. This was done intentionally to prevent non-Catch2 test dlls from being called by default during test case discovery, possibly causing unwanted side effects. Note that the filter is applied to the filename with the extension (".dll") stripped from the name.
+
+See below for several common options.
+- ".*": Perform discovery for all source filenames
+- "^Catch": Perform discovery for all source filenames starting with "Catch"
+- "Catch$": Perform discovery for all source filenames ending with "Catch"
+- "Test": Perform discovery for all source filenames having "Test" in the name.
+- "(?i:Test)": Same as previous but case insensitive.
+
+Note: dll based test discovery also requires a test runner to be configured via the [`<DllRunner>`](#dllrunner) setting.
+
+> Introduced in v2.0.0
+
+## DllPostfix
+
+Default: ""
+
+Use the `<DllPostfix>` option to configure a postfix value that may be present in the dll-filename. This value can then be used in the [`<DllRunner>`](#dllrunner) setting to construct the name of the test runner to be used.
+
+> Introduced in v2.0.0
+
+## DllRunner
+
+Default: ""
+
+Path to the dll runner executable to be used to run the tests located in the provided test source dll. The path to the runner can be constructed based on the name of the provided test source dll. You can use the name placeholders in the following table to construct the path to the dll runner executable.
+
+| Replacement name | Description |
+|:-----------------|:------------|
+| `${dllpath}` | Full path to the folder containing the test dll, without trailing path separator character. |
+| `${dllname}` | Name of the dll without extension, and with the postfix configured via [`<DllPostfix>`](#dllpostfix) removed if present. |
+| `${postfix}` | If it was present in the name of the dll, the postfix configured via the [`<DllPostfix>`](#dllpostfix) setting. Otherwise it is replaced with an empty string. |
+
+Examples.
+
+- "`C:\DevTools\CatchDllRunner.exe`": One runner to rule them all.
+- "`${dllpath}\CatchDllRunner.exe`": One runner to rule the solution.
+- "`${dllpath}\CatchDllRunner${postfix}.exe`": _E.g._, use debug runner with debug dlls.
+- "`${dllpath}\${dllname}Runner${postfix}.exe`": One runner per test dll.
+
+> Introduced in v2.0.0
+
+## DllRunnerCommandLine
+
+Default: "${catch2}"
+
+| Replacement name | Description |
+|:-----------------|:------------|
+| `${catch2}` | (Required) The Catch2 commandline parameters generated/used by the **Test Adapter for Catch2** |
+| `${dll}` | unquoted full path to the dll-file |
+
+> Introduced in v2.0.0
+
 ## Environment
 
 With the `<Environment>` option you can configure environmental variables to be set for the Catch2 executable process. Set the key-value pairs as children of the `<Environment>` parameter, where name of the xml-element is the `key`-part and the content of that element is the `value`-part of the key-value pair. Alternatively the `value`-attribute can be used to set the value. See below for an example that will result in the environmental variables "`MyCustomEnvSetting=Welcome`" and "`MyOtherCustomEnvSetting=debug<0>`" to be set for the Catch2 executable process.
@@ -150,7 +225,7 @@ Note, in case a duplicate environmental variable key exists, the value will be o
 
 ## ExecutionMode
 
-Default: Single
+Default: Combine
 
 With the `<ExecutionMode>` option you can choose the way tests are executed.
 
@@ -161,6 +236,7 @@ With the `<ExecutionMode>` option you can choose the way tests are executed.
 |||
 
 > Introduced in v1.6.0
+> Default value changed in v2.0.0 (from Single to Combine)
 
 ## ExecutionModeForceSingleTagRgx
 
@@ -174,7 +250,7 @@ With the `<ExecutionModeForceSingleTagRgx>` option you can set a regex value to 
 
 Default: ""
 
-Use the `<FilenameFilter>` option to filter the supplied executable files used for discovery. This should enable you to selectively select the Catch2 executables in your project. By default, this parameter has an invalid value, causing test case discovery to fail. This was done intentionally to prevent non-Catch2 test executables from being called by default during test case discovery, possibly causing unwanted side effects. Note that the filter is applied to the filename with the extension (".exe") stripped from the name.
+Use the `<FilenameFilter>` option to filter the supplied executable files used for discovery. This should enable you to selectively select the Catch2 executables in your project. By default, this parameter has an invalid value, causing test case discovery from executables to be disabled. This was done intentionally to prevent non-Catch2 test executables from being called by default during test case discovery, possibly causing unwanted side effects. Note that the filter is applied to the filename with the extension (".exe") stripped from the name.
 
 See below for several common options.
 - ".*": Perform discovery for all source filenames
@@ -199,9 +275,28 @@ The `<Logging>` option has four settings, `quiet`, `normal`, `verbose`, and `deb
 
 Default: StatsOnly
 
-The `<MessageFormat>` option has three settings, `AdditionalInfo`, `None` and `StatsOnly`. The addition of this setting is basically the result of fixing the stack trace link issue. Now the stack trace links to source are working, a significant part of the information is duplicated. Also, in case of many failures the stack trace information typically requires scrolling to get to it. Originally the full failure info was never intended to be shown in the error message. Only the test assertion statistics were originally envisioned for this area. As such the default is to only show the assertion statistics as message. To get all additonal info in the message set this setting to `AdditionalInfo`. For the minimalists you can also set this setting to `None`, in which case no message is generated.
+The `<MessageFormat>` option has three settings, `AdditionalInfo`, `None` and `StatsOnly`. The addition of this setting is basically the result of fixing the stack trace link issue. Now the stack trace links to source are working, a significant part of the information is duplicated. Also, in case of many failures the stack trace information typically requires scrolling to get to it. Originally the full failure info was never intended to be shown in the error message. Only the test assertion statistics were originally envisioned for this area. As such the default is to only show the assertion statistics as message. To get all additional info in the message set this setting to `AdditionalInfo`. For the minimalists you can also set this setting to `None`, in which case no message is generated.
 
 When you opt to not have the additional info in the message, this info is placed in the standard output in front of any standard output actually generated by the test. This info can then be reached via the output link that then appears in the detail view of the test case.
+
+## Overrides
+
+Use the `<Overrides>` section to override settings for specific test sources. With the exception of the [`<FilenameFilter>`](#filenamefilter) and [`<DllFilenameFilter>`](#dllfilenamefilter) settings, all settings can be overridden. Use [`<Source>`](#source) elements in this section to provide overrides.
+
+> Introduced in v2.0.0
+
+## Source
+
+Used inside the [`<Overrides>`](#overrides) section. This element requires the use of at least one of the following attributes.
+
+| Attribute | Description |
+|:----------|:------------|
+| `dllfilter` | The filter for dll-based test sources to use the overridden settings with. Equivalent to the [`<DllFilenameFilter>`](#dllfilenamefilter) setting. |
+| `filter` | The filter for exe-based test sources to use the overridden settings with. Equivalent to the [`<FilenameFilter>`](#filenamefilter) setting. |
+
+This element can contain any of the other settings. Settings included in this section will be overridden for those sources covered by the filter provided via the `dllfilter`and/or `filter` attribute. Note, [`<DllFilenameFilter>`](#dllfilenamefilter), [`<FilenameFilter>`](#filenamefilter), and [`<Overrides>`](#overrides) elements are ignored. Also note, if a value is not provided for a setting element, the setting will not be overridden.
+
+> Introduced in v2.0.0
 
 ## StackTraceFormat
 

@@ -2,6 +2,23 @@
 
 Changes are relative to v1.0.0
 
+## Changes for v2.0.0
+
+This is a big release that adds some features to make some common use cases easier to work with. Most notably is the ability to directly use a dll as a test source, which allows Test Explorer to pick up on changes to the tests and re-discover tests without the need to jump through hoops.
+
+### New features
+- Add direct support for dll based tests
+- Add support for test source specific configuration overrides
+
+### Changes in behaviour / to defaults
+- Remove DiscoverCommandline requirements check
+- Change default setting of `<ExecutionMode>` to `Combine` (_i.e._, run tests faster by default)
+- Prepend tag with process ID to log lines
+
+### Bug fixes
+
+- Issue #54 Recognize also catch output xml without a name
+
 ## Changes for v1.8.0
 
 This version introduces support for Catch2 v3, which has a small change in xml-reporting format and has improved support for test discovery.
