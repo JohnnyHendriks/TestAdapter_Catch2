@@ -18,6 +18,7 @@ This is a big release that adds some features to make some common use cases easi
 ### Bug fixes
 
 - Issue #54 Recognize also catch output xml without a name
+- Issue #70 Fix potential endless loop
 
 ## Changes for v1.8.0
 

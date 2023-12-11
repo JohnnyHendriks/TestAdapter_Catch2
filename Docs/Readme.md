@@ -64,7 +64,7 @@ For a more detailed description see the following pages:
 - **[Configure runsettings (use cases)](./Runsettings.md)**
 - **[Walkthrough: using the Test Adapter for Catch2](./Walkthrough-vs2022.md)**
 - **[Troubleshooting guide](./Troubleshooting.md)**
-- **[Change log](./Docs/CHANGELOG.md)**
+- **[Change log](./CHANGELOG.md)**
 - [Test case naming conventions](./Naming-conventions.md)
 - [Settings reference](./Settings.md)
 - [Testcase Discovery](./Discovery.md)
