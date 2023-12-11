@@ -15,6 +15,7 @@ call :BuildTests Rel3_3_0
 call :BuildTests Rel3_3_1
 call :BuildTests Rel3_3_2
 call :BuildTests Rel3_4_0
+call :BuildTests Rel3_5_0
 
 echo.
 echo Done.

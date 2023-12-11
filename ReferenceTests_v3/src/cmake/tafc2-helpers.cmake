@@ -88,6 +88,7 @@ function( tafc2_add_test targetname idefolder )
       $<$<CONFIG:Rel3_3_1>:Tafc2::Catch2_v3_3_1>
       $<$<CONFIG:Rel3_3_2>:Tafc2::Catch2_v3_3_2>
       $<$<CONFIG:Rel3_4_0>:Tafc2::Catch2_v3_4_0>
+      $<$<CONFIG:Rel3_5_0>:Tafc2::Catch2_v3_5_0>
   )
 
   # Group files for IDE environments
@@ -126,6 +127,7 @@ function( tafc2_add_dlltest targetname idefolder )
       $<$<CONFIG:Rel3_3_1>:Tafc2::Catch2_v3_3_1>
       $<$<CONFIG:Rel3_3_2>:Tafc2::Catch2_v3_3_2>
       $<$<CONFIG:Rel3_4_0>:Tafc2::Catch2_v3_4_0>
+      $<$<CONFIG:Rel3_5_0>:Tafc2::Catch2_v3_5_0>
   )
 
   # Group files for IDE environments
