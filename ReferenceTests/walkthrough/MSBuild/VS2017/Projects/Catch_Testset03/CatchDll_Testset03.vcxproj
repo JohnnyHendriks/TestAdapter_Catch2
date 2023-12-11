@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\Catch2DllUnittest.targets" />
+  <PropertyGroup Label="Globals">
+    <RootNamespace>CatchDll_Testset03</RootNamespace>
+    <ProjectTypeGuids>{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}</ProjectTypeGuids>
+    <ProjectGuid>{0B171E0C-0CB1-4FFD-AC55-79BBF0C233BA}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Testset03\UT_Tests01.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Testset03\UT_Tests02.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Testset03\UT_Tests03.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Testset03\UT_Tests04.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Testset03\UT_Tests05.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Testset03\UT_Tests06.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Testset03\UT_Tests07.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Testset03\UT_Tests08.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Testset03\UT_Tests09.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)CatchDll_Common\main.cpp" />
+  </ItemGroup>
+</Project>

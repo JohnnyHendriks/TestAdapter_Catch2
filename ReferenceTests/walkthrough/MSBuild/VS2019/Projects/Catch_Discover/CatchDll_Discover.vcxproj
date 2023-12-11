@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\Catch2DllUnittest.targets" />
+  <PropertyGroup Label="Globals">
+    <RootNamespace>CatchDll_Discover</RootNamespace>
+    <ProjectTypeGuids>{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}</ProjectTypeGuids>
+    <ProjectGuid>{50C6F8DB-ABB7-3D8A-9A48-DB0706FDE705}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Discover\UT_LongTestCaseNames.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Discover\UT_NotDefaultDiscoverable.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)CatchDll_Common\main.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Discover\UT_Tags.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Discover\UT_TestCases.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(RefTest_SourceDir)CatchDll_Common\catch_discover.hpp" />
+  </ItemGroup>
+</Project>

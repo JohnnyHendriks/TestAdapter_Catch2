@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\Catch2DllUnittest.targets" />
+  <PropertyGroup Label="Globals">
+    <RootNamespace>CatchDll_Hidden</RootNamespace>
+    <ProjectTypeGuids>{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}</ProjectTypeGuids>
+    <ProjectGuid>{8E8FF5CF-2FFC-3C0E-930C-F8284BA0CD51}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Hidden\UT_Hidden.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)Catch_Hidden\UT_NotHidden.cpp" />
+    <ClCompile Include="$(RefTest_SourceDir)CatchDll_Common\main.cpp" />
+  </ItemGroup>
+</Project>
