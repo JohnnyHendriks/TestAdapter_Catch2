@@ -19,47 +19,47 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Catch_Hidden", "MSBuild\VS2
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Catch_NoSEH", "MSBuild\VS2017\Projects\Catch_NoSEH\Catch_NoSEH.vcxproj", "{93AAED31-C6A6-4BFE-ABED-D750C575BA10}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Discover", "MSBuild\VS2019\Projects\Catch_Discover\CatchDll_Discover.vcxproj", "{50C6F8DB-ABB7-3D8A-9A48-DB0706FDE705}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Discover", "MSBuild\VS2017\Projects\Catch_Discover\CatchDll_Discover.vcxproj", "{50C6F8DB-ABB7-3D8A-9A48-DB0706FDE705}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884} = {EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Dummy", "MSBuild\VS2019\Projects\Catch_Dummy\CatchDll_Dummy.vcxproj", "{FF538D31-B7DD-32AB-A434-D3FF55901ABC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Dummy", "MSBuild\VS2017\Projects\Catch_Dummy\CatchDll_Dummy.vcxproj", "{FF538D31-B7DD-32AB-A434-D3FF55901ABC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884} = {EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Duplicates", "MSBuild\VS2019\Projects\Catch_Duplicates\CatchDll_Duplicates.vcxproj", "{EDEFEE82-1B27-3CDE-8501-906698EC3220}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Duplicates", "MSBuild\VS2017\Projects\Catch_Duplicates\CatchDll_Duplicates.vcxproj", "{EDEFEE82-1B27-3CDE-8501-906698EC3220}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884} = {EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Hidden", "MSBuild\VS2019\Projects\Catch_Hidden\CatchDll_Hidden.vcxproj", "{8E8FF5CF-2FFC-3C0E-930C-F8284BA0CD51}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Hidden", "MSBuild\VS2017\Projects\Catch_Hidden\CatchDll_Hidden.vcxproj", "{8E8FF5CF-2FFC-3C0E-930C-F8284BA0CD51}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884} = {EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_NoSEH", "MSBuild\VS2019\Projects\Catch_NoSEH\CatchDll_NoSEH.vcxproj", "{81CB02DF-6B1E-3987-89E3-8673B93AEDC6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_NoSEH", "MSBuild\VS2017\Projects\Catch_NoSEH\CatchDll_NoSEH.vcxproj", "{81CB02DF-6B1E-3987-89E3-8673B93AEDC6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884} = {EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Testset01", "MSBuild\VS2019\Projects\Catch_Testset01\CatchDll_Testset01.vcxproj", "{485C13B7-2858-428F-9010-3B44E7C10E78}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Testset01", "MSBuild\VS2017\Projects\Catch_Testset01\CatchDll_Testset01.vcxproj", "{485C13B7-2858-428F-9010-3B44E7C10E78}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884} = {EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Testset02", "MSBuild\VS2019\Projects\Catch_Testset02\CatchDll_Testset02.vcxproj", "{0468DB6A-4DA8-4214-880A-499B08D315DF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Testset02", "MSBuild\VS2017\Projects\Catch_Testset02\CatchDll_Testset02.vcxproj", "{0468DB6A-4DA8-4214-880A-499B08D315DF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884} = {EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Testset03", "MSBuild\VS2019\Projects\Catch_Testset03\CatchDll_Testset03.vcxproj", "{0B171E0C-0CB1-4FFD-AC55-79BBF0C233BA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDll_Testset03", "MSBuild\VS2017\Projects\Catch_Testset03\CatchDll_Testset03.vcxproj", "{0B171E0C-0CB1-4FFD-AC55-79BBF0C233BA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884} = {EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDllRunner", "MSBuild\VS2019\Projects\CatchDllRunner\CatchDllRunner.vcxproj", "{EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CatchDllRunner", "MSBuild\VS2017\Projects\CatchDllRunner\CatchDllRunner.vcxproj", "{EDA4B5D3-6AE1-3AAA-A1D8-8217EBD8B884}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8DF0F5AE-3AB4-4995-9E50-119B7C2B1C11}"
 	ProjectSection(SolutionItems) = preProject
